@@ -1,0 +1,21 @@
+<!-- @dsCard group="Containers" height=160 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Separator — preview</title></head>
+<body style="margin:0">
+<div id="root"></div>
+<script>
+  var G = window.Graphite, h = React.createElement;
+  function row(){ return h.apply(null, ['div', { className: 'gr-demo__row', style: { alignItems: 'flex-start' } }].concat([].slice.call(arguments))); }
+  function cap(t){ return h('div', { className: 'gr-demo__cap' }, t); }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'gr-demo' },
+      cap('Horizontal (default) and vertical — only where layers alone cannot separate content'),
+      h(G.Separator, null),
+      h('div', { style: { display: 'flex', alignItems: 'center', gap: 16, height: 32, fontSize: 14 } }, 'Title', h(G.Separator, { orientation: 'vertical' }), 'Draft', h(G.Separator, { orientation: 'vertical' }), 'All changes saved')
+    )
+  );
+</script>
+</body>
+</html>

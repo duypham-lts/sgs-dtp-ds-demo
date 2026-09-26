@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>[MVP] SGS Admin – approve & assign</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="sgs-ops" style="position: relative; width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" tone="dark" site-name="Digital Trust Platform" site-sub="Operations Console" badge="Internal" home-links="{{noLinks}}" user-name="Minh Nguyen" user-email="minh.nguyen@sgs.com" notifications="{{three}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" tone="dark" label="SGS Operations" sections="{{nav}}" default-active="req-gap" default-collapsed="{{collapsed}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <x-import component-from-global-scope="Graphite.PageHeader" title="GA-2026-005 · ISO/IEC 27701" subtitle="Gap Analysis · ABC Trading Co., Ltd. · submitted 21 Sep 2026" on-back="{{noop}}" status="{{status}}" actions="{{hdrActions}}"></x-import>
+      <div style="flex-grow: 1; min-height: 0; display: grid; grid-template-columns: 14fr 62fr 21fr; gap: 20px">
+        <div style="min-width: 0; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02)">
+          <x-import component-from-global-scope="Graphite.SectionNav" label="Sections" items="{{sections}}" default-active="rq"></x-import>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 20px">
+          <section class="gr-card">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">1</span><div><h2 class="gr-card__title">Request</h2><p class="gr-card__sub">What the customer asked for</p></div></div></div>
+            <dl style="margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px 24px"><div><dt class="body-small" style="color: var(--text-secondary)">Framework</dt><dd class="body-medium" style="margin: 0">ISO/IEC 27701:2019</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">Scope</dt><dd class="body-medium" style="margin: 0">Customer data platform</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">Delivery</dt><dd class="body-medium" style="margin: 0">On site</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">Earliest start</dt><dd class="body-medium" style="margin: 0">12 Oct 2026</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">Contact</dt><dd class="body-medium" style="margin: 0">Linh Tran · Compliance lead</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">Consent</dt><dd class="body-medium" style="margin: 0">Consultant may read the workspace</dd></div><div style="grid-column: 1 / -1"><dt class="body-small" style="color: var(--text-secondary)">Goal</dt><dd class="body-medium" style="margin: 0">We process personal data for 3 retail brands and want to know what is missing before we certify.</dd></div></dl>
+          </section>
+          <section class="gr-card gr-card--extend">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">2</span><div><h2 class="gr-card__title">Workspace</h2><p class="gr-card__sub">Where the consultant will read evidence</p></div></div></div>
+            <span class="body-medium">ISO/IEC 27701 · Customer data platform — 40 requirements, 18 documents</span>
+          </section>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02); display: flex; flex-direction: column; gap: 16px">
+          <div class="title-medium">Customer</div>
+          <div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: var(--radius-md); background: var(--layer-01)">
+            <span class="title-small">ABC Trading Co., Ltd.</span>
+            <span class="body-small" style="color: var(--text-secondary)">SGS Taiwan · Customer admin Linh Tran</span>
+            <x-import component-from-global-scope="Graphite.Link" href="mailto:linh.tran@abc-trading.com">linh.tran@abc-trading.com</x-import>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <x-import component-from-global-scope="Graphite.Modal" inline="{{yes}}" open="{{yes}}" size="fit" title="Approve and assign consultant" on-close="{{noop}}" primary-action="{{primary}}" secondary-action="{{secondary}}">
+    <div style="display: flex; flex-direction: column; gap: 16px; width: 552px; max-width: 100%">
+      <p class="body-medium" style="margin: 0; color: var(--text-secondary)">GA-2026-005 · ABC Trading Co., Ltd. The request moves to In progress and the consultant can read the workspace until the report is delivered.</p>
+      <x-import component-from-global-scope="Graphite.Select" label="Consultant" width="552px" required="{{yes}}" default-value="anna" options="{{cons}}"></x-import>
+      <div style="display: flex; gap: 16px"><x-import component-from-global-scope="Graphite.DatePicker" label="On site from" width="268px" required="{{yes}}" today="2026-09-24" min="2026-09-24" default-value="2026-10-14"></x-import><x-import component-from-global-scope="Graphite.DatePicker" label="On site to" width="268px" required="{{yes}}" today="2026-09-24" min="2026-10-14" default-value="2026-10-16"></x-import></div>
+      <x-import component-from-global-scope="Graphite.Textarea" label="Message to the customer (optional)" size="l" rows="{{two}}" placeholder="e.g. Please prepare access to the data centre on day 2."></x-import>
+    </div>
+  </x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite, F = window.React.Fragment;
+
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' },
+      { id: 'req', label: 'Requests', icon: 'task', badge: 3, badgeTone: 'attention', badgeLabel: 'requests need triage', children: [
+        { id: 'req-all', label: 'All requests' }, { id: 'req-cert', label: 'Certification' }, { id: 'req-train', label: 'Training' },
+        { type: 'label', label: 'Other services' }, { id: 'req-gap', label: 'Gap Analysis', badge: 3, badgeTone: 'attention', badgeLabel: 'need triage' }, { id: 'req-impl', label: 'Implementation Support' } ] },
+      { id: 'cust', label: 'Customers', icon: 'user--multiple' },
+      { id: 'fw', label: 'Frameworks', icon: 'catalog' },
+      { id: 'asg', label: 'Assignments', icon: 'user--access' },
+      { id: 'audit', label: 'Audit Logs', icon: 'document' },
+      { id: 'settings', label: 'Settings', icon: 'settings' } ] }];
+    var extra = {};
+
+    extra.status = { status: 'under-review', label: 'Submitted', shortLabel: 'Submitted' };
+    extra.hdrActions = h(F, null, h(G.Button, { variant: 'tertiary', size: 'md' }, 'Reject'), h(G.Button, { size: 'md' }, 'Approve & assign'));
+    extra.sections = [{ id: 'rq', label: 'Request', status: 'complete' }, { id: 'ws', label: 'Workspace' }];
+    extra.two = 2; extra.three = 3;
+    extra.cons = [{ value: 'anna', label: 'Anna Lee', description: 'Lead consultant · ISMS, privacy' }, { value: 'wei', label: 'Wei Lin', description: 'Consultant · ISMS' }, { value: 'minh', label: 'Minh Tran', description: 'Consultant · AI, ISMS' }];
+    extra.primary = { label: 'Approve & assign' }; extra.secondary = { label: 'Cancel' };
+    return Object.assign({ yes: true, no: false, three: 3, nav: nav, noLinks: [], noop: function(){}, collapsed: false }, extra);
+  }
+}
+</script>
+</body>
+</html>

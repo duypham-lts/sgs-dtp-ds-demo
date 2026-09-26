@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sgs – sign in (inactive)</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;family=Noto+Sans+TC:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="sgs-ops" style="width: 1440px; height: 900px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <div style="width: 960px; min-height: 640px; display: flex; border-radius: var(--radius-card); overflow: hidden; background: var(--layer-02); box-shadow: var(--shadow-raised)">
+    <div data-theme="inverse" style="width: 440px; flex-shrink: 0; box-sizing: border-box; padding: 48px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 32px; text-align: center; background: var(--shell-dark); color: var(--text-primary)">
+      <svg width="288" height="216" viewBox="0 0 288 216" aria-hidden="true"><path d="M36,0 A36,36 0 0 1 72,36 A36,36 0 0 1 36,72 H0 V36 A36,36 0 0 1 36,0 Z" style="fill: var(--brand-slate)"></path><path d="M108,0 A36,36 0 0 1 144,36 V72 H108 A36,36 0 0 1 72,36 A36,36 0 0 1 108,0 Z" style="fill: var(--brand-orange)"></path><path d="M180,0 A36,36 0 0 1 216,36 V72 H180 A36,36 0 0 1 144,36 A36,36 0 0 1 180,0 Z" style="fill: var(--brand-charcoal)"></path><path d="M252,0 A36,36 0 0 1 288,36 A36,36 0 0 1 252,72 H216 V36 A36,36 0 0 1 252,0 Z" style="fill: var(--brand-slate)"></path><path d="M36,72 A36,36 0 0 1 72,108 A36,36 0 0 1 36,144 A36,36 0 0 1 0,108 V72 H36 Z" style="fill: var(--brand-charcoal)"></path><path d="M180,72 A36,36 0 0 1 216,108 A36,36 0 0 1 180,144 A36,36 0 0 1 144,108 V72 H180 Z" style="fill: var(--brand-slate)"></path><path d="M252,72 H288 V108 A36,36 0 0 1 252,144 A36,36 0 0 1 216,108 A36,36 0 0 1 252,72 Z" style="fill: var(--brand-peach)"></path><path d="M36,144 H72 V180 A36,36 0 0 1 36,216 A36,36 0 0 1 0,180 A36,36 0 0 1 36,144 Z" style="fill: var(--brand-orange)"></path><path d="M108,144 A36,36 0 0 1 144,180 A36,36 0 0 1 108,216 H72 V180 A36,36 0 0 1 108,144 Z" style="fill: var(--brand-slate)"></path><path d="M180,144 A36,36 0 0 1 216,180 V216 H180 A36,36 0 0 1 144,180 A36,36 0 0 1 180,144 Z" style="fill: var(--brand-charcoal)"></path></svg>
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <span class="headline-small">Digital Trust Platform</span>
+        <span class="body-medium" style="color: var(--text-secondary)">SGS Operations · internal access</span>
+      </div>
+    </div>
+    <div style="position: relative; flex-grow: 1; box-sizing: border-box; padding: 40px 72px; display: flex; flex-direction: column; justify-content: center; gap: 20px">
+      <div style="position: absolute; top: 16px; right: 16px"><x-import component-from-global-scope="Graphite.LanguageSelector" compact="{{yes}}"></x-import></div>
+      <div style="display: flex; justify-content: center"><x-import component-from-global-scope="Graphite.Logo" site-name="Digital Trust Platform" site-sub="Operations Console"></x-import></div>
+      <x-import component-from-global-scope="Graphite.InlineNotification" kind="error" title="Your account is not active" live="{{yes}}">This SGS account is deactivated. Contact the SGS platform administrator.</x-import>
+      <div style="display: flex; flex-direction: column; gap: 16px">
+        <x-import component-from-global-scope="Graphite.TextInput" label="Email" type="email" required="{{yes}}" placeholder="name@sgs.com" autocomplete="username" width="100%" default-value="minh.nguyen@sgs.com"></x-import>
+        <x-import component-from-global-scope="Graphite.TextInput" label="Password" type="password" required="{{yes}}" placeholder="Enter your password" autocomplete="current-password" width="100%" default-value="password123"></x-import>
+      </div>
+      <div style="margin-top: -16px"><x-import component-from-global-scope="Graphite.Checkbox" label="Keep me signed in"></x-import></div>
+      <x-import component-from-global-scope="Graphite.Button" variant="primary" full-width="{{yes}}" type="submit">Sign in</x-import>
+    <p class="body-small" style="margin: 0; text-align: center; color: var(--text-secondary)">Trouble signing in? <x-import component-from-global-scope="Graphite.Link" href="#" inline="{{yes}}">Contact the SGS Service Desk</x-import></p>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite;
+    var extra = {};
+
+    return Object.assign({ yes: true, no: false }, extra);
+  }
+}
+</script>
+</body>
+</html>

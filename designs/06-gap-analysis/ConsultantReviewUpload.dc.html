@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SGS Consultant – review uploaded document</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="sgs-ops" style="position: relative; width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" tone="dark" site-name="Digital Trust Platform" site-sub="Operations Console" badge="Internal" home-links="{{noLinks}}" user-name="Anna Lee" user-email="anna.lee@sgs.com" notifications="{{one}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" tone="dark" label="SGS Operations" sections="{{nav}}" default-active="asg-gap" default-collapsed="{{collapsed}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+
+      <x-import component-from-global-scope="Graphite.PageHeader" title="GA-2026-002 · ISO/IEC 27001" subtitle="ABC Trading Co., Ltd. · Head office, Taipei · access ends when you submit the final report" on-back="{{noop}}" status="{{status}}" actions="{{hdr}}"></x-import>
+      <div style="flex-grow: 1; min-height: 0; display: grid; grid-template-columns: 26fr 50fr 21fr; gap: 20px">
+        <div style="min-width: 0; min-height: 0; overflow: auto; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02)">
+          <x-import component-from-global-scope="Graphite.RequirementNavigator" label="ISO/IEC 27001 requirements" framework="{{fw}}" groups="{{groups}}" default-expanded="{{exp}}" default-selected="a5.9"></x-import>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 20px">
+          <section class="gr-card">
+            <div class="gr-card__head"><div class="gr-card__heading"><div><h2 class="gr-card__title">A.5.9 Inventory of information and other associated assets</h2><p class="gr-card__sub">Annex A · Organizational controls · 3 evidence items</p></div></div><x-import component-from-global-scope="Graphite.Tag" tone="neutral">Read only</x-import></div>
+            <div style="display: flex; flex-direction: column; gap: 8px">
+              <span class="title-small">Customer’s self-assessment</span>
+              <span class="body-medium">“Partially in place” — <span style="color: var(--text-secondary)">IT keeps a hardware list; no single register for information assets yet.</span></span>
+            </div>
+            <x-import component-from-global-scope="Graphite.DocumentItem" doc-type="IT hardware list" file-name="hw-inventory-q2.xlsx" date-label="Uploaded Aug 12, 2026" size="410 KB" status="completed" actions="{{viewActs}}"></x-import>
+            <x-import component-from-global-scope="Graphite.DocumentItem" doc-type="Asset management procedure" file-name="asset-procedure-v1.pdf" date-label="Uploaded Aug 12, 2026" size="380 KB" status="completed" actions="{{viewActs}}"></x-import>
+            <x-import component-from-global-scope="Graphite.DocumentItem" variant="actions-required" doc-type="Asset inventory" status="missing-info" status-label="Requested" accordion-label="Requested by you · due 27 Sep" actions="{{noActs}}"><span class="body-small">Full register of hardware, software and information assets in scope, with owners.</span></x-import>
+          </section>
+          <section class="gr-card gr-card--extend">
+            <div class="gr-card__head"><div class="gr-card__heading"><div><h2 class="gr-card__title">Your assessment</h2><p class="gr-card__sub">Visible to the customer only after you submit the final report</p></div></div></div>
+            <fieldset style="border: 0; margin: 0; padding: 0">
+              <legend class="label-small" style="color: var(--text-secondary); margin-bottom: 4px">Result <span class="gr-req">*</span></legend>
+              <div style="display: flex; gap: 24px; flex-wrap: wrap"><x-import component-from-global-scope="Graphite.Radio" name="res" label="Met"></x-import><x-import component-from-global-scope="Graphite.Radio" name="res" label="Partially met"></x-import><x-import component-from-global-scope="Graphite.Radio" name="res" label="Not met" default-checked="{{yes}}"></x-import><x-import component-from-global-scope="Graphite.Radio" name="res" label="Not applicable"></x-import></div>
+            </fieldset>
+            <x-import component-from-global-scope="Graphite.Select" label="Priority" required="{{yes}}" size="s" default-value="high" options="{{prio}}"></x-import>
+            <x-import component-from-global-scope="Graphite.Textarea" label="Finding and recommendation" required="{{yes}}" size="l" rows="{{three}}" default-value="No single register of assets. Hardware list exists for IT only; information assets and the Hsinchu data centre are missing. Build one register with owners and review it twice a year." help-text="Becomes a consultant comment on this requirement in the customer’s workspace."></x-import>
+            <x-import component-from-global-scope="Graphite.Textarea" label="Internal note (optional)" size="l" rows="{{two}}" placeholder="Only visible to SGS"></x-import>
+            <div style="display: flex; justify-content: space-between; margin-top: auto">
+              <x-import component-from-global-scope="Graphite.Button" variant="ghost" size="md">Previous</x-import>
+              <div style="display: flex; gap: 12px"><x-import component-from-global-scope="Graphite.Button" variant="secondary" size="md">Save</x-import><x-import component-from-global-scope="Graphite.Button" size="md" icon="arrow--right">Save &amp; next</x-import></div>
+            </div>
+          </section>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02); display: flex; flex-direction: column; gap: 16px">
+          <div class="title-medium">Assessment</div>
+          <div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: var(--radius-md); background: var(--layer-01)">
+            <span class="title-small">Results so far</span>
+            <dl class="body-small" style="margin: 0; display: grid; grid-template-columns: 1fr auto; gap: 4px 12px">
+              <dt>Met</dt><dd style="margin: 0">24</dd><dt>Partially met</dt><dd style="margin: 0">11</dd><dt>Not met</dt><dd style="margin: 0">6</dd><dt>Not applicable</dt><dd style="margin: 0">1</dd><dt style="color: var(--text-secondary)">Not assessed yet</dt><dd style="margin: 0; color: var(--text-secondary)">74</dd>
+            </dl>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: var(--radius-md); background: var(--layer-01)">
+            <span class="title-small">Document requests</span>
+            <span class="body-small" style="display: flex; justify-content: space-between; gap: 8px"><span>Asset inventory · A.5.9</span><x-import component-from-global-scope="Graphite.Tag" tone="required">Due 27 Sep</x-import></span>
+            <span class="body-small" style="color: var(--text-secondary)">The customer sees “Action required” until they upload.</span>
+            <div><x-import component-from-global-scope="Graphite.Button" variant="tertiary" size="sm" icon="add" icon-position="left">Request a document</x-import></div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: var(--radius-md); background: var(--layer-01)">
+            <span class="title-small">Visit</span>
+            <span class="body-medium">14 – 18 Sep 2026 · on site</span>
+            <span class="body-small" style="color: var(--text-secondary)">Taipei HQ, Hsinchu data centre · contact Linh Tran</span>
+          </div>
+        </div>
+      </div>
+    
+    </main>
+  </div>
+  <x-import component-from-global-scope="Graphite.Modal" inline="{{yes}}" open="{{yes}}" size="fit" title="Review uploaded document" on-close="{{noop}}" primary-action="{{primary}}" secondary-action="{{secondary}}">
+    <div style="display: flex; flex-direction: column; gap: 16px; width: 552px; max-width: 100%">
+      <p class="body-small" style="margin: 0; color: var(--text-secondary)">Requested 18 Sep for A.5.9 · uploaded 25 Sep by Linh Tran</p>
+      <x-import component-from-global-scope="Graphite.DocumentItem" doc-type="Asset inventory" file-name="asset-inventory-2026.xlsx" date-label="Uploaded Sep 25, 2026" size="310 KB" status="completed" status-label="Scanned · clean" actions="{{viewActs}}"></x-import>
+      <div style="display: flex; flex-direction: column; gap: 4px; padding: 12px 16px; border-radius: var(--radius-md); background: var(--layer-01)">
+        <span class="body-small" style="color: var(--text-secondary)">Note from Linh Tran</span>
+        <span class="body-medium">Includes the Hsinchu data centre. Owners are in column F.</span>
+      </div>
+      <fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px">
+        <legend class="label-small" style="color: var(--text-secondary); margin-bottom: 4px">Decision <span class="gr-req">*</span></legend>
+        <x-import component-from-global-scope="Graphite.Radio" name="dec" label="Accept — closes the request and clears “Action required”" default-checked="{{yes}}"></x-import>
+        <x-import component-from-global-scope="Graphite.Radio" name="dec" label="Ask again — the customer gets your comment and a new due date"></x-import>
+      </fieldset>
+      <x-import component-from-global-scope="Graphite.Textarea" label="Comment (optional when accepting)" size="l" rows="{{two}}" placeholder="e.g. Thanks — owners are clear."></x-import>
+    </div>
+  </x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite, F = window.React.Fragment;
+
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' },
+      { id: 'asg', label: 'My assignments', icon: 'user--access', badge: 1, badgeTone: 'attention', badgeLabel: 'assignment in progress', children: [
+        { id: 'asg-gap', label: 'Gap Analysis', badge: 1, badgeTone: 'attention', badgeLabel: 'in progress' }, { id: 'asg-impl', label: 'Implementation Support' } ] },
+      { id: 'fw', label: 'Frameworks', icon: 'catalog' },
+      { id: 'settings', label: 'Settings', icon: 'settings' } ] }];
+    var extra = {};
+
+
+    extra.status = { status: 'under-review', label: 'In progress · waiting for 1 document', shortLabel: 'In progress' };
+    extra.hdr = h(F, null, h(G.Button, { variant: 'secondary', size: 'md' }, 'Request a document'), h(G.Button, { size: 'md' }, 'Submit final report'));
+    extra.pct = 36;
+    extra.viewActs = [{ type: 'view' }, { type: 'open' }]; extra.noActs = [];
+    extra.prio = [{ value: 'high', label: 'High' }, { value: 'medium', label: 'Medium' }, { value: 'low', label: 'Low' }];
+    extra.fw = { name: 'ISO/IEC 27001:2022', progress: extra.pct, caption: extra.pct === 100 ? 'All 116 requirements assessed' : '42 of 116 requirements assessed' };
+    extra.exp = ['a5'];
+    extra.groups = [
+      { id: 'c4', code: '4–10', title: 'Management system', progress: 100, children: [{ id: 'c4.1', code: '4.1', title: 'Context of the organization', status: 'met' }, { id: 'c6.1', code: '6.1.2', title: 'Information security risk assessment', status: 'partial' }] },
+      { id: 'a5', code: 'A.5', title: 'Organizational controls', progress: 32, children: [
+        { id: 'a5.1', code: 'A.5.1', title: 'Policies for information security', status: 'met' },
+        { id: 'a5.2', code: 'A.5.2', title: 'Roles and responsibilities', status: 'partial' },
+        { id: 'a5.3', code: 'A.5.3', title: 'Segregation of duties', status: 'met' },
+        { id: 'a5.7', code: 'A.5.7', title: 'Threat intelligence', status: 'notmet' },
+        { id: 'a5.9', code: 'A.5.9', title: 'Inventory of assets', status: 'notmet' },
+        { id: 'a5.10', code: 'A.5.10', title: 'Acceptable use of information' },
+        { id: 'a5.12', code: 'A.5.12', title: 'Classification of information' },
+        { id: 'a5.19', code: 'A.5.19', title: 'Supplier relationships' } ] },
+      { id: 'a6', code: 'A.6', title: 'People controls', progress: 50, children: [{ id: 'a6.1', code: 'A.6.1', title: 'Screening', status: 'met' }] },
+      { id: 'a7', code: 'A.7', title: 'Physical controls', progress: 21, children: [{ id: 'a7.1', code: 'A.7.1', title: 'Physical security perimeters', status: 'partial' }] },
+      { id: 'a8', code: 'A.8', title: 'Technological controls', progress: 0, children: [{ id: 'a8.1', code: 'A.8.1', title: 'User end point devices' }] } ];
+
+
+    extra.primary = { label: 'Confirm' }; extra.secondary = { label: 'Cancel' };
+    extra.status = { status: 'under-review', label: 'In progress · document received', shortLabel: 'In progress' };
+    return Object.assign({ yes: true, no: false, one: 1, two: 2, three: 3, s16: 16, nav: nav, noLinks: [], noop: function(){}, collapsed: true }, extra);
+  }
+}
+</script>
+</body>
+</html>

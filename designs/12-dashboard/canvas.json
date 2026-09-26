@@ -1,0 +1,98 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "AuditorHome.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "SGS Auditor/Certification · home",
+      "w": 1440,
+      "x": 1520,
+      "y": 1280
+    },
+    "ConsultantHome.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "SGS Consultant · home",
+      "w": 1440,
+      "x": 3040,
+      "y": 1280
+    },
+    "CustomerHomeEmpty.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Customer Admin · new customer",
+      "w": 1440,
+      "x": 3040,
+      "y": 0
+    },
+    "CustomerUserHome.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Customer User · home",
+      "w": 1440,
+      "x": 1520,
+      "y": 0
+    },
+    "Main.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Customer Admin · home",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "SgsAdminHome.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "SGS Admin / SGS User · home",
+      "w": 1440,
+      "x": 0,
+      "y": 1280
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-09-25T13:00:00Z",
+    "v": 1
+  },
+  "designSystems": [
+    {
+      "artifact": "https://claude.ai/artifact/CEneLQNFxsQuEaagfERSqo",
+      "copiedAt": "2026-09-25T13:00:00Z",
+      "namespace": "graphite",
+      "title": "Graphite DS",
+      "version": "1790347709-dd39"
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  },
+  "notes": {
+    "r0": {
+      "kind": "title1",
+      "maxW": 4480,
+      "text": "Customer Portal",
+      "w": 240,
+      "x": 0,
+      "y": -260
+    },
+    "r1": {
+      "kind": "title1",
+      "maxW": 4480,
+      "text": "SGS Operations",
+      "w": 240,
+      "x": 0,
+      "y": 1020
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "CustomerUserHome.dc.html",
+    "CustomerHomeEmpty.dc.html",
+    "SgsAdminHome.dc.html",
+    "AuditorHome.dc.html",
+    "ConsultantHome.dc.html"
+  ],
+  "pages": [],
+  "title": "DTP – Home dashboards"
+}

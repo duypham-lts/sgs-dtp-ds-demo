@@ -1,0 +1,196 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "Activate.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Activate · empty",
+      "w": 1440,
+      "x": 800,
+      "y": 2560
+    },
+    "ActivateExpired.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Link expired",
+      "w": 1440,
+      "x": 6880,
+      "y": 2560
+    },
+    "ActivateMismatch.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Activate · passwords don’t match",
+      "w": 1440,
+      "x": 3840,
+      "y": 2560
+    },
+    "ActivatePassword.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Activate · password rules",
+      "w": 1440,
+      "x": 2320,
+      "y": 2560
+    },
+    "ActivateSuccess.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Activated",
+      "w": 1440,
+      "x": 5360,
+      "y": 2560
+    },
+    "ActivateUsed.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Already activated",
+      "w": 1440,
+      "x": 8400,
+      "y": 2560
+    },
+    "CustomerLoginInactive.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Account deactivated",
+      "w": 1440,
+      "x": 4560,
+      "y": 0
+    },
+    "CustomerLoginLocked.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Locked after failed attempts",
+      "w": 1440,
+      "x": 3040,
+      "y": 0
+    },
+    "CustomerLoginWrongPassword.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Wrong email or password",
+      "w": 1440,
+      "x": 1520,
+      "y": 0
+    },
+    "InviteEmail.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Invitation email",
+      "w": 720,
+      "x": 0,
+      "y": 2560
+    },
+    "Main.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Default",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "SgsActivate.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "SGS account · activate",
+      "w": 1440,
+      "x": 9920,
+      "y": 2560
+    },
+    "SgsLogin.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Default",
+      "w": 1440,
+      "x": 0,
+      "y": 1280
+    },
+    "SgsLoginInactive.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Account deactivated",
+      "w": 1440,
+      "x": 4560,
+      "y": 1280
+    },
+    "SgsLoginLocked.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Locked after failed attempts",
+      "w": 1440,
+      "x": 3040,
+      "y": 1280
+    },
+    "SgsLoginWrongPassword.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Wrong email or password",
+      "w": 1440,
+      "x": 1520,
+      "y": 1280
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-09-24T18:00:00Z",
+    "v": 1
+  },
+  "designSystems": [
+    {
+      "artifact": "https://claude.ai/artifact/CEneLQNFxsQuEaagfERSqo",
+      "copiedAt": "2026-09-24T18:00:00Z",
+      "namespace": "graphite",
+      "title": "Graphite DS",
+      "version": "1790299590-4a2c"
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  },
+  "notes": {
+    "r0": {
+      "kind": "title1",
+      "maxW": 6000,
+      "text": "UC-AUTH-001 · Log in · Customer Portal",
+      "w": 240,
+      "x": 0,
+      "y": -260
+    },
+    "r1": {
+      "kind": "title1",
+      "maxW": 6000,
+      "text": "UC-AUTH-001 · Log in · SGS Operations",
+      "w": 240,
+      "x": 0,
+      "y": 1020
+    },
+    "r2": {
+      "kind": "title1",
+      "maxW": 8000,
+      "text": "Activate account from invitation",
+      "w": 240,
+      "x": 0,
+      "y": 2300
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "CustomerLoginWrongPassword.dc.html",
+    "CustomerLoginLocked.dc.html",
+    "CustomerLoginInactive.dc.html",
+    "SgsLogin.dc.html",
+    "SgsLoginWrongPassword.dc.html",
+    "SgsLoginLocked.dc.html",
+    "SgsLoginInactive.dc.html",
+    "InviteEmail.dc.html",
+    "Activate.dc.html",
+    "ActivatePassword.dc.html",
+    "ActivateMismatch.dc.html",
+    "ActivateSuccess.dc.html",
+    "ActivateExpired.dc.html",
+    "ActivateUsed.dc.html",
+    "SgsActivate.dc.html"
+  ],
+  "pages": [],
+  "title": "DTP – Authentication"
+}

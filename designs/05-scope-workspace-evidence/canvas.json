@@ -1,0 +1,179 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "AssignUsers.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Assign users",
+      "w": 1440,
+      "x": 6080,
+      "y": 0
+    },
+    "ChangeTier.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Change tier",
+      "w": 1440,
+      "x": 9120,
+      "y": 0
+    },
+    "ChangeTierLocked.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Change tier · locked during an audit",
+      "w": 1440,
+      "x": 10640,
+      "y": 0
+    },
+    "Documents.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Documents · all workspaces",
+      "w": 1440,
+      "x": 9120,
+      "y": 1280
+    },
+    "EvidenceDetail.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Evidence detail",
+      "w": 1440,
+      "x": 6080,
+      "y": 1280
+    },
+    "EvidenceLibrary.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Documents · opened from the workspace",
+      "w": 1440,
+      "x": 7600,
+      "y": 1280
+    },
+    "LinkEvidence.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Link existing evidence",
+      "w": 1440,
+      "x": 4560,
+      "y": 1280
+    },
+    "LinkFramework.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Link framework + tier",
+      "w": 1440,
+      "x": 7600,
+      "y": 0
+    },
+    "Main.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Scopes",
+      "w": 1440,
+      "x": 1520,
+      "y": 0
+    },
+    "ScopeCreate.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Create scope (System)",
+      "w": 1440,
+      "x": 3040,
+      "y": 0
+    },
+    "ScopeDetail.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Scope detail",
+      "w": 1440,
+      "x": 4560,
+      "y": 0
+    },
+    "ScopesEmpty.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Scopes · empty",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "UploadEvidence.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Upload evidence",
+      "w": 1440,
+      "x": 3040,
+      "y": 1280
+    },
+    "Workspace.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Workspace",
+      "w": 1440,
+      "x": 1520,
+      "y": 1280
+    },
+    "Workspaces.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Workspaces",
+      "w": 1440,
+      "x": 0,
+      "y": 1280
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-09-25T09:00:00Z",
+    "v": 1
+  },
+  "designSystems": [
+    {
+      "artifact": "https://claude.ai/artifact/CEneLQNFxsQuEaagfERSqo",
+      "copiedAt": "2026-09-25T09:00:00Z",
+      "namespace": "graphite",
+      "title": "Graphite DS",
+      "version": "1790312340-e7be"
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  },
+  "notes": {
+    "r0": {
+      "kind": "title1",
+      "maxW": 8000,
+      "text": "Customer Admin · Scopes",
+      "w": 240,
+      "x": 0,
+      "y": -260
+    },
+    "r1": {
+      "kind": "title1",
+      "maxW": 8000,
+      "text": "Customer User · Workspace & evidence",
+      "w": 240,
+      "x": 0,
+      "y": 1020
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "ScopesEmpty.dc.html",
+    "ScopeCreate.dc.html",
+    "ScopeDetail.dc.html",
+    "AssignUsers.dc.html",
+    "LinkFramework.dc.html",
+    "ChangeTier.dc.html",
+    "Workspaces.dc.html",
+    "Workspace.dc.html",
+    "UploadEvidence.dc.html",
+    "LinkEvidence.dc.html",
+    "EvidenceDetail.dc.html",
+    "EvidenceLibrary.dc.html",
+    "Documents.dc.html",
+    "ChangeTierLocked.dc.html"
+  ],
+  "pages": [],
+  "title": "DTP – Scope, Workspace & Evidence"
+}

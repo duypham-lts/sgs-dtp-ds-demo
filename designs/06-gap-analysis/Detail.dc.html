@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Gap Analysis – detail in progress</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;family=Noto+Sans+TC:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="customer" style="width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" site-name="Digital Trust Platform" site-sub="Customer Portal" user-name="Linh Tran" user-email="linh.tran@abc-trading.com" notifications="{{three}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" label="Customer Portal" sections="{{nav}}" default-active="sr-gap" default-collapsed="{{yes}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <x-import component-from-global-scope="Graphite.PageHeader" title="GA-2026-002 · ISO/IEC 27001" subtitle="Gap Analysis · Head office, Taipei" on-back="{{noop}}" status="{{status}}" actions="{{menu}}"></x-import>
+      <div style="flex-grow: 1; min-height: 0; display: grid; grid-template-columns: 14fr 62fr 21fr; gap: 20px">
+        <div style="min-width: 0; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02)">
+          <x-import component-from-global-scope="Graphite.SectionNav" label="Sections" items="{{sections}}" default-active="ov"></x-import>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; scroll-behavior: smooth; display: flex; flex-direction: column; gap: 20px">
+          <section id="sec-ov" class="gr-card" style="scroll-margin-top: 0">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">1</span><div><h2 class="gr-card__title">Overview</h2><p class="gr-card__sub">Request GA-2026-002 · submitted 02 Sep 2026</p></div></div></div>
+            <div style="display: flex; align-items: center; gap: 32px">
+              <x-import component-from-global-scope="Graphite.ReadinessRing" value="{{ready}}" label="Baseline readiness" caption="From the workspace, before assessment"></x-import>
+              <dl style="flex-grow: 1; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 24px">
+                <div><dt class="body-small" style="color: var(--text-secondary)">Framework</dt><dd class="body-medium" style="margin: 0">ISO/IEC 27001:2022</dd></div>
+                <div><dt class="body-small" style="color: var(--text-secondary)">Scope</dt><dd class="body-medium" style="margin: 0">Head office · Taipei (3 sites)</dd></div>
+                <div><dt class="body-small" style="color: var(--text-secondary)">Delivery</dt><dd class="body-medium" style="margin: 0">On site · 14 – 18 Sep 2026</dd></div>
+                <div><dt class="body-small" style="color: var(--text-secondary)">Goal</dt><dd class="body-medium" style="margin: 0">Certify the head office by Q2 2027</dd></div>
+              </dl>
+            </div>
+          </section>
+          <section id="sec-doc" class="gr-card" style="scroll-margin-top: 0">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">2</span><div><h2 class="gr-card__title">Documents</h2><p class="gr-card__sub">Files you shared and files from SGS</p></div></div></div>
+            <x-import component-from-global-scope="Graphite.DocumentItem" variant="actions-required" doc-type="Asset inventory" status="missing-info" status-label="Missing Info" accordion-label="Requested for A.5.9" actions="{{upload}}"><span class="body-small">Requested by Anna Lee during the on-site visit (18 Sep). List hardware, software and information assets in scope.</span></x-import>
+            <x-import component-from-global-scope="Graphite.DocumentItem" variant="sgs" doc-type="On-site visit agenda" file-name="GA-2026-002-agenda.pdf" date-label="Shared Sep 08, 2026" size="220 KB" actions="{{sgsActs}}"></x-import>
+            <x-import component-from-global-scope="Graphite.DocumentItem" doc-type="Information security policy" file-name="isms-policy-v3.pdf" date-label="Uploaded Sep 02, 2026" size="2.4 MB" status="completed" actions="{{viewActs}}"></x-import>
+            <x-import component-from-global-scope="Graphite.DocumentItem" doc-type="Organisation chart" file-name="org-chart-2026.pdf" date-label="Uploaded Sep 02, 2026" size="842 KB" status="completed" actions="{{viewActs}}"></x-import>
+          </section>
+          <section id="sec-res" class="gr-card" style="scroll-margin-top: 0">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">3</span><div><h2 class="gr-card__title">Results</h2><p class="gr-card__sub">Filled in when SGS delivers the report</p></div></div></div>
+            <x-import component-from-global-scope="Graphite.EmptyState" size="sm" icon="document" title="Assessment in progress" body="The on-site visit is done. Results by clause and the final report appear here when Anna Lee issues them."></x-import>
+          </section>
+          <section id="sec-hist" class="gr-card gr-card--extend" style="scroll-margin-top: 0">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">4</span><div><h2 class="gr-card__title">History</h2><p class="gr-card__sub">Everything that happened on this request, oldest first</p></div></div></div>
+            <ol style="list-style: none; margin: 0; padding: 0">
+              <li style="position: relative; display: flex; gap: 16px; padding-bottom: 16px">
+                <span aria-hidden="true" style="position: absolute; left: 5px; top: 20px; bottom: -4px; width: 2px; background: var(--border-subtle-01)"></span><span aria-hidden="true" style="position: relative; flex-shrink: 0; width: 12px; height: 12px; margin-top: 4px; border-radius: 50%; background: var(--support-success)"></span>
+                <span style="display: flex; flex-direction: column"><span class="body-medium" style="font-weight: 500">Request submitted</span><span class="body-small" style="color: var(--text-secondary)">02 Sep 2026 · Linh Tran</span></span>
+              </li>
+              <li style="position: relative; display: flex; gap: 16px; padding-bottom: 16px">
+                <span aria-hidden="true" style="position: absolute; left: 5px; top: 20px; bottom: -4px; width: 2px; background: var(--border-subtle-01)"></span><span aria-hidden="true" style="position: relative; flex-shrink: 0; width: 12px; height: 12px; margin-top: 4px; border-radius: 50%; background: var(--support-success)"></span>
+                <span style="display: flex; flex-direction: column"><span class="body-medium" style="font-weight: 500">Approved and scheduled</span><span class="body-small" style="color: var(--text-secondary)">05 Sep 2026 · SGS admin · consultant Anna Lee, on site 14 – 18 Sep</span></span>
+              </li>
+              <li style="position: relative; display: flex; gap: 16px; padding-bottom: 16px">
+                <span aria-hidden="true" style="position: absolute; left: 5px; top: 20px; bottom: -4px; width: 2px; background: var(--border-subtle-01)"></span><span aria-hidden="true" style="position: relative; flex-shrink: 0; width: 12px; height: 12px; margin-top: 4px; border-radius: 50%; background: var(--support-success)"></span>
+                <span style="display: flex; flex-direction: column"><span class="body-medium" style="font-weight: 500">In progress · consultant access started</span><span class="body-small" style="color: var(--text-secondary)">11 Sep 2026 · automatic, 3 days before the visit</span></span>
+              </li>
+              <li style="position: relative; display: flex; gap: 16px; padding-bottom: 16px">
+                <span aria-hidden="true" style="position: absolute; left: 5px; top: 20px; bottom: -4px; width: 2px; background: var(--border-subtle-01)"></span><span aria-hidden="true" style="position: relative; flex-shrink: 0; width: 12px; height: 12px; margin-top: 4px; border-radius: 50%; background: var(--support-success)"></span>
+                <span style="display: flex; flex-direction: column"><span class="body-medium" style="font-weight: 500">On-site visit</span><span class="body-small" style="color: var(--text-secondary)">14 – 18 Sep 2026 · Taipei HQ, Hsinchu data centre</span></span>
+              </li>
+              <li style="position: relative; display: flex; gap: 16px; padding-bottom: 16px">
+                <span aria-hidden="true" style="position: absolute; left: 5px; top: 20px; bottom: -4px; width: 2px; background: var(--border-subtle-01)"></span><span aria-hidden="true" style="position: relative; flex-shrink: 0; width: 12px; height: 12px; margin-top: 4px; border-radius: 50%; background: var(--brand-orange)"></span>
+                <span style="display: flex; flex-direction: column"><span class="body-medium" style="font-weight: 500">Document requested: Asset inventory</span><span class="body-small" style="color: var(--text-secondary)">18 Sep 2026 · Anna Lee</span></span>
+              </li>
+              <li style="position: relative; display: flex; gap: 16px; padding-bottom: 0px">
+                <span aria-hidden="true" style="position: relative; flex-shrink: 0; width: 12px; height: 12px; margin-top: 4px; border-radius: 50%; background: var(--border-strong)"></span>
+                <span style="display: flex; flex-direction: column"><span class="body-medium" style="font-weight: 500">Completed when the final report is submitted</span><span class="body-small" style="color: var(--text-secondary)">Planned · [TARGET DATE]</span></span>
+              </li>
+            </ol>
+          </section>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02); display: flex; flex-direction: column; gap: 16px">
+          <div class="title-medium">SGS Requests &amp; Communications</div>
+          <x-import component-from-global-scope="Graphite.InlineNotification" kind="warning" title="Requested by SGS" items="{{req}}">Upload in Documents. Due 27 Sep 2026.</x-import>
+          <div style="display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: var(--radius-md); background: var(--layer-01)">
+            <span class="title-small">Your SGS consultant</span>
+            <div style="display: flex; align-items: center; gap: 12px">
+              <x-import component-from-global-scope="Graphite.Avatar" name="Anna Lee" size="lg"></x-import>
+              <div style="display: flex; flex-direction: column"><span class="body-medium" style="font-weight: 500">Anna Lee</span><span class="body-small" style="color: var(--text-secondary)">Lead consultant · ISMS</span></div>
+            </div>
+            <div class="body-small" style="display: flex; flex-direction: column; gap: 4px">
+              <x-import component-from-global-scope="Graphite.Link" href="mailto:anna.lee@sgs.com">anna.lee@sgs.com</x-import>
+              <span style="color: var(--text-secondary)">[CONSULTANT PHONE]</span>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: var(--radius-md); background: var(--layer-01)">
+            <span class="title-small">Need help?</span>
+            <span class="body-small" style="color: var(--text-secondary)">Questions about this request go to your consultant. For access or account problems, contact SGS support.</span>
+            <div><x-import component-from-global-scope="Graphite.Button" variant="tertiary" size="sm">Contact support</x-import></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite;
+
+    var SR = { id: 'sr', label: 'Service Requests', icon: 'task', badge: 1, badgeTone: 'attention', badgeLabel: 'request needs action', children: [
+      { id: 'sr-all', label: 'All requests' }, { id: 'sr-cert', label: 'Certification Services' }, { id: 'sr-train', label: 'Training Courses' },
+      { type: 'label', label: 'Other services' }, { id: 'sr-gap', label: 'Gap Analysis', badge: 1, badgeTone: 'attention', badgeLabel: 'needs action' }, { id: 'sr-impl', label: 'Implementation Support' } ] };
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' }, { id: 'scopes', label: 'Scopes', icon: 'category' }, { id: 'ws', label: 'Workspaces', icon: 'folders' },
+      { id: 'docs', label: 'Documents', icon: 'document--multiple-01' }, SR, { id: 'training', label: 'Training', icon: 'education' },
+      { id: 'audit', label: 'Audit Logs', icon: 'catalog' }, { id: 'settings', label: 'Settings', icon: 'settings' } ] },
+      { label: 'Administration', items: [{ id: 'users', label: 'Users', icon: 'user--multiple' }, { id: 'access', label: 'Workspace access', icon: 'user--access' }] }];
+
+    var extra = { noop: function(){}, ready: 64,
+      menu: h(G.OverflowMenu, { size: 'md', label: 'Request actions', items: [{ label: 'Download summary (PDF)' }, { label: 'Withdraw request', danger: true }] }),
+      sgsActs: [{ type: 'open' }, { type: 'download' }], upload: [{ type: 'upload' }], viewActs: [{ type: 'view' }, { type: 'open' }] };
+    extra.status = { status: 'missing-info', label: 'In progress · Action required', shortLabel: 'Action required' };
+    extra.sections = [{ id: 'ov', label: 'Overview', status: 'complete', href: '#sec-ov' }, { id: 'doc', label: 'Documents', status: 'incomplete', href: '#sec-doc' }, { id: 'res', label: 'Results', href: '#sec-res' }, { id: 'hist', label: 'History', href: '#sec-hist' }];
+    extra.req = ['Asset inventory (A.5.9)'];
+    return Object.assign({ yes: true, no: false, three: 3, nav: nav }, typeof extra === 'object' ? extra : {});
+  }
+}
+</script>
+</body>
+</html>

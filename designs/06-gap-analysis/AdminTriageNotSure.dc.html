@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SGS Admin – triage “not sure” request</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="sgs-ops" style="position: relative; width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" tone="dark" site-name="Digital Trust Platform" site-sub="Operations Console" badge="Internal" home-links="{{noLinks}}" user-name="Minh Nguyen" user-email="minh.nguyen@sgs.com" notifications="{{three}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" tone="dark" label="SGS Operations" sections="{{nav}}" default-active="req-gap" default-collapsed="{{collapsed}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <x-import component-from-global-scope="Graphite.PageHeader" title="GA-2026-008 · Framework to be advised" subtitle="Gap Analysis · Riyadh Imports LLC · submitted 24 Sep 2026" on-back="{{noop}}" status="{{status}}" actions="{{hdrActions}}"></x-import>
+      <div style="flex-grow: 1; min-height: 0; display: grid; grid-template-columns: 14fr 62fr 21fr; gap: 20px">
+        <div style="min-width: 0; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02)">
+          <x-import component-from-global-scope="Graphite.SectionNav" label="Sections" items="{{sections}}" default-active="set"></x-import>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 20px">
+          <section class="gr-card">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">1</span><div><h2 class="gr-card__title">What the customer needs</h2><p class="gr-card__sub">The customer chose “Not sure — let SGS advise”</p></div></div></div>
+            <dl style="margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px 24px"><div><dt class="body-small" style="color: var(--text-secondary)">Customer</dt><dd class="body-medium" style="margin: 0">Riyadh Imports LLC</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">Contact</dt><dd class="body-medium" style="margin: 0">Omar Haddad · IT director</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">Delivery</dt><dd class="body-medium" style="margin: 0">Remote or on site</dd></div><div style="grid-column: 1 / -1"><dt class="body-small" style="color: var(--text-secondary)">Their description</dt><dd class="body-medium" style="margin: 0">We import medical devices into Saudi Arabia and our hospital clients now ask for proof that we protect patient and device data. We don’t know which standard fits.</dd></div></dl>
+          </section>
+          <section class="gr-card">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">2</span><div><h2 class="gr-card__title">Set framework and scope</h2><p class="gr-card__sub">Required before you can approve</p></div></div></div>
+            <div style="display: flex; flex-direction: column; gap: 16px">
+              <x-import component-from-global-scope="Graphite.Select" label="Framework" required="{{yes}}" size="m" default-value="27001" options="{{fws}}" help-text="The customer is told which framework you chose and why."></x-import>
+              <fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px">
+                <legend class="label-small" style="color: var(--text-secondary); margin-bottom: 4px">Scope <span class="gr-req">*</span></legend>
+                <x-import component-from-global-scope="Graphite.Radio" name="sc" label="Use an existing scope of this customer" default-checked="{{yes}}"></x-import>
+                <x-import component-from-global-scope="Graphite.Radio" name="sc" label="Create a new scope for the customer (their admin is notified)"></x-import>
+              </fieldset>
+              <x-import component-from-global-scope="Graphite.Combobox" label="Existing scope" required="{{yes}}" size="m" default-value="ho" options="{{scopes}}"></x-import>
+              <x-import component-from-global-scope="Graphite.Textarea" label="Why this framework (shown to the customer)" required="{{yes}}" size="l" rows="{{two}}" default-value="ISO/IEC 27001 is the baseline your hospital clients recognise. We can add ISO/IEC 27701 for patient data later."></x-import>
+            </div>
+          </section>
+          <section class="gr-card gr-card--extend">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">3</span><div><h2 class="gr-card__title">Workspace</h2><p class="gr-card__sub">Checked after you set framework and scope</p></div></div></div>
+            <x-import component-from-global-scope="Graphite.InlineNotification" kind="info" title="No workspace yet for ISO/IEC 27001 · Head office">Approving creates it and activates ISO/IEC 27001 for this scope. The customer has already consented to consultant access.</x-import>
+          </section>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02); display: flex; flex-direction: column; gap: 16px">
+          <div class="title-medium">Triage</div>
+          <div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: var(--radius-md); background: var(--layer-01)">
+            <span class="title-small">Automatic checks</span>
+            <ul class="body-small" style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px"><li style="display: flex; gap: 8px; align-items: flex-start"><span style="display: flex; color: var(--support-success)"><x-import component-from-global-scope="Graphite.Icon" name="checkmark--filled" size="{{s16}}"></x-import></span><span>Framework set</span></li><li style="display: flex; gap: 8px; align-items: flex-start"><span style="display: flex; color: var(--support-success)"><x-import component-from-global-scope="Graphite.Icon" name="checkmark--filled" size="{{s16}}"></x-import></span><span>Scope set</span></li><li style="display: flex; gap: 8px; align-items: flex-start"><span style="display: flex; color: var(--support-success)"><x-import component-from-global-scope="Graphite.Icon" name="checkmark--filled" size="{{s16}}"></x-import></span><span>No open gap analysis for this scope and framework</span></li><li style="display: flex; gap: 8px; align-items: flex-start"><span style="display: flex; color: var(--support-info)"><x-import component-from-global-scope="Graphite.Icon" name="information--filled" size="{{s16}}"></x-import></span><span>Workspace will be created on approval</span></li></ul>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: var(--radius-md); background: var(--layer-01)">
+            <span class="title-small">Waiting time</span>
+            <span class="headline-small">Today</span><span class="body-small" style="color: var(--text-secondary)">Triage target: [TRIAGE SLA]</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite, F = window.React.Fragment;
+
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' },
+      { id: 'req', label: 'Requests', icon: 'task', badge: 3, badgeTone: 'attention', badgeLabel: 'requests need triage', children: [
+        { id: 'req-all', label: 'All requests' }, { id: 'req-cert', label: 'Certification' }, { id: 'req-train', label: 'Training' },
+        { type: 'label', label: 'Other services' }, { id: 'req-gap', label: 'Gap Analysis', badge: 3, badgeTone: 'attention', badgeLabel: 'need triage' }, { id: 'req-impl', label: 'Implementation Support' } ] },
+      { id: 'cust', label: 'Customers', icon: 'user--multiple' },
+      { id: 'fw', label: 'Frameworks', icon: 'catalog' },
+      { id: 'asg', label: 'Assignments', icon: 'user--access' },
+      { id: 'audit', label: 'Audit Logs', icon: 'document' },
+      { id: 'settings', label: 'Settings', icon: 'settings' } ] }];
+    var extra = {};
+
+    extra.status = { status: 'under-review', label: 'Submitted · SGS to advise', shortLabel: 'Submitted' };
+    extra.hdrActions = h(F, null, h(G.Button, { variant: 'tertiary', size: 'md' }, 'Reject'), h(G.Button, { size: 'md' }, 'Approve & assign'));
+    extra.sections = [{ id: 'need', label: 'Customer need', status: 'complete' }, { id: 'set', label: 'Framework & scope', status: 'complete' }, { id: 'ws', label: 'Workspace' }];
+    extra.s16 = 16; extra.two = 2;
+    extra.fws = [{ value: '27001', label: 'ISO/IEC 27001' }, { value: '27701', label: 'ISO/IEC 27701' }, { value: 'nist', label: 'NIST CSF' }, { value: '42001', label: 'ISO/IEC 42001' }];
+    extra.scopes = [{ value: 'ho', label: 'Head office · Riyadh', description: 'Organisation scope' }, { value: 'wh', label: 'Warehouse · Jeddah', description: 'Site scope' }];
+    return Object.assign({ yes: true, no: false, three: 3, nav: nav, noLinks: [], noop: function(){}, collapsed: false }, extra);
+  }
+}
+</script>
+</body>
+</html>

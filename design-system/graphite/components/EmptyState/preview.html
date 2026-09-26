@@ -1,0 +1,20 @@
+<!-- @dsCard group="Feedback" height=300 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>EmptyState — preview</title></head>
+<body style="margin:0">
+<div id="root"></div>
+<script>
+  var G = window.Graphite, h = React.createElement;
+  function row(){ return h.apply(null, ['div', { className: 'gr-demo__row', style: { alignItems: 'flex-start' } }].concat([].slice.call(arguments))); }
+  function cap(t){ return h('div', { className: 'gr-demo__cap' }, t); }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'gr-demo' },
+      h(G.EmptyState, { icon: 'folder', title: 'No evidence yet', body: 'Upload documents that show how you meet this requirement. SGS reviewers see them once you submit.', action: h(G.Button, { size: 'md', icon: 'upload', iconPosition: 'left' }, 'Upload evidence') }),
+      h(G.EmptyState, { size: 'sm', title: 'No comments', body: 'Messages from your SGS reviewer appear here.' })
+    )
+  );
+</script>
+</body>
+</html>

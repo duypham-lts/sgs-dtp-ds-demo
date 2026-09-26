@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Customer – review with an overdue item</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;family=Noto+Sans+TC:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="customer" style="width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" site-name="Digital Trust Platform" site-sub="Customer Portal" user-name="Wei Chen" user-email="wei.chen@abc-trading.com" notifications="{{three}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" label="Customer Portal" sections="{{nav}}" default-active="reviews" default-collapsed="{{no}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <div style="padding: 8px 8px 4px">
+        <x-import component-from-global-scope="Graphite.Breadcrumb" items="{{crumbs}}"></x-import>
+        <h1 class="headline-medium" style="margin: 8px 0 0 0">Audit review · Appendix 10 · 2022</h1>
+        <p class="body-medium" style="margin: 0; color: var(--text-secondary)">Customer data platform · CR-2026-015 · auditor David Wu · started 10 Nov 2026</p>
+      </div>
+            <x-import component-from-global-scope="Graphite.InlineNotification" kind="error" title="1 response is overdue">R.1.1.4 was due on 25 Nov 2026. Respond as soon as you can, or contact David Wu if you need more time. Open items delay the certificate.</x-import>
+      <section class="gr-card gr-card--extend" style="padding: 16px 24px"><x-import component-from-global-scope="Graphite.DataTable" title="3 need your response" description="Findings and clarification requests from this audit review only." columns="{{cols}}" rows="{{rows}}" layout="table" paginate="{{no}}"></x-import></section>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite;
+
+    var SR = { id: 'sr', label: 'Service Requests', icon: 'task', badge: 1, badgeTone: 'attention', badgeLabel: 'request needs action', children: [
+      { id: 'sr-all', label: 'All requests' }, { id: 'sr-cert', label: 'Certification Services' }, { id: 'sr-train', label: 'Training Courses' },
+      { type: 'label', label: 'Other services' }, { id: 'sr-gap', label: 'Gap Analysis', badge: 1, badgeTone: 'attention', badgeLabel: 'needs action' }, { id: 'sr-impl', label: 'Implementation Support' } ] };
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' }, { id: 'scopes', label: 'Scopes', icon: 'category' }, { id: 'ws', label: 'Workspaces', icon: 'folders' },
+      { id: 'docs', label: 'Documents', icon: 'document--multiple-01' }, { id: 'reviews', label: 'Reviews', icon: 'view', badge: 3, badgeTone: 'attention', badgeLabel: 'items need your response' }, SR, { id: 'certs', label: 'Certifications', icon: 'checkmark' }, { id: 'training', label: 'Training', icon: 'education' },
+      { id: 'audit', label: 'Audit Logs', icon: 'catalog' }, { id: 'settings', label: 'Settings', icon: 'settings' } ] }];
+
+    var extra = { noop: function(){}, crumbs: [{ label: 'Reviews', href: 'Reviews.dc.html' }, { label: 'Audit review · CR-2026-015' }] };
+    var TY = { clar: ['needs-description', 'Clarification'], min: ['missing-info', 'Minor nonconformity'], maj: ['missing-info', 'Major nonconformity'], obs: ['info', 'Observation'] };
+    function act(r){ return r.done ? h(G.StatusTag, { status: 'under-review', size: 'sm', label: 'Response sent' }) : r.t === 'obs' ? h('span', { className: 'body-small', style: { color: 'var(--text-secondary)' } }, 'No response needed') : h(G.Button, { size: 'sm', variant: r.t === 'clar' ? 'tertiary' : 'primary' }, r.t === 'clar' ? 'Respond' : 'Submit corrective action'); }
+    extra.cols = [
+      { key: 'req', header: 'Requirement', render: function(r){ return h('span', { style: { display: 'flex', flexDirection: 'column' } }, h('span', { style: { fontWeight: 500 } }, r.req), h('span', { className: 'body-small', style: { color: 'var(--text-secondary)' } }, r.title)); } },
+      { key: 't', header: 'Type', width: 190, render: function(r){ return h(G.StatusTag, { status: TY[r.t][0], size: 'sm', label: TY[r.t][1] }); } },
+      { key: 'msg', header: 'From the auditor' },
+      { key: 'due', header: 'Due', width: 130, render: function(r){ return r.over ? h(G.Tag, { tone: 'required' }, r.due + ' · overdue') : r.due; } },
+      { key: 'a', header: '', align: 'end', width: 220, render: act } ];
+    extra.rows = [
+      { id: 1, req: 'R.1.1.4', title: 'Periodically review account lifecycle', t: 'clar', msg: 'Please add the Q3 account review minutes; only Q1 and Q2 are in the workspace.', due: '25 Nov 2026', over: true },
+      { id: 2, req: 'R.3.1.3', title: 'Test backup reliability and integrity', t: 'min', msg: 'No record of a restore test in the last 12 months.', due: '15 Dec 2026' },
+      { id: 3, req: 'R.4.1.2', title: 'Multi-factor authentication', t: 'maj', msg: 'MFA is not enforced for administrator access to the CRM database.', due: '10 Dec 2026' },
+      { id: 4, req: 'R.2.6.2', title: 'Integrity of logs', t: 'obs', msg: 'Consider hashing exported logs; not required for this tier.', due: '—' },
+      { id: 5, req: 'R.5.3.4', title: 'Source code scanning', t: 'clar', msg: 'Which tool produced the scan report?', due: '15 Nov 2026', done: true } ];
+    return Object.assign({ yes: true, no: false, three: 3, nav: nav }, typeof extra === 'object' ? extra : {});
+  }
+}
+</script>
+</body>
+</html>

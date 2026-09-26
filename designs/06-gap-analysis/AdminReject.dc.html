@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SGS Admin – reject request</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="sgs-ops" style="position: relative; width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" tone="dark" site-name="Digital Trust Platform" site-sub="Operations Console" badge="Internal" home-links="{{noLinks}}" user-name="Minh Nguyen" user-email="minh.nguyen@sgs.com" notifications="{{three}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" tone="dark" label="SGS Operations" sections="{{nav}}" default-active="req-gap" default-collapsed="{{collapsed}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <x-import component-from-global-scope="Graphite.PageHeader" title="GA-2026-005 · ISO/IEC 27701" subtitle="Gap Analysis · ABC Trading Co., Ltd. · submitted 21 Sep 2026" on-back="{{noop}}" status="{{status}}" actions="{{hdrActions}}"></x-import>
+      <div style="flex-grow: 1; min-height: 0; display: grid; grid-template-columns: 14fr 62fr 21fr; gap: 20px">
+        <div style="min-width: 0; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02)">
+          <x-import component-from-global-scope="Graphite.SectionNav" label="Sections" items="{{sections}}" default-active="rq"></x-import>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 20px">
+          <section class="gr-card">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">1</span><div><h2 class="gr-card__title">Request</h2><p class="gr-card__sub">What the customer asked for</p></div></div></div>
+            <dl style="margin: 0; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px 24px">
+              <div><dt class="body-small" style="color: var(--text-secondary)">Framework</dt><dd class="body-medium" style="margin: 0">ISO/IEC 27701:2019</dd></div>
+              <div><dt class="body-small" style="color: var(--text-secondary)">Scope</dt><dd class="body-medium" style="margin: 0">Customer data platform (product scope)</dd></div>
+              <div><dt class="body-small" style="color: var(--text-secondary)">Delivery</dt><dd class="body-medium" style="margin: 0">On site · Taipei HQ</dd></div>
+              <div><dt class="body-small" style="color: var(--text-secondary)">Earliest start</dt><dd class="body-medium" style="margin: 0">12 Oct 2026</dd></div>
+              <div><dt class="body-small" style="color: var(--text-secondary)">Target certification</dt><dd class="body-medium" style="margin: 0">Q1 2027</dd></div>
+              <div><dt class="body-small" style="color: var(--text-secondary)">Contact</dt><dd class="body-medium" style="margin: 0">Linh Tran · Compliance lead</dd></div>
+              <div style="grid-column: 1 / -1"><dt class="body-small" style="color: var(--text-secondary)">Goal</dt><dd class="body-medium" style="margin: 0">We process personal data for 3 retail brands and want to know what is missing before we certify. Main worry: data retention and processor contracts.</dd></div>
+            </dl>
+          </section>
+          <section class="gr-card">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">2</span><div><h2 class="gr-card__title">Workspace</h2><p class="gr-card__sub">Where the consultant will work</p></div></div></div>
+            <div style="display: flex; align-items: center; gap: 24px">
+              <x-import component-from-global-scope="Graphite.ReadinessRing" value="{{ready}}" label="ISO/IEC 27701 · Customer data platform" caption="15 of 40 requirements have accepted evidence"></x-import>
+              <div style="margin-left: auto; display: flex; gap: 8px"><x-import component-from-global-scope="Graphite.Tag" tone="neutral">Linked automatically</x-import><x-import component-from-global-scope="Graphite.Tag" tone="info">Consent given 21 Sep</x-import></div>
+            </div>
+          </section>
+          <section class="gr-card gr-card--extend">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">3</span><div><h2 class="gr-card__title">Documents</h2><p class="gr-card__sub">Shared by the customer with the request</p></div></div></div>
+            <x-import component-from-global-scope="Graphite.DocumentItem" doc-type="Record of processing activities" file-name="ropa-2026.xlsx" date-label="Uploaded Sep 21, 2026" size="640 KB" status="completed" actions="{{viewActs}}"></x-import>
+            <x-import component-from-global-scope="Graphite.DocumentItem" doc-type="Privacy policy" file-name="privacy-policy-v2.pdf" date-label="Uploaded Sep 21, 2026" size="1.1 MB" status="completed" actions="{{viewActs}}"></x-import>
+          </section>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02); display: flex; flex-direction: column; gap: 16px">
+          <div class="title-medium">Triage</div>
+          <div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: var(--radius-md); background: var(--layer-01)">
+            <span class="title-small">Automatic checks</span>
+            <ul class="body-small" style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px">
+              <li style="display: flex; gap: 8px; align-items: flex-start"><x-import component-from-global-scope="Graphite.Icon" name="checkmark--filled" size="{{s16}}" class-name="gr-snav__ok"></x-import><span>No other open gap analysis for this scope and framework</span></li>
+              <li style="display: flex; gap: 8px; align-items: flex-start"><x-import component-from-global-scope="Graphite.Icon" name="checkmark--filled" size="{{s16}}" class-name="gr-snav__ok"></x-import><span>Workspace exists and consultant access was consented</span></li>
+              <li style="display: flex; gap: 8px; align-items: flex-start"><span style="display: flex; color: var(--support-info)"><x-import component-from-global-scope="Graphite.Icon" name="information--filled" size="{{s16}}"></x-import></span><span>Commercial agreement is handled outside the platform — confirm before approving</span></li>
+            </ul>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 4px; padding: 16px; border-radius: var(--radius-md); background: var(--layer-01)">
+            <span class="title-small">Waiting time</span>
+            <span class="headline-small">3 days</span>
+            <span class="body-small" style="color: var(--text-secondary)">Triage target: [TRIAGE SLA]</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: var(--radius-md); background: var(--layer-01)">
+            <span class="title-small">Customer</span>
+            <span class="body-medium">ABC Trading Co., Ltd.</span>
+            <span class="body-small" style="color: var(--text-secondary)">SGS Taiwan · tenant since Mar 2025 · 2 active scopes</span>
+            <span class="body-small">Customer admin: <x-import component-from-global-scope="Graphite.Link" href="mailto:linh.tran@abc-trading.com" inline="{{yes}}">Linh Tran</x-import></span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <x-import component-from-global-scope="Graphite.Modal" inline="{{yes}}" open="{{yes}}" size="fit" danger="{{yes}}" title="Reject this request?" on-close="{{closeModal}}" primary-action="{{primary}}" secondary-action="{{secondary}}">
+    <div style="display: flex; flex-direction: column; gap: 16px; width: 552px; max-width: 100%">
+      <p class="body-medium" style="margin: 0; color: var(--text-secondary)">GA-2026-005 moves to Rejected. The customer sees the reason and your message.</p>
+      <x-import component-from-global-scope="Graphite.Select" label="Reason" width="552px" required="{{yes}}" placeholder="Select a reason" options="{{reasons}}" default-value="scope"></x-import>
+      <x-import component-from-global-scope="Graphite.Textarea" label="Message to the customer" required="{{yes}}" size="l" rows="{{three}}" default-value="The product scope described does not process personal data in Taiwan yet. We suggest requesting the gap analysis once the platform goes live, or starting with an ISO/IEC 27001 gap analysis." help-text="Shown to the customer. Be specific about what they can do next."></x-import>
+      <x-import component-from-global-scope="Graphite.Textarea" label="Internal note (optional)" size="l" rows="{{two}}" placeholder="Only visible to SGS"></x-import>
+    </div>
+  </x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite, F = window.React.Fragment;
+
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' },
+      { id: 'req', label: 'Requests', icon: 'task', badge: 3, badgeTone: 'attention', badgeLabel: 'requests need triage', children: [
+        { id: 'req-all', label: 'All requests' }, { id: 'req-cert', label: 'Certification' }, { id: 'req-train', label: 'Training' },
+        { type: 'label', label: 'Other services' }, { id: 'req-gap', label: 'Gap Analysis', badge: 3, badgeTone: 'attention', badgeLabel: 'need triage' }, { id: 'req-impl', label: 'Implementation Support' } ] },
+      { id: 'cust', label: 'Customers', icon: 'user--multiple' },
+      { id: 'fw', label: 'Frameworks', icon: 'catalog' },
+      { id: 'asg', label: 'Assignments', icon: 'user--access' },
+      { id: 'audit', label: 'Audit Logs', icon: 'document' },
+      { id: 'settings', label: 'Settings', icon: 'settings' } ] }];
+    var extra = {};
+
+    extra.status = { status: 'under-review', label: 'Submitted · needs triage', shortLabel: 'Submitted' };
+    extra.hdrActions = h(F, null, h(G.Button, { variant: 'tertiary', size: 'md' }, 'Reject'), h(G.Button, { size: 'md' }, 'Approve & assign'));
+    extra.sections = [{ id: 'rq', label: 'Request', status: 'complete' }, { id: 'ws', label: 'Workspace', status: 'complete' }, { id: 'doc', label: 'Documents' }, { id: 'hist', label: 'History' }];
+    extra.ready = 38; extra.s16 = 16;
+    extra.viewActs = [{ type: 'view' }, { type: 'open' }];
+    extra.two = 2;
+    extra.reasons = [{ value: 'scope', label: 'Scope not ready or unclear' }, { value: 'dup', label: 'Duplicate of an open request' }, { value: 'fw', label: 'Framework not offered by this affiliate' }, { value: 'commercial', label: 'No commercial agreement' }, { value: 'other', label: 'Other' }];
+    extra.closeModal = function(){};
+    extra.primary = { label: 'Reject request' };
+    extra.secondary = { label: 'Cancel' };
+    return Object.assign({ yes: true, no: false, three: 3, nav: nav, noLinks: [], noop: function(){}, collapsed: false }, extra);
+  }
+}
+</script>
+</body>
+</html>

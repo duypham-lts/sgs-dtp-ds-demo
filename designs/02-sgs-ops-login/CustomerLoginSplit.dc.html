@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Customer Portal – Sign in (split)</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;family=Noto+Sans+TC:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="customer" style="width: 1440px; height: 900px; display: flex; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--layer-02)">
+  <div aria-hidden="true" style="position: relative; width: 720px; height: 900px; flex-shrink: 0; overflow: hidden; background: linear-gradient(140deg, var(--brand-orange) 0%, #E0662C 45%, var(--brand-peach) 100%)">
+    <div style="position: absolute; left: -40px; top: 120px; width: 900px; height: 900px; transform: rotate(-8deg); transform-origin: 0 0">
+      <div style="position: absolute; box-sizing: border-box; padding: 24px; border-radius: var(--radius-card); background: var(--layer-02); box-shadow: 0 24px 48px rgba(31,44,50,0.22); display: flex; flex-direction: column; gap: 12px; left: 60px; top: 40px; width: 340px">
+        <div style="display: flex; align-items: center; justify-content: space-between"><span class="title-small">Readiness</span><x-import component-from-global-scope="Graphite.Tag" tone="neutral">ISO/IEC 27001</x-import></div>
+        <div style="display: flex; align-items: center; gap: 20px"><svg width="80" height="80" viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="32" fill="none" style="stroke: var(--border-subtle-00)" stroke-width="8"></circle><circle cx="40" cy="40" r="32" fill="none" style="stroke: var(--support-success)" stroke-width="8" stroke-linecap="round" stroke-dasharray="164.9 201.1" transform="rotate(-90 40 40)"></circle></svg><div style="display: flex; flex-direction: column"><span class="display-small">82%</span><span class="body-small" style="color: var(--text-secondary)">63 of 77 requirements ready</span></div></div>
+      </div>
+      <div style="position: absolute; box-sizing: border-box; padding: 24px; border-radius: var(--radius-card); background: var(--layer-02); box-shadow: 0 24px 48px rgba(31,44,50,0.22); display: flex; flex-direction: column; gap: 12px; left: 430px; top: 0px; width: 300px">
+        <span class="title-small">Certificate</span>
+        <div><x-import component-from-global-scope="Graphite.StatusTag" status="completed" size="sm" label="Certificate issued"></x-import></div>
+        <span class="title-medium">CN-2026-00412</span>
+        <span class="body-small" style="color: var(--text-secondary)">ISO/IEC 42001 · valid until 14 Sep 2029</span>
+      </div>
+      <div style="position: absolute; box-sizing: border-box; padding: 24px; border-radius: var(--radius-card); background: var(--layer-02); box-shadow: 0 24px 48px rgba(31,44,50,0.22); display: flex; flex-direction: column; gap: 12px; left: 20px; top: 250px; width: 400px; gap: 16px">
+        <span class="title-small">Evidence</span>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px"><div style="display: flex; flex-direction: column"><span class="body-medium">Information security policy</span><span class="body-small" style="color: var(--text-secondary)">policy-v3.pdf · 2.4 MB</span></div><x-import component-from-global-scope="Graphite.StatusTag" status="completed" size="sm" label="Completed"></x-import></div>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px"><div style="display: flex; flex-direction: column"><span class="body-medium">Access control review</span><span class="body-small" style="color: var(--text-secondary)">q2-access.xlsx · 812 KB</span></div><x-import component-from-global-scope="Graphite.StatusTag" status="under-review" size="sm" label="Under Review"></x-import></div>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px"><div style="display: flex; flex-direction: column"><span class="body-medium">Supplier risk register</span><span class="body-small" style="color: var(--text-secondary)">Requested by SGS reviewer</span></div><x-import component-from-global-scope="Graphite.StatusTag" status="missing-info" size="sm" label="Missing Info"></x-import></div>
+      </div>
+      <div style="position: absolute; box-sizing: border-box; padding: 24px; border-radius: var(--radius-card); background: var(--layer-02); box-shadow: 0 24px 48px rgba(31,44,50,0.22); display: flex; flex-direction: column; gap: 12px; left: 450px; top: 230px; width: 280px">
+        <span class="title-small">Next audit</span>
+        <span class="title-medium">TISAX · Stage 2</span>
+        <div style="display: flex; align-items: center; gap: 8px"><x-import component-from-global-scope="Graphite.Tag" tone="info">12 Oct 2026</x-import><span class="body-small" style="color: var(--text-secondary)">in 18 days</span></div>
+      </div>
+      <div style="position: absolute; box-sizing: border-box; padding: 24px; border-radius: var(--radius-card); background: var(--layer-02); box-shadow: 0 24px 48px rgba(31,44,50,0.22); display: flex; flex-direction: column; gap: 12px; left: 460px; top: 430px; width: 300px">
+        <span class="title-small">Digital Trust Passport</span>
+        <span class="body-small" style="color: var(--text-secondary)">Shared with 3 trading partners</span>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap"><x-import component-from-global-scope="Graphite.Tag" tone="neutral">ISO/IEC 27001</x-import><x-import component-from-global-scope="Graphite.Tag" tone="neutral">ISO/IEC 42001</x-import><x-import component-from-global-scope="Graphite.Tag" tone="neutral">TISAX</x-import></div>
+      </div>
+      <div style="position: absolute; box-sizing: border-box; padding: 24px; border-radius: var(--radius-card); background: var(--layer-02); box-shadow: 0 24px 48px rgba(31,44,50,0.22); display: flex; flex-direction: column; gap: 12px; left: 60px; top: 560px; width: 360px">
+        <span class="title-small">Findings</span>
+        <div style="display: flex; gap: 24px"><div style="display: flex; flex-direction: column"><span class="headline-medium">2</span><span class="body-small" style="color: var(--text-secondary)">Open</span></div><div style="display: flex; flex-direction: column"><span class="headline-medium">14</span><span class="body-small" style="color: var(--text-secondary)">Closed</span></div><div style="display: flex; flex-direction: column"><span class="headline-medium">0</span><span class="body-small" style="color: var(--text-secondary)">Major</span></div></div>
+      </div>
+    </div>
+
+    <div data-theme="customer" style="position: absolute; left: 0; top: 0; right: 0; height: 104px; box-sizing: border-box; padding: 32px 40px; display: flex; align-items: center; gap: 16px; background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0)); color: var(--text-on-color)">
+      <span style="font-size: 28px; line-height: 40px; font-weight: 700; letter-spacing: 1px; color: #FFFFFF">SGS</span>
+      <span style="width: 1px; height: 28px; background: rgba(255,255,255,0.5)"></span>
+      <span style="display: flex; flex-direction: column; color: #FFFFFF"><span class="title-small">Digital Trust Platform</span><span class="body-small">Customer Portal</span></span>
+      
+    </div>
+  </div>
+
+  <div style="position: relative; flex-grow: 1; height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--layer-02)">
+    <div style="position: absolute; top: 24px; right: 32px"><x-import component-from-global-scope="Graphite.LanguageSelector"></x-import></div>
+    <form style="width: 400px; display: flex; flex-direction: column; gap: 24px">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center">
+        <h1 class="headline-small" style="margin: 0">Sign in to Digital Trust Platform</h1>
+        <p class="body-medium" style="margin: 0; color: var(--text-secondary)">Customer Portal</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 16px">
+        <x-import component-from-global-scope="Graphite.TextInput" label="Email" type="email" required="{{yes}}" placeholder="name@company.com" autocomplete="username" width="400px"></x-import>
+        <x-import component-from-global-scope="Graphite.TextInput" label="Password" type="password" required="{{yes}}" placeholder="Enter your password" autocomplete="current-password" width="400px"></x-import>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-top: -16px">
+        <x-import component-from-global-scope="Graphite.Checkbox" label="Remember me"></x-import>
+        <x-import component-from-global-scope="Graphite.Link" href="#">Forgot password?</x-import>
+      </div>
+      <x-import component-from-global-scope="Graphite.Button" variant="primary" full-width="{{yes}}" type="submit">Sign in</x-import>
+      <div style="display: flex; align-items: center; gap: 12px">
+        <span style="flex-grow: 1; height: 1px; background: var(--border-subtle-00)"></span>
+        <span class="body-small" style="color: var(--text-secondary)">Or sign in with</span>
+        <span style="flex-grow: 1; height: 1px; background: var(--border-subtle-00)"></span>
+      </div>
+      <x-import component-from-global-scope="Graphite.Button" variant="tertiary" full-width="{{yes}}">Company single sign-on (SSO)</x-import>
+      <p class="body-medium" style="margin: 8px 0 0 0; text-align: center; color: var(--text-secondary)">Don’t have an account? <x-import component-from-global-scope="Graphite.Link" href="#" inline="{{yes}}">Request access</x-import></p>
+    </form>
+    <footer class="body-small" style="position: absolute; bottom: 24px; left: 0; right: 0; display: flex; justify-content: center; gap: 16px; color: var(--text-secondary)"><span>© 2026 SGS SA</span><x-import component-from-global-scope="Graphite.Link" href="#" inline="{{yes}}">Privacy notice</x-import><x-import component-from-global-scope="Graphite.Link" href="#" inline="{{yes}}">Terms of use</x-import></footer>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return { yes: true }; }
+}
+</script>
+</body>
+</html>

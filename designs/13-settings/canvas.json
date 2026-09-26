@@ -1,0 +1,98 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "CustomerAdminSettings.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Customer Admin · settings (Organisation tab)",
+      "w": 1440,
+      "x": 1520,
+      "y": 0
+    },
+    "Main.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Customer User · settings",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "SgsAdminPlatform.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "SGS Admin · Platform tab",
+      "w": 1440,
+      "x": 1520,
+      "y": 1280
+    },
+    "SgsAdminToggleOff.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "SGS Admin · turn off a service",
+      "w": 1440,
+      "x": 4560,
+      "y": 1280
+    },
+    "SgsAdminToggles.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "SGS Admin · Services per customer",
+      "w": 1440,
+      "x": 3040,
+      "y": 1280
+    },
+    "SgsStaffSettings.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "SGS User / Auditor / Trainer / Consultant · settings",
+      "w": 1440,
+      "x": 0,
+      "y": 1280
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-09-26T09:00:00Z",
+    "v": 1
+  },
+  "designSystems": [
+    {
+      "artifact": "https://claude.ai/artifact/CEneLQNFxsQuEaagfERSqo",
+      "copiedAt": "2026-09-26T09:00:00Z",
+      "namespace": "graphite",
+      "title": "Graphite DS",
+      "version": "1790347709-dd39"
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  },
+  "notes": {
+    "r0": {
+      "kind": "title1",
+      "maxW": 2960,
+      "text": "Customer Portal",
+      "w": 240,
+      "x": 0,
+      "y": -260
+    },
+    "r1": {
+      "kind": "title1",
+      "maxW": 6000,
+      "text": "SGS Operations",
+      "w": 240,
+      "x": 0,
+      "y": 1020
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "CustomerAdminSettings.dc.html",
+    "SgsStaffSettings.dc.html",
+    "SgsAdminPlatform.dc.html",
+    "SgsAdminToggles.dc.html",
+    "SgsAdminToggleOff.dc.html"
+  ],
+  "pages": [],
+  "title": "DTP – Settings"
+}

@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Composer and thread states</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap">
+  <style>
+    body { margin: 0; font-family: Roboto, "Noto Sans", system-ui, sans-serif; background: #FFFFFF; color: #161616; }
+    a { color: #CA4300; } a:hover { color: #B13B00; }
+    textarea { font-family: inherit; }
+    button { font-family: inherit; }
+  </style>
+</helmet>
+<div style="width: 1280px; height: 940px; box-sizing: border-box; padding: 38px 40px; background: #FFFFFF; display: flex; flex-direction: column; gap: 22px;">
+
+  <div style="display: flex; flex-direction: column; gap: 5px;">
+    <div style="font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: #6E7C85; font-weight: 500;">Specification</div>
+    <h1 style="margin: 0; font-size: 26px; font-weight: 700; color: #001F3F;">States the one thread has to carry</h1>
+    <p style="margin: 0; font-size: 14px; color: #5A6B72;">Three sections became one, so every case the old sections handled separately now has to resolve inside a single component.</p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px; flex-grow: 1;">
+
+    <div style="display: flex; flex-direction: column; gap: 14px;">
+      <h2 style="margin: 0; font-size: 15px; font-weight: 700; color: #001F3F;">Composer</h2>
+
+      <div style="display: flex; flex-direction: column; gap: 7px;">
+        <span style="font-size: 11.5px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #6E7C85;">Internal note selected</span>
+        <div style="border: 1px solid #DED7CB; border-radius: 10px; background: #F9F7F3;">
+          <div style="display: flex; align-items: center; gap: 6px; padding: 9px 12px 0 12px;">
+            <span style="display: inline-flex; align-items: center; height: 34px; padding: 0 13px; border-radius: 8px 8px 0 0; font-size: 13px; font-weight: 500; color: #5F6B72;">Reply to customer</span>
+            <span style="display: inline-flex; align-items: center; gap: 7px; height: 34px; padding: 0 13px; border: 1px solid #E0E0E0; border-bottom: none; border-radius: 8px 8px 0 0; background: #F9F7F3; font-size: 13px; font-weight: 700; color: #3C515B;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+              Internal note
+            </span>
+            <span style="flex-grow: 1;"></span>
+            <span style="display: inline-flex; align-items: center; height: 24px; padding: 0 9px; border: 1px dashed #C8BCA6; border-radius: 4px; background: #EDE8DF; font-size: 11.5px; font-weight: 500; color: #3C515B;">ACME Taiwan will never see this</span>
+          </div>
+          <div style="padding: 11px 12px 12px 12px; border-top: 1px solid #E0E0E0; display: flex; flex-direction: column; gap: 8px;">
+            <label for="s-internal" style="font-size: 11.5px; font-weight: 500; color: #525252;">Internal note — SGS Admin and the assigned Consultant only</label>
+            <textarea id="s-internal" rows="2" style="width: 100%; box-sizing: border-box; resize: vertical; padding: 10px 12px; font-size: 13.5px; line-height: 1.5; color: #161616; background: #FFFFFF; border: 1px solid #8D8D8D; border-radius: 8px;">Their SIEM licence expires in November — raise it at the 25 Sep sync.</textarea>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="flex-grow: 1; font-size: 11.5px; color: #4A5A63;">Kept out of every Customer Portal selector.</span>
+              <button type="button" style="height: 44px; padding: 0 18px; border: none; border-radius: 8px; background: #001F3F; color: #FFFFFF; font-size: 13.5px; font-weight: 700; cursor: pointer;">Add internal note</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 7px;">
+        <span style="font-size: 11.5px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #6E7C85;">Customer Viewer — read only</span>
+        <div style="display: flex; align-items: center; gap: 11px; padding: 15px 16px; border: 1px dashed #C8CFD5; border-radius: 10px; background: #F7F9FB;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4A5A63" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #3C515B;">Your role can read this discussion. Ask a Customer Admin at ACME Taiwan to reply on your behalf.</p>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 7px;">
+        <span style="font-size: 11.5px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #6E7C85;">Request closed — thread sealed</span>
+        <div style="display: flex; align-items: center; gap: 11px; padding: 15px 16px; border: 1px solid #E0E0E0; border-radius: 10px; background: #F4F6F8;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4A5A63" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+          <p style="margin: 0; flex-grow: 1; font-size: 13px; line-height: 1.5; color: #3C515B;">SR-2026-002 was closed on 24 Sep. The thread stays readable; nothing more can be posted.</p>
+          <a href="#reopen" style="font-size: 13px; font-weight: 700; white-space: nowrap;">Reopen request</a>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 14px;">
+      <h2 style="margin: 0; font-size: 15px; font-weight: 700; color: #001F3F;">Thread</h2>
+
+      <div style="display: flex; flex-direction: column; gap: 7px;">
+        <span style="font-size: 11.5px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #6E7C85;">Empty — nothing posted yet</span>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 26px 20px; border: 1px solid #E0E0E0; border-radius: 10px; background: #FAFBFC; text-align: center;">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#8A98A0" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M12 8v5"></path><path d="M9.5 10.5h5"></path></svg>
+          <p style="margin: 0; font-size: 14px; font-weight: 700; color: #29343A;">No messages yet</p>
+          <p style="margin: 0; max-width: 340px; font-size: 13px; line-height: 1.5; color: #4A5A63;">The request itself opened this thread. Start by confirming the delivery plan with ACME Taiwan.</p>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 7px;">
+        <span style="font-size: 11.5px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #6E7C85;">Unread marker</span>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 11.5px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #CA4300;">New since 19 Sep</span>
+          <span style="flex-grow: 1; height: 2px; background: #F2C9B4;"></span>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 7px;">
+        <span style="font-size: 11.5px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #6E7C85;">Long thread — earlier entries collapsed</span>
+        <button type="button" style="display: flex; align-items: center; justify-content: center; gap: 9px; width: 100%; height: 44px; border: 1px solid #C6C6C6; border-radius: 8px; background: #FFFFFF; font-size: 13px; font-weight: 500; color: #29343A; cursor: pointer;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4A5A63" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"></path></svg>
+          Show 14 earlier entries
+        </button>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 7px;">
+        <span style="font-size: 11.5px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #6E7C85;">Withdrawn by its author</span>
+        <article style="display: flex; align-items: stretch; border: 1px solid #E0E0E0; border-radius: 9px; overflow: hidden; background: #FFFFFF;">
+          <span style="width: 4px; align-self: stretch; flex-shrink: 0; background: #C6C6C6;"></span>
+          <div style="flex-grow: 1; display: flex; gap: 12px; padding: 13px 16px; align-items: center;">
+            <span style="flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; background: #EFF2F4; color: #6E7C85;">AL</span>
+            <p style="margin: 0; flex-grow: 1; font-size: 13.5px; font-style: italic; color: #6E7C85;">Avery Lin withdrew a message on 20 Sep. The Audit Trail keeps the original.</p>
+          </div>
+        </article>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 7px;">
+        <span style="font-size: 11.5px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #6E7C85;">Filter returned nothing</span>
+        <div style="display: flex; align-items: center; gap: 11px; padding: 15px 16px; border: 1px solid #E0E0E0; border-radius: 10px; background: #FAFBFC;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4A5A63" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+          <p style="margin: 0; flex-grow: 1; font-size: 13px; line-height: 1.5; color: #3C515B;">No internal notes on this request yet.</p>
+          <a href="#all" style="font-size: 13px; font-weight: 700; white-space: nowrap;">Show everything</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":940}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

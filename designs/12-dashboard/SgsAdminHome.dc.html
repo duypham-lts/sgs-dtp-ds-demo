@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SGS Admin – home</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="sgs-ops" style="position: relative; width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" tone="dark" site-name="Digital Trust Platform" site-sub="Operations Console" badge="Internal" home-links="{{noLinks}}" user-name="Minh Nguyen" user-email="minh.nguyen@sgs.com" notifications="{{three}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" tone="dark" label="SGS Operations" sections="{{nav}}" default-active="home" default-collapsed="{{collapsed}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <div style="padding: 8px 8px 4px">
+        <h1 class="headline-medium" style="margin: 0">Good morning, Minh</h1>
+        <p class="body-medium" style="margin: 0; color: var(--text-secondary)">SGS Taiwan · operations overview</p>
+      </div>
+      <div style="flex-grow: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 20px">
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px">
+          <a href="#" style="text-decoration: none; color: inherit; padding: 16px 20px; border-radius: var(--radius-card); background: var(--layer-02); display: flex; flex-direction: column; gap: 2px"><span class="headline-medium">12</span><span class="body-medium" style="font-weight: 500">Active customers</span><span class="body-small" style="color: var(--text-secondary)">2 without a Customer Admin yet</span></a>
+          <a href="#" style="text-decoration: none; color: inherit; padding: 16px 20px; border-radius: var(--radius-card); background: var(--layer-02); display: flex; flex-direction: column; gap: 2px"><span class="headline-medium">4</span><span class="body-medium" style="font-weight: 500">Requests to triage</span><span class="body-small" style="color: var(--text-secondary)">Oldest waiting 2 days</span></a>
+          <a href="#" style="text-decoration: none; color: inherit; padding: 16px 20px; border-radius: var(--radius-card); background: var(--layer-02); display: flex; flex-direction: column; gap: 2px"><span class="headline-medium">3</span><span class="body-medium" style="font-weight: 500">Audits open</span><span class="body-small" style="color: var(--text-secondary)">1 waiting for the customer</span></a>
+          <a href="#" style="text-decoration: none; color: inherit; padding: 16px 20px; border-radius: var(--radius-card); background: var(--layer-02); display: flex; flex-direction: column; gap: 2px"><span class="headline-medium">1</span><span class="body-medium" style="font-weight: 500">Ready for certificate</span><span class="body-small" style="color: var(--text-secondary)">Audit closed · CR-2026-012</span></a>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start">
+        <section class="gr-card" style="gap: 16px">
+          <div class="gr-card__head"><div><h2 class="gr-card__title">Team workload</h2><p class="gr-card__sub">Open assignments per person · use it when assigning</p></div></div>
+          <x-import component-from-global-scope="Graphite.DataTable" columns="{{wCols}}" rows="{{wRows}}" layout="table" paginate="{{no}}"></x-import>
+        </section>
+        <section class="gr-card" style="gap: 16px">
+          <div class="gr-card__head"><div><h2 class="gr-card__title">Customer onboarding</h2><p class="gr-card__sub">Customers not ready to work in the portal yet</p></div></div>
+          <x-import component-from-global-scope="Graphite.DataTable" columns="{{oCols}}" rows="{{oRows}}" layout="table" paginate="{{no}}"></x-import>
+        </section>
+        </div>
+        <section class="gr-card" style="gap: 16px">
+          <div class="gr-card__head"><div><h2 class="gr-card__title">Requests to triage</h2><p class="gr-card__sub">Submitted requests across all services</p></div><x-import component-from-global-scope="Graphite.Link" href="#">All requests</x-import></div>
+          <x-import component-from-global-scope="Graphite.DataTable" columns="{{tCols}}" rows="{{tRows}}" layout="table" paginate="{{no}}"></x-import>
+        </section>
+        <section class="gr-card gr-card--extend" style="gap: 16px">
+          <div class="gr-card__head"><div><h2 class="gr-card__title">Audits</h2><p class="gr-card__sub">Certification requests assigned to an auditor</p></div><x-import component-from-global-scope="Graphite.Link" href="#">Certification requests</x-import></div>
+          <x-import component-from-global-scope="Graphite.DataTable" columns="{{aCols}}" rows="{{aRows}}" layout="table" paginate="{{no}}"></x-import>
+        </section>
+      </div>
+    </main>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite, F = window.React.Fragment;
+
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' },
+      { id: 'req', label: 'Requests', icon: 'task', badge: 3, badgeTone: 'attention', badgeLabel: 'requests need triage', children: [
+        { id: 'req-all', label: 'All requests' }, { id: 'req-cert', label: 'Certification' }, { id: 'req-train', label: 'Training' },
+        { type: 'label', label: 'Other services' }, { id: 'req-gap', label: 'Gap Analysis', badge: 3, badgeTone: 'attention', badgeLabel: 'need triage' }, { id: 'req-impl', label: 'Implementation Support' } ] },
+      { id: 'certs', label: 'Certifications', icon: 'checkmark' },
+      { id: 'cust', label: 'Customers', icon: 'category' },
+      { id: 'fw', label: 'Frameworks', icon: 'catalog' },
+      { id: 'asg', label: 'Assignments', icon: 'user--access' },
+      { id: 'audit', label: 'Audit Logs', icon: 'document' },
+      { id: 'settings', label: 'Settings', icon: 'settings' } ] }];
+    var extra = {};
+
+    function two(a, b){ return h('span', { style: { display: 'flex', flexDirection: 'column' } }, h('span', { style: { fontWeight: 500 } }, a), h('span', { className: 'body-small', style: { color: 'var(--text-secondary)' } }, b)); }
+    extra.tCols = [
+      { key: 'id', header: 'Request', width: 130, render: function(r){ return h('a', { href: '#', className: 'gr-link', style: { fontWeight: 500 } }, r.id); } },
+      { key: 'c', header: 'Customer · service', render: function(r){ return two(r.c, r.s); } },
+      { key: 'age', header: 'Waiting', width: 110, align: 'end' },
+      { key: 'a', header: '', align: 'end', width: 150, render: function(r){ return h(G.Button, { size: 'sm', variant: 'tertiary' }, r.cta); } } ];
+    extra.tRows = [
+      { id: 'CR-2026-018', c: 'Lotus Cosmetics JSC', s: 'Certification · ISO 22301', age: '2 days', cta: 'Assign auditor' },
+      { id: 'GA-2026-007', c: 'Lotus Cosmetics JSC', s: 'Gap Analysis · ISO/IEC 27001', age: '1 day', cta: 'Review' },
+      { id: 'TR-2026-022', c: 'Lotus Cosmetics JSC', s: 'Training · ISO 22301 Internal Auditor', age: 'Today', cta: 'Assign' },
+      { id: 'IS-2026-005', c: 'Lotus Cosmetics JSC', s: 'Implementation Support · ISO/IEC 27001', age: 'Today', cta: 'Review' } ];
+    extra.wCols = [
+      { key: 'n', header: 'Person', render: function(r){ return two(r.n, r.r); } },
+      { key: 'a', header: 'Audits', align: 'end', width: 90 },
+      { key: 'c', header: 'Consulting', align: 'end', width: 110 },
+      { key: 't', header: 'Training', align: 'end', width: 100 } ];
+    extra.wRows = [
+      { id: 1, n: 'David Wu', r: 'SGS Auditor/Certification', a: 2, c: '—', t: '—' },
+      { id: 2, n: 'Wei Lin', r: 'SGS Auditor/Certification', a: 1, c: '—', t: '—' },
+      { id: 3, n: 'Anna Lee', r: 'SGS Consultant', a: '—', c: 2, t: '—' },
+      { id: 4, n: 'Mei Chang', r: 'SGS Trainer/Assessor', a: '—', c: '—', t: 1 } ];
+    var OB = { noadmin: ['draft', 'No Customer Admin'], invited: ['under-review', 'Admin not activated'], noscope: ['needs-description', 'No scope yet'] };
+    extra.oCols = [
+      { key: 'c', header: 'Customer', render: function(r){ return two(r.c, r.since); } },
+      { key: 'st', header: 'Blocked at', width: 190, render: function(r){ return h(G.StatusTag, { status: OB[r.st][0], size: 'sm', label: OB[r.st][1] }); } } ];
+    extra.oRows = [
+      { id: 1, c: 'Riyadh Imports LLC', since: 'Created today', st: 'noadmin' },
+      { id: 2, c: 'Lotus Cosmetics JSC', since: 'Admin invited 24 Sep', st: 'invited' },
+      { id: 3, c: 'Nanya Foods Co.', since: 'Admin active since 12 Sep', st: 'noscope' } ];
+    extra.aCols = [
+      { key: 'id', header: 'Request', width: 130, render: function(r){ return h('a', { href: '#', className: 'gr-link', style: { fontWeight: 500 } }, r.id); } },
+      { key: 'c', header: 'Customer · workspace', render: function(r){ return two(r.c, r.w); } },
+      { key: 'aud', header: 'Auditor', width: 120 },
+      { key: 'p', header: 'Reviewed', width: 110, align: 'end' },
+      { key: 'st', header: 'Status', width: 190, render: function(r){ return h(G.StatusTag, { status: r.sts, size: 'sm', label: r.st }); } } ];
+    extra.aRows = [
+      { id: 'CR-2026-015', c: 'ABC Trading Co., Ltd.', w: 'Appendix 10 · Customer data platform', aud: 'David Wu', p: '40 / 61', sts: 'needs-description', st: 'Waiting for customer' },
+      { id: 'CR-2026-017', c: 'Formosa Chips Inc.', w: 'TISAX · Hsinchu fab', aud: 'Wei Lin', p: '—', sts: 'info', st: 'Assigned' },
+      { id: 'CR-2026-012', c: 'ABC Trading Co., Ltd.', w: 'ISO/IEC 27001 · Head office', aud: 'David Wu', p: '116 / 116', sts: 'completed', st: 'Ready for certificate' } ];
+    return Object.assign({ yes: true, no: false, three: 3, nav: nav, noLinks: [], noop: function(){}, collapsed: false }, extra);
+  }
+}
+</script>
+</body>
+</html>

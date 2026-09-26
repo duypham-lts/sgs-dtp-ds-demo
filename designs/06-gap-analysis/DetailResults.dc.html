@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Gap Analysis – results</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;family=Noto+Sans+TC:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="customer" style="width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" site-name="Digital Trust Platform" site-sub="Customer Portal" user-name="Linh Tran" user-email="linh.tran@abc-trading.com" notifications="{{three}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" label="Customer Portal" sections="{{nav}}" default-active="sr-gap" default-collapsed="{{yes}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <x-import component-from-global-scope="Graphite.PageHeader" title="GA-2026-002 · ISO/IEC 27001" subtitle="Gap Analysis · Head office, Taipei" on-back="{{noop}}" status="{{status}}" actions="{{menu}}"></x-import>
+      <div style="flex-grow: 1; min-height: 0; display: grid; grid-template-columns: 14fr 62fr 21fr; gap: 20px">
+        <div style="min-width: 0; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02)">
+          <x-import component-from-global-scope="Graphite.SectionNav" label="Sections" items="{{sections}}" default-active="res"></x-import>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; scroll-behavior: smooth; display: flex; flex-direction: column; gap: 20px">
+          <section class="gr-card">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">3</span><div><h2 class="gr-card__title">Results</h2><p class="gr-card__sub">ISO/IEC 27001:2022 · Head office, Taipei · assessed 14 – 18 Sep 2026</p></div></div></div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px">
+              <div style="padding: 16px; border-radius: var(--radius-md); background: var(--layer-02); display: flex; flex-direction: column; gap: 4px"><span style="display: flex; align-items: center; gap: 8px" class="body-small"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 50%; background: var(--support-success)"></span>Met</span><span class="headline-medium">77</span><span class="body-small" style="color: var(--text-secondary)">of 116 requirements</span></div>
+              <div style="padding: 16px; border-radius: var(--radius-md); background: var(--layer-02); display: flex; flex-direction: column; gap: 4px"><span style="display: flex; align-items: center; gap: 8px" class="body-small"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 50%; background: var(--support-warning)"></span>Partially met</span><span class="headline-medium">28</span><span class="body-small" style="color: var(--text-secondary)">need improvement</span></div>
+              <div style="padding: 16px; border-radius: var(--radius-md); background: var(--layer-02); display: flex; flex-direction: column; gap: 4px"><span style="display: flex; align-items: center; gap: 8px" class="body-small"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 50%; background: var(--support-error)"></span>Not met</span><span class="headline-medium">10</span><span class="body-small" style="color: var(--text-secondary)">gaps to close first</span></div>
+              <div style="padding: 16px; border-radius: var(--radius-md); background: var(--layer-02); display: flex; flex-direction: column; gap: 4px"><span style="display: flex; align-items: center; gap: 8px" class="body-small"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 50%; background: var(--border-strong)"></span>Not applicable</span><span class="headline-medium">1</span><span class="body-small" style="color: var(--text-secondary)">justified by you</span></div>
+            </div>
+            <x-import component-from-global-scope="Graphite.InlineNotification" kind="info" title="This is a consultant assessment">It shows where you stand today. It is not a certification decision and does not change the status of requirements in your workspace.</x-import>
+          </section>
+          <section class="gr-card gr-card--extend">
+            <div class="gr-card__head"><div><h2 class="gr-card__title">Gaps by requirement</h2><p class="gr-card__sub">Each row is also a consultant comment on the requirement in your workspace.</p></div></div>
+            <x-import component-from-global-scope="Graphite.Tabs" label="Filter by assessment" tabs="{{resTabs}}"></x-import>
+          </section>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02); display: flex; flex-direction: column; gap: 16px">
+          <div class="title-medium">SGS Requests &amp; Communications</div>
+          <x-import component-from-global-scope="Graphite.InlineNotification" kind="success" title="Completed on 30 Sep 2026">The final report is available and consultant access to your workspace has ended.</x-import>
+          <div style="display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: var(--radius-md); background: var(--layer-01)">
+            <span class="title-small">Your SGS consultant</span>
+            <div style="display: flex; align-items: center; gap: 12px">
+              <x-import component-from-global-scope="Graphite.Avatar" name="Anna Lee" size="lg"></x-import>
+              <div style="display: flex; flex-direction: column"><span class="body-medium" style="font-weight: 500">Anna Lee</span><span class="body-small" style="color: var(--text-secondary)">Lead consultant · ISMS</span></div>
+            </div>
+            <div class="body-small" style="display: flex; flex-direction: column; gap: 4px">
+              <x-import component-from-global-scope="Graphite.Link" href="mailto:anna.lee@sgs.com">anna.lee@sgs.com</x-import>
+              <span style="color: var(--text-secondary)">[CONSULTANT PHONE]</span>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: var(--radius-md); background: var(--layer-01)">
+            <span class="title-small">Need help?</span>
+            <span class="body-small" style="color: var(--text-secondary)">Questions about this request go to your consultant. For access or account problems, contact SGS support.</span>
+            <div><x-import component-from-global-scope="Graphite.Button" variant="tertiary" size="sm">Contact support</x-import></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite;
+
+    var SR = { id: 'sr', label: 'Service Requests', icon: 'task', badge: 1, badgeTone: 'attention', badgeLabel: 'request needs action', children: [
+      { id: 'sr-all', label: 'All requests' }, { id: 'sr-cert', label: 'Certification Services' }, { id: 'sr-train', label: 'Training Courses' },
+      { type: 'label', label: 'Other services' }, { id: 'sr-gap', label: 'Gap Analysis', badge: 1, badgeTone: 'attention', badgeLabel: 'needs action' }, { id: 'sr-impl', label: 'Implementation Support' } ] };
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' }, { id: 'scopes', label: 'Scopes', icon: 'category' }, { id: 'ws', label: 'Workspaces', icon: 'folders' },
+      { id: 'docs', label: 'Documents', icon: 'document--multiple-01' }, SR, { id: 'training', label: 'Training', icon: 'education' },
+      { id: 'audit', label: 'Audit Logs', icon: 'catalog' }, { id: 'settings', label: 'Settings', icon: 'settings' } ] },
+      { label: 'Administration', items: [{ id: 'users', label: 'Users', icon: 'user--multiple' }, { id: 'access', label: 'Workspace access', icon: 'user--access' }] }];
+
+    var extra = { noop: function(){}, ready: 64,
+      menu: h(G.OverflowMenu, { size: 'md', label: 'Request actions', items: [{ label: 'Download summary (PDF)' }, { label: 'Withdraw request', danger: true }] }),
+      sgsActs: [{ type: 'open' }, { type: 'download' }], upload: [{ type: 'upload' }], viewActs: [{ type: 'view' }, { type: 'open' }] };
+    extra.status = { status: 'completed', label: 'Completed · report available', shortLabel: 'Completed' };
+    extra.sections = [{ id: 'ov', label: 'Overview', status: 'complete', href: 'DetailReport.dc.html' }, { id: 'doc', label: 'Documents', status: 'complete', href: 'DetailReport.dc.html#sec-doc' }, { id: 'res', label: 'Results', status: 'complete', href: 'DetailResults.dc.html' }, { id: 'hist', label: 'History', href: 'DetailHistory.dc.html' }];
+    extra.rcols = [{ key: 'c', header: 'Clause' }, { key: 'm', header: 'Met', align: 'end' }, { key: 'p', header: 'Partially met', align: 'end' }, { key: 'n', header: 'Not met', align: 'end' }, { key: 'na', header: 'N/A', align: 'end' }];
+    extra.rrows = [{ c: '4–10 Management system clauses', m: 18, p: 4, n: 1, na: 0 }, { c: 'A.5 Organizational controls', m: 24, p: 9, n: 4, na: 0 }, { c: 'A.6 People controls', m: 6, p: 2, n: 0, na: 0 }, { c: 'A.7 Physical controls', m: 10, p: 3, n: 1, na: 0 }, { c: 'A.8 Technological controls', m: 19, p: 10, n: 4, na: 1 }];
+
+    function mk(filter){ return h(G.DataTable, { columns: gcols, rows: grows.filter(function(r){ return !filter || r.a === filter; }), searchable: true, searchPlaceholder: 'Search requirements', pageSize: 8, layout: 'table', defaultSort: { key: 'prio', dir: 'asc' }, rowActions: function(){ return [{ label: 'Open in workspace' }, { label: 'Download finding' }]; } }); }
+    var A = { met: ['completed', 'Met'], partial: ['needs-description', 'Partially met'], notmet: ['missing-info', 'Not met'], na: ['draft', 'N/A'] };
+    var P = { 1: ['required', 'High'], 2: ['info', 'Medium'], 3: ['neutral', 'Low'] };
+    var grows = [
+      { id: 'A.5.9', t: 'Inventory of information and associated assets', a: 'notmet', prio: 1, note: 'No complete asset inventory for the Hsinchu data centre.' },
+      { id: 'A.5.19', t: 'Information security in supplier relationships', a: 'notmet', prio: 1, note: 'Supplier security requirements are not defined in contracts.' },
+      { id: 'A.8.13', t: 'Information backup', a: 'notmet', prio: 1, note: 'Restore tests are not performed or recorded.' },
+      { id: '6.1.2', t: 'Information security risk assessment', a: 'partial', prio: 1, note: 'Method exists; risk owners are not assigned for all risks.' },
+      { id: 'A.5.24', t: 'Incident management planning', a: 'partial', prio: 2, note: 'Plan exists but roles for the Taichung office are missing.' },
+      { id: 'A.6.3', t: 'Awareness, education and training', a: 'partial', prio: 2, note: 'Training records incomplete for contractors.' },
+      { id: 'A.7.4', t: 'Physical security monitoring', a: 'partial', prio: 3, note: 'CCTV retention period not documented.' },
+      { id: 'A.5.1', t: 'Policies for information security', a: 'met', prio: 3, note: 'Approved policy v3, reviewed Jan 2026.' },
+      { id: 'A.8.5', t: 'Secure authentication', a: 'met', prio: 3, note: 'MFA enforced for all remote access.' },
+      { id: 'A.7.10', t: 'Storage media', a: 'na', prio: 3, note: 'No removable media in scope — justification accepted.' } ];
+    var gcols = [
+      { key: 'id', header: 'Ref.', sortable: true, width: 90 },
+      { key: 't', header: 'Requirement', sortable: true },
+      { key: 'a', header: 'Assessment', sortable: true, sortValue: function(r){ return A[r.a][1]; }, render: function(r){ return h(G.StatusTag, { status: A[r.a][0], size: 'sm', label: A[r.a][1] }); } },
+      { key: 'prio', header: 'Priority', sortable: true, width: 110, render: function(r){ return h(G.Tag, { tone: P[r.prio][0] }, P[r.prio][1]); } },
+      { key: 'note', header: 'Consultant note', hideOnCard: false } ];
+    extra.resTabs = [
+      { id: 'all', label: 'All', badge: 116, content: mk(null) },
+      { id: 'notmet', label: 'Not met', badge: 10, content: mk('notmet') },
+      { id: 'partial', label: 'Partially met', badge: 28, content: mk('partial') },
+      { id: 'met', label: 'Met', badge: 77, content: mk('met') } ];
+    return Object.assign({ yes: true, no: false, three: 3, nav: nav }, typeof extra === 'object' ? extra : {});
+  }
+}
+</script>
+</body>
+</html>

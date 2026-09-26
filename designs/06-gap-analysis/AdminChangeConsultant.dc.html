@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SGS Admin – change consultant</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="sgs-ops" style="position: relative; width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" tone="dark" site-name="Digital Trust Platform" site-sub="Operations Console" badge="Internal" home-links="{{noLinks}}" user-name="Minh Nguyen" user-email="minh.nguyen@sgs.com" notifications="{{three}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" tone="dark" label="SGS Operations" sections="{{nav}}" default-active="req-gap" default-collapsed="{{collapsed}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <x-import component-from-global-scope="Graphite.PageHeader" title="GA-2026-002 · ISO/IEC 27001" subtitle="Gap Analysis · ABC Trading Co., Ltd. · Head office, Taipei" on-back="{{noop}}" status="{{status}}" actions="{{menu}}"></x-import>
+      <div style="flex-grow: 1; min-height: 0; display: grid; grid-template-columns: 14fr 62fr 21fr; gap: 20px">
+        <div style="min-width: 0; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02)">
+          <x-import component-from-global-scope="Graphite.SectionNav" label="Sections" items="{{sections}}" default-active="asg"></x-import>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 20px">
+          <section class="gr-card">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">1</span><div><h2 class="gr-card__title">Progress</h2><p class="gr-card__sub">Updated by the consultant</p></div></div></div>
+            <div style="display: flex; flex-direction: column; gap: 16px">
+              <x-import component-from-global-scope="Graphite.ProgressBar" label="Requirements assessed" value="{{pct}}" helper-text="42 of 116 · last activity today 10:15 by Anna Lee"></x-import>
+              <dl style="margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px 24px"><div><dt class="body-small" style="color: var(--text-secondary)">Met</dt><dd class="body-medium" style="margin: 0">24</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">Partially met</dt><dd class="body-medium" style="margin: 0">11</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">Not met</dt><dd class="body-medium" style="margin: 0">6</dd></div></dl>
+            </div>
+          </section>
+          <section class="gr-card">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">2</span><div><h2 class="gr-card__title">Document requests</h2><p class="gr-card__sub">Sent by the consultant to the customer</p></div></div></div>
+            <x-import component-from-global-scope="Graphite.Table" density="compact" columns="{{dcols}}" rows="{{drows}}"></x-import>
+          </section>
+          <section class="gr-card gr-card--extend">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">3</span><div><h2 class="gr-card__title">Assignment</h2><p class="gr-card__sub"></p></div></div></div>
+            <dl style="margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px 24px"><div><dt class="body-small" style="color: var(--text-secondary)">Consultant</dt><dd class="body-medium" style="margin: 0">Anna Lee · Lead consultant</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">On site</dt><dd class="body-medium" style="margin: 0">14 – 18 Sep 2026 · done</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">Access</dt><dd class="body-medium" style="margin: 0">Since 11 Sep · ends on final report</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">Approved by</dt><dd class="body-medium" style="margin: 0">Minh Nguyen · 05 Sep 2026</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">Customer contact</dt><dd class="body-medium" style="margin: 0">Linh Tran</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">Target report date</dt><dd class="body-medium" style="margin: 0">[TARGET DATE]</dd></div></dl>
+          </section>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02); display: flex; flex-direction: column; gap: 16px">
+          <div class="title-medium">Monitoring</div>
+          <div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: var(--radius-md); background: var(--layer-01)">
+            <span class="title-small">SLA</span>
+            <span class="headline-small">Day 23</span><span class="body-small" style="color: var(--text-secondary)">since approval · report target [REPORT SLA]</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: var(--radius-md); background: var(--layer-01)">
+            <span class="title-small">Customer</span>
+            <span class="body-medium">ABC Trading Co., Ltd.</span><span class="body-small" style="color: var(--text-secondary)">SGS Taiwan · Customer admin Linh Tran</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <x-import component-from-global-scope="Graphite.Modal" inline="{{yes}}" open="{{yes}}" size="fit" title="Change consultant" on-close="{{noop}}" primary-action="{{primary}}" secondary-action="{{secondary}}">
+    <div style="display: flex; flex-direction: column; gap: 16px; width: 588px; max-width: 100%">
+      <p class="body-medium" style="margin: 0; color: var(--text-secondary)">Current consultant: Anna Lee. Assessments and document requests stay on the request.</p>
+      <x-import component-from-global-scope="Graphite.Combobox" label="New consultant" required="{{yes}}" size="l" default-value="wei" options="{{cons}}"></x-import>
+      <div style="width: 588px; max-width: 100%"><x-import component-from-global-scope="Graphite.InlineNotification" kind="success" title="No conflict of interest">Wei Lin has not audited or certified this scope.</x-import></div>
+      <x-import component-from-global-scope="Graphite.Select" label="Reason" required="{{yes}}" size="m" default-value="leave" options="{{why}}"></x-import>
+      <ul class="body-small" style="margin: 0; padding-left: 16px; display: flex; flex-direction: column; gap: 4px; color: var(--text-secondary)">
+        <li>Anna Lee loses access to the workspace immediately.</li>
+        <li>Wei Lin gets access now, until the final report.</li>
+        <li>Both consultants are recorded for impartiality checks. The customer is notified.</li>
+      </ul>
+    </div>
+  </x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite, F = window.React.Fragment;
+
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' },
+      { id: 'req', label: 'Requests', icon: 'task', badge: 3, badgeTone: 'attention', badgeLabel: 'requests need triage', children: [
+        { id: 'req-all', label: 'All requests' }, { id: 'req-cert', label: 'Certification' }, { id: 'req-train', label: 'Training' },
+        { type: 'label', label: 'Other services' }, { id: 'req-gap', label: 'Gap Analysis', badge: 3, badgeTone: 'attention', badgeLabel: 'need triage' }, { id: 'req-impl', label: 'Implementation Support' } ] },
+      { id: 'cust', label: 'Customers', icon: 'user--multiple' },
+      { id: 'fw', label: 'Frameworks', icon: 'catalog' },
+      { id: 'asg', label: 'Assignments', icon: 'user--access' },
+      { id: 'audit', label: 'Audit Logs', icon: 'document' },
+      { id: 'settings', label: 'Settings', icon: 'settings' } ] }];
+    var extra = {};
+
+    extra.status = { status: 'under-review', label: 'In progress · waiting for customer', shortLabel: 'In progress' };
+    extra.menu = h(G.OverflowMenu, { size: 'md', label: 'Request actions', items: [{ label: 'Change consultant' }, { label: 'Change access window' }, { label: 'Message customer' }, { label: 'Cancel request', danger: true }] });
+    extra.sections = [{ id: 'pr', label: 'Progress', status: 'incomplete' }, { id: 'doc', label: 'Document requests' }, { id: 'asg', label: 'Assignment', status: 'complete' }, { id: 'hist', label: 'History' }];
+    extra.pct = 36; extra.s16 = 16; extra.two = 2; extra.three = 3;
+    extra.dcols = [{ key: 'd', header: 'Document' }, { key: 'r', header: 'Requirement' }, { key: 'due', header: 'Due' }, { key: 's', header: 'Status', render: function(r){ return h(G.StatusTag, { status: r.st, size: 'sm', label: r.s }); } }];
+    extra.drows = [{ d: 'Asset inventory', r: 'A.5.9', due: '27 Sep 2026', st: 'missing-info', s: 'Waiting for customer' }, { d: 'Backup restore test log', r: 'A.8.13', due: '20 Sep 2026', st: 'completed', s: 'Accepted' }];
+    extra.primary = { label: 'Change consultant' }; extra.secondary = { label: 'Cancel' };
+    extra.cons = [{ value: 'wei', label: 'Wei Lin', description: 'Consultant · ISMS · available · no conflict' }, { value: 'david', label: 'David Wu', description: 'Conflict: audited this scope in 2025' }];
+    extra.why = [{ value: 'leave', label: 'Consultant unavailable' }, { value: 'workload', label: 'Workload balancing' }, { value: 'coi', label: 'Conflict of interest found' }, { value: 'other', label: 'Other' }];
+    return Object.assign({ yes: true, no: false, three: 3, nav: nav, noLinks: [], noop: function(){}, collapsed: false }, extra);
+  }
+}
+</script>
+</body>
+</html>

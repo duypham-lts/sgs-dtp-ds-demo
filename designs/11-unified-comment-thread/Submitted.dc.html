@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SR-2026-001 — accept or reject</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@500;600;700&display=swap">
+<style>
+  body { margin: 0; font-family: 'IBM Plex Sans', Arial, sans-serif; background: #F4F6F7; }
+  a { color: #CA4300; }
+  a:hover { color: #B13B00; }
+  .navitem { text-decoration: none; }
+  .cond { font-family: 'IBM Plex Sans Condensed', Arial, sans-serif; }
+  .field-pair { display: grid; grid-template-columns: 1fr 1fr; column-gap: 24px; row-gap: 20px; }
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field-label { font-size: 12.5px; font-weight: 500; color: #5A6B72; }
+  .field-value { font-size: 14.5px; font-weight: 600; color: #29343A; }
+  .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 1.4px; }
+  .check-row { display: flex; align-items: flex-start; gap: 12px; padding: 11px 0; border-bottom: 1px solid rgba(60,81,91,0.10); }
+  .check-name { font-size: 13.5px; font-weight: 600; color: #29343A; }
+  .check-detail { font-size: 12.5px; font-weight: 400; color: #5A6B72; margin-top: 2px; }
+  .req { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border: 1px solid rgba(60,81,91,0.14); border-radius: 8px; background: #FFFFFF; }
+  .req-code { font-size: 12px; font-weight: 700; color: #001F3F; width: 52px; flex-shrink: 0; }
+  .req-label { font-size: 12.5px; font-weight: 400; color: #3C515B; }
+  .req-count { font-size: 11.5px; font-weight: 600; }
+  .rail { width: 4px; align-self: stretch; flex-shrink: 0; }
+  .hatch { width: 12px; align-self: stretch; flex-shrink: 0; background-image: repeating-linear-gradient(135deg, #C8BCA6 0 1.5px, rgba(0,0,0,0) 1.5px 6px); }
+  .avatar { flex-shrink: 0; width: 38px; height: 38px; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
+  .rolechip { display: inline-flex; align-items: center; height: 22px; padding: 0 11px; border-radius: 999px; font-size: 11.5px; font-weight: 700; }
+  .vischip { display: inline-flex; align-items: center; gap: 5px; height: 22px; padding: 0 11px; border-radius: 999px; font-size: 11.5px; font-weight: 500; color: #3C515B; }
+  .stamp { font-size: 12px; font-weight: 400; color: #8A98A0; }
+  .msg { margin: 0; font-size: 14px; line-height: 1.55; color: #29343A; }
+  .daylabel { font-size: 11px; font-weight: 700; letter-spacing: 1.2px; color: #8A98A0; }
+  .choice { box-sizing: border-box; padding: 14px 16px; border-radius: 10px; border: 1px solid rgba(60,81,91,0.16); background: #FFFFFF; }
+  .choice-note { margin: 9px 0 0 0; font-size: 12.5px; line-height: 1.5; color: #3C515B; }
+  .btn { width: 100%; display: flex; align-items: center; justify-content: center; gap: 9px; height: 46px; padding: 0 20px; border-radius: 8px; font-size: 14.5px; font-weight: 600; cursor: pointer; }
+  .step { display: flex; flex-direction: column; align-items: center; gap: 7px; width: 108px; }
+  .step-line { display: flex; align-items: center; width: 100%; }
+  .step-name { font-size: 11.5px; text-align: center; }
+  .step-actor { font-size: 10.5px; font-weight: 400; text-align: center; }
+  .branch { display: inline-flex; align-items: center; gap: 6px; padding: 4px 11px; border-radius: 999px; border: 1px dashed rgba(60,81,91,0.3); font-size: 11.5px; font-weight: 500; color: #8A98A0; }
+  textarea { font-family: inherit; }
+  button { font-family: inherit; }
+</style>
+</helmet>
+
+<div style="width: 1440px; height: 1880px; box-sizing: border-box; display: flex; flex-direction: column; background: #F4F6F7; color: #29343A;">
+
+  <!-- Header -->
+  <div style="height: 64px; flex-shrink: 0; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; background: #FFFFFF; border-bottom: 1px solid rgba(60,81,91,0.14);">
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <span style="font-size: 26px; font-weight: 700; letter-spacing: -0.5px; color: #001F3F;">SGS</span>
+      <div style="width: 1px; height: 26px; background: rgba(60,81,91,0.25);"></div>
+      <div style="display: flex; flex-direction: column; line-height: 1.25;">
+        <span class="cond" style="font-size: 11px; font-weight: 700; letter-spacing: 1.6px; color: #CA4300;">DIGITAL TRUST</span>
+        <span style="font-size: 15px; font-weight: 500; color: #3C515B;">Operations Platform</span>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 22px;">
+      <div style="position: relative; width: 22px; height: 22px; color: #3C515B;">
+        <svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8a5 5 0 0 1 10 0c0 4 1.5 5 1.5 5h-13S5 12 5 8Z"/><path d="M8.3 16a1.8 1.8 0 0 0 3.4 0"/></svg>
+        <div style="position: absolute; top: -4px; right: -6px; min-width: 15px; height: 15px; border-radius: 999px; background: #CA4300; color: #fff; font-size: 9px; font-weight: 700; display: flex; align-items: center; justify-content: center; padding: 0 3px;">3</div>
+      </div>
+      <div style="width: 1px; height: 22px; background: rgba(60,81,91,0.2);"></div>
+      <div style="width: 32px; height: 32px; border-radius: 999px; background: rgba(0,31,63,0.06); display: flex; align-items: center; justify-content: center; color: #001F3F;">
+        <svg viewBox="0 0 20 20" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="7" r="3.2"/><path d="M3.3 17c.6-3.4 3-5.3 6.7-5.3s6.1 1.9 6.7 5.3"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div style="flex-grow: 1; display: flex; min-height: 0;">
+
+    <!-- Sidebar -->
+    <div style="width: 240px; flex-shrink: 0; box-sizing: border-box; background: #001F3F; display: flex; flex-direction: column; justify-content: space-between; padding: 20px 0 16px;">
+      <div style="display: flex; flex-direction: column; gap: 2px; padding: 0 12px;">
+        <a class="navitem" href="#" style="display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 8px;">
+          <span style="color: rgba(255,255,255,0.55); display: flex;"><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg></span>
+          <span style="font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.75);">Dashboard</span>
+        </a>
+        <a class="navitem" href="#" style="display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 8px;">
+          <span style="color: rgba(255,255,255,0.55); display: flex;"><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.2" cy="6.8" r="3"/><path d="M2 17c0-3.1 2.1-5 5.2-5s5.2 1.9 5.2 5"/><circle cx="14.5" cy="6.2" r="2.2"/><path d="M13.2 11.1c2.3.2 4 1.9 4.2 5"/></svg></span>
+          <span style="font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.75);">Customers</span>
+        </a>
+        <a class="navitem" href="#" style="display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 8px;">
+          <span style="color: rgba(255,255,255,0.55); display: flex;"><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4.3c2-1 4-1.2 6 0v11.4c-2-1.2-4-1-6 0z"/><path d="M18 4.3c-2-1-4-1.2-6 0v11.4c2-1.2 4-1 6 0z"/></svg></span>
+          <span style="font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.75);">Frameworks</span>
+        </a>
+        <a class="navitem" href="#" style="display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 8px; background: rgba(255,255,255,0.10);">
+          <span style="color: #FF8A3D; display: flex;"><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8.4 8.4 2H16a2 2 0 0 1 2 2v7.6L11.6 18a2 2 0 0 1-2.8 0L2 11.2a2 2 0 0 1 0-2.8Z"/><circle cx="13" cy="7" r="1.3" fill="currentColor" stroke="none"/></svg></span>
+          <span style="font-size: 14px; font-weight: 600; color: #FFFFFF;">Service Requests</span>
+        </a>
+        <a class="navitem" href="#" style="display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 8px;">
+          <span style="color: rgba(255,255,255,0.55); display: flex;"><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="12" height="15" rx="1.5"/><rect x="7" y="1.4" width="6" height="3" rx="1"/><path d="M7 10.6l2 2 4-4.6"/></svg></span>
+          <span style="font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.75);">Reviews</span>
+        </a>
+        <a class="navitem" href="#" style="display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 8px;">
+          <span style="color: rgba(255,255,255,0.55); display: flex;"><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="7.2" r="4.7"/><path d="M7.4 11.3 6 18l4-2.1 4 2.1-1.4-6.7"/></svg></span>
+          <span style="font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.75);">Certifications</span>
+        </a>
+        <a class="navitem" href="#" style="display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 8px;">
+          <span style="color: rgba(255,255,255,0.55); display: flex;"><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2 3 5v5c0 4.5 3 7.5 7 8.5 4-1 7-4 7-8.5V5z"/><circle cx="10" cy="8.4" r="2.1"/><path d="M6.4 14.3c.7-2 2-2.9 3.6-2.9s2.9.9 3.6 2.9"/></svg></span>
+          <span style="font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.75);">Users / Access</span>
+        </a>
+        <a class="navitem" href="#" style="display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 8px;">
+          <span style="color: rgba(255,255,255,0.55); display: flex;"><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7.4"/><path d="M10 5.6V10l3.2 2"/></svg></span>
+          <span style="font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.75);">Audit Trail</span>
+        </a>
+        <a class="navitem" href="#" style="display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 8px;">
+          <span style="color: rgba(255,255,255,0.55); display: flex;"><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="2.5"/><path d="M10 3v2M10 15v2M17 10h-2M5 10H3M15.1 4.9l-1.4 1.4M6.3 13.7l-1.4 1.4M15.1 15.1l-1.4-1.4M6.3 6.3 4.9 4.9"/></svg></span>
+          <span style="font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.75);">Settings</span>
+        </a>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 14px; padding: 14px 20px 0; border-top: 1px solid rgba(255,255,255,0.12);">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 28px; height: 28px; border-radius: 999px; background: #CA4300; color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center;">M</div>
+          <div style="display: flex; flex-direction: column; line-height: 1.3;">
+            <span style="font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.78);">Morgan Huang</span>
+            <span style="font-size: 11px; font-weight: 400; color: rgba(255,255,255,0.5);">SGS Admin</span>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.5);">
+          <svg viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 4 7 10l5.5 6"/></svg>
+          <span style="font-size: 12.5px; font-weight: 500;">Collapse</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main content -->
+    <div style="flex-grow: 1; box-sizing: border-box; padding: 28px 40px 40px; display: flex; flex-direction: column; gap: 24px; overflow: hidden;">
+
+      <!-- Breadcrumb -->
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <a href="#" style="font-size: 13.5px; font-weight: 600; color: #001F3F; text-decoration: none;">Service Request Queue</a>
+        <svg viewBox="0 0 20 20" width="13" height="13" fill="none" stroke="#8A98A0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4l6 6-6 6"/></svg>
+        <span style="font-size: 13.5px; font-weight: 500; color: #8A98A0;">SR-2026-001</span>
+      </div>
+
+      <!-- Title row -->
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <a href="#" style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 999px; background: #FFFFFF; box-shadow: 0 1px 3px rgba(0,31,63,0.14); display: flex; align-items: center; justify-content: center; color: #001F3F; text-decoration: none;">
+          <svg viewBox="0 0 20 20" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 4 7 10l5.5 6"/></svg>
+        </a>
+        <div style="display: flex; flex-direction: column; gap: 3px;">
+          <span style="font-size: 26px; font-weight: 700; color: #001F3F; letter-spacing: -0.3px;">SR-2026-001</span>
+          <span style="font-size: 14px; font-weight: 400; color: #5A6B72;">ACME Taiwan &middot; Gap Analysis</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px; background: rgba(60,81,91,0.08); color: #5A6B72; font-size: 12.5px; font-weight: 600; margin-left: 4px;">
+          <svg viewBox="0 0 20 20" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2.5" width="12" height="15" rx="1.5"/><path d="M7.5 7h5M7.5 10h5M7.5 13h3"/></svg>
+          Submitted
+        </div>
+        <div style="flex-grow: 1;"></div>
+        <a href="#" style="display: flex; align-items: center; gap: 8px; height: 40px; padding: 0 18px; border-radius: 8px; border: 1px solid rgba(0,31,63,0.25); background: #FFFFFF; color: #001F3F; font-size: 13.5px; font-weight: 600; text-decoration: none;">
+          <svg viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7.4"/><path d="M10 5.6V10l3.2 2"/></svg>
+          Open Audit Trail
+        </a>
+      </div>
+
+      <!-- ============ DECISION PANEL ============ -->
+      <div style="display: flex; align-items: stretch; box-sizing: border-box; background: #FFFFFF; border: 1px solid rgba(60,81,91,0.14); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,31,63,0.06);">
+        <span class="rail" style="background: #001F3F;"></span>
+        <div style="flex-grow: 1; box-sizing: border-box; padding: 22px 24px 24px;">
+
+          <!-- Panel header + lifecycle -->
+          <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 32px;">
+            <div style="display: flex; flex-direction: column; gap: 4px;">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <span class="eyebrow" style="color: #001F3F;">YOUR MOVE &middot; SGS ADMIN</span>
+                <span style="display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px; border-radius: 999px; background: rgba(202,67,0,0.10); color: #A63700; font-size: 11px; font-weight: 600;">
+                  <svg viewBox="0 0 20 20" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7.4"/><path d="M10 5.6V10l3.2 2"/></svg>
+                  Waiting 3 days
+                </span>
+              </div>
+              <span style="font-size: 20px; font-weight: 700; color: #001F3F;">Accept or reject this request</span>
+              <span style="font-size: 13px; font-weight: 400; color: #5A6B72;">Submitted 20 Sep 08:20 UTC by Alex Chen. Decide now &mdash; there is no separate triage step to open first.</span>
+            </div>
+
+            <!-- Lifecycle stepper -->
+            <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 10px; flex-shrink: 0;">
+              <ol aria-label="Service Request lifecycle" style="list-style: none; margin: 0; padding: 0; display: flex; align-items: flex-start; gap: 0;">
+                <li class="step">
+                  <div class="step-line">
+                    <span style="flex-grow: 1; height: 2px; background: rgba(0,0,0,0);"></span>
+                    <span style="width: 18px; height: 18px; border-radius: 999px; background: #FFFFFF; border: 4px solid #CA4300; box-sizing: border-box; flex-shrink: 0;"></span>
+                    <span style="flex-grow: 1; height: 2px; background: rgba(60,81,91,0.18);"></span>
+                  </div>
+                  <span class="step-name" style="font-weight: 700; color: #A63700;">Submitted</span>
+                  <span class="step-actor" style="color: #A63700;">You decide</span>
+                </li>
+                <li class="step">
+                  <div class="step-line">
+                    <span style="flex-grow: 1; height: 2px; background: rgba(60,81,91,0.18);"></span>
+                    <span style="width: 18px; height: 18px; border-radius: 999px; background: #FFFFFF; border: 2px solid rgba(60,81,91,0.28); box-sizing: border-box; flex-shrink: 0;"></span>
+                    <span style="flex-grow: 1; height: 2px; background: rgba(60,81,91,0.18);"></span>
+                  </div>
+                  <span class="step-name" style="font-weight: 500; color: #8A98A0;">Accepted</span>
+                  <span class="step-actor" style="color: #A8B3B9;">You assign</span>
+                </li>
+                <li class="step">
+                  <div class="step-line">
+                    <span style="flex-grow: 1; height: 2px; background: rgba(60,81,91,0.18);"></span>
+                    <span style="width: 18px; height: 18px; border-radius: 999px; background: #FFFFFF; border: 2px solid rgba(60,81,91,0.28); box-sizing: border-box; flex-shrink: 0;"></span>
+                    <span style="flex-grow: 1; height: 2px; background: rgba(60,81,91,0.18);"></span>
+                  </div>
+                  <span class="step-name" style="font-weight: 500; color: #8A98A0;">In Progress</span>
+                  <span class="step-actor" style="color: #A8B3B9;">Consultant</span>
+                </li>
+                <li class="step">
+                  <div class="step-line">
+                    <span style="flex-grow: 1; height: 2px; background: rgba(60,81,91,0.18);"></span>
+                    <span style="width: 18px; height: 18px; border-radius: 999px; background: #FFFFFF; border: 2px solid rgba(60,81,91,0.28); box-sizing: border-box; flex-shrink: 0;"></span>
+                    <span style="flex-grow: 1; height: 2px; background: rgba(0,0,0,0);"></span>
+                  </div>
+                  <span class="step-name" style="font-weight: 500; color: #8A98A0;">Closed</span>
+                  <span class="step-actor" style="color: #A8B3B9;">Consultant</span>
+                </li>
+              </ol>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 10.5px; font-weight: 600; letter-spacing: 0.6px; color: #AEB8BD;">BRANCHES</span>
+                <span class="branch">Rejected</span>
+                <span class="branch">Cancelled</span>
+                <span class="branch">Awaiting Information</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="height: 1px; background: rgba(60,81,91,0.12); margin: 20px 0;"></div>
+
+          <!-- Two columns -->
+          <div style="display: flex; gap: 28px; align-items: flex-start;">
+
+            <!-- Left: the basis -->
+            <div style="flex-grow: 1; min-width: 0;">
+              <span class="eyebrow" style="color: #5A6B72;">WHAT YOU ARE DECIDING ON</span>
+
+              <div style="margin-top: 12px;">
+                <div class="check-row" style="padding-top: 0;">
+                  <span style="flex-shrink: 0; width: 20px; height: 20px; border-radius: 999px; background: rgba(31,122,84,0.12); display: flex; align-items: center; justify-content: center; margin-top: 1px;">
+                    <svg viewBox="0 0 20 20" width="11" height="11" fill="none" stroke="#1F7A54" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 8 14.5 16 6"/></svg>
+                  </span>
+                  <div style="flex-grow: 1;">
+                    <div class="check-name">Workspace is live</div>
+                    <div class="check-detail">Payment Processing System &middot; ISO 27001 2022 &middot; 2026 Initial Certification</div>
+                  </div>
+                </div>
+
+                <div class="check-row">
+                  <span style="flex-shrink: 0; width: 20px; height: 20px; border-radius: 999px; background: rgba(31,122,84,0.12); display: flex; align-items: center; justify-content: center; margin-top: 1px;">
+                    <svg viewBox="0 0 20 20" width="11" height="11" fill="none" stroke="#1F7A54" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 8 14.5 16 6"/></svg>
+                  </span>
+                  <div style="flex-grow: 1;">
+                    <div class="check-name">Requester is inside your boundary</div>
+                    <div class="check-detail">Alex Chen &middot; Customer Admin &middot; ACME Taiwan is one of your assigned tenants</div>
+                  </div>
+                </div>
+
+                <div class="check-row">
+                  <span style="flex-shrink: 0; width: 20px; height: 20px; border-radius: 999px; background: rgba(31,122,84,0.12); display: flex; align-items: center; justify-content: center; margin-top: 1px;">
+                    <svg viewBox="0 0 20 20" width="11" height="11" fill="none" stroke="#1F7A54" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 8 14.5 16 6"/></svg>
+                  </span>
+                  <div style="flex-grow: 1;">
+                    <div class="check-name">Service is in the catalogue, and someone can take it</div>
+                    <div class="check-detail">Other Services / Gap Analysis &middot; 2 SGS Consultants are assignable to this customer</div>
+                  </div>
+                </div>
+
+                <div class="check-row" style="border-bottom: none;">
+                  <span style="flex-shrink: 0; width: 20px; height: 20px; border-radius: 999px; background: rgba(202,67,0,0.14); display: flex; align-items: center; justify-content: center; margin-top: 1px;">
+                    <svg viewBox="0 0 20 20" width="12" height="12" fill="none" stroke="#A63700" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 4.5v6"/><path d="M10 14h.01"/></svg>
+                  </span>
+                  <div style="flex-grow: 1;">
+                    <div class="check-name">Evidence coverage &mdash; 3 of 4 assessable requirements</div>
+                    <div class="check-detail">One control has no evidence mapped. That is not a blocker; it is what a Gap Analysis is for.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 6px;">
+                <div class="req">
+                  <span class="req-code">A.5.1</span>
+                  <span class="req-label" style="flex-grow: 1;">Policies for information security</span>
+                  <span class="req-count" style="color: #1F7A54;">1 evidence</span>
+                </div>
+                <div class="req">
+                  <span class="req-code">A.5.2</span>
+                  <span class="req-label" style="flex-grow: 1;">Information security roles and responsibilities</span>
+                  <span class="req-count" style="color: #1F7A54;">1 evidence</span>
+                </div>
+                <div class="req">
+                  <span class="req-code">A.8.8</span>
+                  <span class="req-label" style="flex-grow: 1;">Management of technical vulnerabilities</span>
+                  <span class="req-count" style="color: #1F7A54;">2 evidence</span>
+                </div>
+                <div class="req" style="border-color: rgba(202,67,0,0.35); background: rgba(202,67,0,0.04);">
+                  <span class="req-code" style="color: #A63700;">A.8.15</span>
+                  <span class="req-label" style="flex-grow: 1; color: #29343A; font-weight: 500;">Logging</span>
+                  <span class="req-count" style="color: #A63700;">No evidence</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: the decision -->
+            <div style="width: 372px; flex-shrink: 0; display: flex; flex-direction: column; gap: 10px;">
+              <span class="eyebrow" style="color: #5A6B72;">YOUR DECISION</span>
+
+              <div class="choice" style="border-color: rgba(202,67,0,0.4); background: rgba(202,67,0,0.03);">
+                <button type="button" class="btn" style="background: #CA4300; color: #FFFFFF; border: none;">
+                  <svg viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 8 14.5 16 6"/></svg>
+                  Accept
+                </button>
+                <p class="choice-note">Status becomes <strong style="font-weight: 600;">Accepted</strong> and the Assign consultant step unlocks. Alex Chen is notified. Accepted cannot return to Submitted.</p>
+              </div>
+
+              <div class="choice" style="border-color: rgba(218,30,40,0.3);">
+                <button type="button" class="btn" style="background: #FFFFFF; color: #A2191F; border: 1px solid rgba(218,30,40,0.55);">
+                  <svg viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 5.5 14.5 14.5"/><path d="M14.5 5.5 5.5 14.5"/></svg>
+                  Reject
+                </button>
+                <p class="choice-note">Needs a written reason, and <strong style="font-weight: 600;">that reason goes to the customer</strong> &mdash; it posts in the discussion under your name. Rejected is final; the request cannot be reopened.</p>
+              </div>
+
+              <div class="choice">
+                <button type="button" class="btn" style="background: #FFFFFF; color: #001F3F; border: 1px solid rgba(0,31,63,0.3);">
+                  <svg viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7.4"/><path d="M8.2 8a1.9 1.9 0 1 1 2.6 1.8c-.5.2-.8.7-.8 1.2v.4"/><path d="M10 14h.01"/></svg>
+                  Request information
+                </button>
+                <p class="choice-note">Not a decision &mdash; a pause. Parks the request at <strong style="font-weight: 600;">Awaiting Information</strong>; your message posts to the discussion as customer-visible, and the decision comes back here when they reply.</p>
+              </div>
+
+              <div style="display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; border-radius: 10px; background: rgba(0,31,63,0.05);">
+                <svg viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="#001F3F" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 2px; flex-shrink: 0;"><circle cx="10" cy="10" r="7.4"/><path d="M10 13.5V9.5"/><path d="M10 7h.01"/></svg>
+                <p style="margin: 0; font-size: 12px; line-height: 1.5; color: #29343A;">Write a rejection reason the customer can act on. Internal reasoning belongs in an internal note in the discussion below, where it stays.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!-- ========== END DECISION PANEL ========== -->
+
+      <!-- Request context / Request details -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; column-gap: 20px;">
+        <div style="box-sizing: border-box; background: #FFFFFF; border: 1px solid rgba(60,81,91,0.14); border-radius: 12px; padding: 24px;">
+          <span style="font-size: 18px; font-weight: 700; color: #001F3F;">Request context</span>
+          <div style="font-size: 13px; font-weight: 400; color: #5A6B72; margin-top: 4px; margin-bottom: 22px;">Business context selected by the customer.</div>
+          <div class="field-pair">
+            <div class="field"><span class="field-label">Customer</span><span class="field-value">ACME Taiwan</span></div>
+            <div class="field"><span class="field-label">Service group</span><span class="field-value">Other Services</span></div>
+            <div class="field" style="grid-column: 1 / -1;"><span class="field-label">Selected service</span><span class="field-value">Other Services / Gap Analysis</span></div>
+            <div class="field"><span class="field-label">Scope</span><span class="field-value">Payment Processing System</span></div>
+            <div class="field"><span class="field-label">Framework Version</span><span class="field-value">ISO 27001 2022</span></div>
+            <div class="field"><span class="field-label">Workspace</span><span class="field-value">Payment Processing System &middot; ISO 27001 2022</span></div>
+            <div class="field"><span class="field-label">Certification Cycle</span><span class="field-value">2026 Initial Certification</span></div>
+          </div>
+        </div>
+
+        <div style="box-sizing: border-box; background: #FFFFFF; border: 1px solid rgba(60,81,91,0.14); border-radius: 12px; padding: 24px;">
+          <span style="font-size: 18px; font-weight: 700; color: #001F3F;">Request details</span>
+          <div style="font-size: 13px; font-weight: 400; color: #5A6B72; margin-top: 4px; margin-bottom: 22px;">Submitted service request information.</div>
+          <div class="field-pair">
+            <div class="field"><span class="field-label">Requester</span><span class="field-value">Alex Chen</span></div>
+            <div class="field"><span class="field-label">Assigned SGS Consultant</span><span class="field-value" style="color: #8A98A0; font-weight: 500;">Unassigned</span></div>
+            <div class="field"><span class="field-label">Created</span><span class="field-value">2026-09-20</span></div>
+            <div class="field"><span class="field-label">Last updated</span><span class="field-value">2026-09-20</span></div>
+            <div class="field" style="grid-column: 1 / -1;"><span class="field-label">Description</span><span class="field-value" style="font-weight: 400;">Assess the current evidence set and identify implementation priorities.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="height: 1px; background: rgba(60,81,91,0.14);"></div>
+
+      <!-- Discussion -->
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <div style="display: flex; flex-direction: column; gap: 3px;">
+          <span style="font-size: 19px; font-weight: 700; color: #001F3F;">Discussion</span>
+          <span style="font-size: 13px; font-weight: 400; color: #5A6B72;">Gap Analysis &middot; One thread for this request. Your decision lands here as a status event, so the customer reads one story.</span>
+        </div>
+
+        <div style="box-sizing: border-box; background: #FFFFFF; border: 1px solid rgba(60,81,91,0.14); border-radius: 12px; display: flex; flex-direction: column; overflow: hidden;">
+          <div style="padding: 18px 20px; display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span class="daylabel">20 SEP 2026</span>
+              <span style="flex-grow: 1; height: 1px; background: rgba(60,81,91,0.12);"></span>
+            </div>
+
+            <article style="display: flex; align-items: stretch; border: 1px solid rgba(60,81,91,0.14); border-radius: 10px; overflow: hidden; background: #FFFFFF;">
+              <span class="rail" style="background: #0F62FE;"></span>
+              <div style="flex-grow: 1; display: flex; gap: 14px; padding: 15px 18px;">
+                <span class="avatar" style="background: #D0E2FF; color: #0A3FA8;">AC</span>
+                <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 8px;">
+                  <div style="display: flex; align-items: center; gap: 9px; flex-wrap: wrap;">
+                    <span style="font-size: 14.5px; font-weight: 700; color: #29343A;">Alex Chen</span>
+                    <span class="rolechip" style="background: #D0E2FF; color: #0043CE;">Customer &middot; ACME Taiwan</span>
+                    <span class="vischip" style="background: rgba(60,81,91,0.07); border: 1px solid rgba(60,81,91,0.14);">
+                      <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                      Visible to customer
+                    </span>
+                    <span style="flex-grow: 1;"></span>
+                    <time class="stamp">20 Sep &middot; 08:20</time>
+                  </div>
+                  <p class="msg">Assess the current evidence set and identify implementation priorities.</p>
+                </div>
+              </div>
+            </article>
+
+            <div style="display: flex; align-items: center; gap: 12px; padding: 10px 16px 10px 12px; border-left: 4px solid #B6BFC6; background: #F4F6F7; border-radius: 0 10px 10px 0;">
+              <svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="#4A5A63" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7.4"/><path d="M10 5.6V10l3.2 2"/></svg>
+              <span style="font-size: 13.5px; color: #29343A;"><strong style="font-weight: 700;">Submitted</strong> &mdash; opened by Alex Chen</span>
+              <span style="flex-grow: 1;"></span>
+              <span class="stamp">20 Sep &middot; 08:20</span>
+            </div>
+
+            <article style="display: flex; align-items: stretch; border: 1px solid #DED7CB; border-radius: 10px; overflow: hidden; background: #F9F7F3;">
+              <span class="rail" style="background: #001F3F;"></span>
+              <span class="hatch"></span>
+              <div style="flex-grow: 1; display: flex; gap: 14px; padding: 15px 18px;">
+                <span class="avatar" style="background: #DCE4EC; color: #001F3F;">MH</span>
+                <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 8px;">
+                  <div style="display: flex; align-items: center; gap: 9px; flex-wrap: wrap;">
+                    <span style="font-size: 14.5px; font-weight: 700; color: #29343A;">Morgan Huang</span>
+                    <span class="rolechip" style="background: #DCE4EC; color: #001F3F;">SGS Admin</span>
+                    <span class="vischip" style="background: #EDE8DF; border: 1px dashed #C8BCA6;">
+                      <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+                      Internal &middot; SGS only
+                    </span>
+                    <span style="flex-grow: 1;"></span>
+                    <time class="stamp">23 Sep &middot; 09:06</time>
+                  </div>
+                  <p class="msg">Scope and cycle check out. A.8.15 has nothing mapped, which is exactly the gap they asked us to find &mdash; not a reason to reject.</p>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- Composer -->
+          <div style="border-top: 1px solid rgba(60,81,91,0.14); background: #FAFBFC; padding: 16px 20px 18px;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+              <button type="button" aria-pressed="true" style="display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 16px; border-radius: 8px; border: 1px dashed #C8BCA6; background: #F9F7F3; color: #3C515B; font-size: 13.5px; font-weight: 600; cursor: pointer;">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+                Internal note
+              </button>
+              <button type="button" aria-pressed="false" style="display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 16px; border-radius: 8px; border: 1px solid rgba(60,81,91,0.2); background: rgba(0,0,0,0); color: #5A6B72; font-size: 13.5px; font-weight: 500; cursor: pointer;">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                Reply to customer
+              </button>
+              <span style="flex-grow: 1;"></span>
+              <span style="display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: 999px; background: #EDE8DF; border: 1px dashed #C8BCA6; font-size: 12px; font-weight: 500; color: #3C515B;">ACME Taiwan will never see this</span>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 9px;">
+              <label for="sub-composer" style="font-size: 12.5px; font-weight: 500; color: #3C515B;">Internal note &mdash; SGS Admin only until a Consultant is assigned</label>
+              <textarea id="sub-composer" rows="2" placeholder="Record what you checked before deciding&hellip;" style="width: 100%; box-sizing: border-box; resize: vertical; padding: 12px 14px; font-size: 14px; line-height: 1.5; color: #29343A; background: #FFFFFF; border: 1px solid rgba(60,81,91,0.24); border-radius: 8px;"></textarea>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="flex-grow: 1; font-size: 12.5px; color: #5A6B72;">A rejection reason does not belong here &mdash; the Reject action collects it, so the decision and its reason stay one event.</span>
+                <button type="button" style="height: 44px; padding: 0 24px; border: none; border-radius: 8px; background: #001F3F; color: #FFFFFF; font-size: 14px; font-weight: 600; cursor: pointer;">Add internal note</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1880}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

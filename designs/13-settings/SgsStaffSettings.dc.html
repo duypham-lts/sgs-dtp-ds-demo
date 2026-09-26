@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SGS staff – settings</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="sgs-ops" style="position: relative; width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" tone="dark" site-name="Digital Trust Platform" site-sub="Operations Console" badge="Internal" home-links="{{noLinks}}" user-name="David Wu" user-email="david.wu@sgs.com" notifications="{{one}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" tone="dark" label="SGS Operations" sections="{{nav}}" default-active="settings" default-collapsed="{{collapsed}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <div style="padding: 8px 8px 4px">
+        <h1 class="headline-medium" style="margin: 0">Settings</h1>
+        <p class="body-medium" style="margin: 0; color: var(--text-secondary)">Your profile and preferences. Same page for SGS User, Auditor/Certification, Trainer/Assessor and Consultant.</p>
+      </div>
+      <section class="gr-card gr-card--extend" style="padding: 16px 24px"><x-import component-from-global-scope="Graphite.Tabs" label="Settings sections" tabs="{{tabs}}"></x-import></section>
+    </main>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite, F = window.React.Fragment;
+
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' },
+      { id: 'aud', label: 'My audits', icon: 'task', badge: 2, badgeTone: 'attention', badgeLabel: 'audits need action' },
+      { id: 'settings', label: 'Settings', icon: 'settings' } ] }];
+    var extra = {};
+
+    extra.noop = function(){};
+    function sect(title, sub, body){ return h('div', { style: { display: 'flex', flexDirection: 'column', gap: 16, padding: '24px 0', boxShadow: 'inset 0 -1px 0 var(--border-subtle-00)' } }, h('div', { style: { display: 'flex', flexDirection: 'column', gap: 2 } }, h('h2', { className: 'title-medium', style: { margin: 0 } }, title), sub ? h('p', { className: 'body-small', style: { margin: 0, color: 'var(--text-secondary)' } }, sub) : null), body); }
+    function col(){ return h.apply(null, ['div', { style: { display: 'flex', flexDirection: 'column', gap: 16, width: 552, maxWidth: '100%' } }].concat([].slice.call(arguments))); }
+    var mine = h('div', null,
+      sect('Profile', 'Your name is shown to SGS and your team. Email and role are managed by your administrator.', col(
+        h(G.TextInput, { label: 'Full name', required: true, width: '552px', defaultValue: 'David Wu' }),
+        h(G.TextInput, { label: 'Email', width: '552px', defaultValue: 'david.wu@sgs.com', readOnly: true, helpText: 'Your sign-in name. Ask your administrator to change it.' }),
+        h(G.TextInput, { label: 'Role', width: '552px', defaultValue: 'SGS Auditor/Certification', readOnly: true }),
+        h(G.TextInput, { label: 'Organisation', width: '552px', defaultValue: 'SGS Taiwan', readOnly: true }),
+        h('div', null, h(G.Button, { size: 'md' }, 'Save profile')))),
+      sect('Language', 'Applies to the portal and to framework content where a translation exists; otherwise English is shown.', col(
+        h(G.Select, { label: 'Display language', width: '552px', defaultValue: 'en', options: [{ value: 'en', label: 'English' }, { value: 'zh', label: '繁體中文 (Traditional Chinese)' }] }))),
+      sect('Sign-in', '', col(
+        h('p', { className: 'body-medium', style: { margin: 0 } }, 'Your password and sign-in are handled by the SGS sign-in service.'),
+        h('div', null, h(G.Button, { variant: 'tertiary', size: 'md' }, 'Sign out')))));
+    extra.tabs = [{ id: 'me', label: 'My settings', content: mine }];
+    return Object.assign({ yes: true, no: false, one: 1, two: 2, three: 3, s16: 16, nav: nav, noLinks: [], noop: function(){}, collapsed: false }, extra);
+  }
+}
+</script>
+</body>
+</html>

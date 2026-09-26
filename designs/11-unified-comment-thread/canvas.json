@@ -1,0 +1,224 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "Customer.dc.html": {
+      "h": 1240,
+      "title": "Customer Portal — same thread, filtered",
+      "w": 1280,
+      "x": 1360,
+      "y": 0
+    },
+    "Main.dc.html": {
+      "h": 1240,
+      "is_interactive": true,
+      "title": "SGS Portal — one thread",
+      "w": 1280,
+      "x": 0,
+      "y": 0
+    },
+    "Migration.dc.html": {
+      "h": 820,
+      "title": "Four places to one thread",
+      "w": 1280,
+      "x": 0,
+      "y": 2940
+    },
+    "Roles.dc.html": {
+      "h": 940,
+      "title": "Anatomy and role palette",
+      "w": 1280,
+      "x": 0,
+      "y": 1620
+    },
+    "States.dc.html": {
+      "h": 940,
+      "title": "Composer and thread states",
+      "w": 1280,
+      "x": 1360,
+      "y": 1620
+    },
+    "FullPage.dc.html": {
+      "h": 2020,
+      "is_interactive": true,
+      "title": "Service Request detail — the whole page",
+      "w": 1440,
+      "x": 0,
+      "y": 4140
+    },
+    "Submitted.dc.html": {
+      "h": 1880,
+      "is_interactive": true,
+      "title": "Submitted — Accept or Reject, no triage step",
+      "w": 1440,
+      "x": 0,
+      "y": 6540
+    },
+    "Accepted.dc.html": {
+      "h": 1820,
+      "is_interactive": true,
+      "title": "Accepted — assign a consultant",
+      "w": 1440,
+      "x": 1520,
+      "y": 6540
+    },
+    "Queue.dc.html": {
+      "h": 940,
+      "is_interactive": true,
+      "title": "SGS queue — next move",
+      "w": 1440,
+      "x": 0,
+      "y": 8880
+    },
+    "CustomerList.dc.html": {
+      "h": 940,
+      "is_interactive": true,
+      "title": "Customer list — what happens next",
+      "w": 1440,
+      "x": 1520,
+      "y": 8880
+    },
+    "CustDetail.dc.html": {
+      "h": 1060,
+      "is_interactive": true,
+      "title": "Customer detail — Accepted",
+      "w": 1440,
+      "x": 0,
+      "y": 10200
+    },
+    "CustAwaitingInfo.dc.html": {
+      "h": 1540,
+      "is_interactive": true,
+      "title": "Customer detail — Awaiting Information",
+      "w": 1440,
+      "x": 1520,
+      "y": 10200
+    },
+    "CustRejected.dc.html": {
+      "h": 1220,
+      "is_interactive": true,
+      "title": "Customer detail — Rejected",
+      "w": 1440,
+      "x": 3040,
+      "y": 10200
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-09-23T04:00:00Z",
+    "v": 1
+  },
+  "designSystems": [],
+  "launch": {
+    "view": "canvas"
+  },
+  "notes": {
+    "n1": {
+      "kind": "title1",
+      "maxW": 2640,
+      "text": "One session, two audiences",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    },
+    "n2": {
+      "kind": "title1",
+      "maxW": 2640,
+      "text": "How it is built",
+      "w": 240,
+      "x": 0,
+      "y": 1360
+    },
+    "n3": {
+      "kind": "title1",
+      "maxW": 1280,
+      "text": "Why it changes",
+      "w": 240,
+      "x": 0,
+      "y": 2680
+    },
+    "n4": {
+      "fill": "orange",
+      "text": "Try the filter and the composer tabs on the SGS board — it is interactive.\n\nThe two colour axes are the whole idea: hue = who wrote it, hatch + lock = who may read it. Keep them separate and the thread stays readable even when a request has forty entries.",
+      "w": 560,
+      "x": 1360,
+      "y": 2940
+    },
+    "n5": {
+      "kind": "title1",
+      "maxW": 1440,
+      "text": "The whole page, in the shell",
+      "w": 240,
+      "x": 0,
+      "y": 3880
+    },
+    "n6": {
+      "fill": "blue",
+      "text": "This board follows the sgs-operations-redesign flow instead of the boards above: 1440 wide, IBM Plex Sans, navy rail, 8px controls. Same file ships at design/sgs-operations-redesign/ServiceRequestDetailUnified.dc.html.\n\nPage order changed: actions moved up under the summary, and the discussion sits last because it is the only section that grows without limit.",
+      "w": 560,
+      "x": 1560,
+      "y": 4140
+    },
+    "n7": {
+      "kind": "title1",
+      "maxW": 2960,
+      "text": "Decide on arrival — no triage step",
+      "w": 240,
+      "x": 0,
+      "y": 6280
+    },
+    "n8": {
+      "fill": "green",
+      "text": "These two replace the old Start Triage pair, which asked for a click that only revealed the real buttons. Submitted now shows Accept and Reject at once.\n\nThe design is ahead of the state machine on purpose: SUBMITTED currently allows only UNDER_REVIEW and CANCELLED, so Accept, Reject and Request info from Submitted each need a transition adding. Design only — see DESIGN-SPEC.\n\nFiles: ServiceRequestDetailSubmitted.dc.html and ServiceRequestDetailAccepted.dc.html.",
+      "w": 560,
+      "x": 3120,
+      "y": 6540
+    },
+    "n9": {
+      "kind": "title1",
+      "maxW": 2960,
+      "text": "The two lists, same six requests",
+      "w": 240,
+      "x": 0,
+      "y": 8620
+    },
+    "n10": {
+      "fill": "purple",
+      "text": "Earlier pass. Both list boards have since been removed from the repo folder — the list is out of scope — so these two are kept here for reference only and are not part of the shipped set.",
+      "w": 560,
+      "x": 3120,
+      "y": 8880
+    },
+    "n11": {
+      "kind": "title1",
+      "maxW": 4480,
+      "text": "Customer detail — flow preserved",
+      "w": 240,
+      "x": 0,
+      "y": 9940
+    },
+    "n12": {
+      "fill": "teal",
+      "text": "Visual and IA only. Every step, guard and string of customer-service-request-detail.tsx is preserved — the DESIGN-SPEC carries a UI → existing action map, control by control.\n\nThe middle board is the one that matters: the SGS ask moves out of the left column into a full-width panel under the title, attributed to the consultant with their avatar and the event timestamp. The same reason still appears in the timeline — promoting it hides nothing.",
+      "w": 560,
+      "x": 4560,
+      "y": 10200
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "Customer.dc.html",
+    "Roles.dc.html",
+    "States.dc.html",
+    "Migration.dc.html",
+    "FullPage.dc.html",
+    "Submitted.dc.html",
+    "Accepted.dc.html",
+    "Queue.dc.html",
+    "CustomerList.dc.html",
+    "CustDetail.dc.html",
+    "CustAwaitingInfo.dc.html",
+    "CustRejected.dc.html"
+  ],
+  "pages": [],
+  "title": "Unified Comment Thread — Role Design"
+}

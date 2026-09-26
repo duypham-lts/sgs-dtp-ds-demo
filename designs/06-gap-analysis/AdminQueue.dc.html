@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SGS Admin – Gap Analysis queue</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="sgs-ops" style="position: relative; width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" tone="dark" site-name="Digital Trust Platform" site-sub="Operations Console" badge="Internal" home-links="{{noLinks}}" user-name="Minh Nguyen" user-email="minh.nguyen@sgs.com" notifications="{{three}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" tone="dark" label="SGS Operations" sections="{{nav}}" default-active="req-gap" default-collapsed="{{collapsed}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; padding: 8px 8px 4px">
+        <div>
+          <x-import component-from-global-scope="Graphite.Breadcrumb" items="{{crumbs}}"></x-import>
+          <h1 class="headline-medium" style="margin: 8px 0 0 0">Gap Analysis requests</h1>
+          <p class="body-medium" style="margin: 0; color: var(--text-secondary)">Requests from customers in SGS Taiwan. Approve and assign a consultant, or reject with a reason.</p>
+        </div>
+      </div>
+      <section class="gr-card gr-card--extend" style="padding: 16px 24px">
+        <x-import component-from-global-scope="Graphite.Tabs" label="Request status" tabs="{{tabs}}"></x-import>
+      </section>
+    </main>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite, F = window.React.Fragment;
+
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' },
+      { id: 'req', label: 'Requests', icon: 'task', badge: 3, badgeTone: 'attention', badgeLabel: 'requests need triage', children: [
+        { id: 'req-all', label: 'All requests' }, { id: 'req-cert', label: 'Certification' }, { id: 'req-train', label: 'Training' },
+        { type: 'label', label: 'Other services' }, { id: 'req-gap', label: 'Gap Analysis', badge: 3, badgeTone: 'attention', badgeLabel: 'need triage' }, { id: 'req-impl', label: 'Implementation Support' } ] },
+      { id: 'cust', label: 'Customers', icon: 'user--multiple' },
+      { id: 'fw', label: 'Frameworks', icon: 'catalog' },
+      { id: 'asg', label: 'Assignments', icon: 'user--access' },
+      { id: 'audit', label: 'Audit Logs', icon: 'document' },
+      { id: 'settings', label: 'Settings', icon: 'settings' } ] }];
+    var extra = {};
+
+    var ST = { submitted: ['under-review', 'Submitted'], scheduled: ['info', 'Scheduled'], progress: ['under-review', 'In progress'], completed: ['completed', 'Completed'], rejected: ['rejected', 'Rejected'], withdrawn: ['draft', 'Withdrawn'] };
+    function R(a){ return { id: a[0], cust: a[1], fw: a[2], scope: a[3], sub: a[4], wait: a[5], st: a[6], cons: a[7] || '—', when: a[8] || '—', flag: a[9] }; }
+    var triage = [
+      ['GA-2026-005', 'ABC Trading Co., Ltd.', 'ISO/IEC 27701', 'Customer data platform', '21 Sep 2026', 3, 'submitted'],
+      ['GA-2026-007', 'Lotus Cosmetics JSC', 'ISO/IEC 27001', 'Bac Ninh plant', '23 Sep 2026', 1, 'submitted'],
+      ['GA-2026-008', 'Riyadh Imports LLC', 'Not sure — SGS to advise', 'Head office', '24 Sep 2026', 0, 'submitted'] ].map(R);
+    var sched = [
+      ['GA-2026-003', 'ABC Trading Co., Ltd.', 'NIST CSF', 'Plant · Taichung', '10 Sep 2026', 0, 'scheduled', 'Wei Lin', '12 – 14 Oct 2026'],
+      ['GA-2026-006', 'Formosa Chips Inc.', 'TISAX', 'Hsinchu fab', '15 Sep 2026', 0, 'scheduled', 'Anna Lee', '20 – 22 Oct 2026'] ].map(R);
+    var prog = [
+      ['GA-2026-004', 'ABC Trading Co., Ltd.', 'ISO/IEC 42001', 'AI platform', '01 Sep 2026', 0, 'progress', 'Minh Tran', '16 – 18 Sep 2026', true],
+      ['GA-2026-002', 'ABC Trading Co., Ltd.', 'ISO/IEC 27001', 'Head office · Taipei', '02 Sep 2026', 0, 'progress', 'Anna Lee', '14 – 18 Sep 2026'] ].map(R);
+    var closed = [
+      ['GA-2026-001', 'ABC Trading Co., Ltd.', 'TISAX', 'Plant · Taichung', '12 Jun 2026', 0, 'rejected'],
+      ['GA-2025-044', 'Lotus Cosmetics JSC', 'ISO 22301', 'Head office', '03 Mar 2026', 0, 'completed', 'Anna Lee', '20 – 21 Mar 2026'],
+      ['GA-2025-039', 'Formosa Chips Inc.', 'ISO/IEC 27001', 'Hsinchu fab', '11 Feb 2026', 0, 'withdrawn'] ].map(R);
+    var base = [
+      { key: 'id', header: 'Request', sortable: true, width: 130, render: function(r){ return h('a', { href: r.st === 'submitted' && r.id === 'GA-2026-005' ? 'AdminReview.dc.html' : '#', className: 'gr-link', style: { fontWeight: 500 } }, r.id); } },
+      { key: 'cust', header: 'Customer', sortable: true },
+      { key: 'fw', header: 'Framework', sortable: true },
+      { key: 'scope', header: 'Scope' } ];
+    var stCol = { key: 'st', header: 'Status', render: function(r){ return h('span', { style: { display: 'inline-flex', gap: 4 } }, h(G.StatusTag, { status: ST[r.st][0], size: 'sm', label: ST[r.st][1] }), r.flag ? h(G.StatusTag, { status: 'missing-info', size: 'sm', label: 'Action required' }) : null); } };
+    var triageCols = base.concat([
+      { key: 'sub', header: 'Submitted', sortable: true, sortValue: function(r){ return -r.wait; } },
+      { key: 'wait', header: 'Waiting', sortable: true, align: 'end', render: function(r){ return r.wait >= 3 ? h(G.Tag, { tone: 'required' }, r.wait + ' days') : r.wait === 0 ? 'Today' : r.wait + (r.wait === 1 ? ' day' : ' days'); } }, stCol ]);
+    var workCols = base.concat([{ key: 'cons', header: 'Consultant', sortable: true }, { key: 'when', header: 'On site' }, stCol]);
+    function T(rows, cols, triageActions){ return h(G.DataTable, { columns: cols, rows: rows, searchable: true, searchPlaceholder: 'Search requests or customers', layout: 'table', pageSize: 10,
+      rowActions: function(){ return triageActions ? [{ label: 'Review' }, { label: 'Approve & assign' }, { label: 'Reject', danger: true }] : [{ label: 'Open' }, { label: 'Change consultant' }, { label: 'Change access window' }]; } }); }
+    extra.crumbs = [{ label: 'Requests', href: '#' }, { label: 'Gap Analysis' }];
+    extra.tabs = [
+      { id: 'triage', label: 'Needs triage', badge: triage.length, content: T(triage, triageCols, true) },
+      { id: 'sched', label: 'Scheduled', badge: sched.length, content: T(sched, workCols) },
+      { id: 'prog', label: 'In progress', badge: prog.length, content: T(prog, workCols) },
+      { id: 'closed', label: 'Closed', badge: closed.length, content: T(closed, workCols) } ];
+    return Object.assign({ yes: true, no: false, three: 3, nav: nav, noLinks: [], noop: function(){}, collapsed: false }, extra);
+  }
+}
+</script>
+</body>
+</html>

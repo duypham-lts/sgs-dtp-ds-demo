@@ -1,0 +1,160 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "AdminReject.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Reject request",
+      "w": 1440,
+      "x": 3040,
+      "y": 2560
+    },
+    "CertAdminAssign.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Assign certification request",
+      "w": 1440,
+      "x": 1520,
+      "y": 2560
+    },
+    "CertAdminQueue.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Certification requests",
+      "w": 1440,
+      "x": 0,
+      "y": 2560
+    },
+    "CertDetail.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Request · Submitted",
+      "w": 1440,
+      "x": 3040,
+      "y": 0
+    },
+    "CertDetailAssigned.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Request · Assigned",
+      "w": 1440,
+      "x": 4560,
+      "y": 0
+    },
+    "CertRequest.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Request certification",
+      "w": 1440,
+      "x": 1520,
+      "y": 0
+    },
+    "Main.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Certification catalog",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "TrainAdminAssign.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Assign training request",
+      "w": 1440,
+      "x": 6080,
+      "y": 2560
+    },
+    "TrainAdminQueue.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Training requests",
+      "w": 1440,
+      "x": 4560,
+      "y": 2560
+    },
+    "TrainDetail.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Request · Submitted",
+      "w": 1440,
+      "x": 3040,
+      "y": 1280
+    },
+    "TrainList.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Training catalog",
+      "w": 1440,
+      "x": 0,
+      "y": 1280
+    },
+    "TrainRequest.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Request a course",
+      "w": 1440,
+      "x": 1520,
+      "y": 1280
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-09-24T17:40:00Z",
+    "v": 1
+  },
+  "designSystems": [
+    {
+      "artifact": "https://claude.ai/artifact/CEneLQNFxsQuEaagfERSqo",
+      "copiedAt": "2026-09-24T19:02:00Z",
+      "namespace": "graphite",
+      "title": "Graphite DS",
+      "version": "1790310317-cfa1"
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  },
+  "notes": {
+    "r0": {
+      "kind": "title1",
+      "maxW": 6000,
+      "text": "Customer · Certification Services",
+      "w": 240,
+      "x": 0,
+      "y": -260
+    },
+    "r1": {
+      "kind": "title1",
+      "maxW": 4480,
+      "text": "Customer · Training Courses",
+      "w": 240,
+      "x": 0,
+      "y": 1020
+    },
+    "r2": {
+      "kind": "title1",
+      "maxW": 7520,
+      "text": "SGS Admin",
+      "w": 240,
+      "x": 0,
+      "y": 2300
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "CertRequest.dc.html",
+    "CertDetail.dc.html",
+    "CertDetailAssigned.dc.html",
+    "TrainList.dc.html",
+    "TrainRequest.dc.html",
+    "TrainDetail.dc.html",
+    "CertAdminQueue.dc.html",
+    "CertAdminAssign.dc.html",
+    "AdminReject.dc.html",
+    "TrainAdminQueue.dc.html",
+    "TrainAdminAssign.dc.html"
+  ],
+  "pages": [],
+  "title": "DTP – Certification & Training"
+}

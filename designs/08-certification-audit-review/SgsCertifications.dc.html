@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SGS – certifications</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="sgs-ops" style="position: relative; width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" tone="dark" site-name="Digital Trust Platform" site-sub="Operations Console" badge="Internal" home-links="{{noLinks}}" user-name="Minh Nguyen" user-email="minh.nguyen@sgs.com" notifications="{{three}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" tone="dark" label="SGS Operations" sections="{{nav}}" default-active="certs" default-collapsed="{{collapsed}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <div style="padding: 8px 8px 4px">
+        <x-import component-from-global-scope="Graphite.Breadcrumb" items="{{crumbs}}"></x-import>
+        <h1 class="headline-medium" style="margin: 8px 0 0 0">Certifications</h1>
+        <p class="body-medium" style="margin: 0; color: var(--text-secondary)">Certificates issued to customers of SGS Taiwan.</p>
+      </div>
+      <div style="flex-grow: 1; min-height: 0"><x-import component-from-global-scope="Graphite.DataTable" title="4 certificates" columns="{{cols}}" rows="{{rows}}" searchable="{{yes}}" search-placeholder="Search number, customer or framework" layout="table"></x-import></div>
+    </main>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite, F = window.React.Fragment;
+
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' },
+      { id: 'req', label: 'Requests', icon: 'task', badge: 3, badgeTone: 'attention', badgeLabel: 'requests need triage', children: [
+        { id: 'req-all', label: 'All requests' }, { id: 'req-cert', label: 'Certification' }, { id: 'req-train', label: 'Training' },
+        { type: 'label', label: 'Other services' }, { id: 'req-gap', label: 'Gap Analysis', badge: 3, badgeTone: 'attention', badgeLabel: 'need triage' }, { id: 'req-impl', label: 'Implementation Support' } ] },
+      { id: 'certs', label: 'Certifications', icon: 'checkmark' },
+      { id: 'cust', label: 'Customers', icon: 'category' },
+      { id: 'fw', label: 'Frameworks', icon: 'catalog' },
+      { id: 'asg', label: 'Assignments', icon: 'user--access' },
+      { id: 'audit', label: 'Audit Logs', icon: 'document' },
+      { id: 'settings', label: 'Settings', icon: 'settings' } ] }];
+    var extra = {};
+
+    var extra = { crumbs: [{ label: 'Certifications' }] };
+    extra.cols = [
+      { key: 'n', header: 'Certificate', width: 130, render: function(r){ return h('span', { style: { fontWeight: 500 } }, r.n); } },
+      { key: 'c', header: 'Customer · scope', render: function(r){ return h('span', { style: { display: 'flex', flexDirection: 'column' } }, h('span', null, r.c), h('span', { className: 'body-small', style: { color: 'var(--text-secondary)' } }, r.s)); } },
+      { key: 'f', header: 'Framework', sortable: true },
+      { key: 'd', header: 'Certificate date', width: 150, sortable: true },
+      { key: 'v', header: 'Valid to', width: 130, sortable: true },
+      { key: 'st', header: 'Status', width: 120, render: function(){ return h(G.StatusTag, { status: 'completed', size: 'sm', label: 'Active' }); } } ];
+    extra.rows = [
+      { id: 1, n: 'TW26/1142', c: 'ABC Trading Co., Ltd.', s: 'Customer data platform', f: 'Appendix 10 · 2022 (Medium)', d: '15 Dec 2026', v: '14 Dec 2029' },
+      { id: 2, n: 'TW26/0870', c: 'Formosa Chips Inc.', s: 'Cloud services', f: 'ISO/IEC 27017 · 2015', d: '30 Sep 2026', v: '29 Sep 2029' },
+      { id: 3, n: 'TW25/0877', c: 'ABC Trading Co., Ltd.', s: 'Head office · Taipei', f: 'ISO/IEC 27001 · 2022', d: '21 Jan 2025', v: '20 Jan 2028' },
+      { id: 4, n: 'TW24/0391', c: 'ABC Trading Co., Ltd.', s: 'Head office · Taipei', f: 'ISO 22301 · 2019', d: '04 Mar 2024', v: '03 Mar 2027' } ];
+    return Object.assign({ yes: true, no: false, three: 3, nav: nav, noLinks: [], noop: function(){}, collapsed: false }, extra);
+  }
+}
+</script>
+</body>
+</html>

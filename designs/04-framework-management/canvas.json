@@ -1,0 +1,99 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "FwActivate.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Activate",
+      "w": 1440,
+      "x": 6080,
+      "y": 0
+    },
+    "FwDetail.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Active version · Overview",
+      "w": 1440,
+      "x": 7600,
+      "y": 0
+    },
+    "FwErrors.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Import · errors in the file",
+      "w": 1440,
+      "x": 3040,
+      "y": 0
+    },
+    "FwImport.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Import a framework",
+      "w": 1440,
+      "x": 1520,
+      "y": 0
+    },
+    "FwPreview.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Draft · review",
+      "w": 1440,
+      "x": 4560,
+      "y": 0
+    },
+    "FwRequirements.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Active version · Requirements",
+      "w": 1440,
+      "x": 9120,
+      "y": 0
+    },
+    "Main.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Frameworks",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-09-24T20:10:00Z",
+    "v": 1
+  },
+  "designSystems": [
+    {
+      "artifact": "https://claude.ai/artifact/CEneLQNFxsQuEaagfERSqo",
+      "copiedAt": "2026-09-24T20:10:00Z",
+      "namespace": "graphite",
+      "title": "Graphite DS",
+      "version": "1790312340-e7be"
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  },
+  "notes": {
+    "r0": {
+      "kind": "title1",
+      "maxW": 8000,
+      "text": "SGS Admin · Frameworks",
+      "w": 240,
+      "x": 0,
+      "y": -260
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "FwImport.dc.html",
+    "FwErrors.dc.html",
+    "FwPreview.dc.html",
+    "FwActivate.dc.html",
+    "FwDetail.dc.html",
+    "FwRequirements.dc.html"
+  ],
+  "pages": [],
+  "title": "DTP – Framework Management"
+}

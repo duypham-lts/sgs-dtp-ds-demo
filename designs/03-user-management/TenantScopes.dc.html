@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SGS Admin – customer scopes</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="sgs-ops" style="position: relative; width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" tone="dark" site-name="Digital Trust Platform" site-sub="Operations Console" badge="Internal" home-links="{{noLinks}}" user-name="Minh Nguyen" user-email="minh.nguyen@sgs.com" notifications="{{three}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" tone="dark" label="SGS Operations" sections="{{nav}}" default-active="cust" default-collapsed="{{collapsed}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <x-import component-from-global-scope="Graphite.PageHeader" title="ABC Trading Co., Ltd." subtitle="Taiwan · SGS Taiwan" on-back="{{noop}}" status="{{status}}" actions="{{hdr}}"></x-import>
+      <div style="flex-grow: 1; min-height: 0; display: grid; grid-template-columns: 14fr 62fr 21fr; gap: 20px">
+        <div style="min-width: 0; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02)">
+          <x-import component-from-global-scope="Graphite.SectionNav" label="Sections" items="{{sections}}" default-active="sc"></x-import>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 20px">
+          <section class="gr-card gr-card--extend">
+            <div class="gr-card__head"><div><h2 class="gr-card__title">Scopes</h2><p class="gr-card__sub">Managed by the customer. Requirements and evidence are visible only to the auditor or consultant assigned to a request.</p></div></div>
+            <x-import component-from-global-scope="Graphite.DataTable" title="{{scCount}}" columns="{{scCols}}" rows="{{scRows}}" searchable="{{yes}}" search-placeholder="Search scopes" layout="table" paginate="{{no}}"></x-import>
+          </section>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02); display: flex; flex-direction: column; gap: 16px">
+          <div class="title-medium">Account</div>
+          <div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: var(--radius-md); background: var(--layer-01)">
+            <span class="title-small">Status</span>
+            <span class="body-medium">6 users · 4 scopes</span><span class="body-small" style="color: var(--text-secondary)">Last sign-in today by Linh Tran</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite, F = window.React.Fragment;
+
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' },
+      { id: 'req', label: 'Requests', icon: 'task', badge: 3, badgeTone: 'attention', badgeLabel: 'requests need triage', children: [
+        { id: 'req-all', label: 'All requests' }, { id: 'req-cert', label: 'Certification' }, { id: 'req-train', label: 'Training' },
+        { type: 'label', label: 'Other services' }, { id: 'req-gap', label: 'Gap Analysis', badge: 3, badgeTone: 'attention', badgeLabel: 'need triage' }, { id: 'req-impl', label: 'Implementation Support' } ] },
+      { id: 'cust', label: 'Customers', icon: 'category' },
+      { id: 'fw', label: 'Frameworks', icon: 'catalog' },
+      { id: 'asg', label: 'Assignments', icon: 'user--access' },
+      { id: 'audit', label: 'Audit Logs', icon: 'document' },
+      { id: 'settings', label: 'Settings', icon: 'settings' } ] },
+      { label: 'Administration', items: [{ id: 'users', label: 'Users', icon: 'user--multiple' }] }];
+    var extra = {};
+
+    var extra = { noop: function(){} };
+    extra.status = { status: 'completed', label: 'Active', shortLabel: 'Active' };
+    extra.hdr = null;
+    extra.sections = [{"id": "adm", "label": "Customer Admin", "href": "TenantDetail.dc.html"}, {"id": "pf", "label": "Profile", "href": "TenantDetail.dc.html"}, {"id": "us", "label": "Users", "href": "TenantDetail.dc.html"}, {"id": "sc", "label": "Scopes", "href": "TenantScopes.dc.html"}];
+    extra.uCols = [{ key: 'n', header: 'User' }, { key: 'r', header: 'Role' }, { key: 's', header: 'Status', render: function(r){ return h(G.StatusTag, { status: r.st, size: 'sm', label: r.s }); } }];
+    extra.uRows = [{ n: 'Linh Tran', r: 'Customer Admin', st: 'completed', s: 'Active' }, { n: 'Wei Chen', r: 'Customer User', st: 'completed', s: 'Active' }, { n: 'Mei Lin', r: 'Customer User', st: 'completed', s: 'Active' }, { n: 'Kevin Ho', r: 'Customer User', st: 'under-review', s: 'Invitation pending' }];
+    extra.sCols = [{ key: 's', header: 'Scope' }, { key: 't', header: 'Type', width: 130 }, { key: 'f', header: 'Framework · version' }, { key: 'tierLabel', header: 'Tier (set by customer)', width: 200, render: function(r){ return r.tiers ? (r.tiers.filter(function(t){ return t.value === r.tier; })[0] || {}).label : h('span', { className: 'body-small', style: { color: 'var(--text-secondary)' } }, 'No tiers'); } }];
+    var T = [{ value: 'P', label: 'Basic' }, { value: 'M', label: 'Medium' }, { value: 'H', label: 'High' }];
+    extra.sRows = [
+      { s: 'Head office · Taipei', t: 'Organisation', f: 'ISO/IEC 27001 · 2022' },
+      { s: 'Customer data platform', t: 'System', f: 'Appendix 10 · 2022', tiers: T, tier: 'M' },
+      { s: 'AI platform', t: 'Product', f: 'ISO/IEC 42001 · 2023' },
+      { s: 'Plant · Taichung', t: 'Organisation', f: 'TISAX · ISA 6.0', tiers: [{ value: 'n', label: 'Normal' }, { value: 'h', label: 'High' }, { value: 'vh', label: 'Very high' }], tier: 'h' } ];
+
+    var TT = { Organization: 'neutral', Product: 'info', System: 'required' };
+    function lines(a){ return a.length ? h('span', { style: { display: 'flex', flexDirection: 'column' } }, a.map(function(x){ return h('span', { key: x }, x); })) : h('span', { className: 'body-small', style: { color: 'var(--text-secondary)' } }, 'None linked'); }
+    var sc = [
+      { id: 1, n: 'Head office · Taipei', t: 'Organization', p: '—', f: ['ISO/IEC 27001 · 2022', 'ISO 22301 · 2019'], tier: ['No tiers', 'No tiers'], u: 3, c: '12 Mar 2025' },
+      { id: 2, n: 'Retail loyalty app', t: 'Product', p: '—', f: ['ISO/IEC 27701 · 2019'], tier: ['No tiers'], u: 2, c: '02 Jun 2025' },
+      { id: 3, n: 'Customer data platform', t: 'System', p: 'Head office · Taipei; Retail loyalty app', f: ['Appendix 10 · 2022'], tier: ['Medium · 中'], u: 2, c: '20 Aug 2026' },
+      { id: 4, n: 'AI platform', t: 'Product', p: '—', f: [], tier: [], u: 1, c: '11 Sep 2026' } ];
+    extra.scRows = sc;
+    extra.scCount = sc.length + ' scopes';
+    extra.scCols = [
+      { key: 'n', header: 'Scope', sortable: true, render: function(r){ return h('span', { style: { fontWeight: 500 } }, r.n); } },
+      { key: 't', header: 'Type', sortable: true, width: 140, render: function(r){ return h(G.Tag, { tone: TT[r.t] }, r.t); } },
+      { key: 'p', header: 'Belongs to', width: 220 },
+      { key: 'f', header: 'Framework · version', render: function(r){ return lines(r.f); } },
+      { key: 'tier', header: 'Tier (set by customer)', width: 180, render: function(r){ return r.tier.length ? lines(r.tier) : '—'; } },
+      { key: 'u', header: 'Users', align: 'end', width: 80 },
+      { key: 'c', header: 'Created', width: 120 } ];
+    return Object.assign({ yes: true, no: false, three: 3, nav: nav, noLinks: [], noop: function(){}, collapsed: false }, extra);
+  }
+}
+</script>
+</body>
+</html>

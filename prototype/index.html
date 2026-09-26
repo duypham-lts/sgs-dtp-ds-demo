@@ -1,0 +1,1134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SGS Digital Trust Platform · Customer Portal prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+  --orange:#CA4300; --orange-hover:#A93800; --peach:#FF9966; --burgundy:#8E0B3D;
+  --charcoal:#3C525D; --slate:#65899A; --text:#28373E; --text2:#3C525D; --ph:#8FA3AD;
+  --bg:#EDF2F7; --col:#E2E8EB; --card:#E2E8EB; --sub:#D3DDE2; --field:#EEF2F4; --field-h:#E6ECEF; --ext:#E0E7EB;
+  --white:#FFFFFF; --surface:#F9FAFB; --outline:#7A8285;
+  --green:#24A148; --green-bg:#D9F3E4; --red:#DA1E28; --red-bg:#FEE7E7; --blue:#085CC2; --blue-bg:#D6E6FB;
+  --yellow:#F1C21B; --yellow-bg:#FFF6E5; --nav-active:#FDDCCB;
+  --dis-bg:#C6C6C6; --dis-tx:#8D8D8D;
+  --font:Roboto,"Noto Sans","Noto Sans TC","Helvetica Neue",Arial,sans-serif;
+  --gap:20px; --pad-card:24px; --pad-right:16px; --head-gap:32px;
+}
+:root[data-theme="dark"],:root:not([data-theme="light"]){color-scheme:light}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+body{margin:0;height:100%;background:var(--bg);color:var(--text);font:400 14px/20px var(--font);-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0;padding:0}
+a{color:var(--orange)}
+:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+img,svg{max-width:100%}
+.ic{width:24px;height:24px;fill:currentColor;flex:none}
+.ic.sm{width:20px;height:20px}
+.ic.xs{width:16px;height:16px}
+.si{width:16px;height:16px;fill:currentColor;flex:none}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- Big area & shell (95% rule, 960–1980) ---------- */
+.app{height:100dvh;display:flex;flex-direction:column;min-width:960px;max-width:1980px;margin:0 auto}
+.shell{width:95.5%;margin:0 auto}
+.main-scroll{flex:1;overflow:auto;min-height:0;padding-bottom:48px}
+
+/* ---------- Top bar ---------- */
+.topbar{margin-top:12px;flex:none}
+.tb{height:48px;background:var(--white);border-radius:12px;display:flex;align-items:center;padding:0 16px;gap:16px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--charcoal)}
+.logo b{font:700 20px/28px var(--font);letter-spacing:.5px}
+.logo .site{font:500 14px/20px var(--font);color:var(--text)}
+.logo .sep{width:1px;height:20px;background:var(--charcoal)}
+.logo .portal{font:400 12px/20px var(--font);color:var(--text2)}
+.tb-links{margin-left:auto;display:flex;align-items:center;gap:8px}
+.tb-link{text-decoration:none;font:500 14px/20px var(--font);color:var(--text2);padding:6px 12px;border-radius:16px;display:flex;align-items:center;gap:6px}
+.tb-link:hover{background:rgba(101,137,154,.12)}
+.tb-link.on{color:var(--orange)}
+.tb-link .ic{display:none}
+.icon-btn{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:var(--charcoal);position:relative}
+.icon-btn:hover{background:rgba(101,137,154,.12)}
+.icon-btn.on{color:var(--orange)}
+.badge{position:absolute;top:6px;right:6px;min-width:16px;height:16px;border-radius:8px;background:var(--orange);color:#fff;font:500 12px/16px var(--font);padding:0 4px}
+.topbar.clear .tb{background:transparent}
+.topbar.clear .logo,.topbar.clear .logo .site,.topbar.clear .logo .portal{color:#fff}
+.topbar.clear .logo .sep{background:#fff}
+
+/* ---------- Buttons ---------- */
+.btn{height:40px;padding:0 20px;border-radius:20px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font:500 14px/20px var(--font);white-space:nowrap}
+.btn-primary{background:var(--orange);color:#fff}
+.btn-primary:hover{background:var(--orange-hover)}
+.btn-dark{background:var(--charcoal);color:#fff}
+.btn-dark:hover{background:#2E4049}
+.btn-ghost{border:1px solid var(--charcoal);color:var(--charcoal);height:32px;padding:0 14px;border-radius:16px}
+.btn-ghost:hover{background:rgba(60,82,93,.08)}
+.btn-text{color:var(--orange);height:32px;padding:0 8px}
+.btn[disabled],.btn[aria-disabled="true"]{background:var(--dis-bg);color:var(--dis-tx);cursor:not-allowed;border-color:transparent}
+.btn .ic{width:20px;height:20px}
+
+/* ---------- Tags ---------- */
+.tag{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:6px;font:500 12px/20px var(--font);white-space:nowrap;color:var(--text)}
+.t-green{background:var(--green-bg)} .t-green .si{color:#1B7A37}
+.t-red{background:var(--red-bg)} .t-red .si{color:var(--red)}
+.t-blue{background:var(--blue-bg)} .t-blue .si{color:var(--blue)}
+.t-yellow{background:#FFE9B8} .t-yellow .si{color:var(--text)}
+.t-draft{background:#DCE3E7} .t-draft .si{color:var(--charcoal)}
+.t-grey{background:#E4E7E9;color:var(--text2)}
+.t-review{background:transparent;border:1px solid #B9C6CC;color:var(--text2);font-style:italic;font-weight:400}
+.t-req{background:#FFE3A3;height:20px;padding:0 8px;border-radius:6px;font:500 12px/20px var(--font)}
+.autosave{display:flex;align-items:center;gap:6px;color:var(--text2);font:400 12px/20px var(--font)}
+
+/* ---------- Fields ---------- */
+.row{display:flex;flex-wrap:wrap;gap:16px 24px;margin-top:16px}
+.fld{position:relative;display:flex;flex-direction:column}
+.fbox{background:var(--field);border-bottom:1px solid var(--charcoal);border-radius:4px 4px 0 0;padding:6px 16px 6px 16px;min-height:52px;display:flex;flex-direction:column;justify-content:center;position:relative}
+.fbox:hover{background:var(--field-h)}
+.fbox:focus-within{border-bottom:2px solid var(--orange);padding-bottom:5px}
+.fbox label{font:400 12px/20px var(--font);color:var(--text2)}
+.req{color:var(--orange)}
+.fbox input,.fbox select,.fbox textarea{border:0;background:transparent;outline:none;font:400 16px/24px var(--font);color:var(--text);padding:0;width:100%;appearance:none;-webkit-appearance:none}
+.fbox textarea{resize:vertical;min-height:72px}
+.fbox input::placeholder,.fbox textarea::placeholder{color:var(--ph)}
+.fbox select:invalid{color:var(--ph)}
+.fbox.sel{padding-right:52px}
+.fbox.sel .chev{position:absolute;right:12px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--charcoal)}
+.fbox.srch{padding-right:52px}
+.fbox.srch .chev{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--charcoal)}
+.help{font:400 12px/20px var(--font);color:var(--text2);padding:4px 16px 0}
+.help a{color:var(--orange)}
+.err{font:400 12px/20px var(--font);color:var(--orange);padding:4px 16px 0}
+.fld.has-err .fbox{border-bottom-color:var(--orange)}
+/* width tokens: text +32, dropdown +68 */
+.w-xs{width:96px}.w-s{width:232px}.w-s.dd{width:268px}.w-m,.w-m.dd{width:428px}.w-l,.w-l.dd{width:588px}
+.fld{max-width:100%}
+
+/* choice tiles */
+.tiles{display:flex;gap:16px;flex-wrap:wrap;margin-top:16px}
+.tile{width:392px;max-width:100%;text-align:left;background:var(--sub);border-radius:16px;padding:16px;display:flex;gap:12px;align-items:flex-start;color:var(--text)}
+.tile:hover{background:#C9D4DA}
+.tile[aria-pressed="true"]{background:var(--white);box-shadow:inset 0 0 0 2px var(--orange)}
+.tile .ic{color:var(--charcoal)}
+.tile b{display:block;font:500 16px/24px var(--font)}
+.tile span{font:400 12px/20px var(--font);color:var(--text2)}
+
+/* ---------- Page header ---------- */
+.phead{display:flex;align-items:center;gap:var(--head-gap);padding:16px 0;flex:none}
+.phead .back{width:40px;height:40px;border-radius:50%;border:1px solid var(--charcoal);display:grid;place-items:center;color:var(--charcoal);flex:none}
+.phead .back:hover{background:rgba(60,82,93,.08)}
+.ptitle{display:flex;align-items:center;gap:16px;min-width:0}
+.ptitle h1{margin:0;font:400 24px/36px var(--font);color:var(--text);white-space:nowrap}
+.ptitle p{margin:0;font:400 12px/20px var(--font);color:var(--text2)}
+.phead .acts{margin-left:auto;display:flex;gap:12px}
+.phead .acts .ic{display:none}
+
+/* ---------- 3-column SR layout ---------- */
+.sr-grid{flex:1;min-height:0;display:grid;grid-template-columns:14.7% minmax(0,1fr) 284px;gap:var(--gap);padding-bottom:16px}
+.col{min-height:0;border-radius:16px}
+.col-left{background:var(--col);padding:16px 8px;overflow:hidden}
+.col-mid{overflow:auto;display:flex;flex-direction:column;gap:var(--gap);container-type:inline-size;scroll-behavior:smooth}
+.col-right{background:var(--col);padding:var(--pad-right);display:flex;flex-direction:column;gap:16px;overflow:hidden}
+.ext{flex:1 0 64px;background:var(--ext);border-radius:24px}
+.vnav{display:flex;flex-direction:column;gap:4px;list-style:none;margin:0;padding:0}
+.vnav a{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:20px;text-decoration:none;color:var(--text);font:400 14px/20px var(--font)}
+.vnav a:hover{background:rgba(101,137,154,.12)}
+.vnav a.on{background:var(--nav-active)}
+.vnav .ic{display:none}
+.vnav .dot{margin-left:auto;width:6px;height:6px;border-radius:3px;background:var(--orange)}
+.vnav .ok{margin-left:auto;color:var(--green)}
+.card{background:var(--card);border-radius:24px;padding:var(--pad-card)}
+.card-h{display:flex;align-items:center;gap:12px}
+.num{width:24px;height:24px;border-radius:12px;background:var(--charcoal);color:#fff;display:grid;place-items:center;font:500 12px/20px var(--font);flex:none}
+.card-h h2{margin:0;font:500 20px/28px var(--font)}
+.card-h .r{margin-left:auto;display:flex;gap:8px;align-items:center}
+.card-sub{margin:0 0 0 36px;color:var(--text2);font:400 14px/20px var(--font)}
+.subcard{background:var(--sub);border-radius:16px;padding:16px}
+.subcard h3{margin:0;font:500 16px/24px var(--font)}
+.meta-bar{background:var(--card);border-radius:16px;padding:12px var(--pad-card);display:flex;gap:32px;flex-wrap:wrap;align-items:center}
+.meta-bar span{color:var(--text2)} .meta-bar b{font-weight:500;color:var(--text)}
+.rt{font:500 16px/24px var(--font);margin:0}
+.info-card{background:var(--yellow-bg);border:1px solid #F2B64A;border-radius:16px;padding:16px}
+.info-card h3,.help-card h3{margin:0 0 8px;font:500 14px/20px var(--font)}
+.info-card ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.info-card li button{display:flex;gap:8px;align-items:center;text-align:left;font:400 12px/20px var(--font);color:var(--text)}
+.info-card li button:hover{color:var(--orange)}
+.info-card li .si{color:#E08A00}
+.info-card.done{background:var(--green-bg);border-color:#8FD4A9}
+.help-card{background:var(--white);border:1px solid var(--charcoal);border-radius:16px;padding:16px}
+.help-card p{margin:0 0 12px;font:400 12px/20px var(--font);color:var(--text2)}
+
+/* ---------- Document item ---------- */
+.docs{display:flex;flex-direction:column;gap:12px;margin-top:16px}
+.doc{container-type:inline-size;background:var(--surface);border:1px solid var(--outline);border-radius:12px}
+.doc-row{display:flex;align-items:center;gap:16px;padding:10px 12px 10px 16px;min-height:60px}
+.doc .a1{color:var(--text);display:grid;place-items:center}
+.doc .a2{flex:1;min-width:0}
+.doc .a2 b{display:block;font:500 14px/20px var(--font)}
+.doc .a2 small{display:block;font:400 12px/20px var(--font);color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.doc .a3 .tag{width:172px;justify-content:center;height:32px;border-radius:8px;font:500 14px/20px var(--font)}
+.doc .a3 .dot-st{display:none;width:32px;height:32px;border-radius:16px;place-items:center}
+.doc .a4{display:flex;gap:4px}
+.doc .a4 .icon-btn{width:40px;height:40px}
+.doc .a4 .more{display:none}
+.doc.sgs{border-color:var(--blue)} .doc.sgs .a2 b,.doc.sgs .a4 .icon-btn{color:var(--blue)}
+.doc.action{border:1px dashed var(--orange)} .doc.action .a2 b,.doc.action .up{color:var(--orange)}
+.doc.review .a1,.doc.review .a2{opacity:.5}
+.acc-trig{display:inline-flex;align-items:center;gap:4px;font:400 12px/20px var(--font);color:var(--text2)}
+.acc-trig:hover{color:var(--text)}
+.a5{padding:0 16px 16px}
+.a5 table{width:100%;border-collapse:collapse;font:400 12px/20px var(--font)}
+.a5 th{text-align:left;color:var(--text2);font-weight:500;padding:6px 8px;border-bottom:1px solid #C9D3D8}
+.a5 td{padding:8px;border-bottom:1px solid #E1E6E9;vertical-align:top}
+@container (max-width:560px){
+  .doc .a1{display:none}
+  .doc .a3 .tag{display:none}
+  .doc .a3 .dot-st{display:grid}
+  .doc .a4 .icon-btn:not(.more){display:none}
+  .doc .a4 .more{display:grid}
+}
+.upload-zone{margin-top:16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+
+/* ---------- Home table ---------- */
+.home-head{display:flex;align-items:flex-end;justify-content:space-between;padding:28px 0 20px}
+.h-page{margin:0;font:400 28px/40px var(--font)}
+.sub{margin:0;color:var(--text2)}
+.toolbar{display:flex;gap:0.3%;align-items:center;margin-bottom:16px}
+.search{width:66%;min-width:0;max-width:1005px}
+.search .fbox{background:var(--white);border:1px solid var(--orange);border-radius:28px;min-height:48px;padding:0 52px 0 20px}
+.search .fbox:focus-within{border-width:2px;padding:0 51px 0 19px}
+.search .fbox input{font-size:14px}
+.search .fbox .chev{right:16px}
+.filter{width:16%;min-width:160px;margin-left:0.3%}
+.filter .fbox{background:var(--white);border:0;border-radius:24px;min-height:48px;padding:0 44px 0 16px}
+.filter .fbox select{font:500 14px/20px var(--font)}
+.toolbar .btn{margin-left:auto;min-width:10%;height:48px;border-radius:24px}
+.attn{background:var(--white);border-radius:16px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.attn .si{color:var(--red);width:20px;height:20px}
+.attn p{margin:0;flex:1}
+.tcard{background:var(--white);border-radius:16px;padding:8px 24px 16px;overflow-x:auto}
+.tcard table{width:100%;border-collapse:collapse;min-width:900px}
+.tcard th{text-align:left;font:500 12px/20px var(--font);color:var(--text2);padding:12px 12px;border-bottom:1px solid #B9C6CC;white-space:nowrap}
+.tcard td{padding:14px 12px;border-bottom:1px solid #DDE3E6;vertical-align:middle}
+.tcard tbody tr{cursor:pointer}
+.tcard tbody tr:hover td{background:#F4F7F9}
+.tcard td b{font-weight:500;display:block}
+.tcard td small{display:block;color:var(--text2);font-size:12px}
+.empty{padding:48px 16px;text-align:center;color:var(--text2)}
+.mcards{display:none}
+
+/* ---------- Detail extras ---------- */
+.kv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px 24px;margin-top:16px}
+.kv div span{display:block;font:400 12px/20px var(--font);color:var(--text2)}
+.kv div b{font:400 14px/20px var(--font)}
+.timeline{list-style:none;margin:16px 0 0;padding:0;display:flex;gap:0}
+.timeline li{flex:1;position:relative;padding-top:28px;font:400 12px/20px var(--font);color:var(--text2)}
+.timeline li::before{content:"";position:absolute;top:8px;left:0;right:0;height:2px;background:#B9C6CC}
+.timeline li:first-child::before{left:8px}
+.timeline li .pt{position:absolute;top:0;left:0;width:18px;height:18px;border-radius:9px;background:var(--col);border:2px solid #B9C6CC}
+.timeline li.done::before{background:var(--charcoal)}
+.timeline li.done .pt{background:var(--charcoal);border-color:var(--charcoal)}
+.timeline li.now .pt{background:var(--white);border-color:var(--orange)}
+.timeline li b{display:block;color:var(--text);font-weight:500}
+.sec-title{display:flex;align-items:center;justify-content:space-between;margin:0}
+.sec-title h2{margin:0;font:500 16px/24px var(--font)}
+.comms{flex:1 1 50%;min-height:0;display:flex;flex-direction:column}
+.comms .scroll{overflow:auto;min-height:0;flex:1;display:flex;flex-direction:column;gap:8px;margin-top:8px;padding-right:4px}
+.evt{background:var(--white);border-radius:12px;padding:10px 12px;font:400 12px/20px var(--font)}
+.evt b{font-weight:500;display:block;font-size:14px}
+.evt time{color:var(--text2)}
+.msg{max-width:92%;padding:8px 12px;border-radius:12px;font:400 12px/20px var(--font);background:var(--white)}
+.msg.me{align-self:flex-end;background:#FCE6DA}
+.msg .who{font-weight:500;display:block}
+.composer{display:flex;gap:8px;margin-top:8px}
+.composer .fbox{flex:1;min-height:40px;padding:0 12px;background:var(--white)}
+.composer .fbox input{font-size:14px}
+
+/* ---------- Evidence ---------- */
+.ws-list{display:flex;flex-direction:column;gap:6px}
+.ws{width:100%;text-align:left;padding:10px 12px;border-radius:12px;font:400 12px/20px var(--font);color:var(--text2)}
+.ws b{display:block;font:500 14px/20px var(--font);color:var(--text)}
+.ws:hover{background:rgba(101,137,154,.12)}
+.ws.on{background:var(--nav-active)}
+.ws-ic{display:none}
+.stats{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
+.stat{background:var(--sub);border-radius:12px;padding:10px 16px;min-width:140px}
+.stat b{display:block;font:400 24px/36px var(--font)}
+.stat span{font:400 12px/20px var(--font);color:var(--text2)}
+.ctl-group{margin-top:20px}
+.ctl-group h3{margin:0 0 8px;font:500 14px/20px var(--font);color:var(--text2)}
+.ctl{background:var(--white);border-radius:12px;margin-bottom:8px}
+.ctl-h{width:100%;display:flex;align-items:center;gap:16px;padding:12px 16px;text-align:left}
+.ctl-h .code{font:500 14px/20px var(--font);width:64px;flex:none}
+.ctl-h .ttl{flex:1;min-width:0}
+.ctl-h .ttl small{display:block;font:400 12px/20px var(--font);color:var(--text2)}
+.ctl-b{padding:0 16px 16px 96px}
+.ctl-b p{margin:0 0 8px;color:var(--text2)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{background:var(--field);border-radius:14px;padding:2px 10px;font:400 12px/20px var(--font)}
+@container (max-width:835px){ .ctl-b{padding-left:16px} .kv{grid-template-columns:repeat(2,minmax(0,1fr))} .meta-bar{flex-direction:column;align-items:flex-start;gap:4px} }
+
+/* ---------- Passport ---------- */
+.pp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:16px}
+.cert{background:var(--white);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:12px}
+.cert-top{display:flex;gap:12px;align-items:flex-start}
+.seal{width:48px;height:48px;border-radius:24px;background:var(--charcoal);color:#fff;display:grid;place-items:center;flex:none}
+.cert h3{margin:0;font:500 16px/24px var(--font)}
+.cert .kv{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:0}
+.switch{display:flex;align-items:center;gap:12px;justify-content:space-between;border-top:1px solid #E1E6E9;padding-top:12px}
+.sw{width:44px;height:24px;border-radius:12px;background:#B9C6CC;position:relative;flex:none;transition:background .15s}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:9px;background:#fff;transition:left .15s}
+.sw[aria-checked="true"]{background:var(--orange)}
+.sw[aria-checked="true"]::after{left:23px}
+.sw[aria-disabled="true"]{opacity:.45;cursor:not-allowed}
+.panel{background:var(--white);border-radius:16px;padding:20px 24px;margin-top:20px;overflow-x:auto}
+.panel h2{margin:0;font:500 20px/28px var(--font)}
+.panel table{width:100%;border-collapse:collapse;margin-top:12px;min-width:640px}
+.panel th{text-align:left;font:500 12px/20px var(--font);color:var(--text2);padding:8px 12px;border-bottom:1px solid #B9C6CC}
+.panel td{padding:10px 12px;border-bottom:1px solid #E1E6E9}
+.badges{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
+.bdg{display:flex;gap:12px;align-items:center;background:var(--bg);border-radius:12px;padding:10px 14px}
+.bdg .seal{width:40px;height:40px;background:var(--burgundy)}
+.bdg b{display:block;font-weight:500}
+.bdg span{font:400 12px/20px var(--font);color:var(--text2)}
+
+/* ---------- Login ---------- */
+.login{min-height:100dvh;background:linear-gradient(100deg,#FF9966 0%,#E9C5B3 38%,#C9D3D8 72%,#A3B8C2 100%)}
+.login .app{height:auto;min-height:100dvh}
+.login-body{flex:1;display:grid;grid-template-columns:1fr 29% 1fr;gap:4%;align-items:center;padding:48px 0}
+.login-intro{grid-column:1;color:var(--text)}
+.login-intro h1{margin:0 0 16px;font:400 36px/52px var(--font);max-width:14ch}
+.login-intro p{margin:0;max-width:44ch;font:400 16px/24px var(--font);color:var(--text2)}
+.login-card{grid-column:2;background:rgba(255,255,255,.92);border-radius:24px;padding:32px;display:flex;flex-direction:column;gap:16px;min-width:360px}
+.login-card h2{margin:0;font:400 24px/36px var(--font)}
+.login-card .fld{width:clamp(296px,100%,448px)}
+.login-card .fbox{background:var(--field)}
+.login-card .btn{width:100%;height:48px;border-radius:24px}
+.login-foot{font:400 12px/20px var(--font);color:var(--text2)}
+.login-side{grid-column:3;display:flex;flex-direction:column;gap:12px}
+.login-side .step{background:rgba(255,255,255,.55);border-radius:16px;padding:14px 16px}
+.login-side .step b{display:block;font-weight:500}
+.login-side .step span{font:400 12px/20px var(--font);color:var(--text2)}
+
+/* ---------- Overlays ---------- */
+.scrim{position:fixed;inset:0;background:rgba(40,55,62,.72);display:grid;place-items:center;z-index:50;padding:16px}
+.modal{background:var(--white);border-radius:24px;padding:24px;width:min(560px,100%);max-height:90dvh;overflow:auto;display:flex;flex-direction:column;gap:16px}
+.modal h2{margin:0;font:400 24px/36px var(--font)}
+.modal .foot{display:flex;justify-content:flex-end;gap:12px;margin-top:8px}
+.modal .fld{width:100%}
+.modal .btn-ghost{height:40px;border-radius:20px;padding:0 20px}
+.checks{display:flex;flex-direction:column;gap:8px}
+.checks label{display:flex;gap:10px;align-items:center}
+.checks input{accent-color:var(--orange);width:18px;height:18px}
+.linkbox{display:flex;gap:8px;align-items:center;background:var(--bg);border-radius:12px;padding:10px 12px;font:400 14px/20px var(--font)}
+.linkbox code{flex:1;font-family:inherit;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.snack{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:#28373E;color:#fff;border-radius:8px;padding:12px 16px;display:flex;gap:16px;align-items:center;z-index:60;box-shadow:0 3px 12px rgba(0,0,0,.2);max-width:min(560px,calc(100% - 32px))}
+.snack button{color:#FFB38A;font-weight:500}
+.pop{position:fixed;z-index:55;background:var(--white);border-radius:12px;box-shadow:0 4px 20px rgba(40,55,62,.22);padding:6px;min-width:200px}
+.pop button{display:flex;gap:10px;align-items:center;width:100%;padding:8px 12px;border-radius:8px;text-align:left}
+.pop button:hover{background:var(--bg)}
+.pop button.danger{color:var(--red)}
+.notif{width:360px;padding:12px}
+.notif h3{margin:4px 8px 8px;font:500 16px/24px var(--font)}
+.notif .n{display:block;padding:10px 12px;border-radius:10px;text-align:left;width:100%}
+.notif .n.unread{background:#FFF1EA}
+.notif .n b{display:block;font-weight:500}
+.notif .n span{font:400 12px/20px var(--font);color:var(--text2)}
+
+/* ---------- Mobile bits ---------- */
+.mnav{display:none}
+.m-note{display:none}
+
+/* ================= Breakpoints ================= */
+/* 1280–1439 small desktop: icon nav, 12px gaps, comm column → 260 */
+@media (max-width:1439px){
+  :root{--gap:12px;--head-gap:20px}
+  .sr-grid{grid-template-columns:88px minmax(0,1fr) clamp(260px,19.7vw,284px)}
+  .col-left{padding:12px 4px}
+  .vnav a{flex-direction:column;gap:2px;padding:8px 4px;text-align:center;font:500 12px/16px var(--font);position:relative;border-radius:12px}
+  .vnav .ic{display:block}
+  .vnav a.on{background:transparent}
+  .vnav a.on .ic{background:var(--nav-active);border-radius:12px;width:40px;height:28px;padding:2px 8px}
+  .vnav .dot,.vnav .ok{position:absolute;top:6px;right:14px;margin:0}
+  .vnav .ok{width:14px;height:14px}
+  .ws{padding:8px 4px;text-align:center}
+  .ws b{font-size:12px;line-height:16px}
+  .ws small{display:none}
+}
+/* 1178–1279 big horizontal tablet: icon buttons in header & top bar */
+@media (max-width:1279px){
+  .phead .acts .btn{width:40px;padding:0}
+  .phead .acts .btn span{display:none}
+  .phead .acts .ic{display:block}
+  .tb-link span{display:none}
+  .tb-link .ic{display:block}
+  .tb-link{padding:8px;border-radius:50%}
+  .autosave span{display:none}
+  .phead > .tag .si{display:none}
+  .phead > .tag .long{display:none}
+  .phead > .tag .short{display:inline!important}
+}
+/* 768–1177 small vertical tablet */
+@media (max-width:1177px){
+  :root{--gap:8px;--pad-card:16px;--pad-right:12px}
+  .app{min-width:768px}
+  .sr-grid{grid-template-columns:80px minmax(0,1fr) clamp(206px,22vw,259px)}
+  .login-body{grid-template-columns:1fr 1fr;}
+  .login-side{display:none}
+  .login-card{grid-column:2}
+}
+/* < 768 mobile (consult only) */
+@media (max-width:767px){
+  .app{min-width:320px;height:auto;min-height:100dvh}
+  .main-scroll{overflow:visible;padding-bottom:112px}
+  .topbar{display:none}
+  .home-head{padding:16px 0 12px}
+  .toolbar{flex-wrap:wrap;gap:8px;position:sticky;top:env(safe-area-inset-top,0px);z-index:5;padding:8px 0;background:var(--bg)}
+  .search{width:100%}
+  .filter,.toolbar .btn{display:none}
+  .tcard{display:none}
+  .mcards{display:flex;flex-direction:column;gap:8px}
+  .mc{background:var(--white);border-radius:12px;padding:14px 16px;position:relative;text-align:left;width:100%}
+  .mc b{font-weight:500;display:block}
+  .mc .s{font:400 12px/20px var(--font);color:var(--text2)}
+  .mc .g{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;margin-top:10px}
+  .mc .g span{display:block;font:400 12px/20px var(--font);color:var(--text2)}
+  .mc .tag{margin-top:8px}
+  .mnav{display:flex;position:fixed;left:12px;right:84px;bottom:calc(16px + env(safe-area-inset-bottom,0px));height:56px;border-radius:28px;background:#E3EAEE;box-shadow:0 2px 10px rgba(40,55,62,.18);align-items:center;justify-content:center;gap:16px;z-index:20}
+  .fab{position:fixed;right:12px;bottom:calc(16px + env(safe-area-inset-bottom,0px));width:56px;height:56px;border-radius:16px;background:var(--orange);color:#fff;display:grid;place-items:center;z-index:20;box-shadow:0 2px 10px rgba(40,55,62,.25)}
+  .sr-grid{display:flex;flex-direction:column}
+  .col-left{display:none}
+  .col-mid{overflow:visible}
+  .phead{flex-wrap:wrap;gap:12px}
+  .phead .acts{display:none}
+  .m-note{display:block;background:var(--yellow-bg);border-radius:12px;padding:12px 16px;margin-bottom:8px}
+  .kv{grid-template-columns:1fr 1fr}
+  .timeline{flex-direction:column;gap:12px}
+  .timeline li{padding:0 0 0 28px}
+  .timeline li::before{display:none}
+  .login-body{grid-template-columns:1fr;padding:24px 0}
+  .login-intro{display:none}
+  .login-card{grid-column:1;min-width:0}
+  .login-card .fld{width:100%}
+  .pp-grid{grid-template-columns:1fr}
+  .snack{bottom:calc(88px + env(safe-area-inset-bottom,0px))}
+}
+@media (max-width:411px){
+  .search input::placeholder{color:transparent}
+  .mc .tag .txt{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<input type="file" id="filepick" hidden multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.png,.jpg,.jpeg">
+<script>
+/* ============ Icons (Material, Apache-2.0) ============ */
+const P={
+back:"M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z",
+search:"M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z",
+down:"M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z",
+up:"M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z",
+bell:"M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z",
+user:"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM7.07 18.28c.43-.9 3.05-1.78 4.93-1.78s4.51.88 4.93 1.78A7.89 7.89 0 0 1 12 20c-1.86 0-3.57-.64-4.93-1.72zm11.29-1.45c-1.43-1.74-4.9-2.33-6.36-2.33s-4.93.59-6.36 2.33A7.95 7.95 0 0 1 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8c0 1.82-.62 3.49-1.64 4.83zM12 6c-1.94 0-3.5 1.56-3.5 3.5S10.06 13 12 13s3.5-1.56 3.5-3.5S13.94 6 12 6zm0 5c-.83 0-1.5-.67-1.5-1.5S11.17 8 12 8s1.5.67 1.5 1.5S12.83 11 12 11z",
+info:"M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z",
+folder:"M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V6h5.17l2 2H20v10z",
+doc:"M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zM6 20V4h7v5h5v11H6z",
+pdf:"M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm12 6V9c0-.55-.45-1-1-1h-2v5h2c.55 0 1-.45 1-1zm-2-3h1v3h-1V9zm4 2h1v-1h-1V9h1V8h-2v5h1v-2zm-8 0h1c.55 0 1-.45 1-1V9c0-.55-.45-1-1-1H9v5h1v-2zm0-2h1v1h-1V9z",
+image:"M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86-3 3.87L9 13.14 6 17h12l-3.86-5.14z",
+upload:"M18 15v3H6v-3H4v3c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-3h-2zM7 9l1.41 1.41L11 7.83V16h2V7.83l2.59 2.58L17 9l-5-5-5 5z",
+download:"M18 15v3H6v-3H4v3c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-3h-2zm-1-4-1.41-1.41L13 12.17V4h-2v8.17L8.41 9.59 7 11l5 5 5-5z",
+eye:"M12 6a9.77 9.77 0 0 1 8.82 5.5C19.17 14.87 15.79 17 12 17s-7.17-2.13-8.82-5.5A9.77 9.77 0 0 1 12 6m0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 5a2.5 2.5 0 0 1 0 5 2.5 2.5 0 0 1 0-5m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7z",
+edit:"M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM5.92 19H5v-.92l9.06-9.06.92.92L5.92 19zM20.71 5.63l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83a.996.996 0 0 0 0-1.41z",
+del:"M14.59 8 12 10.59 9.41 8 8 9.41 10.59 12 8 14.59 9.41 16 12 13.41 14.59 16 16 14.59 13.41 12 16 9.41 14.59 8zM12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z",
+more:"M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z",
+check:"M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z",
+save:"M17 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm2 16H5V5h11.17L19 7.83V19zm-7-7c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3zM6 6h9v4H6z",
+send:"M4.01 6.03l7.51 3.22-7.52-1 .01-2.22m7.5 8.72L4 17.97v-2.22l7.51-1M2.01 3 2 10l15 2-15 2 .01 7L23 12 2.01 3z",
+add:"M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z",
+filter:"M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z",
+close:"M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z",
+link:"M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z",
+copy:"M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z",
+list:"M19 13H5c-1.1 0-2 .9-2 2v4c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-4c0-1.1-.9-2-2-2zm0 6H5v-4h14v4zm0-16H5c-1.1 0-2 .9-2 2v4c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 6H5V5h14v4z",
+chat:"M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z",
+shield:"M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z",
+biz:"M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z",
+school:"M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3 1 9l11 6 9-4.91V17h2V9L12 3z",
+task:"M22 7h-9v2h9V7zm0 8h-9v2h9v-2zM5.54 11 2 7.46l1.41-1.41 2.12 2.12 4.24-4.24 1.41 1.41L5.54 11zm0 8L2 15.46l1.41-1.41 2.12 2.12 4.24-4.24 1.41 1.41L5.54 19z",
+logout:"M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z",
+contact:"M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0-6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 8c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4zm6 4H6v-.01c.2-.72 3.3-1.99 6-1.99s5.8 1.27 6 2v0z",
+place:"M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z",
+cal:"M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"
+};
+const ic=(n,c='')=>`<svg class="ic ${c}" viewBox="0 0 24 24" aria-hidden="true"><path d="${P[n]}"/></svg>`;
+/* Carbon status icons (@carbon/icons, Apache-2.0) */
+const SI={
+check:'<path d="M16,2A14,14,0,1,0,30,16,14,14,0,0,0,16,2ZM14,21.5908l-5-5L10.5906,15,14,18.4092,21.41,11l1.5957,1.5859Z"/>',
+warn:'<path d="M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14C30,8.3,23.7,2,16,2z M14.9,8h2.2v11h-2.2V8z M16,25c-0.8,0-1.5-0.7-1.5-1.5S15.2,22,16,22c0.8,0,1.5,0.7,1.5,1.5S16.8,25,16,25z"/>',
+tri:'<path d="M29,30H3a1,1,0,0,1-.8872-1.4614l13-25a1,1,0,0,1,1.7744,0l13,25A1,1,0,0,1,29,30ZM14.875,12v9h2.25V12ZM16,23a1.5,1.5,0,1,0,1.5,1.5A1.5,1.5,0,0,0,16,23Z"/>',
+time:'<path d="m16,2c-7.6001,0-14,6.3999-14,14s6.3999,14,14,14,14-6.3999,14-14S23.6001,2,16,2Zm4.5872,20l-5.5872-5.5898V7h2v8.582l5,5.0044-1.4128,1.4136Z"/>',
+info:'<path d="M16,2A14,14,0,1,0,30,16,14,14,0,0,0,16,2Zm0,6a1.5,1.5,0,1,1-1.5,1.5A1.5,1.5,0,0,1,16,8Zm4,16.125H12v-2.25h2.875v-5.75H13v-2.25h4.125v8H20Z"/>',
+misuse:'<path d="M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14S23.7,2,16,2z M21.4,23L16,17.6L10.6,23L9,21.4l5.4-5.4L9,10.6L10.6,9l5.4,5.4L21.4,9l1.6,1.6L17.6,16l5.4,5.4L21.4,23z"/>',
+dash:'<path d="M7.7,4.7a14.7,14.7,0,0,0-3,3.1L6.3,9A13.26,13.26,0,0,1,8.9,6.3Z"/><path d="M4.6,12.3l-1.9-.6A12.51,12.51,0,0,0,2,16H4A11.48,11.48,0,0,1,4.6,12.3Z"/><path d="M2.7,20.4a14.4,14.4,0,0,0,2,3.9l1.6-1.2a12.89,12.89,0,0,1-1.7-3.3Z"/><path d="M7.8,27.3a14.4,14.4,0,0,0,3.9,2l.6-1.9A12.89,12.89,0,0,1,9,25.7Z"/><path d="M11.7,2.7l.6,1.9A11.48,11.48,0,0,1,16,4V2A12.51,12.51,0,0,0,11.7,2.7Z"/><path d="M24.2,27.3a15.18,15.18,0,0,0,3.1-3.1L25.7,23A11.53,11.53,0,0,1,23,25.7Z"/><path d="M27.4,19.7l1.9.6A15.47,15.47,0,0,0,30,16H28A11.48,11.48,0,0,1,27.4,19.7Z"/><path d="M29.2,11.6a14.4,14.4,0,0,0-2-3.9L25.6,8.9a12.89,12.89,0,0,1,1.7,3.3Z"/><path d="M24.1,4.6a14.4,14.4,0,0,0-3.9-2l-.6,1.9a12.89,12.89,0,0,1,3.3,1.7Z"/><path d="M20.3,29.3l-.6-1.9A11.48,11.48,0,0,1,16,28v2A21.42,21.42,0,0,0,20.3,29.3Z"/>'
+};
+const si=n=>`<svg class="si" viewBox="0 0 32 32" aria-hidden="true">${SI[n]}</svg>`;
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const $=(s,r=document)=>r.querySelector(s);
+const fmt=d=>{if(!d)return'—';const x=new Date(d+'T00:00:00');return x.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})};
+const today='2026-09-25';
+
+/* ============ Service catalogue (List of Book a Service V3) ============ */
+const CERT=["ISO/IEC 42001 Artificial Intelligence Management System","ISO/IEC 27001 Information Security Management System","ISO/IEC 27701 Privacy Information Management System","ISO/IEC 27017 Information security for cloud services","ISO/IEC 27018 Protection of PII in public clouds","ISO 22301 Business Continuity Management System","ISO 56001 Innovation Management System","ISO/IEC 20000 Service Management System","NIST CSF (Cybersecurity Framework)","Cybersecurity Management Act Certification Scheme","TISAX (Trusted Information Security Assessment Exchange)","ASPICE (Automotive SPICE)","Second-party audit for supply chain"];
+const AUDIT_TYPES=["Initial certification","Surveillance audit","Recertification","Certificate transfer"];
+const LA="Lead Auditor Training Course",LAC="Lead Auditor Conversion Training Course",LAT="Lead Auditor Transition Training Course",IA="Internal Auditor Training Course",SA="Standard Analysis Training Course",IMP="Implementation Training Course";
+const TRAIN=[
+ ["AI","ISO/IEC 42001 Artificial Intelligence Management System",[LA,LAC,IA,SA,"Practical Course","Core Concept Training Course (ISO/IEC 22989)","Data Management Training Course","Risk and Cybersecurity Training Course"]],
+ ["Information Security","ISO/IEC 27001 Information Security Management System",[LA,LAC,LAT,IA,SA]],
+ ["Information Security","NIST CSF (Cybersecurity Framework)",[LA,IMP]],
+ ["Information Security","Cybersecurity Management Act",["Security Baselines for Information and Communication Systems Practical Training Course"]],
+ ["Privacy Protection","ISO/IEC 27701 Privacy Information Management System",[LA,LAC,LAT]],
+ ["Cloud Services","ISO/IEC 27017 Information security for cloud services",[LAC,LAT]],
+ ["Cloud Services","ISO/IEC 27018 Protection of PII in public clouds",[LAC,LAT]],
+ ["Business Continuity","ISO 22301 Business Continuity Management System",[LA,LAT,IA,SA]],
+ ["Business Governance","ISO 56001 Innovation Management System",[LAC]],
+ ["Business Governance","ISO/IEC 20000 Service Management System",[LA]],
+ ["Automotive Cybersecurity","TISAX (Trusted Information Security Assessment Exchange)",[LA,SA,IMP]],
+ ["Automotive Cybersecurity","ASPICE (Automotive SPICE)",[IA,SA]]
+];
+const SCOPES=["Formosa Precision Co., Ltd. — Organization","Hsinchu Fab 2 MES — System","VisionAI Inspection Suite — Product","Customer Data Platform — System"];
+const CONTACTS=["Mei-Ling Chen · Compliance Lead","Jason Wu · IT Security Manager","Grace Lin · Quality Director"];
+const DOC_TYPES=["Company registration certificate","ISMS scope statement","Statement of Applicability","Organisation chart","Risk assessment report","Risk treatment plan","Internal audit report","Management review minutes","Policy document","Other"];
+const short=s=>s.replace(/ (Artificial|Information|Privacy|Business|Innovation|Service|Protection|Management|Trusted|\(Cyber|\(Automotive|Security Management|Certification).*$/,'').replace(/ for cloud services| Protection of PII.*$/,'');
+
+/* ============ Status model ============ */
+const ST={
+ draft:{l:'Draft — not yet submitted',s:'Draft',i:'dash',c:'t-draft'},
+ submitted:{l:'Submitted — awaiting SGS review',s:'Awaiting review',i:'time',c:'t-blue'},
+ action:{l:'Action required: Upload requested documents',s:'Action required',i:'warn',c:'t-red'},
+ progress:{l:'In progress — audit scheduled',s:'In progress',i:'info',c:'t-blue'},
+ issued:{l:'Certificate issued',s:'Certificate issued',i:'check',c:'t-green'},
+ completed:{l:'Training completed',s:'Completed',i:'check',c:'t-green'},
+ cancelled:{l:'Cancelled',s:'Cancelled',i:'misuse',c:'t-grey'}
+};
+const tag=(k,mode='l')=>{const t=ST[k];return `<span class="tag ${t.c}">${si(t.i)}<span class="long">${esc(mode==='s'?t.s:t.l)}</span><span class="short" style="display:none">${esc(t.s)}</span></span>`};
+
+/* ============ Seed data ============ */
+let uid=100;const nid=p=>p+(++uid);
+const S={
+ user:{name:'Mei-Ling Chen',role:'Customer Admin',org:'Formosa Precision Co., Ltd.',email:'meiling.chen@formosa-precision.com.tw'},
+ q:'',filter:'all',
+ open:{},
+ notifs:[
+  {id:1,t:'SGS requested 2 documents',b:'SR-2026-09-00412 · ISO/IEC 27001 initial certification',go:'#/sr/SR-2026-09-00412',unread:true},
+  {id:2,t:'New comment from SGS Auditor',b:'Control A.5.15 Access control needs clarification',go:'#/evidence',unread:true},
+  {id:3,t:'Surveillance audit due in 6 months',b:'ISO/IEC 27701 · TW25/PIMS/0441',go:'#/passport',unread:false},
+  {id:4,t:'Your share link was viewed',b:'Taiwan Auto Components procurement · Sep 22',go:'#/passport',unread:false}
+ ],
+ srs:[
+  {id:'SR-2026-09-00412',category:'Certification',standard:CERT[1],type:'Initial certification',scope:SCOPES[0],site:'No. 18, Kexue Rd, Hsinchu Science Park, Hsinchu 300',headcount:'240',start:'2026-11-02',contact:CONTACTS[0],notes:'Two sites in scope; head office in Taipei is out of scope.',submitted:'2026-09-12',updated:'2026-09-15',status:'action',assignee:'Kevin Lin · SGS Taiwan',
+   docs:[
+    {id:'d1',kind:'sgs',type:'Quotation',file:'QT-2026-0412.pdf',date:'2026-09-13',size:'412 KB',label:'Issued'},
+    {id:'d2',kind:'action',type:'Statement of Applicability',affected:[['A.5.1','Policies for information security','Current SoA does not list excluded controls with justification'],['A.5.23','Information security for use of cloud services','Cloud services in use are not covered'],['A.8.9','Configuration management','Control marked applicable, but no implementation reference']]},
+    {id:'d3',kind:'action',type:'Risk treatment plan',affected:[['6.1.3','Information security risk treatment','Plan not approved by risk owners'],['8.3','Risk treatment implementation','No evidence of treatment progress']]},
+    {id:'d4',kind:'review',type:'ISMS scope statement',file:'isms_scope_statement_v3.pdf',date:'2026-09-12',size:'1.1 MB'},
+    {id:'d5',kind:'completed',type:'Company registration certificate',file:'company_registration.pdf',date:'2026-09-12',size:'2.4 MB',desc:'Ministry of Economic Affairs registration, updated 2026.'},
+    {id:'d6',kind:'completed',type:'Organisation chart',file:'org_chart_2026Q3.png',date:'2026-09-12',size:'860 KB',desc:'Includes ISMS committee and reporting lines.'}
+   ],
+   comms:[
+    {t:'Information requested',b:'SGS needs an updated Statement of Applicability and an approved risk treatment plan before the stage 1 audit can be planned.',d:'Sep 15, 2026'},
+    {t:'Quotation issued',b:'QT-2026-0412 is available in SGS Documents.',d:'Sep 13, 2026'},
+    {t:'Request accepted',b:'Assigned to Kevin Lin, SGS Taiwan.',d:'Sep 13, 2026'},
+    {t:'Request submitted',b:'By Mei-Ling Chen.',d:'Sep 12, 2026'}
+   ],
+   messages:[
+    {me:false,who:'Kevin Lin · SGS',b:'Thanks for the request. Could you confirm whether the Taichung warehouse is part of the scope?',d:'Sep 13'},
+    {me:true,who:'You',b:'It is not. Only the Hsinchu site and the MES system.',d:'Sep 13'},
+    {me:false,who:'Kevin Lin · SGS',b:'Noted. I have requested two documents so we can plan stage 1.',d:'Sep 15'}
+   ]},
+  {id:'SR-2026-09-00420',category:'Certification',standard:CERT[0],type:'Initial certification',scope:SCOPES[2],site:'',headcount:'',start:'',contact:'',notes:'',submitted:'',updated:'2026-09-24',status:'draft',docs:[]},
+  {id:'SR-2026-09-00398',category:'Training',standard:TRAIN[0][1],type:LA,delivery:'On-site at our premises',scope:SCOPES[2],site:'No. 18, Kexue Rd, Hsinchu 300',headcount:'12',start:'2026-10-20',contact:CONTACTS[2],notes:'',submitted:'2026-09-08',updated:'2026-09-08',status:'submitted',assignee:'',
+   docs:[{id:'d7',kind:'completed',type:'Other',file:'participant_list.xlsx',date:'2026-09-08',size:'48 KB',desc:'12 participants from the AI quality team.'}],comms:[{t:'Request submitted',b:'By Grace Lin.',d:'Sep 8, 2026'}],messages:[]},
+  {id:'SR-2026-08-00355',category:'Certification',standard:CERT[2],type:'Surveillance audit',scope:SCOPES[3],site:'No. 18, Kexue Rd, Hsinchu 300',headcount:'65',start:'2026-10-06',contact:CONTACTS[1],notes:'',submitted:'2026-08-19',updated:'2026-09-02',status:'progress',assignee:'Annie Huang · SGS Taiwan',
+   docs:[{id:'d8',kind:'sgs',type:'Audit plan',file:'AP-2026-0355.pdf',date:'2026-09-02',size:'320 KB',label:'Issued'},{id:'d9',kind:'completed',type:'Internal audit report',file:'internal_audit_2026.pdf',date:'2026-08-19',size:'3.2 MB',desc:'Covers all PIMS clauses.'}],
+   comms:[{t:'Audit scheduled',b:'On-site audit on Oct 6–7, 2026.',d:'Sep 2, 2026'},{t:'Request accepted',b:'Assigned to Annie Huang.',d:'Aug 21, 2026'}],messages:[]},
+  {id:'SR-2026-07-00281',category:'Certification',standard:CERT[5],type:'Initial certification',scope:SCOPES[1],site:'Hsinchu Fab 2',headcount:'180',start:'2026-06-15',contact:CONTACTS[0],notes:'',submitted:'2026-04-02',updated:'2026-07-10',status:'issued',assignee:'Kevin Lin · SGS Taiwan',
+   docs:[{id:'d10',kind:'sgs',type:'Certificate',file:'TW26-BCM-0187.pdf',date:'2026-07-10',size:'1.3 MB',label:'Issued'},{id:'d11',kind:'sgs',type:'Audit report',file:'AR-2026-0281.pdf',date:'2026-07-01',size:'2.8 MB',label:'Issued'}],
+   comms:[{t:'Certificate issued',b:'TW26/BCM/0187, valid until Jul 9, 2029.',d:'Jul 10, 2026'}],messages:[]},
+  {id:'SR-2026-06-00210',category:'Training',standard:TRAIN[10][1],type:IMP,delivery:'Public class',scope:SCOPES[0],site:'SGS Taipei training centre',headcount:'4',start:'2026-06-24',contact:CONTACTS[1],notes:'',submitted:'2026-05-30',updated:'2026-06-26',status:'completed',assignee:'SGS Academy',
+   docs:[],comms:[{t:'Training completed',b:'4 participants received badges.',d:'Jun 26, 2026'}],messages:[]}
+ ],
+ ws:[
+  {id:'w1',fw:'ISO/IEC 27001:2022',scope:SCOPES[0],cycle:'2026 initial certification',groups:[
+   ['Clauses 4–10',[
+    {c:'4.3',t:'Determining the scope of the ISMS',d:'Define and document the boundaries and applicability of the ISMS.',exp:['Scope statement'],owner:'Mei-Ling Chen',ev:[{id:'e1',type:'ISMS scope statement',file:'isms_scope_statement_v3.pdf',date:'2026-09-12',size:'1.1 MB',kind:'completed',desc:'Hsinchu site and MES system.'}]},
+    {c:'6.1.2',t:'Information security risk assessment',d:'Define and apply a repeatable risk assessment process.',exp:['Methodology','Risk register'],owner:'Jason Wu',ev:[{id:'e2',type:'Risk assessment report',file:'risk_assessment_2026.xlsx',date:'2026-08-30',size:'640 KB',kind:'completed',desc:'Annual assessment, 142 risks.'}]},
+    {c:'9.2',t:'Internal audit',d:'Conduct internal audits at planned intervals.',exp:['Audit programme','Audit report'],owner:'',ev:[]}
+   ]],
+   ['A.5 Organizational controls',[
+    {c:'A.5.1',t:'Policies for information security',d:'Approved, published and reviewed policy set.',exp:['Policy document','Approval record'],owner:'Mei-Ling Chen',ev:[{id:'e3',type:'Policy document',file:'infosec_policy_v5.pdf',date:'2026-03-02',size:'780 KB',kind:'completed',desc:'Approved by the board in March 2026.'}]},
+    {c:'A.5.9',t:'Inventory of information and other associated assets',d:'Maintain an inventory with owners.',exp:['Asset register'],owner:'',ev:[],note:'consult'},
+    {c:'A.5.15',t:'Access control',d:'Rules to control physical and logical access.',exp:['Access control policy','Access review records'],owner:'Jason Wu',ev:[{id:'e4',type:'Policy document',file:'access_control_policy.pdf',date:'2026-07-11',size:'420 KB',kind:'review'}],note:'clar'},
+    {c:'A.5.23',t:'Information security for use of cloud services',d:'Processes for acquiring, using and exiting cloud services.',exp:['Cloud security procedure'],owner:'',ev:[]},
+    {c:'A.5.30',t:'ICT readiness for business continuity',d:'Plan, implement and test ICT readiness.',exp:['BC test report'],owner:'Grace Lin',ev:[{id:'e5',type:'Other',file:'dr_test_2024.pdf',date:'2024-11-04',size:'1.9 MB',kind:'outdated',desc:'Disaster recovery test, Nov 2024.'}]}
+   ]],
+   ['A.6 People controls',[
+    {c:'A.6.1',t:'Screening',d:'Background checks before joining.',exp:['HR procedure'],owner:'Grace Lin',ev:[{id:'e6',type:'Other',file:'hr_screening_procedure.docx',date:'2026-05-20',size:'96 KB',kind:'completed',desc:'HR onboarding procedure.'}]},
+    {c:'A.6.3',t:'Information security awareness, education and training',d:'Staff receive appropriate awareness training.',exp:['Training records'],owner:'',ev:[]}
+   ]],
+   ['A.8 Technological controls',[
+    {c:'A.8.5',t:'Secure authentication',d:'Authentication technologies and procedures.',exp:['MFA configuration evidence'],owner:'Jason Wu',ev:[{id:'e7',type:'Other',file:'mfa_rollout.png',date:'2026-06-14',size:'310 KB',kind:'completed',desc:'Screenshot of MFA enforcement.'}]},
+    {c:'A.8.9',t:'Configuration management',d:'Configurations are established, documented and monitored.',exp:['Baseline configurations'],owner:'',ev:[]},
+    {c:'A.8.13',t:'Information backup',d:'Backups are maintained and regularly tested.',exp:['Backup policy','Restore test'],owner:'Jason Wu',ev:[{id:'e8',type:'Policy document',file:'backup_policy.pdf',date:'2026-02-10',size:'210 KB',kind:'completed',desc:'Backup policy v2.'},{id:'e9',type:'Other',file:'restore_test_2026Q2.pdf',date:'2026-06-30',size:'540 KB',kind:'completed',desc:'Quarterly restore test.'}]}
+   ]]
+  ]},
+  {id:'w2',fw:'ISO/IEC 42001:2023',scope:SCOPES[2],cycle:'Readiness',groups:[
+   ['Clauses 4–10',[
+    {c:'4.1',t:'Understanding the organization and its context',d:'Determine issues relevant to the AI management system.',exp:['Context analysis'],owner:'Grace Lin',ev:[]},
+    {c:'6.1.4',t:'AI system impact assessment',d:'Assess consequences of AI systems for individuals and society.',exp:['Impact assessment'],owner:'',ev:[]}
+   ]]
+  ]},
+  {id:'w3',fw:'ISO 22301:2019',scope:SCOPES[1],cycle:'2027 surveillance',groups:[]}
+ ],
+ activeWs:'w1',
+ feedback:[
+  {k:'Clarification request',who:'Annie Huang · SGS Auditor',c:'A.5.15',b:'Please add the latest quarterly access review for privileged accounts.',d:'Sep 20'},
+  {k:'Consulting comment',who:'David Tsai · SGS Consultant',c:'A.5.9',b:'An export from your CMDB is acceptable if it shows asset owners.',d:'Sep 18'}
+ ],
+ certs:[
+  {id:'c1',fw:'ISO 22301:2019',name:'Business Continuity Management System',no:'TW26/BCM/0187',scope:'Hsinchu Fab 2 — manufacturing execution and support',from:'2026-07-10',to:'2029-07-09',next:'Surveillance · Jul 2027',status:'Active',share:true},
+  {id:'c2',fw:'ISO/IEC 27701:2019',name:'Privacy Information Management System',no:'TW25/PIMS/0441',scope:'Customer Data Platform — processing of customer PII',from:'2025-03-18',to:'2028-03-17',next:'Surveillance · Mar 2027',status:'Active',share:true},
+  {id:'c3',fw:'ISO/IEC 27001:2022',name:'Information Security Management System',no:'—',scope:'Formosa Precision Co., Ltd. — Hsinchu site',from:'',to:'',next:'Stage 1 audit · pending',status:'In progress',share:false}
+ ],
+ badges:[{t:'ISO/IEC 42001 Lead Auditor',n:'2 staff · SGS Academy'},{t:'TISAX Implementation',n:'4 staff · SGS Academy'}],
+ links:[{id:'l1',to:'Taiwan Auto Components — procurement',url:'https://trust.sgs.com/p/7F3K-92QD',exp:'2026-10-20',views:3,on:true}],
+ log:[['Sep 22, 2026 14:08','Taiwan Auto Components — procurement','Viewed trust profile'],['Sep 22, 2026 14:09','Taiwan Auto Components — procurement','Opened ISO 22301 certificate'],['Sep 19, 2026 09:31','Taiwan Auto Components — procurement','Viewed trust profile']],
+ draft:null
+};
+
+/* ============ Routing ============ */
+const route=()=>{const h=location.hash.replace(/^#\/?/,'')||'login';return h.split('/')};
+window.addEventListener('hashchange',render);
+function go(h){closePop();if(location.hash===h)render();else location.hash=h}
+
+/* ============ Shell pieces ============ */
+function topbar(on){
+ const unread=S.notifs.filter(n=>n.unread).length;
+ const L=(k,h,label,icn)=>`<a class="tb-link ${on===k?'on':''}" href="${h}" ${on===k?'aria-current="page"':''} aria-label="${label}" title="${label}">${ic(icn,'sm')}<span>${label}</span></a>`;
+ return `<header class="topbar shell"><div class="tb">
+  <a class="logo" href="#/home" aria-label="Home"><b>SGS</b><span class="site">Digital Trust Platform</span><span class="sep"></span><span class="portal">Customer Portal</span></a>
+  <nav class="tb-links" aria-label="Main">
+   ${L('home','#/home','Service Requests','list')}${L('evidence','#/evidence','Evidence','folder')}${L('passport','#/passport','Trust Passport','shield')}
+   <button class="icon-btn" data-act="notifs" aria-label="Notifications, ${unread} unread">${ic('bell')}${unread?`<span class="badge">${unread}</span>`:''}</button>
+   <button class="icon-btn" data-act="profile" aria-label="Profile">${ic('user')}</button>
+  </nav></div></header>`;
+}
+function mobileNav(){return `<nav class="mnav" aria-label="Main">
+ <a class="icon-btn" href="#/home" aria-label="Service Requests">${ic('list')}</a>
+ <a class="icon-btn" href="#/evidence" aria-label="Evidence">${ic('chat')}</a>
+ <button class="icon-btn" data-act="notifs" aria-label="Notifications">${ic('bell')}</button>
+ <button class="icon-btn" data-act="profile" aria-label="Profile">${ic('user')}</button></nav>
+ <button class="fab" data-act="mobile-new" aria-label="New Service Request">${ic('add')}</button>`}
+
+/* ============ Fields ============ */
+function fld(o){
+ const id=o.id, v=o.value??'';
+ const lab=`<label for="${id}">${esc(o.label)}${o.req?' <span class="req">*</span>':''}</label>`;
+ let inner;
+ if(o.options){
+  const opts=o.options.map(x=>Array.isArray(x)?`<optgroup label="${esc(x[0])}">${x[1].map(y=>`<option ${y===v?'selected':''}>${esc(y)}</option>`).join('')}</optgroup>`:`<option ${x===v?'selected':''}>${esc(x)}</option>`).join('');
+  inner=`<div class="fbox sel">${lab}<select id="${id}" data-f="${o.f||id}" ${o.req?'required':''}><option value="" disabled ${v?'':'selected'} hidden>${esc(o.ph||'Select…')}</option>${opts}</select><span class="chev">${ic('down')}</span></div>`;
+ }else if(o.type==='textarea'){
+  inner=`<div class="fbox">${lab}<textarea id="${id}" data-f="${o.f||id}" placeholder="${esc(o.ph||'')}">${esc(v)}</textarea></div>`;
+ }else{
+  inner=`<div class="fbox">${lab}<input id="${id}" data-f="${o.f||id}" type="${o.type||'text'}" value="${esc(v)}" placeholder="${esc(o.ph||'')}" ${o.min?`min="${o.min}"`:''} ${o.inputmode?`inputmode="${o.inputmode}"`:''} autocomplete="${o.ac||'off'}"></div>`;
+ }
+ const msg=o.err?`<div class="err" id="${id}-m" role="alert">${esc(o.err)}</div>`:(o.help?`<div class="help" id="${id}-m">${o.help}</div>`:'');
+ return `<div class="fld ${o.w||'w-m'} ${o.options?'dd':''} ${o.err?'has-err':''}" data-help="${esc(o.help||'')}">${inner}${msg}</div>`;
+}
+
+/* ============ Document item ============ */
+const ftype=f=>/\.pdf$/i.test(f||'')?'pdf':/\.(png|jpe?g)$/i.test(f||'')?'image':'doc';
+function docItem(d,ctx){
+ const kind=d.kind; const open=S.open[d.id];
+ let cls='doc',a1='',status='',dot='',acts=[];
+ const meta=d.file?`${esc(d.file)} • ${kind==='sgs'?'Issued':'Uploaded'} ${fmt(d.date)} • ${esc(d.size)}`:'';
+ if(kind==='sgs'){cls+=' sgs';acts=[['eye','Open document','open'],['download','Download','download']];}
+ else if(kind==='action'){cls+=' action';status=`<span class="tag t-red">Missing Info</span>`;dot=`<span class="dot-st" style="background:var(--red-bg);color:var(--red)" title="Missing Info" aria-label="Missing Info">${si('warn')}</span>`;acts=[['upload','Upload document','upload-action']];}
+ else if(kind==='review'){cls+=' review';status=`<span class="tag t-review">Under Review</span>`;dot=`<span class="dot-st" style="border:1px solid #B9C6CC" title="Under Review" aria-label="Under Review">${si('time')}</span>`;acts=[['eye','Open document','open'],['info','View document description','view-desc']];}
+ else{
+  const needs=!d.desc;
+  if(kind==='outdated') status=`<span class="tag t-yellow">Needs update</span>`,dot=`<span class="dot-st" style="background:#FFE9B8" title="Needs update" aria-label="Needs update">${si('tri')}</span>`;
+  else status=needs?`<span class="tag t-yellow">Needs Description</span>`:`<span class="tag t-green">Completed</span>`, dot=needs?`<span class="dot-st" style="background:#FFE9B8" title="Needs Description" aria-label="Needs Description">${si('tri')}</span>`:`<span class="dot-st" style="background:var(--green-bg);color:#1B7A37" title="Completed" aria-label="Completed">${ic('check','sm')}</span>`;
+  acts=ctx==='draft'?[['edit','Edit document description','edit-desc'],['eye','Open document','open'],['del','Delete','delete']]:ctx==='evidence'?[['edit','Edit document description','edit-desc'],['eye','Open document','open'],['del','Remove mapping','unmap']]:[['info','View document description','view-desc'],['eye','Open document','open']];
+ }
+ if(kind!=='action'&&kind!=='sgs') a1=`<span class="a1" aria-hidden="true">${ic(ftype(d.file))}</span>`;
+ const a2=kind==='action'?`<b>${esc(d.type)}</b><button class="acc-trig" data-act="toggle" data-id="${d.id}" aria-expanded="${!!open}">Affected ${ctx==='detail'?'controls':'items'} ${ic(open?'up':'down','xs')}</button>`:`<b>${esc(d.type)}</b><small title="${meta}">${meta}</small>`;
+ const actsHtml=acts.map(([i,l,a])=>`<button class="icon-btn ${a==='upload-action'?'up':''}" data-act="${a}" data-id="${d.id}" aria-label="${l}" title="${l}">${ic(i)}</button>`).join('')+`<button class="icon-btn more" data-act="doc-more" data-id="${d.id}" data-acts='${JSON.stringify(acts)}' aria-label="More actions" title="More actions">${ic('more')}</button>`;
+ const a5=kind==='action'&&open?`<div class="a5"><table><thead><tr><th>Control</th><th>Requirement</th><th>What SGS needs</th></tr></thead><tbody>${d.affected.map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join('')}</tbody></table></div>`:'';
+ return `<div class="${cls}" data-doc="${d.id}"><div class="doc-row">${a1}<div class="a2">${a2}</div><div class="a3">${status}${dot}</div><div class="a4">${actsHtml}</div></div>${a5}</div>`;
+}
+
+/* ============ Login ============ */
+function viewLogin(){
+ document.body.className='login';
+ return `<div class="app"><header class="topbar clear shell"><div class="tb"><a class="logo" href="#/login"><b>SGS</b><span class="site">Digital Trust Platform</span></a></div></header>
+ <main class="shell login-body">
+  <section class="login-intro"><h1>Your assurance journey, in one place</h1><p>Book SGS certification and training, keep evidence ready for audits, and share verified certificates with your customers.</p></section>
+  <form class="login-card" data-form="login" novalidate>
+   <h2>Log in</h2>
+   ${fld({id:'email',label:'Email',req:true,type:'email',value:S.user.email,ac:'username',w:'',err:S.lerr?.email})}
+   ${fld({id:'pw',label:'Password',req:true,type:'password',value:'',ph:'Enter your password',ac:'current-password',w:'',err:S.lerr?.pw,help:''})}
+   <a href="#" data-act="forgot" style="font:400 14px/20px var(--font)">Forgot your password?</a>
+   <button class="btn btn-primary" type="submit">Log in</button>
+   <p class="login-foot">Prototype: any password works. Accounts are created by invitation from SGS.</p>
+  </form>
+  <aside class="login-side" aria-label="What you can do">
+   <div class="step"><b>Book a service</b><span>Certification and training from the SGS catalogue</span></div>
+   <div class="step"><b>Prepare evidence</b><span>Map documents to each control of your framework</span></div>
+   <div class="step"><b>Share trust</b><span>Send customers a read-only link to your certificates</span></div>
+  </aside>
+ </main></div>`;
+}
+
+/* ============ Home ============ */
+function rowsFor(){
+ const q=S.q.trim().toLowerCase();
+ return S.srs.filter(r=>(S.filter==='all'||r.status===S.filter)&&(!q||[r.id,r.standard,r.type,r.scope,ST[r.status].l].join(' ').toLowerCase().includes(q)));
+}
+function tableRows(){
+ const rs=rowsFor();
+ if(!rs.length) return {t:`<tr><td colspan="7"><div class="empty">No requests match “${esc(S.q)}”. Clear the search or change the status filter.</div></td></tr>`,m:`<div class="empty">No requests match your search.</div>`};
+ const t=rs.map(r=>`<tr data-act="open-sr" data-id="${r.id}" tabindex="0">
+  <td><b>${r.id}</b><small>${esc(r.category)} · ${esc(r.type)}</small></td>
+  <td>${esc(short(r.standard))}</td>
+  <td>${esc(r.scope.split(' — ')[0])}<small>${esc(r.scope.split(' — ')[1]||'')}</small></td>
+  <td>${tag(r.status,'s')}</td>
+  <td>${fmt(r.submitted)}</td><td>${fmt(r.updated)}</td>
+  <td><button class="icon-btn" data-act="row-more" data-id="${r.id}" aria-label="Actions for ${r.id}">${ic('more')}</button></td></tr>`).join('');
+ const m=rs.map(r=>`<div class="mc" data-act="open-sr" data-id="${r.id}" role="button" tabindex="0"><b>${r.id}</b><span class="s">${esc(r.category)} · ${esc(short(r.standard))}</span><br><span class="tag ${ST[r.status].c}">${si(ST[r.status].i)}<span class="txt">${esc(ST[r.status].l)}</span></span>
+  <div class="g"><div><span>Service type</span>${esc(r.type)}</div><div><span>Submitted</span>${fmt(r.submitted)}</div><div><span>Scope</span>${esc(r.scope.split(' — ')[0])}</div><div><span>Last update</span>${fmt(r.updated)}</div></div></div>`).join('');
+ return {t,m};
+}
+function viewHome(){
+ const r=tableRows(); const act=S.srs.filter(x=>x.status==='action');
+ return `<div class="app">${topbar('home')}<main class="main-scroll" id="main"><div class="shell">
+  <div class="home-head"><div><h1 class="h-page">Service Requests</h1><p class="sub">${esc(S.user.org)} · ${S.srs.length} requests</p></div></div>
+  ${act.length?`<div class="attn">${si('warn')}<p><b style="font-weight:500">${act.length} request needs your action.</b> SGS asked for documents on ${act[0].id}.</p><button class="btn btn-ghost" data-act="open-sr" data-id="${act[0].id}">Review request</button></div>`:''}
+  <div class="toolbar">
+   <div class="search"><div class="fbox srch"><label class="sr-only" for="q">Search</label><input id="q" data-f="q" type="search" value="${esc(S.q)}" placeholder="Search for a Service Request"><span class="chev">${ic('search')}</span></div></div>
+   <div class="filter"><div class="fbox sel"><label class="sr-only" for="flt">Status</label><select id="flt" data-f="filter"><option value="all">All statuses</option>${Object.keys(ST).map(k=>`<option value="${k}" ${S.filter===k?'selected':''}>${ST[k].s}</option>`).join('')}</select><span class="chev">${ic('down')}</span></div></div>
+   <button class="btn btn-primary" data-act="new-sr">${ic('add')}<span>New Service Request</span></button>
+  </div>
+  <div class="tcard"><table><thead><tr><th>Request</th><th>Standard / scheme</th><th>Scope</th><th>Status</th><th>Submitted</th><th>Last update</th><th><span class="sr-only">Actions</span></th></tr></thead><tbody id="rows">${r.t}</tbody></table></div>
+  <div class="mcards" id="mrows">${r.m}</div>
+ </div></main>${mobileNav()}</div>`;
+}
+
+/* ============ New / edit Service Request ============ */
+function newDraft(from){
+ return from?JSON.parse(JSON.stringify(from)):{id:'SR-2026-09-00'+(430+Math.floor(Math.random()*60)),category:'',standard:'',type:'',delivery:'',scope:'',site:'',headcount:'',start:'',contact:CONTACTS[0],notes:'',docs:[],status:'draft',updated:today};
+}
+function missing(d){
+ const m=[];
+ if(!d.category)m.push(['category','Service category']);
+ if(!d.standard)m.push(['standard',d.category==='Training'?'Training topic':'Standard or scheme']);
+ if(!d.type)m.push(['type',d.category==='Training'?'Course':'Audit type']);
+ if(d.category==='Training'&&!d.delivery)m.push(['delivery','Delivery format']);
+ if(!d.scope)m.push(['scope','Scope']);
+ if(!d.headcount)m.push(['headcount',d.category==='Training'?'Number of participants':'Employees in scope']);
+ if(!d.start)m.push(['start','Preferred start date']);
+ if(!d.docs.length)m.push(['docs','At least one supporting document']);
+ d.docs.filter(x=>!x.desc).forEach(x=>m.push(['docs',`Description for ${x.file}`]));
+ if(!d.contact)m.push(['contact','Contact person']);
+ return m;
+}
+const SECS=[['sec-service','Service','task',['category','standard','type','delivery']],['sec-scope','Scope & site','biz',['scope','headcount','start']],['sec-docs','Documents','folder',['docs']],['sec-contact','Contact','contact',['contact']]];
+function draftNav(d){
+ const m=missing(d).map(x=>x[0]);
+ return `<ul class="vnav">${SECS.map(([id,l,i,keys],n)=>{const ok=!keys.some(k=>m.includes(k));return `<li><a href="#" data-act="jump" data-id="${id}" class="${n===S.navOn?'on':''}">${ic(i)}<span>${l}</span>${ok?`<svg class="ic xs ok" viewBox="0 0 32 32" aria-label="Complete">${SI.check}</svg>`:'<span class="dot" aria-label="Incomplete"></span>'}</a></li>`}).join('')}</ul>`;
+}
+function reqCard(d){
+ const m=missing(d);
+ if(!m.length) return `<div class="info-card done"><h3>Ready to submit</h3><p style="margin:0;font:400 12px/20px var(--font)">All required information is in place. Submit the request to send it to SGS.</p></div>`;
+ return `<div class="info-card"><h3>Required information</h3><ul>${m.slice(0,8).map(([k,l])=>`<li><button data-act="jump-field" data-id="${k}">${si('warn')}${esc(l)}</button></li>`).join('')}${m.length>8?`<li style="font-size:12px;color:var(--text2)">+${m.length-8} more</li>`:''}</ul></div>`;
+}
+function draftMid(d){
+ const isT=d.category==='Training';
+ const stdOpts=isT?[...new Set(TRAIN.map(t=>t[0]))].map(g=>[g,TRAIN.filter(t=>t[0]===g).map(t=>t[1])]):CERT;
+ const courseOpts=isT?(TRAIN.find(t=>t[1]===d.standard)?.[2]||[]):AUDIT_TYPES;
+ return `
+ <div class="meta-bar"><span>Request <b>${d.id}</b></span><span>Organization <b>${esc(S.user.org)}</b></span><span>Requested by <b>${esc(S.user.name)}</b></span></div>
+ <section class="card" id="sec-service"><div class="card-h"><span class="num">1</span><h2>Service</h2></div><p class="card-sub">Choose what you want to book with SGS.</p>
+  <div class="tiles" role="group" aria-label="Service category">
+   <button class="tile" data-act="cat" data-id="Certification" aria-pressed="${d.category==='Certification'}" id="category">${ic('shield')}<div><b>Certification</b><span>Initial, surveillance or recertification audits against a standard</span></div></button>
+   <button class="tile" data-act="cat" data-id="Training" aria-pressed="${isT}">${ic('school')}<div><b>Training</b><span>Lead auditor, internal auditor and implementation courses</span></div></button>
+  </div>
+  ${d.category?`<div class="row">
+   ${fld({id:'standard',label:isT?'Training topic':'Standard or scheme',req:true,options:stdOpts,value:d.standard,ph:isT?'Select a topic…':'Select a standard…',w:'w-l'})}
+   ${fld({id:'type',label:isT?'Course':'Audit type',req:true,options:courseOpts,value:d.type,ph:isT?(d.standard?'Select a course…':'Select a topic first'):'Select audit type…',w:'w-l',help:isT&&!d.standard?'Available courses depend on the topic.':''})}
+  </div>${isT?`<div class="row">${fld({id:'delivery',label:'Delivery format',req:true,options:['On-site at our premises','Public class','Virtual class'],value:d.delivery,w:'w-l'})}</div>`:''}`:''}
+ </section>
+ <section class="card" id="sec-scope"><div class="card-h"><span class="num">2</span><h2>Scope & site</h2></div><p class="card-sub">Tell SGS which part of your organization this covers.</p>
+  <div class="row">${fld({id:'scope',label:'Scope',req:true,options:SCOPES,value:d.scope,ph:'Select a scope…',w:'w-m',help:'Scopes are managed by your Customer Admin.'})}
+  ${fld({id:'site',label:'Site address',value:d.site,ph:'Street, city, postal code',w:'w-m',help:'By default the registered address of the scope.'})}</div>
+  <div class="row">${fld({id:'headcount',label:isT?'Participants':'Employees in scope',req:true,type:'number',min:1,inputmode:'numeric',value:d.headcount,ph:'0',w:'w-xs'})}
+  ${fld({id:'start',label:'Preferred start date',req:true,type:'date',min:today,value:d.start,w:'w-s'})}</div>
+ </section>
+ <section class="card" id="sec-docs"><div class="card-h"><span class="num">3</span><h2>Documents</h2></div><p class="card-sub">Add what SGS needs to prepare the quotation, and describe each document.</p>
+  <div class="docs" id="docs">${d.docs.length?d.docs.map(x=>docItem(x,'draft')).join(''):''}</div>
+  <div class="upload-zone" id="docs-anchor"><button class="btn btn-ghost" data-act="pick-draft">${ic('upload','xs')} Upload documents</button><span class="help" style="padding:0">Supported file types are PDF, DOC, XLS, PNG and JPG. <a href="#" data-act="req-docs">View requirements.</a></span></div>
+ </section>
+ <section class="card" id="sec-contact"><div class="card-h"><span class="num">4</span><h2>Contact</h2></div><p class="card-sub">Who SGS should talk to about this request.</p>
+  <div class="row">${fld({id:'contact',label:'Contact person',req:true,options:CONTACTS,value:d.contact,w:'w-m'})}</div>
+  <div class="row">${fld({id:'notes',label:'Notes for SGS',type:'textarea',value:d.notes,ph:'Anything SGS should know before planning',w:'w-l',help:'Optional.'})}</div>
+ </section>
+ <div class="ext" aria-hidden="true"></div>`;
+}
+function viewDraft(){
+ const d=S.draft;
+ if(!d){go('#/home');return ''}
+ const ok=!missing(d).length;
+ return `<div class="app">${topbar('home')}
+ <div class="phead shell">
+  <button class="back" data-act="back" aria-label="Back to Service Requests">${ic('back')}</button>
+  <div class="ptitle"><div><h1>${d.existing?'Edit Service Request':'New Service Request'}</h1><p>Edit, save and submit your request</p></div></div>
+  ${tag('draft')}
+  <span class="autosave" id="autosave" aria-live="polite">${ic('check','xs')}<span>All changes saved</span></span>
+  <div class="acts">
+   <button class="btn btn-dark" data-act="keep-draft" aria-label="Keep as Draft">${ic('save')}<span>Keep as Draft</span></button>
+   <button class="btn btn-primary" id="submit" data-act="submit" ${ok?'':'disabled'} aria-label="Submit Request">${ic('send')}<span>Submit Request</span></button>
+  </div>
+ </div>
+ <p class="m-note shell">Creating and editing requests is available on tablet and desktop. On mobile you can check request status.</p>
+ <div class="sr-grid shell">
+  <nav class="col col-left" id="lnav" aria-label="Sections">${draftNav(d)}</nav>
+  <div class="col col-mid" id="mid">${draftMid(d)}</div>
+  <aside class="col col-right"><h2 class="rt">SGS Requests & Communications</h2><div id="reqcard">${reqCard(d)}</div>
+   <div class="help-card"><h3>Need help?</h3><p>Contact SGS support for help choosing the right service or audit type.</p><button class="btn btn-ghost" data-act="support">Contact Support</button></div></aside>
+ </div></div>`;
+}
+function refreshDraftMeta(){
+ const d=S.draft; if(!d) return;
+ $('#reqcard').innerHTML=reqCard(d); $('#lnav').innerHTML=draftNav(d);
+ const b=$('#submit'); if(b) b.disabled=!!missing(d).length;
+ const a=$('#autosave'); if(a){a.innerHTML=`${ic('check','xs')}<span>Saving…</span>`;clearTimeout(refreshDraftMeta.t);refreshDraftMeta.t=setTimeout(()=>{a.innerHTML=`${ic('check','xs')}<span>All changes saved</span>`},600)}
+}
+function rerenderMid(){const m=$('#mid');const y=m.scrollTop;m.innerHTML=draftMid(S.draft);m.scrollTop=y;refreshDraftMeta();}
+
+/* ============ SR detail ============ */
+function viewDetail(id){
+ const r=S.srs.find(x=>x.id===id); if(!r){go('#/home');return''}
+ if(r.status==='draft'){S.draft=newDraft(r);S.draft.existing=true;return viewDraft()}
+ const steps=['Submitted','Accepted by SGS',r.category==='Training'?'Scheduled':'Audit planning',r.category==='Training'?'Delivered':'Audit',r.category==='Training'?'Completed':'Certificate'];
+ const at={submitted:0,action:2,progress:3,issued:5,completed:5,cancelled:0}[r.status];
+ const sgs=r.docs.filter(d=>d.kind==='sgs'), act=r.docs.filter(d=>d.kind==='action'), mine=r.docs.filter(d=>d.kind!=='sgs'&&d.kind!=='action');
+ return `<div class="app">${topbar('home')}
+ <div class="phead shell">
+  <button class="back" data-act="back" aria-label="Back to Service Requests">${ic('back')}</button>
+  <div class="ptitle"><div><h1>${r.id}</h1><p>${esc(r.category)} · ${esc(short(r.standard))} · ${esc(r.type)}</p></div></div>
+  ${tag(r.status)}
+  <div class="acts">${['submitted','action'].includes(r.status)?`<button class="btn btn-ghost" style="height:40px;border-radius:20px" data-act="cancel-sr" data-id="${r.id}" aria-label="Cancel request">${ic('close')}<span>Cancel request</span></button>`:''}</div>
+ </div>
+ <div class="sr-grid shell">
+  <nav class="col col-left" aria-label="Sections"><ul class="vnav">
+   <li><a href="#" class="on" data-act="jump" data-id="d-over">${ic('info')}<span>Overview</span></a></li>
+   <li><a href="#" data-act="jump" data-id="d-act">${ic('upload')}<span>Requested</span>${act.length?'<span class="dot"></span>':''}</a></li>
+   <li><a href="#" data-act="jump" data-id="d-docs">${ic('folder')}<span>Documents</span></a></li></ul></nav>
+  <div class="col col-mid" id="mid">
+   <section class="card" id="d-over"><div class="card-h"><h2>Overview</h2><div class="r"><span class="help" style="padding:0">Last update ${fmt(r.updated)}</span></div></div>
+    <ol class="timeline">${steps.map((s,i)=>`<li class="${i<at?'done':i===at?'now':''}"><span class="pt"></span><b>${s}</b>${i===0?fmt(r.submitted):''}</li>`).join('')}</ol>
+    <div class="kv">
+     <div><span>Standard / scheme</span><b>${esc(r.standard)}</b></div><div><span>${r.category==='Training'?'Course':'Audit type'}</span><b>${esc(r.type)}</b></div><div><span>Scope</span><b>${esc(r.scope)}</b></div>
+     <div><span>Site</span><b>${esc(r.site||'—')}</b></div><div><span>${r.category==='Training'?'Participants':'Employees in scope'}</span><b>${esc(r.headcount||'—')}</b></div><div><span>Preferred start</span><b>${fmt(r.start)}</b></div>
+     <div><span>Contact</span><b>${esc(r.contact||'—')}</b></div><div><span>SGS owner</span><b>${esc(r.assignee||'Not assigned yet')}</b></div><div><span>Notes</span><b>${esc(r.notes||'—')}</b></div>
+    </div></section>
+   <section class="card" id="d-act"><div class="card-h"><h2>Requested by SGS</h2><div class="r">${act.length?`<span class="tag t-red">${act.length} open</span>`:''}</div></div>
+    ${act.length?`<p class="card-sub" style="margin:4px 0 0">Upload each document. SGS reviews it and updates the request.</p><div class="docs">${act.map(d=>docItem(d,'detail')).join('')}</div>`:`<p class="card-sub" style="margin:4px 0 0">Nothing is waiting on you.</p>`}
+    ${sgs.length?`<h3 style="margin:24px 0 0;font:500 14px/20px var(--font);color:var(--text2)">SGS Documents</h3><div class="docs">${sgs.map(d=>docItem(d,'detail')).join('')}</div>`:''}
+   </section>
+   <section class="card" id="d-docs"><div class="card-h"><h2>Your documents</h2></div>
+    ${mine.length?`<div class="docs">${mine.map(d=>docItem(d,'detail')).join('')}</div>`:`<p class="card-sub" style="margin:4px 0 0">No documents on this request.</p>`}</section>
+   <div class="ext" aria-hidden="true"></div>
+  </div>
+  <aside class="col col-right">
+   <div class="comms"><div class="sec-title"><h2>Communications</h2></div><div class="scroll">${r.comms.map(c=>`<div class="evt"><b>${esc(c.t)}</b>${esc(c.b)}<br><time>${esc(c.d)}</time></div>`).join('')||'<p class="help">No updates yet.</p>'}</div></div>
+   <div class="comms"><div class="sec-title"><h2>Messages</h2></div><div class="scroll" id="msgs">${r.messages.map(m=>`<div class="msg ${m.me?'me':''}"><span class="who">${esc(m.who)} · ${esc(m.d)}</span>${esc(m.b)}</div>`).join('')||'<p class="help" style="padding:0">Send SGS a message about this request.</p>'}</div>
+    <form class="composer" data-form="msg" data-id="${r.id}"><div class="fbox"><label class="sr-only" for="msgin">Message</label><input id="msgin" placeholder="Write a message" autocomplete="off"></div><button class="icon-btn" aria-label="Send message" style="color:var(--orange)">${ic('send')}</button></form></div>
+  </aside>
+ </div></div>`;
+}
+
+/* ============ Evidence ============ */
+function evidenceStatus(c){
+ if(!c.ev.length) return `<span class="tag t-red">${si('warn')}No evidence</span>`;
+ if(c.ev.some(e=>e.kind==='review')) return `<span class="tag t-review">Under Review</span>`;
+ if(c.ev.some(e=>e.kind==='outdated')) return `<span class="tag t-yellow">${si('tri')}Outdated</span>`;
+ return `<span class="tag t-green">${si('check')}Evidence mapped</span>`;
+}
+function viewEvidence(){
+ const w=S.ws.find(x=>x.id===S.activeWs);
+ const all=w.groups.flatMap(g=>g[1]);
+ const withEv=all.filter(c=>c.ev.length).length, none=all.length-withEv, old=all.filter(c=>c.ev.some(e=>e.kind==='outdated')).length;
+ const fb=S.feedback;
+ return `<div class="app">${topbar('evidence')}
+ <div class="phead shell"><div class="ptitle"><div><h1>Evidence workspace</h1><p>${esc(w.fw)} · ${esc(w.scope)} · ${esc(w.cycle)}</p></div></div>
+  <div class="acts"><button class="btn btn-primary" data-act="ev-upload" data-id="" aria-label="Upload evidence">${ic('upload')}<span>Upload evidence</span></button></div></div>
+ <div class="sr-grid shell">
+  <nav class="col col-left" aria-label="Workspaces"><div class="ws-list">${S.ws.map(x=>`<button class="ws ${x.id===w.id?'on':''}" data-act="ws" data-id="${x.id}"><b>${esc(x.fw.split(':')[0])}</b><small>${esc(x.scope.split(' — ')[0])}</small></button>`).join('')}</div></nav>
+  <div class="col col-mid" id="mid">
+   <section class="card"><div class="card-h"><h2>Controls catalogue</h2></div>
+    ${all.length?`<div class="stats"><div class="stat"><b>${all.length}</b><span>Controls in this view</span></div><div class="stat"><b>${withEv}</b><span>With evidence</span></div><div class="stat"><b>${none}</b><span>Without evidence</span></div><div class="stat"><b>${old}</b><span>Outdated evidence</span></div></div>
+    ${w.groups.map(([g,cs])=>`<div class="ctl-group"><h3>${esc(g)}</h3>${cs.map(c=>ctlRow(w,c)).join('')}</div>`).join('')}`
+    :`<div class="empty" style="background:var(--white);border-radius:16px;margin-top:16px"><p style="margin:0 0 12px">This workspace was created when ${esc(w.fw)} was activated. No evidence has been added yet.</p><button class="btn btn-primary" data-act="ev-upload" data-id="">${ic('upload')}<span>Upload first evidence</span></button></div>`}
+   </section><div class="ext" aria-hidden="true"></div>
+  </div>
+  <aside class="col col-right"><h2 class="rt">SGS feedback</h2>
+   <div class="comms" style="flex:1"><div class="scroll" style="margin-top:0">${fb.map(f=>`<div class="evt"><b>${esc(f.k)} · ${esc(f.c)}</b>${esc(f.b)}<br><time>${esc(f.who)} · ${esc(f.d)}</time><br><button class="btn-text" style="padding:0;height:28px" data-act="goto-ctl" data-id="${esc(f.c)}">Open control</button></div>`).join('')}</div></div>
+   <div class="help-card"><h3>Evidence is not a verdict</h3><p>Mapping evidence shows readiness only. Conformity is decided by SGS during the audit.</p></div>
+  </aside>
+ </div></div>`;
+}
+function ctlRow(w,c){
+ const k='c-'+w.id+c.c, open=S.open[k];
+ const owners=['',...CONTACTS.map(x=>x.split(' · ')[0])];
+ return `<div class="ctl" id="${k}"><button class="ctl-h" data-act="toggle" data-id="${k}" aria-expanded="${!!open}"><span class="code">${esc(c.c)}</span><span class="ttl">${esc(c.t)}<small>${c.ev.length} evidence · Owner: ${esc(c.owner||'Unassigned')}</small></span>${evidenceStatus(c)}${ic(open?'up':'down','sm')}</button>
+ ${open?`<div class="ctl-b"><p>${esc(c.d)}</p><div class="chips" aria-label="Expected evidence">${c.exp.map(e=>`<span class="chip">${esc(e)}</span>`).join('')}</div>
+  <div class="row" style="margin-top:12px">${fld({id:'own-'+k,f:'owner',label:'Requirement owner',options:owners.slice(1),value:c.owner,ph:'Assign an owner…',w:'w-s'})}</div>
+  <div class="docs">${c.ev.map(e=>docItem(e,'evidence')).join('')}</div>
+  <div class="upload-zone"><button class="btn btn-ghost" data-act="ev-upload" data-id="${esc(c.c)}">${ic('upload','xs')} Upload evidence</button><button class="btn btn-ghost" data-act="ev-map" data-id="${esc(c.c)}">${ic('link','xs')} Map existing evidence</button></div>
+ </div>`:''}</div>`;
+}
+const findCtl=code=>{for(const w of S.ws)for(const g of w.groups)for(const c of g[1])if(c.c===code&&w.id===S.activeWs)return c};
+const findEv=id=>{for(const w of S.ws)for(const g of w.groups)for(const c of g[1]){const e=c.ev.find(x=>x.id===id);if(e)return[e,c]}return[]};
+
+/* ============ Passport ============ */
+function viewPassport(){
+ return `<div class="app">${topbar('passport')}<main class="main-scroll"><div class="shell">
+  <div class="home-head"><div><h1 class="h-page">Digital Trust Passport</h1><p class="sub">Choose which certificates customers can see, then share a read-only link.</p></div>
+   <div style="display:flex;gap:12px"><button class="btn btn-ghost" style="height:40px;border-radius:20px" data-act="preview">${ic('eye','xs')} Preview shared view</button><button class="btn btn-primary" data-act="share">${ic('link')}<span>Create share link</span></button></div></div>
+  <div class="pp-grid">${S.certs.map(c=>`<article class="cert"><div class="cert-top"><span class="seal">${ic('shield')}</span><div style="flex:1"><h3>${esc(c.fw)}</h3><span class="help" style="padding:0">${esc(c.name)}</span></div>${c.status==='Active'?`<span class="tag t-green">${si('check')}Active</span>`:`<span class="tag t-blue">${si('time')}In progress</span>`}</div>
+   <div class="kv"><div><span>Certificate number</span><b>${esc(c.no)}</b></div><div><span>Valid</span><b>${c.from?fmt(c.from)+' – '+fmt(c.to):'—'}</b></div><div style="grid-column:1/-1"><span>Scope</span><b>${esc(c.scope)}</b></div><div style="grid-column:1/-1"><span>Next milestone</span><b>${esc(c.next)}</b></div></div>
+   <div class="switch"><span>${c.status==='Active'?'Visible to external stakeholders':'Only issued certificates can be shared'}</span><button class="sw" role="switch" aria-checked="${c.share}" ${c.status!=='Active'?'aria-disabled="true"':''} data-act="sw" data-id="${c.id}" aria-label="Share ${esc(c.fw)} externally"></button></div></article>`).join('')}</div>
+  <section class="panel"><h2>Training badges</h2><p class="help" style="padding:0">From SGS Academy. Shown on the passport as training, not certification.</p><div class="badges">${S.badges.map(b=>`<div class="bdg"><span class="seal">${ic('school','sm')}</span><div><b>${esc(b.t)}</b><span>${esc(b.n)}</span></div></div>`).join('')}</div></section>
+  <section class="panel"><h2>Share links</h2><table><thead><tr><th>Shared with</th><th>Link</th><th>Expires</th><th>Views</th><th>Status</th><th></th></tr></thead><tbody>
+   ${S.links.map(l=>`<tr><td>${esc(l.to)}</td><td>${esc(l.url.replace('https://',''))}</td><td>${fmt(l.exp)}</td><td>${l.views}</td><td>${l.on?`<span class="tag t-green">Active</span>`:`<span class="tag t-grey">Revoked</span>`}</td><td style="text-align:right">${l.on?`<button class="btn-text" data-act="copy" data-id="${l.url}">Copy</button><button class="btn-text" data-act="revoke" data-id="${l.id}">Revoke</button>`:''}</td></tr>`).join('')}
+  </tbody></table></section>
+  <section class="panel"><h2>Access log</h2><table><thead><tr><th>When</th><th>Link</th><th>Activity</th></tr></thead><tbody>${S.log.map(r=>`<tr><td>${r[0]}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join('')}</tbody></table></section>
+ </div></main>${mobileNav()}</div>`;
+}
+function viewShared(){
+ document.body.className='';
+ const cs=S.certs.filter(c=>c.share&&c.status==='Active');
+ return `<div class="app"><header class="topbar shell"><div class="tb"><span class="logo"><b>SGS</b><span class="site">Verified trust profile</span></span><a class="tb-link" style="margin-left:auto" href="#/passport">${ic('back','sm')}<span>Back to portal</span></a></div></header>
+ <main class="main-scroll"><div class="shell" style="max-width:960px">
+  <div class="home-head"><div><h1 class="h-page">${esc(S.user.org)}</h1><p class="sub">Read-only view shared by the organization. Certificate information is maintained by SGS.</p></div></div>
+  <div class="pp-grid">${cs.map(c=>`<article class="cert"><div class="cert-top"><span class="seal">${ic('shield')}</span><div style="flex:1"><h3>${esc(c.fw)}</h3><span class="help" style="padding:0">${esc(c.name)}</span></div><span class="tag t-green">${si('check')}Valid</span></div><div class="kv"><div><span>Certificate number</span><b>${esc(c.no)}</b></div><div><span>Valid until</span><b>${fmt(c.to)}</b></div><div style="grid-column:1/-1"><span>Scope</span><b>${esc(c.scope)}</b></div><div style="grid-column:1/-1"><span>Issued by</span><b>SGS Taiwan Ltd. · SGS-verified</b></div></div></article>`).join('')||'<div class="empty">No certificates are shared.</div>'}</div>
+  <section class="panel"><h2>Training</h2><div class="badges">${S.badges.map(b=>`<div class="bdg"><span class="seal">${ic('school','sm')}</span><div><b>${esc(b.t)}</b><span>${esc(b.n)}</span></div></div>`).join('')}</div></section>
+ </div></main></div>`;
+}
+
+/* ============ Render ============ */
+function render(){
+ closePop(); closeModal(true);
+ const [r,a]=route(); document.body.className='';
+ let html='';
+ if(r==='login') html=viewLogin();
+ else if(r==='home') html=viewHome();
+ else if(r==='sr'&&a==='new'){S.navOn=0;html=viewDraft();}
+ else if(r==='sr') html=viewDetail(decodeURIComponent(a||''));
+ else if(r==='evidence') html=viewEvidence();
+ else if(r==='passport') html=viewPassport();
+ else if(r==='shared') html=viewShared();
+ else html=viewHome();
+ $('#root').innerHTML=html;
+}
+
+/* ============ Overlays ============ */
+let snackT;
+function snack(msg,action){
+ document.querySelectorAll('.snack').forEach(n=>n.remove());
+ const n=document.createElement('div');n.className='snack';n.setAttribute('role','status');
+ n.innerHTML=`<span>${esc(msg)}</span>${action?`<button data-act="${action[1]}" data-id="${action[2]||''}">${esc(action[0])}</button>`:''}`;
+ document.body.appendChild(n);clearTimeout(snackT);snackT=setTimeout(()=>n.remove(),4500);
+}
+let lastFocus=null;
+function modal(html,onSubmit){
+ closeModal(true); lastFocus=document.activeElement;
+ const s=document.createElement('div');s.className='scrim';s.id='scrim';
+ s.innerHTML=`<form class="modal" role="dialog" aria-modal="true" novalidate>${html}</form>`;
+ document.body.appendChild(s);
+ s.addEventListener('mousedown',e=>{if(e.target===s)closeModal()});
+ s.querySelector('form').addEventListener('submit',e=>{e.preventDefault();if(onSubmit(new FormData(e.target),e.target)!==false)closeModal()});
+ setTimeout(()=>(s.querySelector('input:not([type=hidden]),select,textarea,button')||s).focus(),30);
+}
+function closeModal(silent){const s=$('#scrim');if(s){s.remove();if(!silent&&lastFocus)lastFocus.focus()}}
+function pop(anchor,html){
+ closePop();const p=document.createElement('div');p.className='pop';p.id='pop';p.innerHTML=html;document.body.appendChild(p);
+ const r=anchor.getBoundingClientRect();const w=p.offsetWidth,h=p.offsetHeight;
+ let left=Math.min(r.right-w,innerWidth-w-8);left=Math.max(8,left);let top=r.bottom+6;if(top+h>innerHeight-8)top=r.top-h-6;
+ p.style.left=left+'px';p.style.top=Math.max(8,top)+'px';
+ const b=p.querySelector('button');b&&b.focus();
+}
+function closePop(){$('#pop')?.remove()}
+const descModal=(d,readonly,after)=>modal(`<h2>${readonly?'Document description':'Describe this document'}</h2>
+ <p class="help" style="padding:0">${esc(d.file||'')}</p>
+ ${readonly?`<div class="kv" style="grid-template-columns:1fr;margin:0"><div><span>Document type</span><b>${esc(d.type)}</b></div><div><span>Description</span><b>${esc(d.desc||'No description provided.')}</b></div></div>
+ <div class="foot"><button class="btn btn-dark" type="submit">Close</button></div>`:
+ `${fld({id:'m-type',label:'Document type',req:true,options:DOC_TYPES,value:DOC_TYPES.includes(d.type)?d.type:'',w:''})}
+ ${fld({id:'m-desc',label:'Description',req:true,type:'textarea',value:d.desc||'',ph:'What this document shows and which period it covers',w:'',help:'SGS reads this before opening the file.'})}
+ <div class="foot"><button class="btn btn-ghost" type="button" data-act="close-modal">Cancel</button><button class="btn btn-primary" type="submit">Save description</button></div>`}`,
+ (fd,form)=>{if(readonly)return;const t=form.querySelector('#m-type').value,ds=form.querySelector('#m-desc').value.trim();
+  if(!t||!ds){if(!ds){const f=form.querySelector('#m-desc').closest('.fld');f.classList.add('has-err');const m=f.querySelector('.help,.err');m.className='err';m.textContent='Add a short description.'}return false}
+  d.type=t;d.desc=ds;after&&after();snack('Description saved')});
+
+/* ============ File picking ============ */
+let pickCb=null;
+$('#filepick').addEventListener('change',e=>{const fs=[...e.target.files];e.target.value='';if(fs.length&&pickCb)pickCb(fs);pickCb=null});
+function pick(cb,multi=true){pickCb=cb;const f=$('#filepick');f.multiple=multi;f.click()}
+const sz=b=>b>1048576?(b/1048576).toFixed(1)+' MB':Math.max(1,Math.round(b/1024))+' KB';
+
+/* ============ Events ============ */
+document.addEventListener('click',e=>{
+ const el=e.target.closest('[data-act]'); if(!el) {if(!e.target.closest('#pop'))closePop();return}
+ const act=el.dataset.act,id=el.dataset.id;
+ if(el.tagName==='A'||act==='open-sr'||el.tagName==='BUTTON') {/* handled */}
+ const H=A[act]; if(H){ if(el.tagName==='A')e.preventDefault(); e.stopPropagation(); H(el,id,e); }
+});
+document.addEventListener('keydown',e=>{
+ if(e.key==='Escape'){if($('#pop'))closePop();else closeModal()}
+ if((e.key==='Enter'||e.key===' ')&&e.target.matches('tr[data-act],.mc[data-act]')){e.preventDefault();A['open-sr'](e.target,e.target.dataset.id)}
+});
+const A={
+ 'open-sr':(el,id)=>go('#/sr/'+encodeURIComponent(id)),
+ 'new-sr':()=>{S.draft=newDraft();go('#/sr/new')},
+ 'mobile-new':()=>snack('Creating requests is available on tablet and desktop.'),
+ back:()=>go('#/home'),
+ forgot:()=>snack('Password reset is handled by SGS support in this release.'),
+ notifs:el=>pop(el,`<div class="notif"><h3>Notifications</h3>${S.notifs.map(n=>`<button class="n ${n.unread?'unread':''}" data-act="notif-go" data-id="${n.id}"><b>${esc(n.t)}</b><span>${esc(n.b)}</span></button>`).join('')}</div>`),
+ 'notif-go':(el,id)=>{const n=S.notifs.find(x=>x.id==id);n.unread=false;go(n.go)},
+ profile:el=>pop(el,`<div style="padding:8px 12px 10px"><b style="font-weight:500;display:block">${esc(S.user.name)}</b><span class="help" style="padding:0">${esc(S.user.role)} · ${esc(S.user.org)}</span></div><button data-act="logout">${ic('logout','sm')} Log out</button>`),
+ logout:()=>{snack('You have logged out.');go('#/login')},
+ 'row-more':(el,id)=>{const r=S.srs.find(x=>x.id===id);pop(el,`<button data-act="open-sr" data-id="${id}">${ic('eye','sm')} View details</button><button data-act="dup" data-id="${id}">${ic('copy','sm')} Duplicate as new request</button>${['submitted','action'].includes(r.status)?`<button class="danger" data-act="cancel-sr" data-id="${id}">${ic('close','sm')} Cancel request</button>`:''}`)},
+ dup:(el,id)=>{const r=S.srs.find(x=>x.id===id);const d=newDraft();Object.assign(d,{category:r.category,standard:r.standard,type:r.type,delivery:r.delivery||'',scope:r.scope,site:r.site,headcount:r.headcount,contact:r.contact});S.draft=d;go('#/sr/new');snack('Details copied. Add documents to submit.')},
+ 'cancel-sr':(el,id)=>{closePop();modal(`<h2>Cancel ${id}?</h2><p style="margin:0">SGS stops work on this request. You can still view it, but you can't reopen it.</p>
+  ${fld({id:'m-why',label:'Reason',options:['No longer needed','Booked by mistake','Will re-submit with changes','Other'],w:''})}
+  <div class="foot"><button class="btn btn-ghost" type="button" data-act="close-modal">Keep request</button><button class="btn btn-primary" type="submit">Cancel request</button></div>`,()=>{const r=S.srs.find(x=>x.id===id);r.status='cancelled';r.updated=today;r.comms?.unshift({t:'Request cancelled',b:'By '+S.user.name+'.',d:fmt(today)});render();snack(id+' cancelled')})},
+ 'close-modal':()=>closeModal(),
+ cat:(el,id)=>{const d=S.draft;if(d.category===id)return;d.category=id;d.standard='';d.type='';d.delivery='';rerenderMid()},
+ jump:(el,id)=>{const t=document.getElementById(id);if(!t)return;$('#mid').scrollTo({top:t.offsetTop-$('#mid').offsetTop,behavior:'smooth'});document.querySelectorAll('.vnav a').forEach(a=>a.classList.toggle('on',a===el));const i=[...document.querySelectorAll('.vnav a')].indexOf(el);S.navOn=i},
+ 'jump-field':(el,id)=>{const t=id==='docs'?$('#docs-anchor'):document.getElementById(id);if(!t)return;t.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>(t.matches('input,select,button,textarea')?t:t.querySelector('button'))?.focus({preventScroll:true}),350)},
+ 'pick-draft':()=>pick(fs=>{fs.forEach(f=>S.draft.docs.push({id:nid('u'),kind:'completed',type:'Other',file:f.name,date:today,size:sz(f.size),desc:''}));rerenderMid();snack(fs.length+' document'+(fs.length>1?'s':'')+' uploaded. Add a description to each.')}),
+ 'req-docs':()=>modal(`<h2>Document requirements</h2><p style="margin:0">For a quotation SGS usually needs your company registration, a scope statement, an organisation chart and, for certification, the latest internal audit report. Files up to 25 MB each.</p><div class="foot"><button class="btn btn-dark" type="submit">Got it</button></div>`,()=>{}),
+ 'edit-desc':(el,id)=>{closePop();const d=S.draft?.docs.find(x=>x.id===id)||findEv(id)[0];descModal(d,false,()=>{if(S.draft&&location.hash.startsWith('#/sr'))rerenderMid();else render()})},
+ 'view-desc':(el,id)=>{closePop();const r=S.srs.find(x=>x.docs.some(d=>d.id===id));descModal(r.docs.find(d=>d.id===id),true)},
+ open:(el,id)=>{closePop();snack('Opening document in a new tab (prototype).')},
+ download:()=>{closePop();snack('Download started (prototype).')},
+ delete:(el,id)=>{closePop();const d=S.draft;const i=d.docs.findIndex(x=>x.id===id);const [rm]=d.docs.splice(i,1);rerenderMid();snack('Document deleted',['Undo','undo-del',id]);A._undo=()=>{d.docs.splice(i,0,rm);rerenderMid()}},
+ 'undo-del':()=>{A._undo&&A._undo();document.querySelector('.snack')?.remove()},
+ 'doc-more':(el,id)=>{const acts=JSON.parse(el.dataset.acts);pop(el,acts.map(([i,l,a])=>`<button data-act="${a}" data-id="${id}">${ic(i,'sm')} ${l}</button>`).join(''))},
+ toggle:(el,id)=>{S.open[id]=!S.open[id];const m=$('#mid');const y=m?m.scrollTop:0;render();const m2=$('#mid');if(m2)m2.scrollTop=y;document.querySelector(`[data-id="${CSS.escape(id)}"][data-act="toggle"]`)?.focus({preventScroll:true})},
+ 'upload-action':(el,id)=>{closePop();const r=S.srs.find(x=>x.docs.some(d=>d.id===id));pick(fs=>{const d=r.docs.find(x=>x.id===id);const f=fs[0];Object.assign(d,{kind:'review',file:f.name,date:today,size:sz(f.size)});delete d.affected;r.updated=today;
+   r.comms.unshift({t:'Document uploaded',b:`${d.type} sent to SGS for review.`,d:fmt(today)});
+   if(!r.docs.some(x=>x.kind==='action')){r.status='submitted';r.comms.unshift({t:'Information provided',b:'All requested documents are with SGS.',d:fmt(today)});S.notifs.forEach(n=>{if(n.go.includes(r.id))n.unread=false})}
+   const m=$('#mid');const y=m.scrollTop;render();$('#mid').scrollTop=y;snack(r.status==='submitted'?'All requested documents sent. SGS will review them.':`${d.type} uploaded. SGS will review it.`)},false)},
+ 'keep-draft':()=>{saveDraft('draft');go('#/home');snack('Draft saved. You can finish it later.')},
+ submit:()=>{const d=S.draft;if(missing(d).length)return;modal(`<h2>Submit ${d.id}?</h2><p style="margin:0">SGS will review your request and reply with a quotation or questions. You can't edit the request after submitting, but you can message SGS.</p>
+  <div class="kv" style="grid-template-columns:1fr 1fr;margin:0"><div><span>Service</span><b>${esc(d.category)} · ${esc(d.type)}</b></div><div><span>Standard</span><b>${esc(short(d.standard))}</b></div><div><span>Scope</span><b>${esc(d.scope)}</b></div><div><span>Documents</span><b>${d.docs.length}</b></div></div>
+  <div class="foot"><button class="btn btn-ghost" type="button" data-act="close-modal">Keep editing</button><button class="btn btn-primary" type="submit">Submit Request</button></div>`,()=>{const r=saveDraft('submitted');r.submitted=today;r.assignee='';r.comms=[{t:'Request submitted',b:'By '+S.user.name+'.',d:fmt(today)}];r.messages=[];S.draft=null;go('#/sr/'+r.id);snack('Request submitted. SGS usually replies within 2 working days.')})},
+ support:()=>modal(`<h2>Contact SGS support</h2>${fld({id:'m-topic',label:'Topic',req:true,options:['Choosing a service','Audit planning','Technical problem','Other'],value:'Choosing a service',w:''})}${fld({id:'m-msg',label:'Message',req:true,type:'textarea',ph:'How can SGS help?',w:''})}<div class="foot"><button class="btn btn-ghost" type="button" data-act="close-modal">Cancel</button><button class="btn btn-primary" type="submit">Send message</button></div>`,()=>snack('Message sent to SGS support')),
+ ws:(el,id)=>{S.activeWs=id;render()},
+ 'goto-ctl':(el,code)=>{S.activeWs='w1';S.open['c-w1'+code]=true;render();const t=document.getElementById('c-w1'+code);t&&$('#mid').scrollTo({top:t.offsetTop-$('#mid').offsetTop-12,behavior:'smooth'})},
+ 'ev-upload':(el,code)=>{
+  const w=S.ws.find(x=>x.id===S.activeWs);const codes=w.groups.flatMap(g=>g[1].map(c=>c.c));
+  let files=[];
+  modal(`<h2>Upload evidence</h2>
+   <div class="upload-zone" style="margin:0"><button class="btn btn-ghost" type="button" id="m-pick">${ic('upload','xs')} Choose file</button><span class="help" id="m-file" style="padding:0">No file chosen</span></div>
+   ${fld({id:'m-type',label:'Document type',req:true,options:DOC_TYPES,value:'',w:''})}
+   ${fld({id:'m-desc',label:'Description',type:'textarea',ph:'What this evidence shows',w:'',help:'Evidence without a description is marked Needs Description.'})}
+   <div class="row" style="margin:0">${fld({id:'m-from',label:'Effective from',type:'date',value:today,w:'w-s'})}${fld({id:'m-exp',label:'Expires',type:'date',w:'w-s',help:'Drives freshness.'})}</div>
+   <fieldset style="border:0;padding:0;margin:0"><legend class="help" style="padding:0 0 6px">Map to controls <span class="req">*</span></legend><div class="checks" style="max-height:160px;overflow:auto">${codes.map(c=>`<label><input type="checkbox" name="map" value="${esc(c)}" ${c===code?'checked':''}> ${esc(c)} ${esc(findCtl(c)?.t||'')}</label>`).join('')}</div></fieldset>
+   <p class="err" id="m-err" style="padding:0;display:none"></p>
+   <div class="foot"><button class="btn btn-ghost" type="button" data-act="close-modal">Cancel</button><button class="btn btn-primary" type="submit">Upload evidence</button></div>`,
+   (fd,form)=>{const maps=fd.getAll('map');const t=form.querySelector('#m-type').value;const er=form.querySelector('#m-err');
+    if(!files.length||!t||!maps.length){er.style.display='block';er.textContent=!files.length?'Choose a file to upload.':!t?'Select a document type.':'Map the evidence to at least one control.';return false}
+    const f=files[0];const desc=form.querySelector('#m-desc').value.trim();
+    maps.forEach(c=>{const ctl=findCtl(c);ctl.ev.push({id:nid('e'),type:t,file:f.name,date:today,size:sz(f.size),kind:'completed',desc});S.open['c-'+w.id+c]=true});
+    render();snack(`Evidence uploaded and mapped to ${maps.length} control${maps.length>1?'s':''}`)});
+  $('#m-pick').onclick=()=>pick(fs=>{files=fs;$('#m-file').textContent=fs[0].name+' · '+sz(fs[0].size)},false);
+ },
+ 'ev-map':(el,code)=>{
+  const lib=[];const seen=new Set();S.ws.forEach(w=>w.groups.forEach(g=>g[1].forEach(c=>c.ev.forEach(e=>{if(!seen.has(e.file)){seen.add(e.file);lib.push(e)}}))));
+  const ctl=findCtl(code);const have=new Set(ctl.ev.map(e=>e.file));
+  modal(`<h2>Map existing evidence to ${esc(code)}</h2><p class="help" style="padding:0">From your evidence library.</p><div class="checks">${lib.map(e=>`<label><input type="checkbox" name="ev" value="${esc(e.file)}" ${have.has(e.file)?'checked disabled':''}> ${esc(e.file)} <span class="help" style="padding:0">· ${esc(e.type)}</span></label>`).join('')}</div>
+   <div class="foot"><button class="btn btn-ghost" type="button" data-act="close-modal">Cancel</button><button class="btn btn-primary" type="submit">Map evidence</button></div>`,
+   fd=>{const sel=fd.getAll('ev');sel.forEach(f=>{const e=lib.find(x=>x.file===f);ctl.ev.push({...e,id:nid('e')})});render();if(sel.length)snack(`${sel.length} evidence mapped to ${code}`)})},
+ unmap:(el,id)=>{closePop();const [e,c]=findEv(id);c.ev=c.ev.filter(x=>x.id!==id);render();snack(`Mapping removed from ${c.c}. The file stays in your library.`)},
+ sw:(el,id)=>{const c=S.certs.find(x=>x.id===id);if(c.status!=='Active'){snack('Only issued certificates can be shared.');return}c.share=!c.share;el.setAttribute('aria-checked',c.share);snack(c.share?`${c.fw} is now visible on shared links`:`${c.fw} is hidden from shared links`)},
+ share:()=>modal(`<h2>Create share link</h2>
+  ${fld({id:'m-to',label:'Shared with',req:true,ph:'e.g. Customer name — team',w:'',help:'Only you and your Customer Admins see this label.'})}
+  ${fld({id:'m-exp',label:'Link expires after',options:['7 days','30 days','90 days'],value:'30 days',w:''})}
+  <fieldset style="border:0;padding:0;margin:0"><legend class="help" style="padding:0 0 6px">Include</legend><div class="checks">${S.certs.filter(c=>c.status==='Active').map(c=>`<label><input type="checkbox" name="c" value="${c.id}" ${c.share?'checked':''}> ${esc(c.fw)} · ${esc(c.no)}</label>`).join('')}<label><input type="checkbox" name="b" checked> Training badges</label></div></fieldset>
+  <div class="foot"><button class="btn btn-ghost" type="button" data-act="close-modal">Cancel</button><button class="btn btn-primary" type="submit">Create link</button></div>`,
+  (fd,form)=>{const to=form.querySelector('#m-to').value.trim();if(!to){const f=form.querySelector('#m-to').closest('.fld');f.classList.add('has-err');f.querySelector('.help,.err').className='err';f.querySelector('.err').textContent='Add who you are sharing with.';return false}
+   const days=parseInt(form.querySelector('#m-exp').value)||30;const d=new Date(today);d.setDate(d.getDate()+days);
+   const tok=Math.random().toString(36).slice(2,6).toUpperCase()+'-'+Math.random().toString(36).slice(2,6).toUpperCase();
+   const l={id:nid('l'),to,url:'https://trust.sgs.com/p/'+tok,exp:d.toISOString().slice(0,10),views:0,on:true};S.links.unshift(l);
+   setTimeout(()=>{render();modal(`<h2>Link ready</h2><p style="margin:0">Anyone with this link can view the selected certificates until ${fmt(l.exp)}. You can revoke it at any time.</p><div class="linkbox"><code>${l.url}</code><button class="icon-btn" type="button" data-act="copy" data-id="${l.url}" aria-label="Copy link">${ic('copy','sm')}</button></div><div class="foot"><button class="btn btn-ghost" type="button" data-act="preview">Preview</button><button class="btn btn-dark" type="submit">Done</button></div>`,()=>{})},0)}),
+ copy:(el,id)=>{try{navigator.clipboard.writeText(id)}catch(_){}snack('Link copied')},
+ revoke:(el,id)=>{const l=S.links.find(x=>x.id===id);l.on=false;render();snack('Link revoked. It no longer opens.')},
+ preview:()=>{closeModal(true);go('#/shared')}
+};
+function saveDraft(status){
+ const d=S.draft;const existing=S.srs.find(x=>x.id===d.id);
+ const rec=Object.assign(existing||{},JSON.parse(JSON.stringify(d)),{status,updated:today});delete rec.existing;
+ rec.comms=rec.comms||[];rec.messages=rec.messages||[];
+ if(!existing)S.srs.unshift(rec);
+ return rec;
+}
+/* inputs */
+document.addEventListener('input',e=>{
+ const fl=e.target.closest('.fld');
+ if(fl&&fl.classList.contains('has-err')){fl.classList.remove('has-err');const m=fl.querySelector('.err');if(m){if(fl.dataset.help){m.className='help';m.innerHTML=fl.dataset.help}else m.remove()}}
+ const f=e.target.dataset.f; if(!f||e.target.closest('#scrim')) return;
+ if(f==='q'){S.q=e.target.value;const r=tableRows();$('#rows').innerHTML=r.t;$('#mrows').innerHTML=r.m;return}
+ if(S.draft&&location.hash.startsWith('#/sr')&&f in S.draft&&e.target.tagName!=='SELECT'){S.draft[f]=e.target.value;refreshDraftMeta()}
+});
+document.addEventListener('change',e=>{
+ const f=e.target.dataset.f; if(!f||e.target.closest('#scrim')) return;
+ if(f==='filter'){S.filter=e.target.value;const r=tableRows();$('#rows').innerHTML=r.t;$('#mrows').innerHTML=r.m;return}
+ if(f==='owner'){const code=e.target.id.replace('own-c-'+S.activeWs,'');const c=findCtl(code);c.owner=e.target.value;const m=$('#mid'),y=m.scrollTop;render();$('#mid').scrollTop=y;snack(`${e.target.value} now owns ${code}`);return}
+ if(S.draft&&location.hash.startsWith('#/sr')&&f in S.draft){
+  S.draft[f]=e.target.value;
+  if(f==='standard'){S.draft.type=S.draft.category==='Certification'?S.draft.type:'';rerenderMid()} else refreshDraftMeta();
+ }
+});
+document.addEventListener('submit',e=>{
+ const k=e.target.dataset.form; if(!k) return; e.preventDefault();
+ if(k==='login'){const em=$('#email').value.trim(),pw=$('#pw').value;S.lerr={};
+  if(!/^\S+@\S+\.\S+$/.test(em))S.lerr.email='Enter the email address you were invited with.';
+  if(!pw)S.lerr.pw='Enter your password.';
+  if(Object.keys(S.lerr).length){$('#root').innerHTML=viewLogin();($('.has-err input'))?.focus();return}
+  S.lerr=null;go('#/home')}
+ if(k==='msg'){const r=S.srs.find(x=>x.id===e.target.dataset.id);const v=$('#msgin').value.trim();if(!v)return;r.messages.push({me:true,who:'You',b:v,d:'Now'});
+  const box=$('#msgs');box.innerHTML=r.messages.map(m=>`<div class="msg ${m.me?'me':''}"><span class="who">${esc(m.who)} · ${esc(m.d)}</span>${esc(m.b)}</div>`).join('');box.scrollTop=box.scrollHeight;$('#msgin').value='';snack('Message sent to SGS')}
+});
+/* scroll-spy for left nav on the draft page */
+document.addEventListener('scroll',e=>{
+ if(e.target.id!=='mid'||!S.draft||!location.hash.startsWith('#/sr/new'))return;
+ const m=e.target;let idx=0;SECS.forEach(([id],i)=>{const t=document.getElementById(id);if(t&&t.offsetTop-m.offsetTop-80<=m.scrollTop)idx=i});
+ if(idx!==S.navOn){S.navOn=idx;document.querySelectorAll('#lnav a').forEach((a,i)=>a.classList.toggle('on',i===idx))}
+},true);
+render();
+</script>
+</body>
+</html>

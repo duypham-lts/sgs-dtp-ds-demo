@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SGS Admin – customer detail</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="sgs-ops" style="position: relative; width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" tone="dark" site-name="Digital Trust Platform" site-sub="Operations Console" badge="Internal" home-links="{{noLinks}}" user-name="Minh Nguyen" user-email="minh.nguyen@sgs.com" notifications="{{three}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" tone="dark" label="SGS Operations" sections="{{nav}}" default-active="cust" default-collapsed="{{collapsed}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <x-import component-from-global-scope="Graphite.PageHeader" title="ABC Trading Co., Ltd." subtitle="Taiwan · SGS Taiwan" on-back="{{noop}}" status="{{status}}" actions="{{hdr}}"></x-import>
+      <div style="flex-grow: 1; min-height: 0; display: grid; grid-template-columns: 14fr 62fr 21fr; gap: 20px">
+        <div style="min-width: 0; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02)">
+          <x-import component-from-global-scope="Graphite.SectionNav" label="Sections" items="{{sections}}" default-active="adm"></x-import>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 20px">
+          <section class="gr-card">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">1</span><div><h2 class="gr-card__title">Customer Admin</h2><p class="gr-card__sub">One per customer. They invite and manage the other users.</p></div></div></div>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 16px; border-radius: var(--radius-md); background: var(--layer-02)">
+              <span style="display: flex; align-items: center; gap: 12px"><x-import component-from-global-scope="Graphite.Avatar" name="Linh Tran" size="lg"></x-import><span style="display: flex; flex-direction: column"><span class="body-medium" style="font-weight: 500">Linh Tran</span><span class="body-small" style="color: var(--text-secondary)">linh.tran@abc-trading.com · active since 13 Mar 2025</span></span></span>
+              <x-import component-from-global-scope="Graphite.StatusTag" status="completed" label="Active" size="sm"></x-import>
+            </div>
+          </section>
+          <section class="gr-card">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">2</span><div><h2 class="gr-card__title">Profile</h2><p class="gr-card__sub">Maintained by SGS</p></div></div><x-import component-from-global-scope="Graphite.Button" variant="tertiary" size="sm" icon="edit" icon-position="left">Edit</x-import></div>
+            <dl style="margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 24px"><div><dt class="body-small" style="color: var(--text-secondary)">Company name</dt><dd class="body-medium" style="margin: 0">ABC Trading Co., Ltd.</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">Country</dt><dd class="body-medium" style="margin: 0">Taiwan</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">SGS affiliate</dt><dd class="body-medium" style="margin: 0">SGS Taiwan</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">Created</dt><dd class="body-medium" style="margin: 0">12 Mar 2025 by Minh Nguyen</dd></div></dl>
+          </section>
+          <section class="gr-card">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">3</span><div><h2 class="gr-card__title">Users</h2><p class="gr-card__sub">Managed by the Customer Admin · read only</p></div></div></div>
+            <x-import component-from-global-scope="Graphite.Table" density="compact" columns="{{uCols}}" rows="{{uRows}}"></x-import>
+            <div><x-import component-from-global-scope="Graphite.Link" href="SgsUsers.dc.html">Open in Users</x-import></div>
+          </section>
+          <section class="gr-card gr-card--extend">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">4</span><div><h2 class="gr-card__title">Scopes</h2><p class="gr-card__sub">4 scopes · 4 frameworks linked · managed by the customer</p></div></div><x-import component-from-global-scope="Graphite.Link" href="TenantScopes.dc.html">View scopes</x-import></div>
+          </section>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02); display: flex; flex-direction: column; gap: 16px">
+          <div class="title-medium">Account</div>
+          <div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: var(--radius-md); background: var(--layer-01)">
+            <span class="title-small">Status</span>
+            <span class="body-medium">6 users · 4 scopes</span><span class="body-small" style="color: var(--text-secondary)">Last sign-in today by Linh Tran</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite, F = window.React.Fragment;
+
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' },
+      { id: 'req', label: 'Requests', icon: 'task', badge: 3, badgeTone: 'attention', badgeLabel: 'requests need triage', children: [
+        { id: 'req-all', label: 'All requests' }, { id: 'req-cert', label: 'Certification' }, { id: 'req-train', label: 'Training' },
+        { type: 'label', label: 'Other services' }, { id: 'req-gap', label: 'Gap Analysis', badge: 3, badgeTone: 'attention', badgeLabel: 'need triage' }, { id: 'req-impl', label: 'Implementation Support' } ] },
+      { id: 'cust', label: 'Customers', icon: 'category' },
+      { id: 'fw', label: 'Frameworks', icon: 'catalog' },
+      { id: 'asg', label: 'Assignments', icon: 'user--access' },
+      { id: 'audit', label: 'Audit Logs', icon: 'document' },
+      { id: 'settings', label: 'Settings', icon: 'settings' } ] },
+      { label: 'Administration', items: [{ id: 'users', label: 'Users', icon: 'user--multiple' }] }];
+    var extra = {};
+
+    var extra = { noop: function(){} };
+    extra.status = { status: 'completed', label: 'Active', shortLabel: 'Active' };
+    extra.hdr = null;
+    extra.sections = [{"id": "adm", "label": "Customer Admin", "href": "TenantDetail.dc.html"}, {"id": "pf", "label": "Profile", "href": "TenantDetail.dc.html"}, {"id": "us", "label": "Users", "href": "TenantDetail.dc.html"}, {"id": "sc", "label": "Scopes", "href": "TenantScopes.dc.html"}];
+    extra.uCols = [{ key: 'n', header: 'User' }, { key: 'r', header: 'Role' }, { key: 's', header: 'Status', render: function(r){ return h(G.StatusTag, { status: r.st, size: 'sm', label: r.s }); } }];
+    extra.uRows = [{ n: 'Linh Tran', r: 'Customer Admin', st: 'completed', s: 'Active' }, { n: 'Wei Chen', r: 'Customer User', st: 'completed', s: 'Active' }, { n: 'Mei Lin', r: 'Customer User', st: 'completed', s: 'Active' }, { n: 'Kevin Ho', r: 'Customer User', st: 'under-review', s: 'Invitation pending' }];
+    extra.sCols = [{ key: 's', header: 'Scope' }, { key: 't', header: 'Type', width: 130 }, { key: 'f', header: 'Framework · version' }, { key: 'tierLabel', header: 'Tier (set by customer)', width: 200, render: function(r){ return r.tiers ? (r.tiers.filter(function(t){ return t.value === r.tier; })[0] || {}).label : h('span', { className: 'body-small', style: { color: 'var(--text-secondary)' } }, 'No tiers'); } }];
+    var T = [{ value: 'P', label: 'Basic' }, { value: 'M', label: 'Medium' }, { value: 'H', label: 'High' }];
+    extra.sRows = [
+      { s: 'Head office · Taipei', t: 'Organisation', f: 'ISO/IEC 27001 · 2022' },
+      { s: 'Customer data platform', t: 'System', f: 'Appendix 10 · 2022', tiers: T, tier: 'M' },
+      { s: 'AI platform', t: 'Product', f: 'ISO/IEC 42001 · 2023' },
+      { s: 'Plant · Taichung', t: 'Organisation', f: 'TISAX · ISA 6.0', tiers: [{ value: 'n', label: 'Normal' }, { value: 'h', label: 'High' }, { value: 'vh', label: 'Very high' }], tier: 'h' } ];
+    return Object.assign({ yes: true, no: false, three: 3, nav: nav, noLinks: [], noop: function(){}, collapsed: false }, extra);
+  }
+}
+</script>
+</body>
+</html>

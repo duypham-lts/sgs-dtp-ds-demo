@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Consultant – workspace (read only) · IS-2026-003</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="sgs-ops" style="position: relative; width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" tone="dark" site-name="Digital Trust Platform" site-sub="Operations Console" badge="Internal" home-links="{{noLinks}}" user-name="Anna Lee" user-email="anna.lee@sgs.com" notifications="{{one}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" tone="dark" label="SGS Operations" sections="{{nav}}" default-active="asg-impl" default-collapsed="{{collapsed}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <x-import component-from-global-scope="Graphite.PageHeader" title="Workspace · ISO/IEC 27001 · Head office, Taipei" subtitle="ABC Trading Co., Ltd. · opened from IS-2026-003" on-back="{{noop}}" status="{{status}}"></x-import>
+      <div style="max-width: 100%"><x-import component-from-global-scope="Graphite.InlineNotification" kind="info" title="Read only">You can view requirements and download evidence until IS-2026-003 is completed. Every view and download is recorded in the customer’s audit trail. You can’t upload, change or delete anything.</x-import></div>
+      <div style="flex-grow: 1; min-height: 0; display: grid; grid-template-columns: 26fr 71fr; gap: 20px">
+        <div style="min-width: 0; min-height: 0; overflow: auto; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02)">
+          <x-import component-from-global-scope="Graphite.RequirementNavigator" label="ISO/IEC 27001 requirements" framework="{{fw}}" groups="{{groups}}" default-expanded="{{exp}}" default-selected="a5.9" filter-options="{{filters}}"></x-import>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 20px">
+          <section class="gr-card">
+            <div class="gr-card__head"><div><h2 class="gr-card__title">A.5.9 Inventory of information and other associated assets</h2><p class="gr-card__sub">Annex A · Organizational controls · owner Linh Tran · last updated 18 Sep 2026</p></div><x-import component-from-global-scope="Graphite.StatusTag" status="missing-info" label="Missing evidence" size="sm"></x-import></div>
+            <div style="display: flex; flex-direction: column; gap: 4px; padding: 16px; border-radius: var(--radius-md); background: var(--layer-02)">
+              <span class="body-small" style="color: var(--text-secondary)">Customer self-assessment</span>
+              <span class="body-medium">Partially in place — IT keeps a hardware list; there is no single register for information assets yet.</span>
+            </div>
+          </section>
+          <section class="gr-card gr-card--extend">
+            <div class="gr-card__head"><div class="gr-card__heading"><div><h2 class="gr-card__title">Evidence</h2><p class="gr-card__sub">3 documents · download only · any file type</p></div></div></div>
+            <x-import component-from-global-scope="Graphite.DocumentItem" doc-type="IT hardware list" file-name="hw-inventory-q2.xlsx" date-label="Uploaded Aug 12, 2026 by Wei Chen" size="410 KB" status="completed" status-label="Accepted" actions="{{viewOnly}}"></x-import>
+            <x-import component-from-global-scope="Graphite.DocumentItem" doc-type="Asset management procedure" file-name="asset-procedure-v1.docx" date-label="Uploaded Aug 12, 2026 by Linh Tran" size="380 KB" status="completed" status-label="Accepted" actions="{{viewOnly}}"></x-import>
+            <x-import component-from-global-scope="Graphite.DocumentItem" variant="under-review" doc-type="Software inventory (draft)" file-name="sw-export-2026-09.txt" date-label="Uploaded Sep 18, 2026 by Wei Chen" size="120 KB" status="under-review" status-label="Under review" actions="{{viewOnly}}"></x-import>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite, F = window.React.Fragment;
+
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' },
+      { id: 'asg', label: 'My assignments', icon: 'user--access', badge: 1, badgeTone: 'attention', badgeLabel: 'assignment in progress', children: [
+        { id: 'asg-gap', label: 'Gap Analysis', badge: 1, badgeTone: 'attention', badgeLabel: 'in progress' }, { id: 'asg-impl', label: 'Implementation Support' } ] },
+      { id: 'fw', label: 'Frameworks', icon: 'catalog' },
+      { id: 'settings', label: 'Settings', icon: 'settings' } ] }];
+    var extra = {};
+
+    extra.status = { status: 'info', label: 'Read only', shortLabel: 'Read only' };
+    extra.viewOnly = [{ type: 'download', label: 'Download file' }];
+    extra.fw = { name: 'ISO/IEC 27001:2022', progress: 64, caption: 'Customer readiness · 74 of 116 requirements with accepted evidence' };
+    extra.exp = ['a5'];
+    extra.filters = [{ value: 'all', label: 'All' }, { value: 'fulfilled', label: 'Fulfilled' }, { value: 'review', label: 'Under review' }, { value: 'missing', label: 'Missing evidence' }, { value: 'none', label: 'No evidence' }];
+    extra.groups = [
+      { id: 'c4', code: '4–10', title: 'Management system', progress: 87, children: [{ id: 'c4.1', code: '4.1', title: 'Context of the organization', status: 'fulfilled' }, { id: 'c6.1', code: '6.1.2', title: 'Information security risk assessment', status: 'review' }] },
+      { id: 'a5', code: 'A.5', title: 'Organizational controls', progress: 62, children: [
+        { id: 'a5.1', code: 'A.5.1', title: 'Policies for information security', status: 'fulfilled' },
+        { id: 'a5.2', code: 'A.5.2', title: 'Roles and responsibilities', status: 'fulfilled' },
+        { id: 'a5.7', code: 'A.5.7', title: 'Threat intelligence', status: 'missing' },
+        { id: 'a5.9', code: 'A.5.9', title: 'Inventory of assets', status: 'missing' },
+        { id: 'a5.10', code: 'A.5.10', title: 'Acceptable use of information', status: 'review' },
+        { id: 'a5.19', code: 'A.5.19', title: 'Supplier relationships' } ] },
+      { id: 'a6', code: 'A.6', title: 'People controls', progress: 75, children: [{ id: 'a6.1', code: 'A.6.1', title: 'Screening', status: 'fulfilled' }] },
+      { id: 'a7', code: 'A.7', title: 'Physical controls', progress: 57, children: [{ id: 'a7.1', code: 'A.7.1', title: 'Physical security perimeters', status: 'fulfilled' }] },
+      { id: 'a8', code: 'A.8', title: 'Technological controls', progress: 53, children: [{ id: 'a8.1', code: 'A.8.1', title: 'User end point devices', status: 'review' }] } ];
+    return Object.assign({ yes: true, no: false, one: 1, two: 2, three: 3, s16: 16, nav: nav, noLinks: [], noop: function(){}, collapsed: true }, extra);
+  }
+}
+</script>
+</body>
+</html>

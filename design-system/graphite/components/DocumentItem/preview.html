@@ -1,0 +1,28 @@
+<!-- @dsCard group="Patterns" height=640 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>DocumentItem — preview</title></head>
+<body style="margin:0">
+<div id="root"></div>
+<script>
+  var G = window.Graphite, h = React.createElement;
+  function cap(t){ return h('div', { className: 'gr-demo__cap' }, t); }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'gr-demo', style: { background: 'var(--background)' } },
+      cap('Standard · Completed'),
+      h(G.DocumentItem, { docType: 'Final Invoice', fileName: 'invoice234657.pdf', dateLabel: 'Uploaded January 20, 2026', size: '2.4 MB', status: 'completed', actions: [{ type: 'edit' }, { type: 'open' }, { type: 'delete' }] }),
+      cap('Under Review — subdued, read-only actions'),
+      h(G.DocumentItem, { variant: 'under-review', docType: 'Final Invoice', fileName: 'invoice234657.pdf', dateLabel: 'Uploaded January 20, 2026', size: '2.4 MB', status: 'under-review', actions: [{ type: 'open' }, { type: 'view' }] }),
+      cap('Actions Required / Missing Info — dashed orange, Affected Products expands (Area 5)'),
+      h(G.DocumentItem, { variant: 'actions-required', docType: 'Test Report', status: 'missing-info', defaultExpanded: true, actions: [{ type: 'upload' }] },
+        h(G.Table, { density: 'compact', columns: [{ key: 'p', header: 'Product' }, { key: 'm', header: 'Model' }, { key: 'q', header: 'Qty', align: 'end' }], rows: [{ p: 'Face cream 50 ml', m: 'FC-50', q: 1200 }, { p: 'Lip balm', m: 'LB-10', q: 800 }] })),
+      cap('SGS Documents — blue, no leading icon'),
+      h(G.DocumentItem, { variant: 'sgs', docType: 'Inspection Results', fileName: 'IR-2026-001245.pdf', dateLabel: 'Issued April 15, 2026', size: '2.4 MB', actions: [{ type: 'open' }, { type: 'download' }] }),
+      cap('Small breakpoint — no icon, status icon-only, actions in one overflow, metadata truncated (tooltip)'),
+      h('div', { style: { width: 340 } }, h(G.DocumentItem, { compact: true, docType: 'Final Invoice', fileName: 'invoice234657.pdf', dateLabel: 'Uploaded January 20, 2026', size: '2.4 MB', status: 'completed', actions: [{ type: 'edit' }, { type: 'open' }, { type: 'delete' }] }))
+    )
+  );
+</script>
+</body>
+</html>

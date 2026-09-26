@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SGS Admin – services per customer</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="sgs-ops" style="position: relative; width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" tone="dark" site-name="Digital Trust Platform" site-sub="Operations Console" badge="Internal" home-links="{{noLinks}}" user-name="Minh Nguyen" user-email="minh.nguyen@sgs.com" notifications="{{three}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" tone="dark" label="SGS Operations" sections="{{nav}}" default-active="settings" default-collapsed="{{collapsed}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <div style="padding: 8px 8px 4px">
+        <h1 class="headline-medium" style="margin: 0">Settings</h1>
+        <p class="body-medium" style="margin: 0; color: var(--text-secondary)">Your profile, platform settings for SGS Taiwan, and the services each customer can use.</p>
+      </div>
+      <section class="gr-card gr-card--extend" style="padding: 16px 24px"><x-import component-from-global-scope="Graphite.Tabs" label="Settings sections" tabs="{{tabs}}" default-tab="tog"></x-import></section>
+    </main>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite, F = window.React.Fragment;
+
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' },
+      { id: 'req', label: 'Requests', icon: 'task', badge: 3, badgeTone: 'attention', badgeLabel: 'requests need triage', children: [
+        { id: 'req-all', label: 'All requests' }, { id: 'req-cert', label: 'Certification' }, { id: 'req-train', label: 'Training' },
+        { type: 'label', label: 'Other services' }, { id: 'req-gap', label: 'Gap Analysis', badge: 3, badgeTone: 'attention', badgeLabel: 'need triage' }, { id: 'req-impl', label: 'Implementation Support' } ] },
+      { id: 'certs', label: 'Certifications', icon: 'checkmark' },
+      { id: 'cust', label: 'Customers', icon: 'category' },
+      { id: 'fw', label: 'Frameworks', icon: 'catalog' },
+      { id: 'asg', label: 'Assignments', icon: 'user--access' },
+      { id: 'audit', label: 'Audit Logs', icon: 'document' },
+      { id: 'settings', label: 'Settings', icon: 'settings' } ] }];
+    var extra = {};
+
+    function sect(title, sub, body){ return h('div', { style: { display: 'flex', flexDirection: 'column', gap: 16, padding: '24px 0', boxShadow: 'inset 0 -1px 0 var(--border-subtle-00)' } }, h('div', { style: { display: 'flex', flexDirection: 'column', gap: 2 } }, h('h2', { className: 'title-medium', style: { margin: 0 } }, title), sub ? h('p', { className: 'body-small', style: { margin: 0, color: 'var(--text-secondary)' } }, sub) : null), body); }
+    function col(){ return h.apply(null, ['div', { style: { display: 'flex', flexDirection: 'column', gap: 16, width: 552, maxWidth: '100%' } }].concat([].slice.call(arguments))); }
+    var mine = h('div', null,
+      sect('Profile', 'Your name is shown to SGS and your team. Email and role are managed by your administrator.', col(
+        h(G.TextInput, { label: 'Full name', required: true, width: '552px', defaultValue: 'Minh Nguyen' }),
+        h(G.TextInput, { label: 'Email', width: '552px', defaultValue: 'minh.nguyen@sgs.com', readOnly: true, helpText: 'Your sign-in name. Ask your administrator to change it.' }),
+        h(G.TextInput, { label: 'Role', width: '552px', defaultValue: 'SGS Admin', readOnly: true }),
+        h(G.TextInput, { label: 'Organisation', width: '552px', defaultValue: 'SGS Taiwan', readOnly: true }),
+        h('div', null, h(G.Button, { size: 'md' }, 'Save profile')))),
+      sect('Language', 'Applies to the portal and to framework content where a translation exists; otherwise English is shown.', col(
+        h(G.Select, { label: 'Display language', width: '552px', defaultValue: 'en', options: [{ value: 'en', label: 'English' }, { value: 'zh', label: '繁體中文 (Traditional Chinese)' }] }))),
+      sect('Sign-in', '', col(
+        h('p', { className: 'body-medium', style: { margin: 0 } }, 'Your password and sign-in are handled by the SGS sign-in service.'),
+        h('div', null, h(G.Button, { variant: 'tertiary', size: 'md' }, 'Sign out')))));
+    var plat = h('div', null,
+      sect('Invitations', 'Applies to new invitations for customer and SGS users.', col(
+        h(G.TextInput, { label: 'Invitation link valid for (days)', required: true, width: '268px', type: 'number', defaultValue: '7' }))),
+      sect('Evidence', 'Used in workspaces, Documents and Home.', col(
+        h(G.TextInput, { label: '“Expiring soon” warning (days before expiry)', required: true, width: '268px', type: 'number', defaultValue: '30' }),
+        h(G.TextInput, { label: 'Maximum file size (MB)', required: true, width: '268px', type: 'number', defaultValue: '20', helpText: 'Applies to evidence, deliverables, reports and attachments.' }))),
+      sect('Language', 'For users who haven’t chosen one yet.', col(
+        h(G.Select, { label: 'Default display language', width: '552px', defaultValue: 'en', options: [{ value: 'en', label: 'English' }, { value: 'zh', label: '繁體中文 (Traditional Chinese)' }] }))),
+      h('div', { style: { display: 'flex', gap: 12, paddingTop: 24 } }, h(G.Button, { size: 'md' }, 'Save platform settings'), h('span', { className: 'body-small', style: { alignSelf: 'center', color: 'var(--text-secondary)' } }, 'Changes apply to the whole SGS Taiwan affiliate and are recorded in the audit trail.')));
+    var MODS = [['cert', 'Certification'], ['train', 'Training'], ['ga', 'Gap Analysis'], ['is', 'Implementation Support']];
+    var tenants = [
+      { id: 'def', name: 'Default for new customers', sub: 'Applied when a customer is created', cert: true, train: true, ga: true, is: true, def: true },
+      { id: 't1', name: 'ABC Trading Co., Ltd.', sub: 'Taiwan', cert: true, train: true, ga: true, is: false },
+      { id: 't2', name: 'Formosa Chips Inc.', sub: 'Taiwan', cert: true, train: false, ga: true, is: true },
+      { id: 't3', name: 'Lotus Cosmetics JSC', sub: 'Vietnam', cert: true, train: true, ga: true, is: true },
+      { id: 't4', name: 'Riyadh Imports LLC', sub: 'Saudi Arabia', cert: true, train: true, ga: false, is: false } ];
+    var tcols = [{ key: 'name', header: 'Customer', render: function(r){ return h('span', { style: { display: 'flex', flexDirection: 'column' } }, h('span', { style: { fontWeight: 500 } }, r.name), h('span', { className: 'body-small', style: { color: 'var(--text-secondary)' } }, r.sub)); } }].concat(MODS.map(function(m){ return { key: m[0], header: m[1], width: 170, render: function(r){ return h(G.Toggle, { 'aria-label': m[1] + ' for ' + r.name, defaultChecked: r[m[0]] }); } }; }));
+    var togs = h('div', { style: { display: 'flex', flexDirection: 'column', gap: 16, paddingTop: 16 } },
+      h('p', { className: 'body-medium', style: { margin: 0, color: 'var(--text-secondary)', maxWidth: 800 } }, 'Turn services on or off per customer. A service that is off disappears from the customer’s catalogue and menu; requests already open continue. Changes apply immediately and are recorded in the audit trail.'),
+      h(G.DataTable, { columns: tcols, rows: tenants, searchable: true, searchPlaceholder: 'Search customers', layout: 'table', paginate: false }));
+    extra.tabs = [{ id: 'me', label: 'My settings', content: mine }, { id: 'plat', label: 'Platform', content: plat }, { id: 'tog', label: 'Services per customer', content: togs }];
+    return Object.assign({ yes: true, no: false, three: 3, nav: nav, noLinks: [], noop: function(){}, collapsed: false }, extra);
+  }
+}
+</script>
+</body>
+</html>

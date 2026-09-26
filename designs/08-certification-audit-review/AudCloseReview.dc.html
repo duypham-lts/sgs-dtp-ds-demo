@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Auditor – close review</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="sgs-ops" style="position: relative; width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" tone="dark" site-name="Digital Trust Platform" site-sub="Operations Console" badge="Internal" home-links="{{noLinks}}" user-name="David Wu" user-email="david.wu@sgs.com" notifications="{{one}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" tone="dark" label="SGS Operations" sections="{{nav}}" default-active="aud" default-collapsed="{{collapsed}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <x-import component-from-global-scope="Graphite.PageHeader" title="Audit review · Appendix 10 · 2022 · Medium" subtitle="CR-2026-015 · ABC Trading Co., Ltd. · Customer data platform" on-back="{{noop}}" status="{{status}}" actions="{{hdr}}"></x-import>
+      <div style="flex-grow: 1; min-height: 0; display: grid; grid-template-columns: 340px 1fr 320px; gap: 20px">
+        <div style="min-width: 0; min-height: 0; overflow: auto; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02)">
+          <x-import component-from-global-scope="Graphite.RequirementNavigator" label="Review items" framework="{{fw}}" groups="{{groups}}" default-expanded="{{exp}}" default-selected="R.3.1.3" filter-options="{{filters}}" status-labels="{{labels}}"></x-import>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 20px">
+          <section class="gr-card">
+            <x-import component-from-global-scope="Graphite.Breadcrumb" items="{{path}}"></x-import>
+            <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px">
+              <div style="display: flex; flex-direction: column; gap: 4px"><span class="body-small" style="color: var(--text-secondary)">R.3.1.3 · from Medium</span><h2 class="headline-small" style="margin: 0">Periodically test backup reliability and integrity</h2></div>
+              <x-import component-from-global-scope="Graphite.StatusTag" status="under-review" label="Response submitted" size="sm"></x-import>
+            </div>
+            <p class="body-medium" style="margin: 0">Backup data shall be tested periodically to verify the reliability of backup media and the integrity of information.</p>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap"><x-import component-from-global-scope="Graphite.Button" size="md">Accept</x-import><x-import component-from-global-scope="Graphite.Button" variant="secondary" size="md">Request clarification</x-import><x-import component-from-global-scope="Graphite.Button" variant="secondary" size="md">Raise finding</x-import></div>
+          </section>
+          <section class="gr-card">
+            <div class="gr-card__head"><div><h2 class="gr-card__title">Finding F-003 · Minor nonconformity</h2><p class="gr-card__sub">Corrective action submitted by Kevin Ho on 02 Dec 2026 · due 15 Dec</p></div><x-import component-from-global-scope="Graphite.Button" size="sm">Evaluate</x-import></div>
+            <span class="body-medium">No record of a restore test in the last 12 months.</span>
+          </section>
+          <section class="gr-card gr-card--extend">
+            <div class="gr-card__head"><div class="gr-card__heading"><div><h2 class="gr-card__title">Evidence</h2><p class="gr-card__sub">Locked · as submitted on 10 Nov 2026</p></div></div></div>
+            <x-import component-from-global-scope="Graphite.DocumentItem" doc-type="Backup procedure" file-name="backup-procedure-v2.pdf" date-label="Uploaded Aug 02, 2026 by Kevin Ho" size="640 KB" actions="{{docActs}}"></x-import>
+            <x-import component-from-global-scope="Graphite.DocumentItem" doc-type="Corrective action · F-003" file-name="restore-test-2026-12.pdf" date-label="Uploaded Dec 02, 2026 by Kevin Ho" size="540 KB" actions="{{docActs}}"></x-import>
+            <x-import component-from-global-scope="Graphite.DocumentItem" doc-type="Corrective action · F-003" file-name="backup-procedure-v3.pdf" date-label="Uploaded Dec 02, 2026 by Kevin Ho" size="610 KB" actions="{{docActs}}"></x-import>
+          </section>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02)">
+          <x-import component-from-global-scope="Graphite.CommentThread" title="Internal notes" messages="{{msgs}}" current-user="David Wu" current-role="sgs" placeholder="Add a note — only SGS can see it" empty-title="No internal notes yet" empty-body="Notes here are never shown to the customer."></x-import>
+        </div>
+      </div>
+    </main>
+  </div>
+  <x-import component-from-global-scope="Graphite.Modal" inline="{{yes}}" open="{{yes}}" size="fit" title="Close review" on-close="{{noop}}" primary-action="{{primary}}" secondary-action="{{secondary}}">
+    <div style="display: flex; flex-direction: column; gap: 16px; width: 552px; max-width: 100%">
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px">
+        <div style="padding: 12px; border-radius: var(--radius-md); background: var(--layer-01); display: flex; flex-direction: column"><span class="headline-small">58</span><span class="body-small" style="color: var(--text-secondary)">Accepted</span></div>
+        <div style="padding: 12px; border-radius: var(--radius-md); background: var(--layer-01); display: flex; flex-direction: column"><span class="headline-small">3</span><span class="body-small" style="color: var(--text-secondary)">Closed with finding</span></div>
+        <div style="padding: 12px; border-radius: var(--radius-md); background: var(--layer-01); display: flex; flex-direction: column"><span class="headline-small">0</span><span class="body-small" style="color: var(--text-secondary)">Open</span></div>
+        <div style="padding: 12px; border-radius: var(--radius-md); background: var(--layer-01); display: flex; flex-direction: column"><span class="headline-small">61</span><span class="body-small" style="color: var(--text-secondary)">Reviewed</span></div>
+      </div>
+      <x-import component-from-global-scope="Graphite.InlineNotification" kind="success" title="Ready to close">All 61 items are final and no finding is open.</x-import>
+      <x-import component-from-global-scope="Graphite.FileUpload" label="Audit report (optional)" multiple="{{no}}" hint="PDF · shown to the customer on the request" default-files="{{rep}}"></x-import>
+      <x-import component-from-global-scope="Graphite.Checkbox" label="The review is complete. Closing unlocks the customer’s workspace and ends my access." default-checked="{{yes}}"></x-import>
+      <p class="body-small" style="margin: 0; color: var(--text-secondary)">Closing the review is not the certification decision. An SGS User creates the certificate afterwards.</p>
+    </div>
+  </x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite, F = window.React.Fragment;
+
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' },
+      { id: 'aud', label: 'My audits', icon: 'task', badge: 2, badgeTone: 'attention', badgeLabel: 'audits need action' },
+      { id: 'settings', label: 'Settings', icon: 'settings' } ] }];
+    var extra = {};
+
+    extra.noop = function(){};
+    extra.status = { status: 'needs-description', label: 'Ready to close · 61 of 61 reviewed', shortLabel: 'Ready' };
+    extra.hdr = h(F, null, h('a', { href: 'AudFindings.dc.html', className: 'gr-btn gr-btn--tertiary gr-btn--md' }, 'Findings (3)'), h(G.Button, { size: 'md', disabled: true }, 'Close review'));
+    extra.fw = { name: 'Appendix 10 · 2022 · Medium', progress: 66, caption: '40 of 61 reviewed · 34 accepted · 3 waiting for customer' };
+    extra.labels = { none: ['draft', 'Not reviewed'], acc: ['completed', 'Accepted'], clar: ['needs-description', 'Clarification requested'], find: ['missing-info', 'Finding raised'], resp: ['under-review', 'Response submitted'], cwf: ['completed', 'Closed with finding'] };
+    extra.filters = [{ value: 'all', label: 'All' }, { value: 'none', label: 'Not reviewed' }, { value: 'resp', label: 'Response submitted' }, { value: 'clar', label: 'Clarification' }, { value: 'find', label: 'Finding' }, { value: 'acc', label: 'Accepted' }];
+    extra.exp = ['3'];
+    extra.path = [{ label: '3 Business Continuity Plan', href: '#' }, { label: '3.1 Data backup', href: '#' }, { label: 'R.3.1.3' }];
+    extra.docActs = [{ type: 'view' }, { type: 'download' }];
+    extra.groups = [
+      { id: '1', code: '1', title: 'Access Control', progress: 80, children: [{ id: 'R.1.1.1', code: 'R.1.1.1', title: 'Account management mechanism', status: 'acc' }, { id: 'R.1.1.4', code: 'R.1.1.4', title: 'Periodically review account lifecycle', status: 'clar' }, { id: 'R.1.2.1', code: 'R.1.2.1', title: 'Least privilege', status: 'acc' }] },
+      { id: '2', code: '2', title: 'Event Logging and Accountability', progress: 70, children: [{ id: 'R.2.6.2', code: 'R.2.6.2', title: 'Integrity of logs', status: 'cwf' }] },
+      { id: '3', code: '3', title: 'Business Continuity Plan', progress: 40, children: [{ id: 'R.3.1.2', code: 'R.3.1.2', title: 'Perform data backup', status: 'acc' }, { id: 'R.3.1.3', code: 'R.3.1.3', title: 'Test backup reliability and integrity', status: 'resp' }, { id: 'R.3.2.2', code: 'R.3.2.2', title: 'Test redundancy failover', status: 'none' }] },
+      { id: '4', code: '4', title: 'Identification and Authentication', progress: 60, children: [{ id: 'R.4.1.2', code: 'R.4.1.2', title: 'Multi-factor authentication', status: 'find' }] },
+      { id: '5', code: '5', title: 'System and Service Acquisition', progress: 50, children: [{ id: 'R.5.3.4', code: 'R.5.3.4', title: 'Source code scanning', status: 'resp' }, { id: 'R.5.4.2', code: 'R.5.4.2', title: 'Penetration testing', status: 'none' }] } ];
+    extra.msgs = [
+      { id: 'm1', author: 'David Wu', role: 'sgs', roleLabel: 'Auditor', internal: true, time: '12 Nov, 10:04', body: 'Backup procedure v2 reviewed. No restore test in the last 12 months — raised F-003 (minor).' },
+      { id: 'm2', author: 'David Wu', role: 'sgs', roleLabel: 'Auditor', internal: true, time: '12 Nov, 10:06', body: 'Check the Hsinchu DR site on day 2 of the visit.' },
+      { id: 'm3', author: 'David Wu', role: 'sgs', roleLabel: 'Auditor', internal: true, time: '03 Dec, 09:15', body: 'Restore test report received; results on pages 3–5 look complete.' } ];
+    extra.noop = function(){}; extra.primary = { label: 'Close review' }; extra.secondary = { label: 'Cancel' };
+    extra.rep = [{ name: 'CR-2026-015-audit-report.pdf', size: 1990000, status: 'complete' }];
+    return Object.assign({ yes: true, no: false, one: 1, two: 2, three: 3, s16: 16, nav: nav, noLinks: [], noop: function(){}, collapsed: true }, extra);
+  }
+}
+</script>
+</body>
+</html>

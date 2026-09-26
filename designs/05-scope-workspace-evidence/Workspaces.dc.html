@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Customer User – workspaces</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;family=Noto+Sans+TC:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="customer" style="width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" site-name="Digital Trust Platform" site-sub="Customer Portal" user-name="Wei Chen" user-email="wei.chen@abc-trading.com" notifications="{{three}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" label="Customer Portal" sections="{{nav}}" default-active="ws" default-collapsed="{{no}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <div style="padding: 8px 8px 4px">
+        <x-import component-from-global-scope="Graphite.Breadcrumb" items="{{crumbs}}"></x-import>
+        <h1 class="headline-medium" style="margin: 8px 0 0 0">Workspaces</h1>
+        <p class="body-medium" style="margin: 0; color: var(--text-secondary)">Workspaces of the scopes assigned to you. Coverage shows how much evidence is in place — it is not a compliance decision.</p>
+      </div>
+      <div style="flex-grow: 1; min-height: 0"><x-import component-from-global-scope="Graphite.DataTable" title="3 workspaces" columns="{{cols}}" rows="{{rows}}" searchable="{{yes}}" search-placeholder="Search workspaces" layout="table"></x-import></div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite;
+
+    var SR = { id: 'sr', label: 'Service Requests', icon: 'task', badge: 1, badgeTone: 'attention', badgeLabel: 'request needs action', children: [
+      { id: 'sr-all', label: 'All requests' }, { id: 'sr-cert', label: 'Certification Services' }, { id: 'sr-train', label: 'Training Courses' },
+      { type: 'label', label: 'Other services' }, { id: 'sr-gap', label: 'Gap Analysis', badge: 1, badgeTone: 'attention', badgeLabel: 'needs action' }, { id: 'sr-impl', label: 'Implementation Support' } ] };
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' }, { id: 'scopes', label: 'Scopes', icon: 'category' }, { id: 'ws', label: 'Workspaces', icon: 'folders' },
+      { id: 'docs', label: 'Documents', icon: 'document--multiple-01' }, SR, { id: 'training', label: 'Training', icon: 'education' },
+      { id: 'audit', label: 'Audit Logs', icon: 'catalog' }, { id: 'settings', label: 'Settings', icon: 'settings' } ] }];
+
+    var extra = { crumbs: [{ label: 'Workspaces' }] };
+    extra.cols = [
+      { key: 'fw', header: 'Workspace', render: function(r){ return h('span', { style: { display: 'flex', flexDirection: 'column' } }, h('a', { href: r.href, className: 'gr-link', style: { fontWeight: 500 } }, r.fw), h('span', { className: 'body-small', style: { color: 'var(--text-secondary)' } }, r.scope)); } },
+      { key: 'tier', header: 'Tier', width: 150 },
+      { key: 'cov', header: 'Evidence coverage', width: 260, render: function(r){ return h(G.ProgressBar, { value: r.v, size: 'sm', label: r.fw + ' coverage', helperText: r.cov }); } },
+      { key: 'st', header: 'Status', width: 190, render: function(r){ return h(G.StatusTag, { status: r.sts, size: 'sm', label: r.st }); } } ];
+    extra.rows = [
+      { id: 'a', fw: 'Appendix 10 · 2022', scope: 'Customer data platform · System', tier: 'Medium · 中', v: 62, cov: '38 of 61 requirements', sts: 'draft', st: 'Preparing', href: 'Workspace.dc.html' },
+      { id: 'b', fw: 'ISO/IEC 27001 · 2022', scope: 'Head office · Taipei · Organization', tier: 'No tiers', v: 64, cov: '74 of 116 requirements', sts: 'draft', st: 'Preparing', href: '#' },
+      { id: 'c', fw: 'ISO 22301 · 2019', scope: 'Head office · Taipei · Organization', tier: 'No tiers', v: 12, cov: '6 of 52 requirements', sts: 'draft', st: 'Preparing', href: '#' } ];
+    return Object.assign({ yes: true, no: false, three: 3, nav: nav }, typeof extra === 'object' ? extra : {});
+  }
+}
+</script>
+</body>
+</html>

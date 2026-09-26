@@ -1,0 +1,19 @@
+<!-- @dsCard group="Forms" height=200 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>SearchInput — preview</title></head>
+<body style="margin:0">
+<div id="root"></div>
+<script>
+  var G = window.Graphite, h = React.createElement;
+  function row(){ return h.apply(null, ['div', { className: 'gr-demo__row' }].concat([].slice.call(arguments))); }
+  function cap(t){ return h('div', { className: 'gr-demo__cap' }, t); }
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'gr-demo' },
+      cap('Label hidden by default (still announced) · with visible label'),
+      row(h(G.SearchInput, { placeholder: 'Search for a Service Request' }), h(G.SearchInput, { showLabel: true, label: 'Filter frameworks', size: 's', placeholder: 'ISO 27001' }))
+    )
+  );
+</script>
+</body>
+</html>

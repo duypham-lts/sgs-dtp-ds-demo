@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Customer User – documents filtered to one workspace</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;family=Noto+Sans+TC:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="customer" style="width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" site-name="Digital Trust Platform" site-sub="Customer Portal" user-name="Wei Chen" user-email="wei.chen@abc-trading.com" notifications="{{three}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" label="Customer Portal" sections="{{nav}}" default-active="docs" default-collapsed="{{no}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; padding: 8px 8px 4px">
+        <div>
+          <x-import component-from-global-scope="Graphite.Breadcrumb" items="{{crumbs}}"></x-import>
+          <h1 class="headline-medium" style="margin: 8px 0 0 0">Documents</h1>
+          <p class="body-medium" style="margin: 0; color: var(--text-secondary)">Evidence uploaded to the workspaces you can access. Each file belongs to one workspace.</p>
+        </div>
+        <x-import component-from-global-scope="Graphite.Link" href="Workspace.dc.html">Back to workspace</x-import>
+      </div>
+      <section class="gr-card gr-card--extend" style="padding: 16px 24px; gap: 12px">
+        <div class="gr-dt__tools" style="display: flex; align-items: center; gap: 8px">
+          <x-import component-from-global-scope="Graphite.Select" label="Workspace" size="s" width="360px" value="{{ws}}" on-change="{{onWs}}" options="{{wsOpts}}"></x-import>
+        </div>
+        <x-import component-from-global-scope="Graphite.Tabs" label="Evidence filter" tabs="{{tabs}}"></x-import>
+      </section>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { ws: 'a10' }; }
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite;
+
+    var SR = { id: 'sr', label: 'Service Requests', icon: 'task', badge: 1, badgeTone: 'attention', badgeLabel: 'request needs action', children: [
+      { id: 'sr-all', label: 'All requests' }, { id: 'sr-cert', label: 'Certification Services' }, { id: 'sr-train', label: 'Training Courses' },
+      { type: 'label', label: 'Other services' }, { id: 'sr-gap', label: 'Gap Analysis', badge: 1, badgeTone: 'attention', badgeLabel: 'needs action' }, { id: 'sr-impl', label: 'Implementation Support' } ] };
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' }, { id: 'scopes', label: 'Scopes', icon: 'category' }, { id: 'ws', label: 'Workspaces', icon: 'folders' },
+      { id: 'docs', label: 'Documents', icon: 'document--multiple-01' }, SR, { id: 'training', label: 'Training', icon: 'education' },
+      { id: 'audit', label: 'Audit Logs', icon: 'catalog' }, { id: 'settings', label: 'Settings', icon: 'settings' } ] }];
+
+    var self = this, st = this.state || {};
+    var WS = { a10: 'Appendix 10 · 2022 · Customer data platform', i27: 'ISO/IEC 27001 · 2022 · Head office', i22: 'ISO 22301 · 2019 · Head office' };
+    var extra = { crumbs: [{ label: 'Documents' }] };
+    var ST = { ok: ['completed', 'Valid'], soon: ['needs-description', 'Expires soon'], exp: ['missing-info', 'Expired'] };
+    var all = [
+      { id: 1, ws: 'a10', n: 'Access control policy', f: 'access-control-policy-v3.pdf', used: 'R.1.1.1, R.1.2.1', until: '12 Sep 2027', st: 'ok', by: 'Wei Chen · 12 Sep 2026' },
+      { id: 2, ws: 'a10', n: 'Penetration test report 2025', f: 'pentest-2025.pdf', used: 'R.5.4.2', until: '30 Oct 2026', st: 'soon', by: 'Linh Tran · 30 Oct 2025' },
+      { id: 3, ws: 'a10', n: 'Backup job log', f: 'backup-log-2026-08.csv', used: 'R.3.1.2', until: '—', st: 'ok', by: 'Kevin Ho · 01 Sep 2026' },
+      { id: 4, ws: 'a10', n: 'Vulnerability scan Q1', f: 'vuln-scan-2026Q1.pdf', used: 'R.5.4.1', until: '31 Jul 2026', st: 'exp', by: 'Wei Chen · 02 Apr 2026' },
+      { id: 5, ws: 'a10', n: 'Old network diagram', f: 'network-2024.vsdx', used: '—', until: '—', st: 'ok', by: 'Mei Lin · 14 Mar 2025' },
+      { id: 6, ws: 'i27', n: 'Information security policy', f: 'isms-policy-v4.pdf', used: 'A.5.1', until: '15 Jan 2027', st: 'ok', by: 'Linh Tran · 15 Jan 2026' },
+      { id: 7, ws: 'i27', n: 'Access control policy', f: 'access-control-policy-v3.pdf', used: 'A.5.15, A.5.18', until: '12 Sep 2027', st: 'ok', by: 'Wei Chen · 12 Sep 2026' },
+      { id: 8, ws: 'i27', n: 'Security awareness records 2025', f: 'awareness-2025.xlsx', used: 'A.6.3', until: '31 Dec 2025', st: 'exp', by: 'Mei Lin · 05 Jan 2026' },
+      { id: 9, ws: 'i22', n: 'Business impact analysis', f: 'bia-2026.docx', used: '8.2.2', until: '15 Oct 2026', st: 'soon', by: 'Linh Tran · 15 Oct 2025' } ];
+    var rows = all.filter(function(r){ return !st.ws || st.ws === 'all' || r.ws === st.ws; });
+    var cols = [
+      { key: 'n', header: 'Evidence', sortable: true, render: function(r){ return h('span', { style: { display: 'flex', flexDirection: 'column' } }, h('a', { href: 'EvidenceDetail.dc.html', className: 'gr-link', style: { fontWeight: 500 } }, r.n), h('span', { className: 'body-small', style: { color: 'var(--text-secondary)' } }, r.f)); } },
+      { key: 'ws', header: 'Workspace', sortable: true, width: 260, sortValue: function(r){ return WS[r.ws]; }, render: function(r){ return WS[r.ws]; } },
+      { key: 'used', header: 'Used for', width: 150, render: function(r){ return r.used === '—' ? h(G.Tag, { tone: 'required' }, 'Not linked') : r.used; } },
+      { key: 'until', header: 'Valid until', width: 120 },
+      { key: 'st', header: 'Validity', width: 140, render: function(r){ return h(G.StatusTag, { status: ST[r.st][0], size: 'sm', label: ST[r.st][1] }); } },
+      { key: 'by', header: 'Uploaded', width: 190 },
+      { key: 'dl', header: '', align: 'end', width: 64, render: function(){ return h(G.IconButton, { icon: 'download', label: 'Download', size: 'md' }); } } ];
+    function T(list){ return h(G.DataTable, { columns: cols, rows: list, searchable: true, searchPlaceholder: 'Search evidence', layout: 'table', paginate: false }); }
+    var expd = rows.filter(function(r){ return r.st !== 'ok'; }), nl = rows.filter(function(r){ return r.used === '—'; });
+    extra.tabs = [
+      { id: 'all', label: 'All', badge: rows.length, content: T(rows) },
+      { id: 'exp', label: 'Expiring or expired', badge: expd.length, content: T(expd) },
+      { id: 'nl', label: 'Not linked', badge: nl.length, content: T(nl) } ];
+    extra.ws = st.ws || 'all';
+    extra.onWs = function(e, v){ self.setState({ ws: v }); };
+    extra.wsOpts = [{ value: 'all', label: 'All workspaces' }].concat(Object.keys(WS).map(function(k){ return { value: k, label: WS[k] }; }));
+
+    return Object.assign({ yes: true, no: false, three: 3, nav: nav }, typeof extra === 'object' ? extra : {});
+  }
+}
+</script>
+</body>
+</html>

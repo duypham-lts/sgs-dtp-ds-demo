@@ -1,0 +1,223 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "CaAssignScopes.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Assign scope access",
+      "w": 1440,
+      "x": 9120,
+      "y": 0
+    },
+    "CaChangeRole.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Change role",
+      "w": 1440,
+      "x": 7600,
+      "y": 0
+    },
+    "CaInvite.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Invite a user",
+      "w": 1440,
+      "x": 1520,
+      "y": 0
+    },
+    "CaRevoke.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Revoke invitation",
+      "w": 1440,
+      "x": 4560,
+      "y": 0
+    },
+    "CaUserDetail.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "User detail",
+      "w": 1440,
+      "x": 6080,
+      "y": 0
+    },
+    "CaUserPending.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "User · invitation pending",
+      "w": 1440,
+      "x": 3040,
+      "y": 0
+    },
+    "CaUsersEmpty.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Users · only you (empty)",
+      "w": 1440,
+      "x": 10640,
+      "y": 0
+    },
+    "Main.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Users",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "SgsInviteCustomer.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Invite a customer user",
+      "w": 1440,
+      "x": 3040,
+      "y": 1280
+    },
+    "SgsInviteSgs.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Invite an SGS user",
+      "w": 1440,
+      "x": 1520,
+      "y": 1280
+    },
+    "SgsUserDetail.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "User detail",
+      "w": 1440,
+      "x": 4560,
+      "y": 1280
+    },
+    "SgsUsers.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Users",
+      "w": 1440,
+      "x": 0,
+      "y": 1280
+    },
+    "TenantCreate.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Create customer",
+      "w": 1440,
+      "x": 1520,
+      "y": 2560
+    },
+    "TenantCreateAdmin.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Create Customer Admin",
+      "w": 1440,
+      "x": 4560,
+      "y": 2560
+    },
+    "TenantDetail.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Customer detail",
+      "w": 1440,
+      "x": 6080,
+      "y": 2560
+    },
+    "TenantEdit.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Edit customer",
+      "w": 1440,
+      "x": 7600,
+      "y": 2560
+    },
+    "TenantList.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Customers",
+      "w": 1440,
+      "x": 0,
+      "y": 2560
+    },
+    "TenantNew.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Customer · no admin yet",
+      "w": 1440,
+      "x": 3040,
+      "y": 2560
+    },
+    "TenantScopes.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Customer · Scopes",
+      "w": 1440,
+      "x": 9120,
+      "y": 2560
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-09-24T18:30:00Z",
+    "v": 1
+  },
+  "designSystems": [
+    {
+      "artifact": "https://claude.ai/artifact/CEneLQNFxsQuEaagfERSqo",
+      "copiedAt": "2026-09-24T19:02:00Z",
+      "namespace": "graphite",
+      "title": "Graphite DS",
+      "version": "1790310317-cfa1"
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  },
+  "notes": {
+    "r0": {
+      "kind": "title1",
+      "maxW": 8000,
+      "text": "Customer Admin · own organisation",
+      "w": 240,
+      "x": 0,
+      "y": -260
+    },
+    "r1": {
+      "kind": "title1",
+      "maxW": 7520,
+      "text": "SGS Admin · affiliate",
+      "w": 240,
+      "x": 0,
+      "y": 1020
+    },
+    "r2": {
+      "kind": "title1",
+      "maxW": 8000,
+      "text": "SGS Admin · Customers (tenants)",
+      "w": 240,
+      "x": 0,
+      "y": 2300
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "CaInvite.dc.html",
+    "CaUserPending.dc.html",
+    "CaRevoke.dc.html",
+    "CaUserDetail.dc.html",
+    "CaChangeRole.dc.html",
+    "CaAssignScopes.dc.html",
+    "SgsUsers.dc.html",
+    "SgsInviteSgs.dc.html",
+    "SgsInviteCustomer.dc.html",
+    "SgsUserDetail.dc.html",
+    "CaUsersEmpty.dc.html",
+    "TenantList.dc.html",
+    "TenantCreate.dc.html",
+    "TenantNew.dc.html",
+    "TenantCreateAdmin.dc.html",
+    "TenantDetail.dc.html",
+    "TenantEdit.dc.html",
+    "TenantScopes.dc.html"
+  ],
+  "pages": [],
+  "title": "DTP – User Management"
+}

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SGS Admin – import framework</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="sgs-ops" style="position: relative; width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" tone="dark" site-name="Digital Trust Platform" site-sub="Operations Console" badge="Internal" home-links="{{noLinks}}" user-name="Minh Nguyen" user-email="minh.nguyen@sgs.com" notifications="{{three}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" tone="dark" label="SGS Operations" sections="{{nav}}" default-active="fw" default-collapsed="{{collapsed}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; padding: 8px 8px 4px">
+        <div>
+          <x-import component-from-global-scope="Graphite.Breadcrumb" items="{{crumbs}}"></x-import>
+          <h1 class="headline-medium" style="margin: 8px 0 0 0">Frameworks</h1>
+          <p class="body-medium" style="margin: 0; color: var(--text-secondary)">Frameworks customers can activate on their scopes. Import one from the Excel template.</p>
+        </div>
+        <div style="display: flex; gap: 12px"><x-import component-from-global-scope="Graphite.Button" variant="tertiary" size="md" icon="download" icon-position="left">Download template</x-import><x-import component-from-global-scope="Graphite.Button" size="md" icon="upload" icon-position="left">Import framework</x-import></div>
+      </div>
+      <div style="flex-grow: 1; min-height: 0"><x-import component-from-global-scope="Graphite.DataTable" title="{{count}}" columns="{{cols}}" rows="{{rows}}" searchable="{{yes}}" search-placeholder="Search code or name" row-actions="{{acts}}" layout="table"></x-import></div>
+    </main>
+  </div>
+  <x-import component-from-global-scope="Graphite.Modal" inline="{{yes}}" open="{{yes}}" size="fit" title="Import a framework" on-close="{{noop}}" primary-action="{{primary}}" secondary-action="{{secondary}}">
+    <div style="display: flex; flex-direction: column; gap: 24px; width: 552px; max-width: 100%">
+      <div style="display: flex; gap: 16px">
+        <span class="gr-card__num" aria-hidden="true">1</span>
+        <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 8px">
+          <span class="title-small">Download the template and fill it in</span>
+          <span class="body-small" style="color: var(--text-secondary)">One file = one framework version. A new version of an existing framework (same code, different version) is added as its own entry. Sheets: Framework (one row), Tiers (leave empty if the framework has no tiers), Requirements, Expected_Evidence.</span>
+          <div><x-import component-from-global-scope="Graphite.Button" variant="tertiary" size="sm" icon="download" icon-position="left">Download template (.xlsx)</x-import></div>
+        </div>
+      </div>
+      <div style="display: flex; gap: 16px">
+        <span class="gr-card__num" aria-hidden="true">2</span>
+        <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 8px">
+          <span class="title-small">Upload the completed file</span>
+          <x-import component-from-global-scope="Graphite.FileUpload" label="Framework file" required="{{yes}}" multiple="{{no}}" accept=".xlsx" hint="Excel (.xlsx) · up to 20 MB · checked before anything is saved" default-files="{{file}}"></x-import>
+        </div>
+      </div>
+    </div>
+  </x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite, F = window.React.Fragment;
+
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' },
+      { id: 'req', label: 'Requests', icon: 'task', badge: 3, badgeTone: 'attention', badgeLabel: 'requests need triage', children: [
+        { id: 'req-all', label: 'All requests' }, { id: 'req-cert', label: 'Certification' }, { id: 'req-train', label: 'Training' },
+        { type: 'label', label: 'Other services' }, { id: 'req-gap', label: 'Gap Analysis', badge: 3, badgeTone: 'attention', badgeLabel: 'need triage' }, { id: 'req-impl', label: 'Implementation Support' } ] },
+      { id: 'cust', label: 'Customers', icon: 'user--multiple' },
+      { id: 'fw', label: 'Frameworks', icon: 'catalog' },
+      { id: 'asg', label: 'Assignments', icon: 'user--access' },
+      { id: 'audit', label: 'Audit Logs', icon: 'document' },
+      { id: 'settings', label: 'Settings', icon: 'settings' } ] }];
+    var extra = {};
+
+    var ST = { active: ['completed', 'Active'], draft: ['draft', 'Draft · not active'] };
+    function two(a, b){ return h('span', { style: { display: 'flex', flexDirection: 'column' } }, h('span', { style: { fontWeight: 500 } }, a), h('span', { className: 'body-small', style: { color: 'var(--text-secondary)' } }, b)); }
+    var rows = [
+      { id: 'f1', code: 'TW_ISRM_ANNEX10_EN', name: 'Security Baselines for ICT Systems (Appendix 10)', body: 'MODA', ver: 'Appendix 10 · amended version', tiers: 'Basic · Medium · High', reqs: 79, st: 'draft', upd: 'Today, 10:20', href: 'FwPreview.dc.html' },
+      { id: 'f0', code: 'TW_ISRM_ANNEX10_EN', name: 'Security Baselines for ICT Systems (Appendix 10)', body: 'MODA', ver: 'Appendix 10 · 2022', tiers: 'Basic · Medium · High', reqs: 76, st: 'active', upd: '14 Aug 2025', href: 'FwDetail.dc.html' },
+      { id: 'f2', code: 'ISO_IEC_27001', name: 'ISO/IEC 27001 Information security management', body: 'ISO / IEC', ver: '2022', tiers: '—', reqs: 116, st: 'active', upd: '02 Mar 2026', href: '#' },
+      { id: 'f2b', code: 'ISO_IEC_27001', name: 'ISO/IEC 27001 Information security management', body: 'ISO / IEC', ver: '2013', tiers: '—', reqs: 114, st: 'active', upd: '10 Jan 2024', href: '#' },
+      { id: 'f3', code: 'ISO_IEC_42001', name: 'ISO/IEC 42001 AI management system', body: 'ISO / IEC', ver: '2023', tiers: '—', reqs: 76, st: 'active', upd: '11 Apr 2026', href: '#' },
+      { id: 'f4', code: 'TISAX_VDA_ISA', name: 'TISAX · VDA ISA', body: 'ENX Association', ver: 'ISA 6.0', tiers: 'Normal · High · Very high', reqs: 78, st: 'active', upd: '20 May 2026', href: '#' } ];
+    var extra = { rows: rows, count: rows.length + ' frameworks', crumbs: [{ label: 'Frameworks' }] };
+    extra.cols = [
+      { key: 'name', header: 'Framework', sortable: true, render: function(r){ return h('span', { style: { display: 'flex', flexDirection: 'column' } }, h('a', { href: r.href, className: 'gr-link', style: { fontWeight: 500 } }, r.name), h('span', { className: 'body-small', style: { color: 'var(--text-secondary)' } }, r.code)); }, searchValue: function(r){ return r.name + ' ' + r.code; } },
+      { key: 'ver', header: 'Version', sortable: true, render: function(r){ return two(r.ver, r.body); } },
+      { key: 'tiers', header: 'Tiers', width: 190 },
+      { key: 'reqs', header: 'Requirements', align: 'end', width: 130, sortable: true },
+      { key: 'st', header: 'Status', width: 170, render: function(r){ return h(G.StatusTag, { status: ST[r.st][0], size: 'sm', label: ST[r.st][1] }); } },
+      { key: 'upd', header: 'Updated', width: 130 } ];
+    extra.acts = function(r){ return r.st === 'active' ? [{ label: 'View' }, { label: 'Import new version' }, { label: 'Download source file' }] : [{ label: 'Review and activate' }, { label: 'Discard draft', danger: true }]; };
+    extra.noop = function(){}; extra.file = [{ name: 'SGS_DTP_Framework_Import_Appendix10.xlsx', size: 184000, status: 'complete' }];
+    extra.primary = { label: 'Check file' }; extra.secondary = { label: 'Cancel' };
+    return Object.assign({ yes: true, no: false, three: 3, nav: nav, noLinks: [], noop: function(){}, collapsed: false }, extra);
+  }
+}
+</script>
+</body>
+</html>

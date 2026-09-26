@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SGS Admin – framework overview</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="sgs-ops" style="position: relative; width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" tone="dark" site-name="Digital Trust Platform" site-sub="Operations Console" badge="Internal" home-links="{{noLinks}}" user-name="Minh Nguyen" user-email="minh.nguyen@sgs.com" notifications="{{three}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" tone="dark" label="SGS Operations" sections="{{nav}}" default-active="fw" default-collapsed="{{collapsed}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <x-import component-from-global-scope="Graphite.PageHeader" title="Security Baselines for ICT Systems (Appendix 10)" subtitle="TW_ISRM_ANNEX10_EN · Appendix 10 · 2022 · MODA" on-back="{{noop}}" status="{{status}}" actions="{{hdr}}"></x-import>
+      <div style="flex-grow: 1; min-height: 0; display: grid; grid-template-columns: 14fr 83fr; gap: 20px">
+        <div style="min-width: 0; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02)">
+          <x-import component-from-global-scope="Graphite.SectionNav" label="Sections" items="{{sections}}" default-active="ov"></x-import>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 20px">
+          <section class="gr-card">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">1</span><div><h2 class="gr-card__title">Framework</h2><p class="gr-card__sub">From the Framework sheet</p></div></div></div>
+            <dl style="margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 24px"><div><dt class="body-small" style="color: var(--text-secondary)">Code</dt><dd class="body-medium" style="margin: 0">TW_ISRM_ANNEX10_EN</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">Issued by</dt><dd class="body-medium" style="margin: 0">MODA</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">Version</dt><dd class="body-medium" style="margin: 0">Appendix 10 · 2022</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">Effective date</dt><dd class="body-medium" style="margin: 0">01 Sep 2022</dd></div><div style="grid-column: 1 / -1"><dt class="body-small" style="color: var(--text-secondary)">Description</dt><dd class="body-medium" style="margin: 0">Appendix 10 to the Regulations on Cyber Security Responsibility Levels (Article 11), covering the High / Medium / Basic protection levels.</dd></div></dl>
+          </section>
+          <section class="gr-card">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">2</span><div><h2 class="gr-card__title">Tiers</h2><p class="gr-card__sub">Higher tiers include every requirement of the tiers below</p></div></div></div>
+            <x-import component-from-global-scope="Graphite.Table" density="compact" columns="{{tCols}}" rows="{{tRows}}"></x-import>
+          </section>
+          <section class="gr-card gr-card--extend">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">3</span><div><h2 class="gr-card__title">Content</h2><p class="gr-card__sub">What the file contains</p></div></div></div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px">
+              <a href="FwRequirements.dc.html" style="text-decoration: none; color: inherit; padding: 16px; border-radius: var(--radius-md); background: var(--layer-02); display: flex; flex-direction: column"><span class="headline-small">7</span><span class="body-small" style="color: var(--text-secondary)">Dimensions</span></a>
+              <a href="FwRequirements.dc.html" style="text-decoration: none; color: inherit; padding: 16px; border-radius: var(--radius-md); background: var(--layer-02); display: flex; flex-direction: column"><span class="headline-small">27</span><span class="body-small" style="color: var(--text-secondary)">Control measures</span></a>
+              <a href="FwRequirements.dc.html" style="text-decoration: none; color: inherit; padding: 16px; border-radius: var(--radius-md); background: var(--layer-02); display: flex; flex-direction: column"><span class="headline-small">76</span><span class="body-small" style="color: var(--text-secondary)">Requirements</span></a>
+              <a href="FwRequirements.dc.html" style="text-decoration: none; color: inherit; padding: 16px; border-radius: var(--radius-md); background: var(--layer-02); display: flex; flex-direction: column"><span class="headline-small">76</span><span class="body-small" style="color: var(--text-secondary)">Expected evidence items</span></a>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite, F = window.React.Fragment;
+
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' },
+      { id: 'req', label: 'Requests', icon: 'task', badge: 3, badgeTone: 'attention', badgeLabel: 'requests need triage', children: [
+        { id: 'req-all', label: 'All requests' }, { id: 'req-cert', label: 'Certification' }, { id: 'req-train', label: 'Training' },
+        { type: 'label', label: 'Other services' }, { id: 'req-gap', label: 'Gap Analysis', badge: 3, badgeTone: 'attention', badgeLabel: 'need triage' }, { id: 'req-impl', label: 'Implementation Support' } ] },
+      { id: 'cust', label: 'Customers', icon: 'user--multiple' },
+      { id: 'fw', label: 'Frameworks', icon: 'catalog' },
+      { id: 'asg', label: 'Assignments', icon: 'user--access' },
+      { id: 'audit', label: 'Audit Logs', icon: 'document' },
+      { id: 'settings', label: 'Settings', icon: 'settings' } ] }];
+    var extra = {};
+
+    var extra = { noop: function(){} };
+    extra.status = { status: 'completed', label: 'Active', shortLabel: 'Active' };
+    extra.hdr = h(G.OverflowMenu, { size: 'md', label: 'Framework actions', items: [{ label: 'Import new version' }] });
+    extra.sections = [{"id": "ov", "label": "Overview", "href": "FwDetail.dc.html"}, {"id": "req", "label": "Requirements", "href": "FwRequirements.dc.html"}, {"id": "ver", "label": "Other versions", "href": "FwVersions.dc.html"}];
+    extra.tCols = [{ key: 'c', header: 'Code', width: 80 }, { key: 'n', header: 'Tier' }, { key: 'r', header: 'Rank', align: 'end', width: 80 }, { key: 'nw', header: 'New at this tier', align: 'end' }, { key: 'tot', header: 'Total to meet', align: 'end' }];
+    extra.tRows = [{ c: 'P', n: 'Basic', r: 1, nw: 44, tot: 44 }, { c: 'M', n: 'Medium', r: 2, nw: 17, tot: 61 }, { c: 'H', n: 'High', r: 3, nw: 18, tot: 79 }];
+
+    return Object.assign({ yes: true, no: false, three: 3, nav: nav, noLinks: [], noop: function(){}, collapsed: false }, extra);
+  }
+}
+</script>
+</body>
+</html>

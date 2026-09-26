@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Customer Portal — the same thread, filtered by the server</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap">
+  <style>
+    body { margin: 0; font-family: Roboto, "Noto Sans", system-ui, sans-serif; background: #EDF2F7; color: #161616; }
+    a { color: #CA4300; } a:hover { color: #B13B00; }
+    button { font-family: inherit; }
+    textarea { font-family: inherit; }
+  </style>
+</helmet>
+<div style="width: 1280px; height: 1240px; box-sizing: border-box; padding: 36px 40px; background: #EDF2F7; display: flex; flex-direction: column; gap: 18px;">
+
+  <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;">
+    <div style="display: flex; flex-direction: column; gap: 4px;">
+      <div style="font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: #6E7C85; font-weight: 500;">Customer Portal · ACME Taiwan · SR-2026-002</div>
+      <h1 style="margin: 0; font-size: 26px; font-weight: 700; color: #001F3F;">Discussion</h1>
+      <p style="margin: 0; font-size: 14px; color: #5A6B72;">The same component and the same thread. The customer's session simply never receives the internal entries — nothing is hidden with CSS.</p>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px; padding: 8px 14px; background: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 999px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0043CE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg>
+      <span style="font-size: 13px; color: #29343A;">Avery Lin is your assigned SGS Consultant</span>
+    </div>
+  </div>
+
+  <section style="background: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 12px; display: flex; flex-direction: column; flex-grow: 1; overflow: hidden;">
+
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 15px 20px; border-bottom: 1px solid #E0E0E0; background: #FAFBFC;">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#001F3F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        <span style="font-size: 14px; font-weight: 700; color: #001F3F;">4 messages with SGS</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 14px; font-size: 12px; color: #4A5A63;">
+        <span style="display: inline-flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; border-radius: 2px; background: #0F62FE; display: inline-block;"></span>Your organisation</span>
+        <span style="display: inline-flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; border-radius: 2px; background: #CA4300; display: inline-block;"></span>SGS Consultant</span>
+        <span style="display: inline-flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; border-radius: 2px; background: #001F3F; display: inline-block;"></span>SGS Admin</span>
+      </div>
+    </div>
+
+    <div style="flex-grow: 1; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px;">
+
+      <div style="display: flex; align-items: center; gap: 12px; padding-top: 4px;">
+        <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #6E7C85;">14 Sep 2026</span>
+        <span style="flex-grow: 1; height: 1px; background: #E8EDF1;"></span>
+      </div>
+
+      <article style="display: flex; align-items: stretch; border: 1px solid #E0E0E0; border-radius: 9px; overflow: hidden; background: #FFFFFF;">
+        <span style="width: 4px; align-self: stretch; flex-shrink: 0; background: #0F62FE;"></span>
+        <div style="flex-grow: 1; display: flex; gap: 13px; padding: 14px 18px;">
+          <span style="flex-shrink: 0; width: 38px; height: 38px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; background: #D0E2FF; color: #0A3FA8;">JL</span>
+          <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 7px;">
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <span style="font-size: 14px; font-weight: 700; color: #161616;">Jamie Lin</span>
+              <span style="display: inline-flex; align-items: center; height: 21px; padding: 0 9px; border-radius: 4px; font-size: 11.5px; font-weight: 700; background: #D0E2FF; color: #0043CE;">You · Customer Admin</span>
+              <span style="flex-grow: 1;"></span>
+              <time style="font-size: 12px; color: #6E7C85;">14 Sep · 10:02</time>
+            </div>
+            <p style="margin: 0; font-size: 14px; line-height: 1.55; color: #29343A;">Raised for the Payment Processing System workspace. We need help sequencing the logging and vulnerability remediation before the ISO 27001 initial certification audit.</p>
+          </div>
+        </div>
+      </article>
+
+      <div style="display: flex; align-items: center; gap: 10px; padding: 9px 14px 9px 11px; border-left: 4px solid #B6BFC6; background: #F4F6F8; border-radius: 0 8px 8px 0;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4A5A63" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+        <span style="font-size: 13px; color: #29343A;"><strong style="font-weight: 700;">Accepted</strong> — Avery Lin assigned as your SGS Consultant</span>
+        <span style="flex-grow: 1;"></span>
+        <span style="font-size: 12px; color: #6E7C85;">15 Sep · 09:12</span>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 12px; padding-top: 4px;">
+        <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #6E7C85;">19 Sep 2026</span>
+        <span style="flex-grow: 1; height: 1px; background: #E8EDF1;"></span>
+      </div>
+
+      <article style="display: flex; align-items: stretch; border: 1px solid #E0E0E0; border-radius: 9px; overflow: hidden; background: #FFFFFF;">
+        <span style="width: 4px; align-self: stretch; flex-shrink: 0; background: #CA4300;"></span>
+        <div style="flex-grow: 1; display: flex; gap: 13px; padding: 14px 18px;">
+          <span style="flex-shrink: 0; width: 38px; height: 38px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; background: #FBEDE7; color: #8F2F00;">AL</span>
+          <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 7px;">
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <span style="font-size: 14px; font-weight: 700; color: #161616;">Avery Lin</span>
+              <span style="display: inline-flex; align-items: center; height: 21px; padding: 0 9px; border-radius: 4px; font-size: 11.5px; font-weight: 700; background: #FBEDE7; color: #A63700;">SGS Consultant</span>
+              <span style="flex-grow: 1;"></span>
+              <time style="font-size: 12px; color: #6E7C85;">19 Sep · 09:03</time>
+            </div>
+            <p style="margin: 0; font-size: 14px; line-height: 1.55; color: #29343A;">Remediation order I would recommend: A.8.15 logging first, since it feeds the evidence for three other controls, then A.8.8 vulnerability handling. The control mapping is attached.</p>
+            <a href="#attachment" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 7px; padding: 5px 11px; border: 1px solid #C6C6C6; border-radius: 6px; background: #FFFFFF; font-size: 12.5px; color: #29343A; text-decoration: none;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#4A5A63" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.4 11.05 12.2 20.25a5.5 5.5 0 0 1-7.78-7.78l9.2-9.2a3.67 3.67 0 0 1 5.18 5.19l-9.19 9.19a1.83 1.83 0 0 1-2.6-2.59l8.5-8.49"></path></svg>
+              A8-15-remediation-plan.pdf
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article style="display: flex; align-items: stretch; border: 1px solid #E0E0E0; border-radius: 9px; overflow: hidden; background: #FFFFFF;">
+        <span style="width: 4px; align-self: stretch; flex-shrink: 0; background: #0F62FE;"></span>
+        <div style="flex-grow: 1; display: flex; gap: 13px; padding: 14px 18px;">
+          <span style="flex-shrink: 0; width: 38px; height: 38px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; background: #D0E2FF; color: #0A3FA8;">JL</span>
+          <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 7px;">
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <span style="font-size: 14px; font-weight: 700; color: #161616;">Jamie Lin</span>
+              <span style="display: inline-flex; align-items: center; height: 21px; padding: 0 9px; border-radius: 4px; font-size: 11.5px; font-weight: 700; background: #D0E2FF; color: #0043CE;">You · Customer Admin</span>
+              <span style="flex-grow: 1;"></span>
+              <time style="font-size: 12px; color: #6E7C85;">19 Sep · 14:40</time>
+            </div>
+            <p style="margin: 0; font-size: 14px; line-height: 1.55; color: #29343A;">Understood, thank you. Uploading the log retention policy today and I will tag the evidence against A.8.15.</p>
+          </div>
+        </div>
+      </article>
+
+      <div style="display: flex; align-items: flex-start; gap: 11px; margin-top: 4px; padding: 13px 16px; border: 1px dashed #C8CFD5; border-radius: 9px; background: #F7F9FB;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4A5A63" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-top: 1px;"><circle cx="12" cy="12" r="9"></circle><path d="M12 16v-5"></path><path d="M12 8h.01"></path></svg>
+        <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #3C515B;">SGS keeps operational notes about this request that are not part of your thread. You are told that they exist here; you never see their content, their authors or their count.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section style="border: 1px solid #E0E0E0; border-radius: 12px; background: #FFFFFF; display: flex; flex-direction: column;">
+    <div style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid #E0E0E0;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#A63700" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+      <span style="font-size: 13.5px; font-weight: 700; color: #A63700;">Reply to SGS</span>
+      <span style="flex-grow: 1;"></span>
+      <span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border: 1px solid #E0E0E0; border-radius: 4px; background: #EFF2F4; font-size: 12px; font-weight: 500; color: #3C515B;">Avery Lin and SGS Admin are notified</span>
+    </div>
+    <div style="padding: 13px 16px 15px 16px; display: flex; flex-direction: column; gap: 9px;">
+      <label for="customer-composer" style="font-size: 12px; font-weight: 500; color: #525252;">Your message — visible to your organisation and to SGS</label>
+      <textarea id="customer-composer" rows="3" placeholder="Ask your consultant a question…" style="width: 100%; box-sizing: border-box; resize: vertical; padding: 11px 13px; font-size: 14px; line-height: 1.5; color: #161616; background: #FFFFFF; border: 1px solid #8D8D8D; border-radius: 8px;"></textarea>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <button type="button" aria-label="Attach a file" style="display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid #C6C6C6; border-radius: 8px; background: #FFFFFF; cursor: pointer;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#3C515B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.4 11.05 12.2 20.25a5.5 5.5 0 0 1-7.78-7.78l9.2-9.2a3.67 3.67 0 0 1 5.18 5.19l-9.19 9.19a1.83 1.83 0 0 1-2.6-2.59l8.5-8.49"></path></svg>
+        </button>
+        <span style="flex-grow: 1; font-size: 12px; color: #4A5A63;">Customer Viewers can read this thread but cannot post.</span>
+        <button type="button" style="height: 44px; padding: 0 20px; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; color: #FFFFFF; cursor: pointer; background: #CA4300;">Send</button>
+      </div>
+    </div>
+  </section>
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1240}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

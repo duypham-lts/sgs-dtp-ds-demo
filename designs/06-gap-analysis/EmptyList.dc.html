@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Gap Analysis – first visit</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;family=Noto+Sans+TC:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="customer" style="width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" site-name="Digital Trust Platform" site-sub="Customer Portal" user-name="Linh Tran" user-email="linh.tran@abc-trading.com" notifications="{{three}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" label="Customer Portal" sections="{{nav}}" default-active="sr-gap" default-collapsed="{{no}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <div style="padding: 8px 8px 4px">
+        <x-import component-from-global-scope="Graphite.Breadcrumb" items="{{crumbs}}"></x-import>
+        <h1 class="headline-medium" style="margin: 8px 0 0 0">Gap Analysis</h1>
+      </div>
+      <section class="gr-card gr-card--extend" style="align-items: center; justify-content: center">
+        <div style="max-width: 720px; display: flex; flex-direction: column; align-items: center; gap: 32px">
+          <x-import component-from-global-scope="Graphite.EmptyState" icon="document" title="See where you stand before certification" body="An SGS consultant compares your organisation with a framework, requirement by requirement, and tells you what is missing and what to fix first." action="{{cta}}"></x-import>
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; width: 100%">
+            <div style="padding: 16px; border-radius: var(--radius-md); background: var(--layer-02); display: flex; flex-direction: column; gap: 4px"><span class="title-small">What you get</span><span class="body-small" style="color: var(--text-secondary)">A report of gaps per clause, with priorities, shared in your workspace.</span></div>
+            <div style="padding: 16px; border-radius: var(--radius-md); background: var(--layer-02); display: flex; flex-direction: column; gap: 4px"><span class="title-small">How it works</span><span class="body-small" style="color: var(--text-secondary)">Pick a framework and scope, share your evidence, meet the consultant remotely or on site.</span></div>
+            <div style="padding: 16px; border-radius: var(--radius-md); background: var(--layer-02); display: flex; flex-direction: column; gap: 4px"><span class="title-small">How long</span><span class="body-small" style="color: var(--text-secondary)">Usually [TYPICAL DURATION], depending on scope size.</span></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite;
+
+    var SR = { id: 'sr', label: 'Service Requests', icon: 'task', badge: 1, badgeTone: 'attention', badgeLabel: 'request needs action', children: [
+      { id: 'sr-all', label: 'All requests' }, { id: 'sr-cert', label: 'Certification Services' }, { id: 'sr-train', label: 'Training Courses' },
+      { type: 'label', label: 'Other services' }, { id: 'sr-gap', label: 'Gap Analysis', badge: 1, badgeTone: 'attention', badgeLabel: 'needs action' }, { id: 'sr-impl', label: 'Implementation Support' } ] };
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' }, { id: 'scopes', label: 'Scopes', icon: 'category' }, { id: 'ws', label: 'Workspaces', icon: 'folders' },
+      { id: 'docs', label: 'Documents', icon: 'document--multiple-01' }, SR, { id: 'training', label: 'Training', icon: 'education' },
+      { id: 'audit', label: 'Audit Logs', icon: 'catalog' }, { id: 'settings', label: 'Settings', icon: 'settings' } ] },
+      { label: 'Administration', items: [{ id: 'users', label: 'Users', icon: 'user--multiple' }, { id: 'access', label: 'Workspace access', icon: 'user--access' }] }];
+
+    var extra = { crumbs: [{ label: 'Service Requests', href: '#' }, { label: 'Gap Analysis' }],
+      cta: h(G.Button, { icon: 'add', iconPosition: 'left' }, 'Request a gap analysis') };
+    return Object.assign({ yes: true, no: false, three: 3, nav: nav }, typeof extra === 'object' ? extra : {});
+  }
+}
+</script>
+</body>
+</html>

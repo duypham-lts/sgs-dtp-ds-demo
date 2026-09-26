@@ -1,0 +1,20 @@
+<!-- @dsCard group="Feedback" height=200 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>ReadinessRing — preview</title></head>
+<body style="margin:0">
+<div id="root"></div>
+<script>
+  var G = window.Graphite, h = React.createElement;
+  function row(){ return h.apply(null, ['div', { className: 'gr-demo__row', style: { alignItems: 'flex-start' } }].concat([].slice.call(arguments))); }
+  function cap(t){ return h('div', { className: 'gr-demo__cap' }, t); }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'gr-demo' },
+      cap('Share of requirements with accepted evidence. The number is always shown — never colour alone.'),
+      row(h(G.ReadinessRing, { value: 82, size: 'lg', label: 'ISO/IEC 27001', caption: '63 of 77 requirements ready' }), h(G.ReadinessRing, { value: 35, label: 'TISAX', caption: '14 of 40 ready' }))
+    )
+  );
+</script>
+</body>
+</html>

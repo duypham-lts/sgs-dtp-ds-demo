@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SGS Portal — unified discussion thread</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap">
+  <style>
+    body { margin: 0; font-family: Roboto, "Noto Sans", system-ui, sans-serif; background: #EDF2F7; color: #161616; }
+    a { color: #CA4300; } a:hover { color: #B13B00; }
+    button { font-family: inherit; }
+    textarea { font-family: inherit; }
+  </style>
+</helmet>
+<div style="width: 1280px; height: 1240px; box-sizing: border-box; padding: 36px 40px; background: #EDF2F7; display: flex; flex-direction: column; gap: 18px;">
+
+  <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;">
+    <div style="display: flex; flex-direction: column; gap: 4px;">
+      <div style="font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: #6E7C85; font-weight: 500;">SGS Portal · Service Request SR-2026-002</div>
+      <h1 style="margin: 0; font-size: 26px; font-weight: 700; color: #001F3F;">Discussion</h1>
+      <p style="margin: 0; font-size: 14px; color: #5A6B72;">One thread for this Service Request. Every consulting comment, internal note and status change, in the order it happened.</p>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px; padding: 8px 14px; background: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 999px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3C515B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+      <span style="font-size: 13px; color: #29343A;">3 participants · ACME Taiwan, SGS</span>
+    </div>
+  </div>
+
+  <section style="background: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 12px; display: flex; flex-direction: column; flex-grow: 1; overflow: hidden;">
+
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 20px; border-bottom: 1px solid #E0E0E0; background: #FAFBFC;">
+      <div role="group" aria-label="Filter the thread" style="display: flex; align-items: center; gap: 4px; padding: 4px; background: #EFF2F4; border-radius: 10px;">
+        <sc-for list="{{ filters }}" as="tab" hint-placeholder-count="3">
+          <button type="button" onClick="{{ tab.pick }}" aria-pressed="{{ tab.on }}" style="{{ tab.style }}">
+            <span style="{{ tab.dotStyle }}"></span>
+            <span>{{ tab.label }}</span>
+            <span style="{{ tab.countStyle }}">{{ tab.count }}</span>
+          </button>
+        </sc-for>
+      </div>
+      <div style="display: flex; align-items: center; gap: 14px; font-size: 12px; color: #4A5A63;">
+        <span style="display: inline-flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; border-radius: 2px; background: #0F62FE; display: inline-block;"></span>Customer</span>
+        <span style="display: inline-flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; border-radius: 2px; background: #CA4300; display: inline-block;"></span>Consultant</span>
+        <span style="display: inline-flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; border-radius: 2px; background: #001F3F; display: inline-block;"></span>Admin</span>
+        <span style="display: inline-flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; border-radius: 2px; background: repeating-linear-gradient(135deg, #B9AE9B 0 1.5px, #F0EBE2 1.5px 5px); display: inline-block;"></span>Internal</span>
+      </div>
+    </div>
+
+    <div style="flex-grow: 1; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px;">
+      <sc-for list="{{ entries }}" as="item" hint-placeholder-count="8">
+
+        <sc-if value="{{ item.isDivider }}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; align-items: center; gap: 12px; padding-top: 4px;">
+            <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #6E7C85;">{{ item.label }}</span>
+            <span style="flex-grow: 1; height: 1px; background: #E8EDF1;"></span>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ item.isEvent }}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; align-items: center; gap: 10px; padding: 9px 14px 9px 11px; border-left: 4px solid #B6BFC6; background: #F4F6F8; border-radius: 0 8px 8px 0;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4A5A63" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+            <span style="font-size: 13px; color: #29343A;"><strong style="font-weight: 700;">{{ item.label }}</strong>{{ item.text }}</span>
+            <span style="flex-grow: 1;"></span>
+            <span style="font-size: 12px; color: #6E7C85;">{{ item.time }}</span>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ item.isComment }}" hint-placeholder-val="{{ true }}">
+          <article style="{{ item.cardStyle }}">
+            <span style="{{ item.railStyle }}"></span>
+            <sc-if value="{{ item.internal }}" hint-placeholder-val="{{ false }}">
+              <span style="width: 12px; align-self: stretch; flex-shrink: 0; background-image: repeating-linear-gradient(135deg, #C8BCA6 0 1.5px, rgba(0,0,0,0) 1.5px 6px);"></span>
+            </sc-if>
+            <div style="{{ item.padStyle }}">
+              <span style="{{ item.avatarStyle }}">{{ item.initials }}</span>
+              <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 7px;">
+                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                  <span style="font-size: 14px; font-weight: 700; color: #161616;">{{ item.name }}</span>
+                  <span style="{{ item.roleChipStyle }}">{{ item.roleLabel }}</span>
+                  <span style="{{ item.visChipStyle }}">
+                    <sc-if value="{{ item.internal }}" hint-placeholder-val="{{ false }}">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+                    </sc-if>
+                    <sc-if value="{{ item.shared }}" hint-placeholder-val="{{ true }}">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </sc-if>
+                    <span>{{ item.visLabel }}</span>
+                  </span>
+                  <span style="flex-grow: 1;"></span>
+                  <time style="font-size: 12px; color: #6E7C85;">{{ item.time }}</time>
+                </div>
+                <p style="margin: 0; font-size: 14px; line-height: 1.55; color: #29343A;">{{ item.text }}</p>
+                <sc-if value="{{ item.hasFile }}" hint-placeholder-val="{{ false }}">
+                  <span style="align-self: flex-start; display: inline-flex; align-items: center; gap: 7px; padding: 5px 11px; border: 1px solid #C6C6C6; border-radius: 6px; background: #FFFFFF; font-size: 12.5px; color: #29343A;">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#4A5A63" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.4 11.05 12.2 20.25a5.5 5.5 0 0 1-7.78-7.78l9.2-9.2a3.67 3.67 0 0 1 5.18 5.19l-9.19 9.19a1.83 1.83 0 0 1-2.6-2.59l8.5-8.49"></path></svg>
+                    {{ item.file }}
+                  </span>
+                </sc-if>
+              </div>
+            </div>
+          </article>
+        </sc-if>
+
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="{{ composerCardStyle }}">
+    <div style="display: flex; align-items: center; gap: 6px; padding: 10px 14px 0 14px;">
+      <sc-for list="{{ modes }}" as="mode" hint-placeholder-count="2">
+        <button type="button" onClick="{{ mode.pick }}" aria-pressed="{{ mode.on }}" style="{{ mode.style }}">
+          <sc-if value="{{ mode.isInternal }}" hint-placeholder-val="{{ false }}">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+          </sc-if>
+          <sc-if value="{{ mode.isShared }}" hint-placeholder-val="{{ true }}">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          </sc-if>
+          <span>{{ mode.label }}</span>
+        </button>
+      </sc-for>
+      <span style="flex-grow: 1;"></span>
+      <span style="{{ audienceNoteStyle }}">{{ audienceNote }}</span>
+    </div>
+
+    <div style="padding: 12px 14px 14px 14px; display: flex; flex-direction: column; gap: 9px; border-top: 1px solid #E0E0E0;">
+      <label for="composer" style="font-size: 12px; font-weight: 500; color: #525252;">{{ composerLabel }}</label>
+      <textarea id="composer" rows="3" placeholder="{{ composerPlaceholder }}" style="{{ composerFieldStyle }}"></textarea>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <button type="button" aria-label="Attach a file" style="display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid #C6C6C6; border-radius: 8px; background: #FFFFFF; cursor: pointer;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#3C515B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.4 11.05 12.2 20.25a5.5 5.5 0 0 1-7.78-7.78l9.2-9.2a3.67 3.67 0 0 1 5.18 5.19l-9.19 9.19a1.83 1.83 0 0 1-2.6-2.59l8.5-8.49"></path></svg>
+        </button>
+        <button type="button" aria-label="Mention a person" style="display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid #C6C6C6; border-radius: 8px; background: #FFFFFF; cursor: pointer;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#3C515B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path></svg>
+        </button>
+        <span style="flex-grow: 1; font-size: 12px; color: #4A5A63;">{{ composerHelp }}</span>
+        <button type="button" style="{{ submitStyle }}">{{ submitLabel }}</button>
+      </div>
+    </div>
+  </section>
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props='{"density":{"editor":"enum","options":["comfortable","compact"],"default":"comfortable","section":"Layout"},"$preview":{"width":1280,"height":1240}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { filter: 'ALL', mode: 'SHARED' };
+  }
+
+  roles() {
+    return {
+      CUSTOMER: { rail: '#0F62FE', avatarBg: '#D0E2FF', avatarInk: '#0A3FA8', chipBg: '#D0E2FF', chipInk: '#0043CE', label: 'Customer · ACME Taiwan' },
+      CONSULTANT: { rail: '#CA4300', avatarBg: '#FBEDE7', avatarInk: '#8F2F00', chipBg: '#FBEDE7', chipInk: '#A63700', label: 'SGS Consultant' },
+      ADMIN: { rail: '#001F3F', avatarBg: '#DCE4EC', avatarInk: '#001F3F', chipBg: '#DCE4EC', chipInk: '#001F3F', label: 'SGS Admin' }
+    };
+  }
+
+  thread() {
+    return [
+      { kind: 'divider', label: '14 Sep 2026' },
+      { kind: 'comment', role: 'CUSTOMER', name: 'Jamie Lin', initials: 'JL', time: '14 Sep · 10:02', internal: false,
+        text: 'Raised for the Payment Processing System workspace. We need help sequencing the logging and vulnerability remediation before the ISO 27001 initial certification audit.' },
+      { kind: 'event', label: 'Accepted', text: ' — assigned to Avery Lin by Morgan Huang (SGS Admin)', time: '15 Sep · 09:12' },
+      { kind: 'comment', role: 'ADMIN', name: 'Morgan Huang', initials: 'MH', time: '15 Sep · 09:14', internal: true,
+        text: 'Taiwan scope, 2026 initial cycle. Avery, keep the cycle dates in view — the audit window closes 12 Nov and we cannot slip the readiness review.' },
+      { kind: 'divider', label: '19 Sep 2026' },
+      { kind: 'comment', role: 'CONSULTANT', name: 'Avery Lin', initials: 'AL', time: '19 Sep · 09:03', internal: false,
+        text: 'Remediation order I would recommend: A.8.15 logging first, since it feeds the evidence for three other controls, then A.8.8 vulnerability handling. The control mapping is attached.',
+        file: 'A8-15-remediation-plan.pdf' },
+      { kind: 'comment', role: 'CONSULTANT', name: 'Avery Lin', initials: 'AL', time: '19 Sep · 09:07', internal: true,
+        text: 'Their SIEM licence expires in November — raise it at the 25 Sep sync before we commit to the logging evidence dates.' },
+      { kind: 'comment', role: 'CUSTOMER', name: 'Jamie Lin', initials: 'JL', time: '19 Sep · 14:40', internal: false,
+        text: 'Understood, thank you. Uploading the log retention policy today and I will tag the evidence against A.8.15.' }
+    ];
+  }
+
+  counts() {
+    const all = this.thread();
+    const cs = all.filter(function (t) { return t.kind === 'comment'; });
+    return {
+      ALL: all.filter(function (t) { return t.kind !== 'divider'; }).length,
+      SHARED: cs.filter(function (c) { return !c.internal; }).length,
+      INTERNAL: cs.filter(function (c) { return c.internal; }).length
+    };
+  }
+
+  tabStyle(on) {
+    return 'display: inline-flex; align-items: center; gap: 7px; height: 36px; padding: 0 13px; border-radius: 8px; border: 1px solid ' +
+      (on ? '#001F3F' : 'rgba(0,0,0,0)') + '; background: ' + (on ? '#FFFFFF' : 'rgba(0,0,0,0)') +
+      '; color: ' + (on ? '#001F3F' : '#3C515B') + '; font-size: 13px; font-weight: ' + (on ? '700' : '500') + '; cursor: pointer;';
+  }
+
+  modeStyle(on, internal) {
+    const ink = internal ? '#3C515B' : '#A63700';
+    return 'display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 15px; border: 1px solid ' +
+      (on ? '#E0E0E0' : 'rgba(0,0,0,0)') + '; border-bottom: none; border-radius: 9px 9px 0 0; background: ' +
+      (on ? (internal ? '#F9F7F3' : '#FFFFFF') : 'rgba(0,0,0,0)') + '; color: ' + (on ? ink : '#5F6B72') +
+      '; font-size: 13.5px; font-weight: ' + (on ? '700' : '500') + '; cursor: pointer;';
+  }
+
+  renderVals() {
+    const self = this;
+    const roles = this.roles();
+    const counts = this.counts();
+    const filter = this.state.filter;
+    const internalMode = this.state.mode === 'INTERNAL';
+    const compact = this.props.density === 'compact';
+
+    const filters = [
+      { key: 'ALL', label: 'Everything', dot: '#001F3F' },
+      { key: 'SHARED', label: 'Shared with customer', dot: '#0F62FE' },
+      { key: 'INTERNAL', label: 'Internal only', dot: '#8A7E68' }
+    ].map(function (f) {
+      const on = filter === f.key;
+      return {
+        label: f.label,
+        count: counts[f.key],
+        on: on,
+        pick: function () { self.setState({ filter: f.key }); },
+        style: self.tabStyle(on),
+        dotStyle: 'width: 9px; height: 9px; border-radius: 3px; background: ' + f.dot + '; display: inline-block;',
+        countStyle: 'min-width: 20px; text-align: center; padding: 1px 6px; border-radius: 999px; background: ' +
+          (on ? '#EFF2F4' : '#FFFFFF') + '; font-size: 11.5px; font-weight: 700; color: #3C515B;'
+      };
+    });
+
+    const kept = this.thread().filter(function (t) {
+      if (filter === 'ALL') return true;
+      if (t.kind !== 'comment') return false;
+      return filter === 'INTERNAL' ? t.internal : !t.internal;
+    });
+
+    const entries = kept.map(function (t, i) {
+      if (t.kind !== 'comment') {
+        return {
+          isDivider: t.kind === 'divider', isEvent: t.kind === 'event', isComment: false,
+          label: t.label, text: t.text || '', time: t.time || '',
+          internal: false, shared: false, hasFile: false, file: '',
+          name: '', initials: '', roleLabel: '', visLabel: '',
+          cardStyle: '', railStyle: '', avatarStyle: '', roleChipStyle: '', visChipStyle: '', padStyle: ''
+        };
+      }
+      const r = roles[t.role];
+      return {
+        isDivider: false, isEvent: false, isComment: true,
+        internal: t.internal, shared: !t.internal,
+        name: t.name, initials: t.initials, time: t.time, text: t.text, label: '',
+        hasFile: !!t.file, file: t.file || '',
+        roleLabel: r.label,
+        visLabel: t.internal ? 'Internal · SGS only' : 'Visible to customer',
+        cardStyle: 'display: flex; align-items: stretch; border: 1px solid ' + (t.internal ? '#DED7CB' : '#E0E0E0') +
+          '; border-radius: 9px; overflow: hidden; background: ' + (t.internal ? '#F9F7F3' : '#FFFFFF') + ';',
+        railStyle: 'width: 4px; align-self: stretch; flex-shrink: 0; background: ' + r.rail + ';',
+        padStyle: 'flex-grow: 1; display: flex; gap: 13px; padding: ' + (compact ? '10px 16px' : '14px 18px') + ';',
+        avatarStyle: 'flex-shrink: 0; width: 38px; height: 38px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; background: ' +
+          r.avatarBg + '; color: ' + r.avatarInk + ';',
+        roleChipStyle: 'display: inline-flex; align-items: center; height: 21px; padding: 0 9px; border-radius: 4px; font-size: 11.5px; font-weight: 700; background: ' +
+          r.chipBg + '; color: ' + r.chipInk + ';',
+        visChipStyle: 'display: inline-flex; align-items: center; gap: 5px; height: 21px; padding: 0 9px; border-radius: 4px; font-size: 11.5px; font-weight: 500; color: #3C515B; background: ' +
+          (t.internal ? '#EDE8DF' : '#EFF2F4') + '; border: 1px ' + (t.internal ? 'dashed #C8BCA6' : 'solid #E0E0E0') + ';'
+      };
+    });
+
+    const modes = [
+      { key: 'SHARED', label: 'Reply to customer' },
+      { key: 'INTERNAL', label: 'Internal note' }
+    ].map(function (m) {
+      const on = self.state.mode === m.key;
+      return {
+        label: m.label,
+        on: on,
+        isInternal: m.key === 'INTERNAL',
+        isShared: m.key === 'SHARED',
+        pick: function () { self.setState({ mode: m.key }); },
+        style: self.modeStyle(on, m.key === 'INTERNAL')
+      };
+    });
+
+    return {
+      filters: filters,
+      entries: entries,
+      modes: modes,
+      composerCardStyle: 'border: 1px solid ' + (internalMode ? '#DED7CB' : '#E0E0E0') + '; border-radius: 12px; background: ' +
+        (internalMode ? '#F9F7F3' : '#FFFFFF') + '; display: flex; flex-direction: column;',
+      audienceNote: internalMode ? 'ACME Taiwan will never see this entry' : 'Jamie Lin and 2 more at ACME Taiwan are notified',
+      audienceNoteStyle: 'display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 4px; font-size: 12px; font-weight: 500; color: #3C515B; background: ' +
+        (internalMode ? '#EDE8DF' : '#EFF2F4') + '; border: 1px ' + (internalMode ? 'dashed #C8BCA6' : 'solid #E0E0E0') + ';',
+      composerLabel: internalMode ? 'Internal note — SGS Admin and the assigned Consultant only' : 'Reply — posted to the shared thread',
+      composerPlaceholder: internalMode ? 'Context for the SGS side of this request…' : 'Write guidance for ACME Taiwan…',
+      composerHelp: internalMode ? 'Kept out of every Customer Portal selector.' : 'Appears in the customer thread immediately.',
+      composerFieldStyle: 'width: 100%; box-sizing: border-box; resize: vertical; padding: 11px 13px; font-size: 14px; line-height: 1.5; color: #161616; background: #FFFFFF; border: 1px solid #8D8D8D; border-radius: 8px;',
+      submitLabel: internalMode ? 'Add internal note' : 'Post reply',
+      submitStyle: 'height: 44px; padding: 0 20px; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; color: #FFFFFF; cursor: pointer; background: ' +
+        (internalMode ? '#001F3F' : '#CA4300') + ';'
+    };
+  }
+}
+</script>
+</body>
+</html>

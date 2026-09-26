@@ -1,0 +1,21 @@
+<!-- @dsCard group="Actions" height=220 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Link — preview</title></head>
+<body style="margin:0">
+<div id="root"></div>
+<script>
+  var G = window.Graphite, h = React.createElement;
+  function row(){ return h.apply(null, ['div', { className: 'gr-demo__row' }].concat([].slice.call(arguments))); }
+  function cap(t){ return h('div', { className: 'gr-demo__cap' }, t); }
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'gr-demo' },
+      cap('Standalone · semibold'),
+      row(h(G.Link, null, 'Forgot your password?'), h(G.Link, { weight: 'semibold' }, 'Contact SGS support')),
+      cap('Inside help text: only the interactive part is orange and underlined, never bold'),
+      h('div', { style: { fontSize: 12, lineHeight: '20px', color: 'var(--text-secondary)' } }, 'Supported file types are PDF, DOC, and XLS. ', h(G.Link, { inline: true }, 'View requirements.'))
+    )
+  );
+</script>
+</body>
+</html>

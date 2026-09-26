@@ -1,0 +1,48 @@
+<!-- @dsCard group="Data" height=1160 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>DataTable — preview</title></head>
+<body style="margin:0">
+<div id="root"></div>
+<script>
+  var G = window.Graphite, h = React.createElement;
+  function cap(t){ return h('div', { className: 'gr-demo__cap' }, t); }
+  var SR = [
+    ['SR-2026-04-12345','Product Conformity Assessment','Saudi Arabia','completed','Certificate issued','20 Jan 2026',6],
+    ['SR-2026-04-12346','ISO/IEC 27001 Certification','Taiwan','missing-info','Action required','02 Feb 2026',3],
+    ['SR-2026-04-12347','TISAX Assessment','Germany','under-review','Under Review','11 Feb 2026',9],
+    ['SR-2026-04-12348','ISO 22301 Certification','Taiwan','draft','Draft','—',0],
+    ['SR-2026-04-12349','ISO/IEC 42001 Certification','Singapore','under-review','Under Review','03 Mar 2026',4],
+    ['SR-2026-04-12350','Second Audit for Supply Chain','Vietnam','completed','Certificate issued','14 Mar 2026',12],
+    ['SR-2026-04-12351','ISO/IEC 27701 Certification','Taiwan','rejected','Rejected','18 Mar 2026',2],
+    ['SR-2026-04-12352','NIST CSF Assessment','Japan','needs-description','Needs Description','22 Mar 2026',5],
+    ['SR-2026-04-12353','ISO/IEC 20000 Certification','Taiwan','completed','Certificate issued','01 Apr 2026',7],
+    ['SR-2026-04-12354','ASPICE Assessment','Korea','under-review','Under Review','09 Apr 2026',8],
+    ['SR-2026-04-12355','ISO 56001 Certification','Taiwan','draft','Draft','—',1],
+    ['SR-2026-04-12356','Cybersecurity Management Act','Taiwan','missing-info','Action required','15 Apr 2026',3]
+  ].map(function(r){ return { id: r[0], service: r[1], country: r[2], status: r[3], statusLabel: r[4], submitted: r[5], docs: r[6] }; });
+  var COLS = [
+    { key: 'id', header: 'Request', sortable: true, width: 180 },
+    { key: 'service', header: 'Service', sortable: true },
+    { key: 'country', header: 'Destination', sortable: true },
+    { key: 'status', header: 'Status', sortable: true, sortValue: function(r){ return r.statusLabel; }, searchValue: function(r){ return r.statusLabel; }, render: function(r){ return h(G.StatusTag, { status: r.status, size: 'sm', label: r.statusLabel }); } },
+    { key: 'submitted', header: 'Submitted', sortable: true },
+    { key: 'docs', header: 'Docs', align: 'end', sortable: true, width: 80 }
+  ];
+  function actions(r){ return [{ label: 'View request' }, { label: 'Download summary' }, { label: 'Withdraw', danger: true, disabled: r.status === 'completed' }]; }
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'gr-demo', style: { background: 'var(--background)' } },
+      cap('Full: title · search · sortable columns · row selection with bulk bar · row overflow menu · pagination. Select a row to see the bulk bar.'),
+      h(G.DataTable, { title: 'Service requests', description: '12 requests across 6 frameworks', columns: COLS, rows: SR, selectable: true, searchable: true, searchPlaceholder: 'Search requests', pageSize: 5, pageSizeOptions: [5, 10, 25], rowActions: actions, bulkActions: [{ label: 'Download' }, { label: 'Assign reviewer' }], defaultSort: { key: 'id', dir: 'asc' }, layout: 'table', toolbarActions: h(G.Button, { size: 'md', icon: 'add', iconPosition: 'left' }, 'New request') }),
+      cap('States: loading (skeleton) · empty · error'),
+      h('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 } },
+        h(G.DataTable, { columns: COLS.slice(0, 3), rows: SR, loading: true, paginate: false, layout: 'table' }),
+        h(G.DataTable, { columns: COLS.slice(0, 3), rows: [], layout: 'table', emptyState: { title: 'No service requests yet', body: 'Requests you create or that SGS opens for you appear here.', action: h(G.Button, { size: 'md' }, 'New request') } }),
+        h(G.DataTable, { columns: COLS.slice(0, 3), rows: SR, layout: 'table', error: { title: 'Couldn’t load requests', message: 'Check your connection and try again.' } })),
+      cap('Cards layout (auto below 640px container width, or layout: "cards") — the mobile pattern from the UI Guidelines'),
+      h('div', { style: { width: 380 } }, h(G.DataTable, { columns: COLS, rows: SR.slice(0, 2), cardTitleKey: 'id', cardStatusKey: 'status', rowActions: actions, paginate: false }))
+    )
+  );
+</script>
+</body>
+</html>

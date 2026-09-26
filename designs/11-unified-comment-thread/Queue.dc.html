@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Service Request Queue — next move</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@500;600;700&display=swap">
+<style>
+  body { margin: 0; font-family: 'IBM Plex Sans', Arial, sans-serif; background: #F4F6F7; }
+  a { color: #CA4300; }
+  a:hover { color: #B13B00; }
+  .navitem { text-decoration: none; }
+  .cond { font-family: 'IBM Plex Sans Condensed', Arial, sans-serif; }
+  .q-grid { display: grid; grid-template-columns: 124px minmax(0, 1fr) 148px 118px 118px 70px 176px; align-items: center; column-gap: 12px; }
+  .colhead { font-family: 'IBM Plex Sans Condensed', Arial, sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.5px; color: #6F8092; }
+  .tag { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; width: fit-content; }
+  .cta { display: inline-flex; align-items: center; justify-content: center; gap: 7px; height: 34px; padding: 0 14px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; border: 1px solid rgba(0,0,0,0); }
+  .ctrl { display: flex; align-items: center; gap: 6px; height: 36px; padding: 0 14px; border: 1px solid rgba(60,81,91,0.18); border-radius: 8px; background: #FFFFFF; font-size: 13px; font-weight: 500; color: #29343A; white-space: nowrap; cursor: pointer; }
+  .idle { font-size: 12.5px; font-weight: 600; }
+  .id { font-size: 14.5px; font-weight: 700; color: #001F3F; text-decoration: none; }
+  .cust { font-size: 14px; font-weight: 600; color: #29343A; }
+  .svc { font-size: 12.5px; font-weight: 400; color: #5A6B72; margin-top: 2px; }
+  .who { font-size: 13px; font-weight: 500; }
+  button { font-family: inherit; }
+</style>
+</helmet>
+
+<div style="width: 1440px; height: 940px; box-sizing: border-box; display: flex; flex-direction: column; background: #F4F6F7; color: #29343A;">
+
+  <!-- Header -->
+  <div style="height: 64px; flex-shrink: 0; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; background: #FFFFFF; border-bottom: 1px solid rgba(60,81,91,0.14);">
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <span style="font-size: 26px; font-weight: 700; letter-spacing: -0.5px; color: #001F3F;">SGS</span>
+      <div style="width: 1px; height: 26px; background: rgba(60,81,91,0.25);"></div>
+      <div style="display: flex; flex-direction: column; line-height: 1.25;">
+        <span class="cond" style="font-size: 11px; font-weight: 700; letter-spacing: 1.6px; color: #CA4300;">DIGITAL TRUST</span>
+        <span style="font-size: 15px; font-weight: 500; color: #3C515B;">Operations Platform</span>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 22px;">
+      <div style="position: relative; width: 22px; height: 22px; color: #3C515B;">
+        <svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8a5 5 0 0 1 10 0c0 4 1.5 5 1.5 5h-13S5 12 5 8Z"/><path d="M8.3 16a1.8 1.8 0 0 0 3.4 0"/></svg>
+        <div style="position: absolute; top: -4px; right: -6px; min-width: 15px; height: 15px; border-radius: 999px; background: #CA4300; color: #fff; font-size: 9px; font-weight: 700; display: flex; align-items: center; justify-content: center; padding: 0 3px;">3</div>
+      </div>
+      <div style="width: 1px; height: 22px; background: rgba(60,81,91,0.2);"></div>
+      <div style="width: 32px; height: 32px; border-radius: 999px; background: rgba(0,31,63,0.06); display: flex; align-items: center; justify-content: center; color: #001F3F;">
+        <svg viewBox="0 0 20 20" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="7" r="3.2"/><path d="M3.3 17c.6-3.4 3-5.3 6.7-5.3s6.1 1.9 6.7 5.3"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div style="flex-grow: 1; display: flex; min-height: 0;">
+
+    <!-- Sidebar -->
+    <div style="width: 240px; flex-shrink: 0; box-sizing: border-box; background: #001F3F; display: flex; flex-direction: column; justify-content: space-between; padding: 20px 0 16px;">
+      <div style="display: flex; flex-direction: column; gap: 2px; padding: 0 12px;">
+        <a class="navitem" href="#" style="display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 8px;">
+          <span style="color: rgba(255,255,255,0.55); display: flex;"><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg></span>
+          <span style="font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.75);">Dashboard</span>
+        </a>
+        <a class="navitem" href="#" style="display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 8px;">
+          <span style="color: rgba(255,255,255,0.55); display: flex;"><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.2" cy="6.8" r="3"/><path d="M2 17c0-3.1 2.1-5 5.2-5s5.2 1.9 5.2 5"/><circle cx="14.5" cy="6.2" r="2.2"/><path d="M13.2 11.1c2.3.2 4 1.9 4.2 5"/></svg></span>
+          <span style="font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.75);">Customers</span>
+        </a>
+        <a class="navitem" href="#" style="display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 8px;">
+          <span style="color: rgba(255,255,255,0.55); display: flex;"><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4.3c2-1 4-1.2 6 0v11.4c-2-1.2-4-1-6 0z"/><path d="M18 4.3c-2-1-4-1.2-6 0v11.4c2-1.2 4-1 6 0z"/></svg></span>
+          <span style="font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.75);">Frameworks</span>
+        </a>
+        <a class="navitem" href="#" style="display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 8px; background: rgba(255,255,255,0.10);">
+          <span style="color: #FF8A3D; display: flex;"><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8.4 8.4 2H16a2 2 0 0 1 2 2v7.6L11.6 18a2 2 0 0 1-2.8 0L2 11.2a2 2 0 0 1 0-2.8Z"/><circle cx="13" cy="7" r="1.3" fill="currentColor" stroke="none"/></svg></span>
+          <span style="font-size: 14px; font-weight: 600; color: #FFFFFF;">Service Requests</span>
+        </a>
+        <a class="navitem" href="#" style="display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 8px;">
+          <span style="color: rgba(255,255,255,0.55); display: flex;"><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="12" height="15" rx="1.5"/><rect x="7" y="1.4" width="6" height="3" rx="1"/><path d="M7 10.6l2 2 4-4.6"/></svg></span>
+          <span style="font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.75);">Reviews</span>
+        </a>
+        <a class="navitem" href="#" style="display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 8px;">
+          <span style="color: rgba(255,255,255,0.55); display: flex;"><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="7.2" r="4.7"/><path d="M7.4 11.3 6 18l4-2.1 4 2.1-1.4-6.7"/></svg></span>
+          <span style="font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.75);">Certifications</span>
+        </a>
+        <a class="navitem" href="#" style="display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 8px;">
+          <span style="color: rgba(255,255,255,0.55); display: flex;"><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2 3 5v5c0 4.5 3 7.5 7 8.5 4-1 7-4 7-8.5V5z"/><circle cx="10" cy="8.4" r="2.1"/><path d="M6.4 14.3c.7-2 2-2.9 3.6-2.9s2.9.9 3.6 2.9"/></svg></span>
+          <span style="font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.75);">Users / Access</span>
+        </a>
+        <a class="navitem" href="#" style="display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 8px;">
+          <span style="color: rgba(255,255,255,0.55); display: flex;"><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7.4"/><path d="M10 5.6V10l3.2 2"/></svg></span>
+          <span style="font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.75);">Audit Trail</span>
+        </a>
+        <a class="navitem" href="#" style="display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 8px;">
+          <span style="color: rgba(255,255,255,0.55); display: flex;"><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="2.5"/><path d="M10 3v2M10 15v2M17 10h-2M5 10H3M15.1 4.9l-1.4 1.4M6.3 13.7l-1.4 1.4M15.1 15.1l-1.4-1.4M6.3 6.3 4.9 4.9"/></svg></span>
+          <span style="font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.75);">Settings</span>
+        </a>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 14px; padding: 14px 20px 0; border-top: 1px solid rgba(255,255,255,0.12);">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 28px; height: 28px; border-radius: 999px; background: #CA4300; color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center;">M</div>
+          <div style="display: flex; flex-direction: column; line-height: 1.3;">
+            <span style="font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.78);">Morgan Huang</span>
+            <span style="font-size: 11px; font-weight: 400; color: rgba(255,255,255,0.5);">SGS Admin</span>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.5);">
+          <svg viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 4 7 10l5.5 6"/></svg>
+          <span style="font-size: 12.5px; font-weight: 500;">Collapse</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main content -->
+    <div style="flex-grow: 1; box-sizing: border-box; padding: 32px 40px 40px; display: flex; flex-direction: column; gap: 20px; overflow: hidden;">
+
+      <!-- Page title row -->
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;">
+        <div style="display: flex; flex-direction: column; gap: 4px;">
+          <span style="font-size: 24px; font-weight: 700; color: #001F3F; letter-spacing: -0.2px;">Service Request Queue</span>
+          <span style="font-size: 14px; font-weight: 400; color: #5A6B72;">Triage and assign requests for your SGS customers.</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px; border-radius: 8px; background: rgba(202,67,0,0.10);">
+          <svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="#A63700" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.2 16H2.8Z"/><path d="M10 8.2v3.1"/><path d="M10 13.6h.01"/></svg>
+          <span style="font-size: 13px; font-weight: 600; color: #A63700;">SR-2026-005 has been Accepted for 4 days with no consultant</span>
+        </div>
+      </div>
+
+      <!-- Needs-action tiles -->
+      <div style="display: flex; align-items: stretch; gap: 10px;">
+        <button type="button" aria-pressed="true" style="flex: 1 1 0; box-sizing: border-box; display: flex; align-items: center; gap: 12px; padding: 13px 16px; border-radius: 8px; border: 1px solid #CA4300; background: #FFFFFF; cursor: pointer; text-align: left; border-left-width: 4px;">
+          <span style="font-size: 24px; font-weight: 700; color: #CA4300; line-height: 1;">3</span>
+          <span style="display: flex; flex-direction: column; gap: 2px;">
+            <span style="font-size: 13.5px; font-weight: 700; color: #29343A;">Needs you</span>
+            <span style="font-size: 11.5px; font-weight: 400; color: #5A6B72;">SGS holds the next move</span>
+          </span>
+        </button>
+        <button type="button" aria-pressed="false" style="flex: 1 1 0; box-sizing: border-box; display: flex; align-items: center; gap: 12px; padding: 13px 16px; border-radius: 8px; border: 1px solid rgba(60,81,91,0.18); background: #FFFFFF; cursor: pointer; text-align: left;">
+          <span style="font-size: 24px; font-weight: 700; color: #001F3F; line-height: 1;">2</span>
+          <span style="display: flex; flex-direction: column; gap: 2px;">
+            <span style="font-size: 13.5px; font-weight: 600; color: #29343A;">Awaiting triage</span>
+            <span style="font-size: 11.5px; font-weight: 400; color: #5A6B72;">Submitted &middot; Under Review</span>
+          </span>
+        </button>
+        <button type="button" aria-pressed="false" style="flex: 1 1 0; box-sizing: border-box; display: flex; align-items: center; gap: 12px; padding: 13px 16px; border-radius: 8px; border: 1px solid rgba(60,81,91,0.18); background: #FFFFFF; cursor: pointer; text-align: left;">
+          <span style="font-size: 24px; font-weight: 700; color: #001F3F; line-height: 1;">1</span>
+          <span style="display: flex; flex-direction: column; gap: 2px;">
+            <span style="font-size: 13.5px; font-weight: 600; color: #29343A;">Needs assignment</span>
+            <span style="font-size: 11.5px; font-weight: 400; color: #5A6B72;">Accepted, unassigned</span>
+          </span>
+        </button>
+        <button type="button" aria-pressed="false" style="flex: 1 1 0; box-sizing: border-box; display: flex; align-items: center; gap: 12px; padding: 13px 16px; border-radius: 8px; border: 1px solid rgba(60,81,91,0.18); background: #FFFFFF; cursor: pointer; text-align: left;">
+          <span style="font-size: 24px; font-weight: 700; color: #8A98A0; line-height: 1;">1</span>
+          <span style="display: flex; flex-direction: column; gap: 2px;">
+            <span style="font-size: 13.5px; font-weight: 600; color: #29343A;">Awaiting customer</span>
+            <span style="font-size: 11.5px; font-weight: 400; color: #5A6B72;">Not your move</span>
+          </span>
+        </button>
+        <button type="button" aria-pressed="false" style="flex: 1 1 0; box-sizing: border-box; display: flex; align-items: center; gap: 12px; padding: 13px 16px; border-radius: 8px; border: 1px solid rgba(60,81,91,0.18); background: #FFFFFF; cursor: pointer; text-align: left;">
+          <span style="font-size: 24px; font-weight: 700; color: #1D4ED8; line-height: 1;">1</span>
+          <span style="display: flex; flex-direction: column; gap: 2px;">
+            <span style="font-size: 13.5px; font-weight: 600; color: #29343A;">In progress</span>
+            <span style="font-size: 11.5px; font-weight: 400; color: #5A6B72;">Delivery under way</span>
+          </span>
+        </button>
+      </div>
+
+      <!-- Queue card -->
+      <div style="box-sizing: border-box; background: #FFFFFF; border: 1px solid rgba(60,81,91,0.14); border-radius: 12px; overflow: hidden;">
+
+        <!-- Filters -->
+        <div style="display: flex; align-items: center; gap: 10px; padding: 16px 24px; border-bottom: 1px solid rgba(60,81,91,0.10);">
+          <div style="display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px; border: 1px solid rgba(60,81,91,0.18); border-radius: 8px; background: #FBFCFC; flex-grow: 1; max-width: 300px;">
+            <svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="#8A98A0" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M17 17l-4.3-4.3"/></svg>
+            <span style="font-size: 13px; font-weight: 400; color: #8A98A0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Search ID, customer or service</span>
+          </div>
+          <div class="ctrl"><span>Status: All</span><svg viewBox="0 0 20 20" width="13" height="13" fill="none" stroke="#5A6B72" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8l5 5 5-5"/></svg></div>
+          <div class="ctrl"><span>Service group: All</span><svg viewBox="0 0 20 20" width="13" height="13" fill="none" stroke="#5A6B72" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8l5 5 5-5"/></svg></div>
+          <div class="ctrl"><span>Customer: All</span><svg viewBox="0 0 20 20" width="13" height="13" fill="none" stroke="#5A6B72" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8l5 5 5-5"/></svg></div>
+          <div class="ctrl"><span>Assignee: All</span><svg viewBox="0 0 20 20" width="13" height="13" fill="none" stroke="#5A6B72" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8l5 5 5-5"/></svg></div>
+          <span style="flex-grow: 1;"></span>
+          <span style="font-size: 12.5px; font-weight: 500; color: #8A98A0;">6 requests</span>
+        </div>
+
+        <!-- Table header -->
+        <div class="q-grid" style="padding: 13px 24px; background: #FBFCFC; border-bottom: 1px solid rgba(60,81,91,0.10);">
+          <span class="colhead">REQUEST</span>
+          <span class="colhead">CUSTOMER &amp; SERVICE</span>
+          <span class="colhead">STATUS</span>
+          <span class="colhead">WAITING ON</span>
+          <span class="colhead">ASSIGNEE</span>
+          <span class="colhead">IDLE</span>
+          <span class="colhead" style="text-align: right;">NEXT MOVE</span>
+        </div>
+
+        <!-- SR-2026-001 · Submitted -->
+        <div class="q-grid" style="padding: 14px 24px; border-bottom: 1px solid rgba(60,81,91,0.08);">
+          <a href="#" class="id">SR-2026-001</a>
+          <div style="min-width: 0;">
+            <div class="cust">ACME Taiwan</div>
+            <div class="svc">Other Services &middot; Gap Analysis</div>
+          </div>
+          <span class="tag" style="background: rgba(60,81,91,0.08); color: #5A6B72;">
+            <svg viewBox="0 0 20 20" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2.5" width="12" height="15" rx="1.5"/><path d="M7.5 7h5M7.5 10h5M7.5 13h3"/></svg>
+            Submitted
+          </span>
+          <span class="who" style="color: #A63700;">SGS Admin</span>
+          <span class="who" style="color: #8A98A0;">Unassigned</span>
+          <span class="idle" style="color: #A63700;">3d</span>
+          <a href="#" class="cta" style="background: #CA4300; color: #FFFFFF;">
+            <svg viewBox="0 0 20 20" width="12" height="12" fill="currentColor" stroke="none"><path d="M6 4l10 6-10 6Z"/></svg>
+            Start triage
+          </a>
+        </div>
+
+        <!-- SR-2026-004 · Under Review -->
+        <div class="q-grid" style="padding: 14px 24px; border-bottom: 1px solid rgba(60,81,91,0.08);">
+          <a href="#" class="id">SR-2026-004</a>
+          <div style="min-width: 0;">
+            <div class="cust">Meridian Foods</div>
+            <div class="svc">Certification Services &middot; Readiness Assessment</div>
+          </div>
+          <span class="tag" style="background: rgba(0,31,63,0.09); color: #001F3F;">
+            <svg viewBox="0 0 20 20" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="5.6"/><path d="m13.2 13.2 3.3 3.3"/></svg>
+            Under Review
+          </span>
+          <span class="who" style="color: #A63700;">SGS Admin</span>
+          <span class="who" style="color: #8A98A0;">Unassigned</span>
+          <span class="idle" style="color: #5A6B72;">1d</span>
+          <a href="#" class="cta" style="background: #CA4300; color: #FFFFFF;">
+            <svg viewBox="0 0 20 20" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 8 14.5 16 6"/></svg>
+            Accept or reject
+          </a>
+        </div>
+
+        <!-- SR-2026-005 · Accepted, unassigned — the stuck one -->
+        <div class="q-grid" style="padding: 14px 24px; border-bottom: 1px solid rgba(60,81,91,0.08); background: rgba(202,67,0,0.035); box-shadow: inset 3px 0 0 #CA4300;">
+          <a href="#" class="id">SR-2026-005</a>
+          <div style="min-width: 0;">
+            <div class="cust">ACME Taiwan</div>
+            <div class="svc">Training Services &middot; ISO 27001 Lead Implementer</div>
+          </div>
+          <span class="tag" style="background: #DFF0EC; color: #0F6B5C;">
+            <svg viewBox="0 0 20 20" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 8 14.5 16 6"/></svg>
+            Accepted
+          </span>
+          <span class="who" style="color: #A63700;">SGS Admin</span>
+          <span class="who" style="color: #A63700; font-weight: 600;">Nobody yet</span>
+          <span class="idle" style="color: #A63700;">4d</span>
+          <a href="#" class="cta" style="background: #CA4300; color: #FFFFFF;">
+            <svg viewBox="0 0 20 20" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="7" r="3"/><path d="M2.6 16.5c.5-3 2.6-4.6 5.4-4.6 1 0 1.9.2 2.7.6"/><path d="M14 12.5v5M11.5 15h5"/></svg>
+            Assign consultant
+          </a>
+        </div>
+
+        <!-- SR-2026-002 · In Progress -->
+        <div class="q-grid" style="padding: 14px 24px; border-bottom: 1px solid rgba(60,81,91,0.08);">
+          <a href="#" class="id">SR-2026-002</a>
+          <div style="min-width: 0;">
+            <div class="cust">ACME Taiwan</div>
+            <div class="svc">Other Services &middot; Implementation Support</div>
+          </div>
+          <span class="tag" style="background: #E8F0FE; color: #1D4ED8;">
+            <svg viewBox="0 0 20 20" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7.3"/><path d="M10 6v4l3 2"/></svg>
+            In Progress
+          </span>
+          <span class="who" style="color: #5A6B72;">Consultant</span>
+          <span class="who" style="color: #29343A;">Avery Lin</span>
+          <span class="idle" style="color: #5A6B72;">4d</span>
+          <a href="#" class="cta" style="background: #FFFFFF; color: #001F3F; border-color: rgba(0,31,63,0.28);">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Open thread
+          </a>
+        </div>
+
+        <!-- SR-2026-003 · Awaiting Information — not your move -->
+        <div class="q-grid" style="padding: 14px 24px; border-bottom: 1px solid rgba(60,81,91,0.08); background: #FBFCFC;">
+          <a href="#" class="id" style="color: #3C515B;">SR-2026-003</a>
+          <div style="min-width: 0;">
+            <div class="cust" style="color: #5A6B72;">ACME Taiwan</div>
+            <div class="svc">Other Services &middot; Internal Audit Support</div>
+          </div>
+          <span class="tag" style="background: #FBEDE7; color: #CA4300;">
+            <svg viewBox="0 0 20 20" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7.4"/><path d="M8.2 8a1.9 1.9 0 1 1 2.6 1.8c-.5.2-.8.7-.8 1.2v.4"/><path d="M10 14h.01"/></svg>
+            Awaiting Information
+          </span>
+          <span class="who" style="color: #0043CE; font-weight: 600;">Customer</span>
+          <span class="who" style="color: #5A6B72;">Avery Lin</span>
+          <span class="idle" style="color: #8A98A0;">6d</span>
+          <div style="display: flex; align-items: center; justify-content: flex-end; gap: 7px;">
+            <svg viewBox="0 0 20 20" width="13" height="13" fill="none" stroke="#8A98A0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7.4"/><path d="M10 5.6V10l3.2 2"/></svg>
+            <span style="font-size: 12.5px; font-weight: 500; color: #8A98A0;">Asked 17 Sep</span>
+          </div>
+        </div>
+
+        <!-- SR-2025-098 · Closed -->
+        <div class="q-grid" style="padding: 14px 24px; background: #FBFCFC;">
+          <a href="#" class="id" style="color: #3C515B;">SR-2025-098</a>
+          <div style="min-width: 0;">
+            <div class="cust" style="color: #5A6B72;">ACME Taiwan</div>
+            <div class="svc">Other Services &middot; Gap Analysis</div>
+          </div>
+          <span class="tag" style="background: #E5F2EA; color: #1F7A54;">
+            <svg viewBox="0 0 20 20" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 8 14.5 16 6"/></svg>
+            Closed
+          </span>
+          <span class="who" style="color: #AEB8BD;">&mdash;</span>
+          <span class="who" style="color: #5A6B72;">Priya Raman</span>
+          <span class="idle" style="color: #AEB8BD;">&mdash;</span>
+          <a href="#" class="cta" style="background: rgba(0,0,0,0); color: #5A6B72;">
+            <svg viewBox="0 0 20 20" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1.8 10S4.9 5.2 10 5.2 18.2 10 18.2 10 15.1 14.8 10 14.8 1.8 10 1.8 10Z"/><circle cx="10" cy="10" r="2.2"/></svg>
+            View
+          </a>
+        </div>
+
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <svg viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="#8A98A0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7.4"/><path d="M10 13.5V9.5"/><path d="M10 7h.01"/></svg>
+        <span style="font-size: 12.5px; color: #8A98A0;">An SGS Consultant sees the same queue narrowed to their assignments, so the Next move column reads Start work or Close instead of Start triage.</span>
+      </div>
+
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":940}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

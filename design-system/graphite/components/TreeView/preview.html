@@ -1,0 +1,23 @@
+<!-- @dsCard group="Data" height=360 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>TreeView — preview</title></head>
+<body style="margin:0">
+<div id="root"></div>
+<script>
+  var G = window.Graphite, h = React.createElement;
+  function row(){ return h.apply(null, ['div', { className: 'gr-demo__row', style: { alignItems: 'flex-start' } }].concat([].slice.call(arguments))); }
+  function cap(t){ return h('div', { className: 'gr-demo__cap' }, t); }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'gr-demo' },
+      cap('Framework → clause → requirement. ↑/↓ move, → expand, ← collapse, Enter select.'),
+      h('div', { style: { maxWidth: 440 } }, h(G.TreeView, { label: 'ISO/IEC 27001 requirements', defaultExpanded: ['a5', 'a8'], defaultSelected: 'a8.2', items: [
+        { id: 'a5', label: 'A.5 Organizational controls', meta: '37', children: [{ id: 'a5.1', label: 'A.5.1 Policies for information security', meta: h(G.StatusTag, { status: 'completed', compact: true }) }, { id: 'a5.2', label: 'A.5.2 Roles and responsibilities', meta: h(G.StatusTag, { status: 'missing-info', compact: true }) }] },
+        { id: 'a6', label: 'A.6 People controls', meta: '8', children: [{ id: 'a6.1', label: 'A.6.1 Screening' }] },
+        { id: 'a8', label: 'A.8 Technological controls', meta: '34', children: [{ id: 'a8.1', label: 'A.8.1 User end point devices' }, { id: 'a8.2', label: 'A.8.2 Privileged access rights', meta: h(G.StatusTag, { status: 'under-review', compact: true }) }] } ] }))
+    )
+  );
+</script>
+</body>
+</html>

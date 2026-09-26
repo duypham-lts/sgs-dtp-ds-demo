@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Implementation Support – list</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;family=Noto+Sans+TC:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="customer" style="width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" site-name="Digital Trust Platform" site-sub="Customer Portal" user-name="Linh Tran" user-email="linh.tran@abc-trading.com" notifications="{{three}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" label="Customer Portal" sections="{{nav}}" default-active="sr-impl" default-collapsed="{{no}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; padding: 8px 8px 4px">
+        <div>
+          <x-import component-from-global-scope="Graphite.Breadcrumb" items="{{crumbs}}"></x-import>
+          <h1 class="headline-medium" style="margin: 8px 0 0 0">Implementation Support</h1>
+          <p class="body-medium" style="margin: 0; color: var(--text-secondary)">Work with an SGS consultant to close your gaps and get ready for certification.</p>
+        </div>
+        <x-import component-from-global-scope="Graphite.Button" icon="add" icon-position="left">Request support</x-import>
+      </div>
+      <div style="flex-grow: 1; min-height: 0"><x-import component-from-global-scope="Graphite.DataTable" title="My support requests" columns="{{cols}}" rows="{{rows}}" searchable="{{yes}}" search-placeholder="Search requests" layout="table"></x-import></div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite;
+
+    var SR = { id: 'sr', label: 'Service Requests', icon: 'task', badge: 1, badgeTone: 'attention', badgeLabel: 'request needs action', children: [
+      { id: 'sr-all', label: 'All requests' }, { id: 'sr-cert', label: 'Certification Services' }, { id: 'sr-train', label: 'Training Courses' },
+      { type: 'label', label: 'Other services' }, { id: 'sr-gap', label: 'Gap Analysis', badge: 1, badgeTone: 'attention', badgeLabel: 'needs action' }, { id: 'sr-impl', label: 'Implementation Support' } ] };
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' }, { id: 'scopes', label: 'Scopes', icon: 'category' }, { id: 'ws', label: 'Workspaces', icon: 'folders' },
+      { id: 'docs', label: 'Documents', icon: 'document--multiple-01' }, SR, { id: 'training', label: 'Training', icon: 'education' },
+      { id: 'audit', label: 'Audit Logs', icon: 'catalog' }, { id: 'settings', label: 'Settings', icon: 'settings' } ] },
+      { label: 'Administration', items: [{ id: 'users', label: 'Users', icon: 'user--multiple' }, { id: 'access', label: 'Workspace access', icon: 'user--access' }] }];
+
+    var ST = { submitted: ['under-review', 'Submitted', 'IsDetailSubmitted.dc.html'], progress: ['info', 'In progress', 'IsDetailProgress.dc.html'], completed: ['completed', 'Completed', 'IsDetailCompleted.dc.html'], rejected: ['rejected', 'Rejected', 'IsDetailRejected.dc.html'] };
+    var rows = [
+      { id: 'IS-2026-004', fw: 'ISO/IEC 27701', scope: 'Customer data platform', cons: '—', period: 'Dec 2026 – Feb 2027', st: 'submitted', upd: '22 Sep 2026' },
+      { id: 'IS-2026-003', fw: 'ISO/IEC 27001', scope: 'Head office · Taipei', cons: 'Anna Lee', period: '01 Nov 2026 – 31 Jan 2027', st: 'progress', upd: '20 Nov 2026' },
+      { id: 'IS-2026-001', fw: 'TISAX', scope: 'Plant · Taichung', cons: 'Wei Lin', period: 'Feb – Apr 2026', st: 'completed', upd: '28 Apr 2026' },
+      { id: 'IS-2025-009', fw: 'ISO 22301', scope: 'Head office · Taipei', cons: '—', period: '—', st: 'rejected', upd: '10 Dec 2025' } ];
+    var extra = { rows: rows, crumbs: [{ label: 'Service Requests', href: '#' }, { label: 'Implementation Support' }],
+      cols: [
+        { key: 'id', header: 'Request', sortable: true, width: 140, render: function(r){ return h('a', { href: ST[r.st][2], className: 'gr-link', style: { fontWeight: 500 } }, r.id); } },
+        { key: 'fw', header: 'Framework', sortable: true },
+        { key: 'scope', header: 'Scope', sortable: true },
+        { key: 'cons', header: 'SGS consultant' },
+        { key: 'period', header: 'Period' },
+        { key: 'st', header: 'Status', sortable: true, render: function(r){ return h(G.StatusTag, { status: ST[r.st][0], size: 'sm', label: ST[r.st][1] }); } },
+        { key: 'upd', header: 'Last update', width: 130 } ] };
+    return Object.assign({ yes: true, no: false, three: 3, nav: nav }, typeof extra === 'object' ? extra : {});
+  }
+}
+</script>
+</body>
+</html>

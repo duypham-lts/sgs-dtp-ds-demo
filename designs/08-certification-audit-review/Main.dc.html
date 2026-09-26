@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Customer – request certification</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;family=Noto+Sans+TC:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="customer" style="position: relative; width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" site-name="Digital Trust Platform" site-sub="Customer Portal" user-name="Linh Tran" user-email="linh.tran@abc-trading.com" notifications="{{three}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" label="Customer Portal" sections="{{nav}}" default-active="ws" default-collapsed="{{yes}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <x-import component-from-global-scope="Graphite.PageHeader" title="Appendix 10 · 2022 · Medium" subtitle="Customer data platform · System scope" on-back="{{noop}}" status="{{wsStatus}}" actions="{{wsHdr}}"></x-import>
+      <section class="gr-card gr-card--extend">
+            <div class="gr-card__head"><div class="gr-card__heading"><div><h2 class="gr-card__title">Workspace</h2><p class="gr-card__sub">38 of 61 requirements have their mandatory evidence</p></div></div></div>
+        <x-import component-from-global-scope="Graphite.ProgressBar" label="Evidence coverage" value="{{c}}" helper-text="Preparation progress only — not a compliance decision"></x-import>
+      </section>
+    </main>
+  </div>
+  <x-import component-from-global-scope="Graphite.Modal" inline="{{yes}}" open="{{yes}}" size="fit" title="Request certification" on-close="{{noop}}" primary-action="{{primary}}" secondary-action="{{secondary}}">
+    <div style="display: flex; flex-direction: column; gap: 16px; width: 552px; max-width: 100%">
+      <div style="padding: 12px 16px; border-radius: var(--radius-md); background: var(--layer-01); display: flex; flex-direction: column">
+        <span class="title-small">Appendix 10 · 2022 · tier Medium</span>
+        <span class="body-small" style="color: var(--text-secondary)">Customer data platform · 61 requirements · initial certification</span>
+      </div>
+      <x-import component-from-global-scope="Graphite.Select" label="Preferred audit period" required="{{yes}}" size="s" default-value="nov" options="{{periods}}"></x-import>
+      <x-import component-from-global-scope="Graphite.Textarea" label="Message to SGS (optional)" size="l" rows="{{two}}" placeholder="e.g. Hosting is in the Hsinchu data centre; please plan one day on site."></x-import>
+      <x-import component-from-global-scope="Graphite.FileUpload" label="Documents (optional)" hint="e.g. organisation chart · up to 20 MB each"></x-import>
+      <p class="body-small" style="margin: 0; color: var(--text-secondary)">When the audit review starts, this workspace is locked so the auditor reviews the evidence as submitted.</p>
+    </div>
+  </x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite;
+
+    var SR = { id: 'sr', label: 'Service Requests', icon: 'task', badge: 1, badgeTone: 'attention', badgeLabel: 'request needs action', children: [
+      { id: 'sr-all', label: 'All requests' }, { id: 'sr-cert', label: 'Certification Services' }, { id: 'sr-train', label: 'Training Courses' },
+      { type: 'label', label: 'Other services' }, { id: 'sr-gap', label: 'Gap Analysis', badge: 1, badgeTone: 'attention', badgeLabel: 'needs action' }, { id: 'sr-impl', label: 'Implementation Support' } ] };
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' }, { id: 'scopes', label: 'Scopes', icon: 'category' }, { id: 'ws', label: 'Workspaces', icon: 'folders' },
+      { id: 'docs', label: 'Documents', icon: 'document--multiple-01' }, { id: 'reviews', label: 'Reviews', icon: 'view', badge: 3, badgeTone: 'attention', badgeLabel: 'items need your response' }, SR, { id: 'certs', label: 'Certifications', icon: 'checkmark' }, { id: 'training', label: 'Training', icon: 'education' },
+      { id: 'audit', label: 'Audit Logs', icon: 'catalog' }, { id: 'settings', label: 'Settings', icon: 'settings' } ] },
+      { label: 'Administration', items: [{ id: 'users', label: 'Users', icon: 'user--multiple' }] }];
+
+    var extra = { noop: function(){}, c: 62 };
+    extra.wsStatus = { status: 'draft', label: 'Preparing · 62% coverage', shortLabel: '62%' };
+    extra.wsHdr = h(G.Button, { size: 'md' }, 'Request certification');
+    extra.noop = function(){}; extra.primary = { label: 'Send request' }; extra.secondary = { label: 'Cancel' };
+    extra.two = 2; extra.periods = [{ value: 'nov', label: 'November 2026' }, { value: 'dec', label: 'December 2026' }, { value: 'q1', label: 'Q1 2027' }];
+    return Object.assign({ yes: true, no: false, three: 3, nav: nav }, typeof extra === 'object' ? extra : {});
+  }
+}
+</script>
+</body>
+</html>

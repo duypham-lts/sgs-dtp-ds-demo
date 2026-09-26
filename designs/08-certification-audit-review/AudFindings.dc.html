@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Auditor – findings</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="sgs-ops" style="position: relative; width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" tone="dark" site-name="Digital Trust Platform" site-sub="Operations Console" badge="Internal" home-links="{{noLinks}}" user-name="David Wu" user-email="david.wu@sgs.com" notifications="{{one}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" tone="dark" label="SGS Operations" sections="{{nav}}" default-active="aud" default-collapsed="{{collapsed}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <x-import component-from-global-scope="Graphite.PageHeader" title="Findings · CR-2026-015" subtitle="Audit review · Appendix 10 · 2022 · Customer data platform" on-back="{{noop}}" status="{{status}}"></x-import>
+      <section class="gr-card gr-card--extend" style="padding: 16px 24px"><x-import component-from-global-scope="Graphite.DataTable" title="3 findings" columns="{{cols}}" rows="{{rows}}" layout="table" paginate="{{no}}"></x-import></section>
+    </main>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite, F = window.React.Fragment;
+
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' },
+      { id: 'aud', label: 'My audits', icon: 'task', badge: 2, badgeTone: 'attention', badgeLabel: 'audits need action' },
+      { id: 'settings', label: 'Settings', icon: 'settings' } ] }];
+    var extra = {};
+
+    extra.noop = function(){};
+    extra.status = { status: 'needs-description', label: 'Waiting for customer', shortLabel: 'Waiting' };
+    var CL = { maj: 'Major nonconformity', min: 'Minor nonconformity', obs: 'Observation' };
+    var ST = { open: ['missing-info', 'Open'], resp: ['under-review', 'Response submitted'], closed: ['completed', 'Closed'] };
+    extra.cols = [
+      { key: 'id', header: 'Finding', width: 90, render: function(r){ return h('span', { style: { fontWeight: 500 } }, r.id); } },
+      { key: 'req', header: 'Requirement', render: function(r){ return h('span', { style: { display: 'flex', flexDirection: 'column' } }, h('span', null, r.req), h('span', { className: 'body-small', style: { color: 'var(--text-secondary)' } }, r.t)); } },
+      { key: 'cl', header: 'Classification', width: 200, render: function(r){ return CL[r.cl]; } },
+      { key: 'due', header: 'Due', width: 150, render: function(r){ return r.over ? h(G.Tag, { tone: 'required' }, r.due + ' · overdue') : r.due; } },
+      { key: 'st', header: 'Status', width: 180, render: function(r){ return h(G.StatusTag, { status: ST[r.st][0], size: 'sm', label: ST[r.st][1] }); } } ];
+    extra.rows = [
+      { id: 'F-004', req: 'R.4.1.2', t: 'Multi-factor authentication', cl: 'maj', due: '10 Dec 2026', st: 'open' },
+      { id: 'F-003', req: 'R.3.1.3', t: 'Test backup reliability and integrity', cl: 'min', due: '15 Dec 2026', st: 'resp' },
+      { id: 'F-002', req: 'R.2.6.2', t: 'Integrity of logs', cl: 'obs', due: '—', st: 'closed' } ];
+    return Object.assign({ yes: true, no: false, one: 1, two: 2, three: 3, s16: 16, nav: nav, noLinks: [], noop: function(){}, collapsed: true }, extra);
+  }
+}
+</script>
+</body>
+</html>

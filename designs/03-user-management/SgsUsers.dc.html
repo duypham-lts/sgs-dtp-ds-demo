@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SGS Admin – users</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="sgs-ops" style="position: relative; width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" tone="dark" site-name="Digital Trust Platform" site-sub="Operations Console" badge="Internal" home-links="{{noLinks}}" user-name="Minh Nguyen" user-email="minh.nguyen@sgs.com" notifications="{{three}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" tone="dark" label="SGS Operations" sections="{{nav}}" default-active="users" default-collapsed="{{collapsed}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <div style="padding: 8px 8px 4px">
+        <x-import component-from-global-scope="Graphite.Breadcrumb" items="{{crumbs}}"></x-import>
+        <h1 class="headline-medium" style="margin: 8px 0 0 0">Users</h1>
+        <p class="body-medium" style="margin: 0; color: var(--text-secondary)">SGS Taiwan staff, and users of the customers in your affiliate.</p>
+      </div>
+      <section class="gr-card gr-card--extend" style="padding: 16px 24px"><x-import component-from-global-scope="Graphite.Tabs" label="User type" tabs="{{tabs}}"></x-import></section>
+    </main>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite, F = window.React.Fragment;
+
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' },
+      { id: 'req', label: 'Requests', icon: 'task', badge: 3, badgeTone: 'attention', badgeLabel: 'requests need triage', children: [
+        { id: 'req-all', label: 'All requests' }, { id: 'req-cert', label: 'Certification' }, { id: 'req-train', label: 'Training' },
+        { type: 'label', label: 'Other services' }, { id: 'req-gap', label: 'Gap Analysis', badge: 3, badgeTone: 'attention', badgeLabel: 'need triage' }, { id: 'req-impl', label: 'Implementation Support' } ] },
+      { id: 'cust', label: 'Customers', icon: 'category' },
+      { id: 'fw', label: 'Frameworks', icon: 'catalog' },
+      { id: 'asg', label: 'Assignments', icon: 'user--access' },
+      { id: 'audit', label: 'Audit Logs', icon: 'document' },
+      { id: 'settings', label: 'Settings', icon: 'settings' } ] },
+      { label: 'Administration', items: [{ id: 'users', label: 'Users', icon: 'user--multiple' }] }];
+    var extra = {};
+
+    var ST = { active: ['completed', 'Active'], invited: ['under-review', 'Invitation pending'], expired: ['missing-info', 'Invitation expired'], inactive: ['draft', 'Deactivated'] };
+    function two(a, b){ return h('span', { style: { display: 'flex', flexDirection: 'column' } }, h('span', { style: { fontWeight: 500 } }, a), h('span', { className: 'body-small', style: { color: 'var(--text-secondary)' } }, b)); }
+    function U(a){ return { id: a[0], name: a[1], email: a[2], org: a[3], role: a[4], st: a[5], last: a[6] }; }
+    var cust = [['c1', 'Linh Tran', 'linh.tran@abc-trading.com', 'ABC Trading Co., Ltd.', 'Customer Admin', 'active', 'Today'], ['c2', 'Wei Chen', 'wei.chen@abc-trading.com', 'ABC Trading Co., Ltd.', 'Customer User', 'active', 'Yesterday'], ['c3', 'Nguyen Thi Ha', 'ha.nguyen@lotus.vn', 'Lotus Cosmetics JSC', 'Customer Admin', 'invited', '—'], ['c4', 'Chen Wei-Ting', 'wt.chen@formosachips.com', 'Formosa Chips Inc.', 'Customer Admin', 'active', '20 Sep 2026']].map(U);
+    var sgs = [['s1', 'Minh Nguyen', 'minh.nguyen@sgs.com', 'SGS Taiwan', 'SGS Admin', 'active', 'Today'], ['s2', 'Anna Lee', 'anna.lee@sgs.com', 'SGS Taiwan', 'SGS Consultant', 'active', 'Today'], ['s3', 'David Wu', 'david.wu@sgs.com', 'SGS Taiwan', 'SGS Auditor', 'active', 'Yesterday'], ['s4', 'Mei Chang', 'mei.chang@sgs.com', 'SGS Taiwan', 'SGS User', 'active', '22 Sep 2026'], ['s5', 'Wei Lin', 'wei.lin@sgs.com', 'SGS Taiwan', 'SGS Consultant', 'invited', '—']].map(U);
+    var extra = { crumbs: [{ label: 'Administration', href: '#' }, { label: 'Users' }] };
+    function userCell(r){ return h('span', { style: { display: 'flex', alignItems: 'center', gap: 12 } }, h(G.Avatar, { name: r.name, size: 'md' }), h('span', { style: { display: 'flex', flexDirection: 'column' } }, h('a', { href: r.id === 's2' ? 'SgsUserDetail.dc.html' : '#', className: 'gr-link', style: { fontWeight: 500 } }, r.name), h('span', { className: 'body-small', style: { color: 'var(--text-secondary)' } }, r.email))); }
+    var stCol = { key: 'st', header: 'Status', width: 190, render: function(r){ return h(G.StatusTag, { status: ST[r.st][0], size: 'sm', label: ST[r.st][1] }); } };
+    var custCols = [{ key: 'name', header: 'User', sortable: true, render: userCell, searchValue: function(r){ return r.name + ' ' + r.email + ' ' + r.org; } }, { key: 'org', header: 'Customer', sortable: true }, { key: 'role', header: 'Role', sortable: true, width: 160 }, stCol, { key: 'last', header: 'Last sign-in', width: 140 }];
+    var sgsCols = [{ key: 'name', header: 'User', sortable: true, render: userCell, searchValue: function(r){ return r.name + ' ' + r.email; } }, { key: 'role', header: 'Role', sortable: true, width: 180 }, { key: 'org', header: 'Affiliate', width: 160 }, stCol, { key: 'last', header: 'Last sign-in', width: 140 }];
+    function acts(r){ return r.st === 'invited' ? [{ label: 'View' }, { label: 'Resend invitation' }, { label: 'Revoke invitation', danger: true }] : [{ label: 'View' }]; }
+    extra.tabs = [
+      { id: 'sgs', label: 'SGS users', badge: sgs.length, content: h(G.DataTable, { columns: sgsCols, rows: sgs, searchable: true, searchPlaceholder: 'Search name or email', layout: 'table', rowActions: acts, toolbarActions: h(G.Button, { size: 'md', icon: 'add', iconPosition: 'left' }, 'Invite SGS user') }) },
+      { id: 'cust', label: 'Customer users', badge: cust.length, content: h(G.DataTable, { columns: custCols, rows: cust, searchable: true, searchPlaceholder: 'Search name, email or customer', description: 'Customer Admins are created from Customers. Customer Users are invited by their own admin.', layout: 'table', rowActions: acts }) } ];
+    return Object.assign({ yes: true, no: false, three: 3, nav: nav, noLinks: [], noop: function(){}, collapsed: false }, extra);
+  }
+}
+</script>
+</body>
+</html>

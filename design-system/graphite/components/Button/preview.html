@@ -1,0 +1,23 @@
+<!-- @dsCard group="Actions" height=360 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Button — preview</title></head>
+<body style="margin:0">
+<div id="root"></div>
+<script>
+  var G = window.Graphite, h = React.createElement;
+  function row(){ return h.apply(null, ['div', { className: 'gr-demo__row' }].concat([].slice.call(arguments))); }
+  function cap(t){ return h('div', { className: 'gr-demo__cap' }, t); }
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'gr-demo' },
+      cap('Variants · lg 48px'),
+      row(h(G.Button, null, 'Submit Request'), h(G.Button, { variant: 'secondary' }, 'Keep as Draft'), h(G.Button, { variant: 'tertiary' }, 'Add another party'), h(G.Button, { variant: 'ghost' }, 'Cancel'), h(G.Button, { variant: 'danger' }, 'Delete')),
+      cap('Sizes · with icon'),
+      row(h(G.Button, { icon: 'arrow--right' }, 'Sign in'), h(G.Button, { size: 'md', variant: 'secondary', icon: 'add', iconPosition: 'left' }, 'New request'), h(G.Button, { size: 'sm', variant: 'tertiary' }, 'Small')),
+      cap('Disabled'),
+      row(h(G.Button, { disabled: true }, 'Submit Request'), h(G.Button, { variant: 'tertiary', disabled: true }, 'Tertiary'), h(G.Button, { variant: 'ghost', disabled: true }, 'Ghost'))
+    )
+  );
+</script>
+</body>
+</html>

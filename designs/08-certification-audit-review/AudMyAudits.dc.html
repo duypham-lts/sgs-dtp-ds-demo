@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Auditor – my audits</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="sgs-ops" style="position: relative; width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" tone="dark" site-name="Digital Trust Platform" site-sub="Operations Console" badge="Internal" home-links="{{noLinks}}" user-name="David Wu" user-email="david.wu@sgs.com" notifications="{{one}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" tone="dark" label="SGS Operations" sections="{{nav}}" default-active="aud" default-collapsed="{{collapsed}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <div style="padding: 8px 8px 4px">
+        <x-import component-from-global-scope="Graphite.Breadcrumb" items="{{crumbs}}"></x-import>
+        <h1 class="headline-medium" style="margin: 8px 0 0 0">My audits</h1>
+        <p class="body-medium" style="margin: 0; color: var(--text-secondary)">Certification requests assigned to you. You can see a workspace only while its request is assigned to you.</p>
+      </div>
+      <section class="gr-card gr-card--extend" style="padding: 16px 24px"><x-import component-from-global-scope="Graphite.Tabs" label="Audit status" tabs="{{tabs}}" default-tab="r"></x-import></section>
+    </main>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite, F = window.React.Fragment;
+
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' },
+      { id: 'aud', label: 'My audits', icon: 'task', badge: 2, badgeTone: 'attention', badgeLabel: 'audits need action' },
+      { id: 'settings', label: 'Settings', icon: 'settings' } ] }];
+    var extra = {};
+
+    var ST = { assigned: ['info', 'Assigned'], review: ['under-review', 'In review'], wait: ['needs-description', 'Waiting for customer'], closed: ['completed', 'Closed'] };
+    function two(a, b){ return h('span', { style: { display: 'flex', flexDirection: 'column' } }, h('span', { style: { fontWeight: 500 } }, a), h('span', { className: 'body-small', style: { color: 'var(--text-secondary)' } }, b)); }
+    var all = [
+      { id: 'CR-2026-017', cust: 'Formosa Chips Inc.', ws: 'TISAX · ISA 6.0 · Hsinchu fab', prog: '—', open: '—', st: 'assigned', href: 'AudRequest.dc.html' },
+      { id: 'CR-2026-015', cust: 'ABC Trading Co., Ltd.', ws: 'Appendix 10 · 2022 · Customer data platform · Medium', prog: '40 / 61', open: '3 · 1 overdue', st: 'wait', href: 'AudReview.dc.html' },
+      { id: 'CR-2026-012', cust: 'ABC Trading Co., Ltd.', ws: 'ISO/IEC 27001 · 2022 · Head office', prog: '116 / 116', open: '0', st: 'closed', href: '#' } ];
+    var cols = [
+      { key: 'id', header: 'Request', width: 130, render: function(r){ return h('a', { href: r.href, className: 'gr-link', style: { fontWeight: 500 } }, r.id); } },
+      { key: 'cust', header: 'Customer · workspace', render: function(r){ return two(r.cust, r.ws); } },
+      { key: 'prog', header: 'Reviewed', align: 'end', width: 120 },
+      { key: 'open', header: 'Open items', width: 150 },
+      { key: 'st', header: 'Status', width: 200, render: function(r){ return h(G.StatusTag, { status: ST[r.st][0], size: 'sm', label: ST[r.st][1] }); } } ];
+    function T(sts){ return h(G.DataTable, { columns: cols, rows: all.filter(function(r){ return sts.indexOf(r.st) >= 0; }), layout: 'table', paginate: false }); }
+    var extra = { crumbs: [{ label: 'My audits' }] };
+    extra.tabs = [
+      { id: 'a', label: 'Assigned', badge: 1, content: T(['assigned']) },
+      { id: 'r', label: 'In review', badge: 1, content: T(['review', 'wait']) },
+      { id: 'c', label: 'Closed', badge: 1, content: T(['closed']) } ];
+    return Object.assign({ yes: true, no: false, one: 1, two: 2, three: 3, s16: 16, nav: nav, noLinks: [], noop: function(){}, collapsed: false }, extra);
+  }
+}
+</script>
+</body>
+</html>

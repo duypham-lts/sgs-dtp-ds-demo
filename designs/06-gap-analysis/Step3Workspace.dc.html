@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Gap Analysis – step 3 workspace</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;family=Noto+Sans+TC:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="customer" style="width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" site-name="Digital Trust Platform" site-sub="Customer Portal" user-name="Linh Tran" user-email="linh.tran@abc-trading.com" notifications="{{three}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" label="Customer Portal" sections="{{nav}}" default-active="sr-gap" default-collapsed="{{yes}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <x-import component-from-global-scope="Graphite.PageHeader" title="New Gap Analysis" subtitle="Step 3 of 5 · Workspace" status="{{draft}}" autosave="saved" on-back="{{noop}}" actions="{{hdrActions}}"></x-import>
+      <div style="flex-grow: 1; min-height: 0; display: flex; gap: 20px">
+        <div style="width: 220px; flex-shrink: 0; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02)">
+          <x-import component-from-global-scope="Graphite.SectionNav" label="Steps" items="{{steps}}" default-active="ws"></x-import>
+        </div>
+        <div style="flex-grow: 1; min-width: 0; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 20px">
+          <section class="gr-card gr-card--extend">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">3</span><div><h2 class="gr-card__title">Workspace</h2><p class="gr-card__sub">Where the consultant will read your evidence and leave comments.</p></div></div></div>
+            <div style="display: flex; align-items: center; gap: 24px; padding: 20px; border-radius: var(--radius-md); background: var(--layer-02); max-width: 720px">
+              <x-import component-from-global-scope="Graphite.ReadinessRing" value="{{ready}}" size="lg"></x-import>
+              <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 4px">
+                <span class="title-medium">ISO/IEC 27001 · Head office, Taipei</span>
+                <span class="body-small" style="color: var(--text-secondary)">49 of 77 requirements have accepted evidence · 212 documents</span>
+                <div style="display: flex; gap: 8px; margin-top: 4px"><x-import component-from-global-scope="Graphite.Tag" tone="neutral">Linked automatically</x-import><x-import component-from-global-scope="Graphite.Tag" tone="neutral">Owner: Linh Tran</x-import></div>
+              </div>
+            </div>
+            <fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; max-width: 720px">
+              <legend class="title-small" style="margin-bottom: 4px">Consultant access <span class="gr-req">*</span></legend>
+              <x-import component-from-global-scope="Graphite.Checkbox" label="I allow the assigned SGS consultant to read this workspace and comment on requirements and evidence."></x-import>
+              <p class="body-small" style="margin: 0 0 0 32px; color: var(--text-secondary)">Access starts when SGS accepts the request and ends automatically when it closes. Every view is recorded in the audit trail.</p>
+            </fieldset>
+            <div style="max-width: 720px"><x-import component-from-global-scope="Graphite.InlineNotification" kind="warning" title="Consultancy and certification are kept separate">To stay impartial, the consultant who works on this gap analysis will not audit or certify the same scope.</x-import></div>
+            <div style="display: flex; justify-content: space-between; margin-top: auto">
+              <div><x-import component-from-global-scope="Graphite.Button" variant="ghost" size="md">Back</x-import></div>
+              <x-import component-from-global-scope="Graphite.Button" size="md" icon="arrow--right">Next</x-import>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite;
+
+    var SR = { id: 'sr', label: 'Service Requests', icon: 'task', badge: 1, badgeTone: 'attention', badgeLabel: 'request needs action', children: [
+      { id: 'sr-all', label: 'All requests' }, { id: 'sr-cert', label: 'Certification Services' }, { id: 'sr-train', label: 'Training Courses' },
+      { type: 'label', label: 'Other services' }, { id: 'sr-gap', label: 'Gap Analysis', badge: 1, badgeTone: 'attention', badgeLabel: 'needs action' }, { id: 'sr-impl', label: 'Implementation Support' } ] };
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' }, { id: 'scopes', label: 'Scopes', icon: 'category' }, { id: 'ws', label: 'Workspaces', icon: 'folders' },
+      { id: 'docs', label: 'Documents', icon: 'document--multiple-01' }, SR, { id: 'training', label: 'Training', icon: 'education' },
+      { id: 'audit', label: 'Audit Logs', icon: 'catalog' }, { id: 'settings', label: 'Settings', icon: 'settings' } ] },
+      { label: 'Administration', items: [{ id: 'users', label: 'Users', icon: 'user--multiple' }, { id: 'access', label: 'Workspace access', icon: 'user--access' }] }];
+
+    var extra2 = { ready: 64 };
+    var steps = [{"id": "fw", "label": "1. Framework", "status": "complete"}, {"id": "scope", "label": "2. Scope", "status": "complete"}, {"id": "ws", "label": "3. Workspace", "status": "incomplete"}, {"id": "det", "label": "4. Details", "status": "incomplete"}, {"id": "rev", "label": "5. Review & submit", "status": "optional"}];
+    var extra = Object.assign(typeof extra2 === 'object' ? extra2 : {}, { steps: steps });
+    extra.draft = { status: 'draft', label: 'Draft — not yet submitted', shortLabel: 'Draft' };
+    extra.noop = function(){};
+    extra.hdrActions = h(window.React.Fragment, null, h(G.Button, { variant: 'secondary', size: 'md' }, 'Keep as Draft'), h(G.Button, { size: 'md', disabled: true }, 'Submit request'));
+    return Object.assign({ yes: true, no: false, three: 3, nav: nav }, typeof extra === 'object' ? extra : {});
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Invitation email</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="customer" style="width: 720px; height: 900px; box-sizing: border-box; padding: 40px; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <div style="display: flex; flex-direction: column; gap: 4px; margin-bottom: 16px" class="body-small">
+    <span style="color: var(--text-secondary)">From: SGS Digital Trust Platform &lt;no-reply@dtp.sgs.com&gt;</span>
+    <span style="color: var(--text-secondary)">To: wei.chen@abc-trading.com</span>
+    <span class="title-small">Subject: Linh Tran invited you to ABC Trading on the SGS Digital Trust Platform</span>
+  </div>
+  <div style="border-radius: var(--radius-card); background: var(--layer-02); overflow: hidden">
+    <div style="height: 4px; background: var(--brand-band)"></div>
+    <div style="padding: 40px; display: flex; flex-direction: column; gap: 24px">
+      <x-import component-from-global-scope="Graphite.Logo" site-name="Digital Trust Platform" site-sub="Customer Portal"></x-import>
+      <h1 class="headline-small" style="margin: 0">You’re invited to ABC Trading Co., Ltd.</h1>
+      <p class="body-large" style="margin: 0">Hi Wei Chen,<br>Linh Tran (Customer Admin) invited you to work on compliance evidence for <strong>ABC Trading Co., Ltd.</strong> on the SGS Digital Trust Platform.</p>
+      <div><a href="Activate.dc.html" class="gr-btn gr-btn--primary gr-btn--lg">Activate my account</a></div>
+      <p class="body-small" style="margin: 0; color: var(--text-secondary)">This link works once and expires on 01 Oct 2026. If you didn’t expect this email, you can ignore it.</p>
+      <div style="height: 1px; background: var(--border-subtle-00)"></div>
+      <p class="body-small" style="margin: 0; color: var(--text-secondary)">SGS Digital Trust Platform · SGS Taiwan · <x-import component-from-global-scope="Graphite.Link" href="#" inline="{{yes}}">Privacy notice</x-import></p>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":720,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return { yes: true }; }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "sgs-dtp",
+  "private": true,
+  "packageManager": "pnpm@8.15.9",
+  "scripts": {
+    "dev": "pnpm --filter @sgs/prototype dev",
+    "build": "pnpm --filter @sgs/prototype build",
+    "typecheck": "pnpm -r typecheck",
+    "graphite:port": "node packages/graphite/scripts/port-bundle.mjs",
+    "test": "pnpm --filter @sgs/prototype test",
+    "e2e": "pnpm --filter @sgs/prototype e2e",
+    "verify": "pnpm --filter @sgs/graphite typecheck && pnpm --filter @sgs/graphite verify && pnpm --filter @sgs/prototype typecheck && pnpm test"
+  }
+}

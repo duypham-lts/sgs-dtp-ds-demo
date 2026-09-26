@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Comment anatomy and the role palette</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap">
+  <style>
+    body { margin: 0; font-family: Roboto, "Noto Sans", system-ui, sans-serif; background: #FFFFFF; color: #161616; }
+    a { color: #CA4300; } a:hover { color: #B13B00; }
+    code { font-family: "Roboto Mono", ui-monospace, Menlo, monospace; }
+  </style>
+</helmet>
+<div style="width: 1280px; height: 940px; box-sizing: border-box; padding: 38px 40px; background: #FFFFFF; display: flex; flex-direction: column; gap: 22px;">
+
+  <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 32px;">
+    <div style="display: flex; flex-direction: column; gap: 5px; max-width: 640px;">
+      <div style="font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: #6E7C85; font-weight: 500;">Specification</div>
+      <h1 style="margin: 0; font-size: 26px; font-weight: 700; color: #001F3F;">Anatomy and the role palette</h1>
+    </div>
+    <p style="margin: 0; max-width: 520px; padding: 13px 16px; border-left: 4px solid #CA4300; background: #FBEDE7; font-size: 14px; line-height: 1.5; color: #29343A;"><strong style="font-weight: 700;">The rule that keeps the two axes apart:</strong> hue carries <em>who wrote it</em>. Texture and icon carry <em>who can read it</em>. Nothing ever signals both.</p>
+  </div>
+
+  <div style="display: flex; gap: 28px; flex-grow: 1;">
+
+    <div style="width: 600px; flex-shrink: 0; display: flex; flex-direction: column; gap: 14px;">
+      <h2 style="margin: 0; font-size: 16px; font-weight: 700; color: #001F3F;">Comment anatomy</h2>
+
+      <article style="display: flex; align-items: stretch; border: 1px solid #DED7CB; border-radius: 9px; overflow: hidden; background: #F9F7F3;">
+        <span style="width: 4px; align-self: stretch; flex-shrink: 0; background: #CA4300;"></span>
+        <span style="width: 12px; align-self: stretch; flex-shrink: 0; background-image: repeating-linear-gradient(135deg, #C8BCA6 0 1.5px, rgba(0,0,0,0) 1.5px 6px);"></span>
+        <div style="flex-grow: 1; display: flex; gap: 13px; padding: 14px 18px;">
+          <span style="flex-shrink: 0; width: 38px; height: 38px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; background: #FBEDE7; color: #8F2F00;">AL</span>
+          <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 7px;">
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <span style="font-size: 14px; font-weight: 700; color: #161616;">Avery Lin</span>
+              <span style="display: inline-flex; align-items: center; height: 21px; padding: 0 9px; border-radius: 4px; font-size: 11.5px; font-weight: 700; background: #FBEDE7; color: #A63700;">SGS Consultant</span>
+              <span style="display: inline-flex; align-items: center; gap: 5px; height: 21px; padding: 0 9px; border-radius: 4px; font-size: 11.5px; font-weight: 500; color: #3C515B; background: #EDE8DF; border: 1px dashed #C8BCA6;">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+                Internal · SGS only
+              </span>
+              <span style="flex-grow: 1;"></span>
+              <time style="font-size: 12px; color: #6E7C85;">19 Sep · 09:07</time>
+            </div>
+            <p style="margin: 0; font-size: 14px; line-height: 1.55; color: #29343A;">Their SIEM licence expires in November — raise it at the 25 Sep sync before we commit to the logging evidence dates.</p>
+          </div>
+        </div>
+      </article>
+
+      <ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 9px;">
+        <li style="display: flex; gap: 11px; align-items: flex-start;">
+          <span style="flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: #001F3F; color: #FFFFFF; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center;">1</span>
+          <p style="margin: 0; font-size: 13.5px; line-height: 1.5; color: #29343A;"><strong style="font-weight: 700;">Identity rail, 4px.</strong> The author's role colour. It is the only full-height element, so a scan down the thread reads as a colour sequence before any text is parsed.</p>
+        </li>
+        <li style="display: flex; gap: 11px; align-items: flex-start;">
+          <span style="flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: #001F3F; color: #FFFFFF; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center;">2</span>
+          <p style="margin: 0; font-size: 13.5px; line-height: 1.5; color: #29343A;"><strong style="font-weight: 700;">Restriction hatch, 12px.</strong> Present only on internal entries, in warm neutral. A texture, never a hue, so it cannot be mistaken for a fourth role.</p>
+        </li>
+        <li style="display: flex; gap: 11px; align-items: flex-start;">
+          <span style="flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: #001F3F; color: #FFFFFF; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center;">3</span>
+          <p style="margin: 0; font-size: 13.5px; line-height: 1.5; color: #29343A;"><strong style="font-weight: 700;">Avatar and role chip.</strong> Same hue family as the rail, at tag strength. The chip names the role, never a generic label like "SGS user".</p>
+        </li>
+        <li style="display: flex; gap: 11px; align-items: flex-start;">
+          <span style="flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: #001F3F; color: #FFFFFF; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center;">4</span>
+          <p style="margin: 0; font-size: 13.5px; line-height: 1.5; color: #29343A;"><strong style="font-weight: 700;">Visibility chip.</strong> Always slate, always present, dashed border and lock when internal, solid border and eye when shared. Audience is never inferred from silence.</p>
+        </li>
+        <li style="display: flex; gap: 11px; align-items: flex-start;">
+          <span style="flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: #001F3F; color: #FFFFFF; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center;">5</span>
+          <p style="margin: 0; font-size: 13.5px; line-height: 1.5; color: #29343A;"><strong style="font-weight: 700;">Surface.</strong> White for shared, warm <code style="font-size: 12.5px;">#F9F7F3</code> for internal. The tint is deliberately weak — the hatch does the work, so the tint survives printing and colour-blind vision.</p>
+        </li>
+      </ol>
+    </div>
+
+    <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 14px;">
+      <h2 style="margin: 0; font-size: 16px; font-weight: 700; color: #001F3F;">Role palette</h2>
+
+      <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+        <thead>
+          <tr>
+            <th scope="col" style="text-align: left; padding: 0 10px 8px 0; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: #6E7C85; font-weight: 700; border-bottom: 1px solid #C6C6C6;">Role</th>
+            <th scope="col" style="text-align: left; padding: 0 10px 8px 0; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: #6E7C85; font-weight: 700; border-bottom: 1px solid #C6C6C6;">Rail</th>
+            <th scope="col" style="text-align: left; padding: 0 10px 8px 0; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: #6E7C85; font-weight: 700; border-bottom: 1px solid #C6C6C6;">Chip</th>
+            <th scope="col" style="text-align: left; padding: 0 0 8px 0; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: #6E7C85; font-weight: 700; border-bottom: 1px solid #C6C6C6;">Can post</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row" style="text-align: left; font-weight: 500; padding: 11px 10px 11px 0; border-bottom: 1px solid #E8EDF1; color: #29343A;">Customer Admin<br><span style="color: #6E7C85; font-size: 11.5px;">Customer User</span></th>
+            <td style="padding: 11px 10px 11px 0; border-bottom: 1px solid #E8EDF1;"><span style="display: inline-flex; align-items: center; gap: 7px;"><span style="width: 20px; height: 20px; border-radius: 4px; background: #0F62FE; display: inline-block;"></span><code style="font-size: 11.5px; color: #4A5A63;">#0F62FE</code></span></td>
+            <td style="padding: 11px 10px 11px 0; border-bottom: 1px solid #E8EDF1;"><span style="display: inline-flex; align-items: center; height: 21px; padding: 0 9px; border-radius: 4px; font-size: 11.5px; font-weight: 700; background: #D0E2FF; color: #0043CE;">Customer</span></td>
+            <td style="padding: 11px 0; border-bottom: 1px solid #E8EDF1; color: #29343A;">Shared only</td>
+          </tr>
+          <tr>
+            <th scope="row" style="text-align: left; font-weight: 500; padding: 11px 10px 11px 0; border-bottom: 1px solid #E8EDF1; color: #29343A;">Customer Viewer</th>
+            <td style="padding: 11px 10px 11px 0; border-bottom: 1px solid #E8EDF1;"><span style="display: inline-flex; align-items: center; gap: 7px;"><span style="width: 20px; height: 20px; border-radius: 4px; background: #0F62FE; opacity: 0.45; display: inline-block;"></span><code style="font-size: 11.5px; color: #4A5A63;">45%</code></span></td>
+            <td style="padding: 11px 10px 11px 0; border-bottom: 1px solid #E8EDF1;"><span style="display: inline-flex; align-items: center; height: 21px; padding: 0 9px; border-radius: 4px; font-size: 11.5px; font-weight: 700; background: #E4ECF7; color: #2C4A7C;">Viewer</span></td>
+            <td style="padding: 11px 0; border-bottom: 1px solid #E8EDF1; color: #6E7C85;">Read only</td>
+          </tr>
+          <tr>
+            <th scope="row" style="text-align: left; font-weight: 500; padding: 11px 10px 11px 0; border-bottom: 1px solid #E8EDF1; color: #29343A;">SGS Consultant</th>
+            <td style="padding: 11px 10px 11px 0; border-bottom: 1px solid #E8EDF1;"><span style="display: inline-flex; align-items: center; gap: 7px;"><span style="width: 20px; height: 20px; border-radius: 4px; background: #CA4300; display: inline-block;"></span><code style="font-size: 11.5px; color: #4A5A63;">#CA4300</code></span></td>
+            <td style="padding: 11px 10px 11px 0; border-bottom: 1px solid #E8EDF1;"><span style="display: inline-flex; align-items: center; height: 21px; padding: 0 9px; border-radius: 4px; font-size: 11.5px; font-weight: 700; background: #FBEDE7; color: #A63700;">Consultant</span></td>
+            <td style="padding: 11px 0; border-bottom: 1px solid #E8EDF1; color: #29343A;">Shared + internal</td>
+          </tr>
+          <tr>
+            <th scope="row" style="text-align: left; font-weight: 500; padding: 11px 10px 11px 0; border-bottom: 1px solid #E8EDF1; color: #29343A;">SGS Admin</th>
+            <td style="padding: 11px 10px 11px 0; border-bottom: 1px solid #E8EDF1;"><span style="display: inline-flex; align-items: center; gap: 7px;"><span style="width: 20px; height: 20px; border-radius: 4px; background: #001F3F; display: inline-block;"></span><code style="font-size: 11.5px; color: #4A5A63;">#001F3F</code></span></td>
+            <td style="padding: 11px 10px 11px 0; border-bottom: 1px solid #E8EDF1;"><span style="display: inline-flex; align-items: center; height: 21px; padding: 0 9px; border-radius: 4px; font-size: 11.5px; font-weight: 700; background: #DCE4EC; color: #001F3F;">Admin</span></td>
+            <td style="padding: 11px 0; border-bottom: 1px solid #E8EDF1; color: #29343A;">Shared + internal</td>
+          </tr>
+          <tr>
+            <th scope="row" style="text-align: left; font-weight: 500; padding: 11px 10px 11px 0; border-bottom: 1px solid #E8EDF1; color: #29343A;">SGS Assessor<br><span style="color: #6E7C85; font-size: 11.5px;">SGS Auditor</span></th>
+            <td style="padding: 11px 10px 11px 0; border-bottom: 1px solid #E8EDF1;"><span style="display: inline-flex; align-items: center; gap: 7px;"><span style="width: 20px; height: 20px; border-radius: 4px; background: #6929C4; display: inline-block;"></span><code style="font-size: 11.5px; color: #4A5A63;">#6929C4</code></span></td>
+            <td style="padding: 11px 10px 11px 0; border-bottom: 1px solid #E8EDF1;"><span style="display: inline-flex; align-items: center; height: 21px; padding: 0 9px; border-radius: 4px; font-size: 11.5px; font-weight: 700; background: #E8DAFF; color: #6929C4;">Assessor</span></td>
+            <td style="padding: 11px 0; border-bottom: 1px solid #E8EDF1; color: #29343A;">Review threads</td>
+          </tr>
+          <tr>
+            <th scope="row" style="text-align: left; font-weight: 500; padding: 11px 10px 11px 0; border-bottom: 1px solid #E8EDF1; color: #29343A;">System</th>
+            <td style="padding: 11px 10px 11px 0; border-bottom: 1px solid #E8EDF1;"><span style="display: inline-flex; align-items: center; gap: 7px;"><span style="width: 20px; height: 20px; border-radius: 4px; background: #B6BFC6; display: inline-block;"></span><code style="font-size: 11.5px; color: #4A5A63;">#B6BFC6</code></span></td>
+            <td style="padding: 11px 10px 11px 0; border-bottom: 1px solid #E8EDF1;"><span style="font-size: 12px; color: #6E7C85;">No chip · no avatar</span></td>
+            <td style="padding: 11px 0; border-bottom: 1px solid #E8EDF1; color: #6E7C85;">Emitted, never typed</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="margin-top: 2px; padding: 14px 16px; border: 1px solid #E0E0E0; border-radius: 9px; background: #F7F9FB; display: flex; flex-direction: column; gap: 8px;">
+        <h3 style="margin: 0; font-size: 13.5px; font-weight: 700; color: #001F3F;">Rules that hold everywhere</h3>
+        <p style="margin: 0; font-size: 13px; line-height: 1.55; color: #29343A;">One thread per Service Request, Review and Workspace — the component is the same, only the parent id changes.</p>
+        <p style="margin: 0; font-size: 13px; line-height: 1.55; color: #29343A;">Visibility is decided by the selector, not the renderer: a Customer session is never sent an internal row, so no styling mistake can leak one.</p>
+        <p style="margin: 0; font-size: 13px; line-height: 1.55; color: #29343A;">The Audit Trail stays a separate, immutable record. The thread shows status events for context; it is not the legal history.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":940}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!-- @dsCard group="Actions" height=260 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>OverflowMenu — preview</title></head>
+<body style="margin:0">
+<div id="root"></div>
+<script>
+  var G = window.Graphite, h = React.createElement;
+  function row(){ return h.apply(null, ['div', { className: 'gr-demo__row' }].concat([].slice.call(arguments))); }
+  function cap(t){ return h('div', { className: 'gr-demo__cap' }, t); }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'gr-demo' },
+      cap('Replaces 4+ actions (and all actions at small breakpoints) with one kebab. Arrow keys, Home/End, Esc.'),
+      h('div', { style: { display: 'flex', justifyContent: 'flex-start', gap: 160 } },
+        h(G.OverflowMenu, { defaultOpen: true, align: 'start', items: [{ label: 'View description' }, { label: 'Open document' }, { label: 'Replace file' }, { label: 'Delete', danger: true }] }),
+        h(G.OverflowMenu, { label: 'Request actions', items: [{ label: 'Duplicate request' }, { label: 'Download summary' }, { label: 'Withdraw', disabled: true }] }))
+    )
+  );
+</script>
+</body>
+</html>

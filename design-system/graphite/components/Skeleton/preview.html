@@ -1,0 +1,20 @@
+<!-- @dsCard group="Feedback" height=200 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Skeleton — preview</title></head>
+<body style="margin:0">
+<div id="root"></div>
+<script>
+  var G = window.Graphite, h = React.createElement;
+  function row(){ return h.apply(null, ['div', { className: 'gr-demo__row', style: { alignItems: 'flex-start' } }].concat([].slice.call(arguments))); }
+  function cap(t){ return h('div', { className: 'gr-demo__cap' }, t); }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'gr-demo' },
+      row(h(G.Skeleton, { variant: 'circle' }), h('div', { style: { flex: 1, maxWidth: 360 } }, h(G.Skeleton, { lines: 3 }))),
+      h(G.Skeleton, { variant: 'rect', height: 64 })
+    )
+  );
+</script>
+</body>
+</html>

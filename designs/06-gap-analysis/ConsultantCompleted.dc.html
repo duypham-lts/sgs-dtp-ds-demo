@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SGS Consultant – completed assignment</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="sgs-ops" style="position: relative; width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" tone="dark" site-name="Digital Trust Platform" site-sub="Operations Console" badge="Internal" home-links="{{noLinks}}" user-name="Anna Lee" user-email="anna.lee@sgs.com" notifications="{{one}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" tone="dark" label="SGS Operations" sections="{{nav}}" default-active="asg-gap" default-collapsed="{{collapsed}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <x-import component-from-global-scope="Graphite.PageHeader" title="GA-2026-002 · ISO/IEC 27001" subtitle="ABC Trading Co., Ltd. · Head office, Taipei" on-back="{{noop}}" status="{{status}}"></x-import>
+      <div style="flex-grow: 1; min-height: 0; display: grid; grid-template-columns: 62fr 21fr; gap: 20px">
+        <div style="min-width: 0; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 20px">
+          <section class="gr-card">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">1</span><div><h2 class="gr-card__title">Result</h2><p class="gr-card__sub">Submitted by you on 30 Sep 2026 — visible to the customer</p></div></div></div>
+            <dl style="margin: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px 24px"><div><dt class="body-small" style="color: var(--text-secondary)">Met</dt><dd class="body-medium" style="margin: 0">77</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">Partially met</dt><dd class="body-medium" style="margin: 0">28</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">Not met</dt><dd class="body-medium" style="margin: 0">10</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">Not applicable</dt><dd class="body-medium" style="margin: 0">1</dd></div></dl>
+            <x-import component-from-global-scope="Graphite.DocumentItem" variant="sgs" doc-type="Gap Analysis Report" file-name="GA-2026-002-final.pdf" date-label="Issued Sep 30, 2026" size="2.6 MB" actions="{{sgsActs}}"></x-import>
+          </section>
+          <section class="gr-card gr-card--extend">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">2</span><div><h2 class="gr-card__title">Findings</h2><p class="gr-card__sub">Your assessment per requirement · read only</p></div></div></div>
+            <x-import component-from-global-scope="Graphite.DataTable" columns="{{fcols}}" rows="{{frows}}" layout="table" page-size="{{six}}"></x-import>
+          </section>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02); display: flex; flex-direction: column; gap: 16px">
+          <div class="title-medium">Assignment</div>
+          <x-import component-from-global-scope="Graphite.InlineNotification" kind="info" title="Workspace access ended on 30 Sep 2026">You can see what you submitted, but not the customer’s workspace or evidence.</x-import>
+          <div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: var(--radius-md); background: var(--layer-01)">
+            <span class="title-small">Impartiality</span>
+            <span class="body-small" style="color: var(--text-secondary)">You are recorded as consultant for ABC Trading · Head office · ISO/IEC 27001. You can’t be assigned to audit or certify this scope.</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite, F = window.React.Fragment;
+
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' },
+      { id: 'asg', label: 'My assignments', icon: 'user--access', badge: 1, badgeTone: 'attention', badgeLabel: 'assignment in progress', children: [
+        { id: 'asg-gap', label: 'Gap Analysis', badge: 1, badgeTone: 'attention', badgeLabel: 'in progress' }, { id: 'asg-impl', label: 'Implementation Support' } ] },
+      { id: 'fw', label: 'Frameworks', icon: 'catalog' },
+      { id: 'settings', label: 'Settings', icon: 'settings' } ] }];
+    var extra = {};
+
+    extra.status = { status: 'completed', label: 'Completed · access ended', shortLabel: 'Completed' };
+    extra.sgsActs = [{ type: 'open' }, { type: 'download' }]; extra.six = 6;
+    var A = { met: ['completed', 'Met'], partial: ['needs-description', 'Partially met'], notmet: ['missing-info', 'Not met'], na: ['draft', 'N/A'] };
+    extra.fcols = [{ key: 'id', header: 'Ref.', sortable: true, width: 90 }, { key: 't', header: 'Requirement', sortable: true }, { key: 'a', header: 'Assessment', sortable: true, render: function(r){ return h(G.StatusTag, { status: A[r.a][0], size: 'sm', label: A[r.a][1] }); } }, { key: 'p', header: 'Priority', width: 100 }];
+    extra.frows = [
+      { id: 'A.5.9', t: 'Inventory of assets', a: 'notmet', p: 'High' }, { id: 'A.5.19', t: 'Supplier relationships', a: 'notmet', p: 'High' },
+      { id: 'A.8.13', t: 'Information backup', a: 'notmet', p: 'High' }, { id: '6.1.2', t: 'Risk assessment', a: 'partial', p: 'High' },
+      { id: 'A.5.24', t: 'Incident management planning', a: 'partial', p: 'Medium' }, { id: 'A.5.1', t: 'Policies for information security', a: 'met', p: 'Low' },
+      { id: 'A.8.5', t: 'Secure authentication', a: 'met', p: 'Low' } ];
+    return Object.assign({ yes: true, no: false, one: 1, two: 2, three: 3, s16: 16, nav: nav, noLinks: [], noop: function(){}, collapsed: true }, extra);
+  }
+}
+</script>
+</body>
+</html>

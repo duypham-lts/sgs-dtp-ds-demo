@@ -1,0 +1,89 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "CaActivity.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Activity log",
+      "w": 1440,
+      "x": 0,
+      "y": 1280
+    },
+    "CaActivityDetail.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Event detail",
+      "w": 1440,
+      "x": 1520,
+      "y": 1280
+    },
+    "Main.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Audit trail",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "SgsAuditConsultant.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Filtered · consultant activity",
+      "w": 1440,
+      "x": 1520,
+      "y": 0
+    },
+    "SgsAuditDetail.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Event detail",
+      "w": 1440,
+      "x": 3040,
+      "y": 0
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-09-24T19:40:00Z",
+    "v": 1
+  },
+  "designSystems": [
+    {
+      "artifact": "https://claude.ai/artifact/CEneLQNFxsQuEaagfERSqo",
+      "copiedAt": "2026-09-24T19:40:00Z",
+      "namespace": "graphite",
+      "title": "Graphite DS",
+      "version": "1790310924-0be7"
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  },
+  "notes": {
+    "r0": {
+      "kind": "title1",
+      "maxW": 4480,
+      "text": "UC-AUD-002 · SGS Admin · Audit trail",
+      "w": 240,
+      "x": 0,
+      "y": -260
+    },
+    "r1": {
+      "kind": "title1",
+      "maxW": 4480,
+      "text": "UC-AUD-004 · Customer Admin · Activity log",
+      "w": 240,
+      "x": 0,
+      "y": 1020
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "SgsAuditConsultant.dc.html",
+    "SgsAuditDetail.dc.html",
+    "CaActivity.dc.html",
+    "CaActivityDetail.dc.html"
+  ],
+  "pages": [],
+  "title": "DTP – Audit Trail"
+}

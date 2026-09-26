@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>[MVP] Detail – completed</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;family=Noto+Sans+TC:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="customer" style="width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" site-name="Digital Trust Platform" site-sub="Customer Portal" user-name="Linh Tran" user-email="linh.tran@abc-trading.com" notifications="{{three}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" label="Customer Portal" sections="{{nav}}" default-active="sr-gap" default-collapsed="{{yes}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <x-import component-from-global-scope="Graphite.PageHeader" title="GA-2026-002 · ISO/IEC 27001" subtitle="Gap Analysis · Head office, Taipei" on-back="{{noop}}" status="{{status}}"></x-import>
+      <div style="flex-grow: 1; min-height: 0; display: grid; grid-template-columns: 14fr 62fr 21fr; gap: 20px">
+        <div style="min-width: 0; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02)">
+          <x-import component-from-global-scope="Graphite.SectionNav" label="Sections" items="{{sections}}" default-active="rep"></x-import>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 20px">
+          <section class="gr-card">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">1</span><div><h2 class="gr-card__title">Report</h2><p class="gr-card__sub">Delivered 30 Sep 2026 by Anna Lee</p></div></div></div>
+            <x-import component-from-global-scope="Graphite.DocumentItem" variant="sgs" doc-type="Gap Analysis Report" file-name="GA-2026-002 – Gap Analysis Report.pdf" date-label="Issued Sep 30, 2026" size="2.6 MB" actions="{{sgsActs}}"></x-import>
+            <x-import component-from-global-scope="Graphite.DocumentItem" variant="sgs" doc-type="Attachment · detailed findings" file-name="GA-2026-002 – Findings.xlsx" date-label="Issued Sep 30, 2026" size="480 KB" actions="{{sgsActs}}"></x-import>
+            <div style="display: flex; flex-direction: column; gap: 4px; padding: 16px; border-radius: var(--radius-md); background: var(--layer-02)"><span class="body-small" style="color: var(--text-secondary)">Note from Anna Lee</span><span class="body-medium">Solid ISMS foundation. Close the asset inventory, supplier agreements and backup testing gaps first — details on pages 6–9.</span></div>
+          </section>
+          <section class="gr-card">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">2</span><div><h2 class="gr-card__title">Overview</h2></div></div></div>
+            <dl style="margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 24px"><div><dt class="body-small" style="color: var(--text-secondary)">Framework</dt><dd class="body-medium" style="margin: 0">ISO/IEC 27001:2022</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">Scope</dt><dd class="body-medium" style="margin: 0">Head office · Taipei</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">On site</dt><dd class="body-medium" style="margin: 0">14 – 18 Sep 2026</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">SGS consultant</dt><dd class="body-medium" style="margin: 0">Anna Lee</dd></div><div style="grid-column: 1 / -1"><dt class="body-small" style="color: var(--text-secondary)">Goal</dt><dd class="body-medium" style="margin: 0">Certify the head office by Q2 2027; biggest concern is supplier management.</dd></div></dl>
+          </section>
+          <section class="gr-card gr-card--extend">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">3</span><div><h2 class="gr-card__title">History</h2></div></div></div>
+            <ol style="list-style: none; margin: 0; padding: 0"><li style="position: relative; display: flex; gap: 16px; padding-bottom: 16px"><span aria-hidden="true" style="position: absolute; left: 5px; top: 20px; bottom: -4px; width: 2px; background: var(--border-subtle-01)"></span><span aria-hidden="true" style="position: relative; flex-shrink: 0; width: 12px; height: 12px; margin-top: 4px; border-radius: 50%; background: var(--support-success)"></span><span style="display: flex; flex-direction: column"><span class="body-medium" style="font-weight: 500">Submitted</span><span class="body-small" style="color: var(--text-secondary)">02 Sep 2026 · Linh Tran</span></span></li><li style="position: relative; display: flex; gap: 16px; padding-bottom: 16px"><span aria-hidden="true" style="position: absolute; left: 5px; top: 20px; bottom: -4px; width: 2px; background: var(--border-subtle-01)"></span><span aria-hidden="true" style="position: relative; flex-shrink: 0; width: 12px; height: 12px; margin-top: 4px; border-radius: 50%; background: var(--support-success)"></span><span style="display: flex; flex-direction: column"><span class="body-medium" style="font-weight: 500">Approved · consultant Anna Lee assigned</span><span class="body-small" style="color: var(--text-secondary)">05 Sep 2026</span></span></li><li style="position: relative; display: flex; gap: 16px; padding-bottom: 16px"><span aria-hidden="true" style="position: absolute; left: 5px; top: 20px; bottom: -4px; width: 2px; background: var(--border-subtle-01)"></span><span aria-hidden="true" style="position: relative; flex-shrink: 0; width: 12px; height: 12px; margin-top: 4px; border-radius: 50%; background: var(--support-success)"></span><span style="display: flex; flex-direction: column"><span class="body-medium" style="font-weight: 500">On-site visit</span><span class="body-small" style="color: var(--text-secondary)">14 – 18 Sep 2026</span></span></li><li style="position: relative; display: flex; gap: 16px; padding-bottom: 0px"><span aria-hidden="true" style="position: relative; flex-shrink: 0; width: 12px; height: 12px; margin-top: 4px; border-radius: 50%; background: var(--support-success)"></span><span style="display: flex; flex-direction: column"><span class="body-medium" style="font-weight: 500">Report delivered · Completed</span><span class="body-small" style="color: var(--text-secondary)">30 Sep 2026 · consultant access ended</span></span></li></ol>
+          </section>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02); display: flex; flex-direction: column; gap: 16px">
+          <div class="title-medium">SGS Requests &amp; Communications</div>
+          <x-import component-from-global-scope="Graphite.InlineNotification" kind="success" title="Completed on 30 Sep 2026">The report is final. Consultant access to your workspace has ended.</x-import>
+          <div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: var(--radius-md); background: var(--layer-01)">
+            <span class="title-small">Your SGS consultant</span>
+            <div style="display: flex; align-items: center; gap: 12px"><x-import component-from-global-scope="Graphite.Avatar" name="Anna Lee" size="lg"></x-import><div style="display: flex; flex-direction: column"><span class="body-medium" style="font-weight: 500">Anna Lee</span><span class="body-small" style="color: var(--text-secondary)">Lead consultant</span></div></div>
+            <x-import component-from-global-scope="Graphite.Link" href="mailto:anna.lee@sgs.com">anna.lee@sgs.com</x-import>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: var(--radius-md); background: var(--layer-01)">
+            <span class="title-small">Need help?</span>
+            <span class="body-small" style="color: var(--text-secondary)">Questions about this request? Contact SGS support and quote the request number.</span>
+            <div><x-import component-from-global-scope="Graphite.Button" variant="tertiary" size="sm">Contact support</x-import></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite;
+
+    var SR = { id: 'sr', label: 'Service Requests', icon: 'task', badge: 1, badgeTone: 'attention', badgeLabel: 'request needs action', children: [
+      { id: 'sr-all', label: 'All requests' }, { id: 'sr-cert', label: 'Certification Services' }, { id: 'sr-train', label: 'Training Courses' },
+      { type: 'label', label: 'Other services' }, { id: 'sr-gap', label: 'Gap Analysis', badge: 1, badgeTone: 'attention', badgeLabel: 'needs action' }, { id: 'sr-impl', label: 'Implementation Support' } ] };
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' }, { id: 'scopes', label: 'Scopes', icon: 'category' }, { id: 'ws', label: 'Workspaces', icon: 'folders' },
+      { id: 'docs', label: 'Documents', icon: 'document--multiple-01' }, SR, { id: 'training', label: 'Training', icon: 'education' },
+      { id: 'audit', label: 'Audit Logs', icon: 'catalog' }, { id: 'settings', label: 'Settings', icon: 'settings' } ] },
+      { label: 'Administration', items: [{ id: 'users', label: 'Users', icon: 'user--multiple' }, { id: 'access', label: 'Workspace access', icon: 'user--access' }] }];
+
+    var extra = { noop: function(){}, sgsActs: [{ type: 'open' }, { type: 'download' }], viewActs: [{ type: 'view' }, { type: 'open' }] };
+    extra.status = { status: 'completed', label: 'Completed', shortLabel: 'Completed' };
+    extra.sections = [{"id": "ov", "label": "Overview", "status": "complete"}, {"id": "rep", "label": "Report", "status": "complete"}, {"id": "hist", "label": "History"}];
+    return Object.assign({ yes: true, no: false, three: 3, nav: nav }, typeof extra === 'object' ? extra : {});
+  }
+}
+</script>
+</body>
+</html>

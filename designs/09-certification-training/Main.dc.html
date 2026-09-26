@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Certification Services – list</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;family=Noto+Sans+TC:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="customer" style="width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" site-name="Digital Trust Platform" site-sub="Customer Portal" user-name="Linh Tran" user-email="linh.tran@abc-trading.com" notifications="{{three}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" label="Customer Portal" sections="{{nav}}" default-active="sr-cert" default-collapsed="{{no}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <div style="padding: 8px 8px 4px">
+        <x-import component-from-global-scope="Graphite.Breadcrumb" items="{{crumbs}}"></x-import>
+        <h1 class="headline-medium" style="margin: 8px 0 0 0">Certification Services</h1>
+        <p class="body-medium" style="margin: 0; color: var(--text-secondary)">Request a certification. An SGS contact gets back to you to plan the audit.</p>
+      </div>
+      <section class="gr-card gr-card--extend" style="padding: 16px 24px"><x-import component-from-global-scope="Graphite.Tabs" label="Certification Services" tabs="{{tabs}}"></x-import></section>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite;
+
+    var SR = { id: 'sr', label: 'Service Requests', icon: 'task', badge: 1, badgeTone: 'attention', badgeLabel: 'request needs action', children: [
+      { id: 'sr-all', label: 'All requests' }, { id: 'sr-cert', label: 'Certification Services' }, { id: 'sr-train', label: 'Training Courses' },
+      { type: 'label', label: 'Other services' }, { id: 'sr-gap', label: 'Gap Analysis', badge: 1, badgeTone: 'attention', badgeLabel: 'needs action' }, { id: 'sr-impl', label: 'Implementation Support' } ] };
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' }, { id: 'scopes', label: 'Scopes', icon: 'category' }, { id: 'ws', label: 'Workspaces', icon: 'folders' },
+      { id: 'docs', label: 'Documents', icon: 'document--multiple-01' }, SR, { id: 'training', label: 'Training', icon: 'education' },
+      { id: 'audit', label: 'Audit Logs', icon: 'catalog' }, { id: 'settings', label: 'Settings', icon: 'settings' } ] },
+      { label: 'Administration', items: [{ id: 'users', label: 'Users', icon: 'user--multiple' }, { id: 'access', label: 'Workspace access', icon: 'user--access' }] }];
+
+    var ST = { submitted: ['under-review', 'Submitted'], assigned: ['info', 'Assigned'], rejected: ['rejected', 'Rejected'] };
+    var svc = [{"id": "c0", "std": "ISO/IEC 42001", "name": "Artificial Intelligence Management System", "zh": "人工智慧管理系統"}, {"id": "c1", "std": "ISO/IEC 27001", "name": "Information Security Management System", "zh": "資訊安全管理系統"}, {"id": "c2", "std": "ISO/IEC 27701", "name": "Privacy Information Management System", "zh": "隱私資訊管理系統"}, {"id": "c3", "std": "ISO/IEC 27017", "name": "Information security for cloud services", "zh": "雲服務資訊安全"}, {"id": "c4", "std": "ISO/IEC 27018", "name": "Protection of PII in public clouds", "zh": "雲服務個資保護"}, {"id": "c5", "std": "ISO 22301", "name": "Business Continuity Management System", "zh": "營運持續管理系統"}, {"id": "c6", "std": "ISO 56001", "name": "Innovation Management System", "zh": "創新管理系統"}, {"id": "c7", "std": "ISO/IEC 20000", "name": "Service Management System", "zh": "服務管理系統"}, {"id": "c8", "std": "NIST CSF", "name": "Cybersecurity Framework", "zh": "網路安全框架"}, {"id": "c9", "std": "Cybersecurity Management Act", "name": "Certification Scheme", "zh": "資通安全管理法驗證方案"}, {"id": "c10", "std": "TISAX", "name": "Trusted Information Security Assessment Exchange", "zh": "可信任資訊安全評鑑"}, {"id": "c11", "std": "ASPICE", "name": "Automotive SPICE capability assessment", "zh": "汽車產業軟體流程改進與能力測定標準"}, {"id": "c12", "std": "Second-party audit", "name": "Supply chain audit", "zh": "供應鏈二者稽核服務"}];
+    var reqs = [{"id": "CR-2026-012", "svc": "ISO/IEC 27001 \u00b7 Head office, Taipei", "sub": "23 Sep 2026", "owner": "\u2014", "st": "submitted", "href": "CertDetail.dc.html"}, {"id": "CR-2026-008", "svc": "TISAX \u00b7 Plant, Taichung", "sub": "02 Aug 2026", "owner": "David Wu", "st": "assigned", "href": "CertDetailAssigned.dc.html"}];
+    var extra = { crumbs: [{ label: 'Service Requests', href: '#' }, { label: 'Certification Services' }] };
+    var svcCols = [
+      { key: 'std', header: 'Standard', sortable: true, width: 220, render: function(r){ return h('span', { style: { fontWeight: 500 } }, r.std); } },
+      { key: 'name', header: 'Service', sortable: true, render: function(r){ return h('span', { style: { display: 'flex', flexDirection: 'column' } }, h('span', null, r.name), h('span', { className: 'body-small', lang: 'zh-Hant', style: { color: 'var(--text-secondary)' } }, r.zh)); }, searchValue: function(r){ return r.name + ' ' + r.zh; } },
+      { key: 'act', header: '', align: 'end', width: 140, render: function(r){ return h('a', { href: 'CertRequest.dc.html', className: 'gr-btn gr-btn--tertiary gr-btn--sm' }, 'Request'); } } ];
+    var reqCols = [
+      { key: 'id', header: 'Request', width: 140, render: function(r){ return h('a', { href: r.href || '#', className: 'gr-link', style: { fontWeight: 500 } }, r.id); } },
+      { key: 'svc', header: 'Service', sortable: true },
+      { key: 'sub', header: 'Submitted', sortable: true, width: 130 },
+      { key: 'owner', header: 'SGS contact' },
+      { key: 'st', header: 'Status', render: function(r){ return h(G.StatusTag, { status: ST[r.st][0], size: 'sm', label: ST[r.st][1] }); } } ];
+    extra.tabs = [
+      { id: 'svc', label: 'Services', badge: svc.length, content: h(G.DataTable, { columns: svcCols, rows: svc, searchable: true, searchPlaceholder: 'Search services', layout: 'table', pageSize: 10 }) },
+      { id: 'req', label: 'My requests', badge: reqs.length, content: h(G.DataTable, { columns: reqCols, rows: reqs, layout: 'table', paginate: false }) } ];
+    return Object.assign({ yes: true, no: false, three: 3, nav: nav }, typeof extra === 'object' ? extra : {});
+  }
+}
+</script>
+</body>
+</html>

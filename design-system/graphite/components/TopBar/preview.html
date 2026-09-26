@@ -1,0 +1,25 @@
+<!-- @dsCard group="Patterns" height=420 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>TopBar — preview</title></head>
+<body style="margin:0">
+<div id="root"></div>
+<script>
+  var G = window.Graphite, h = React.createElement;
+  function cap(t){ return h('div', { className: 'gr-demo__cap' }, t); }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'gr-demo', style: { background: 'var(--background)' } },
+      cap('home — Request Applications (orange), Communications, notifications, profile'),
+      h(G.TopBar, { variant: 'home', siteName: 'Government & Trade Facilitation', siteSub: 'The Official Exporter Portal', userName: 'Linh Tran', userEmail: 'linh.tran@abc-trading.com', notifications: 3 }),
+      cap('home · compact (1178–1279px) — text links become icon buttons'),
+      h(G.TopBar, { variant: 'home', compact: true, siteName: 'Government & Trade Facilitation', siteSub: 'The Official Exporter Portal', userName: 'Linh Tran', notifications: 3 }),
+      cap('landing'),
+      h(G.TopBar, { variant: 'landing', siteName: 'Digital Trust Platform' }),
+      cap('login — transparent; inside data-theme="inverse" the wordmark turns white'),
+      h('div', { 'data-theme': 'inverse', style: { background: 'var(--background)', borderRadius: 8 } }, h(G.TopBar, { variant: 'login', siteName: 'Digital Trust Platform', siteSub: 'Customer Portal' }))
+    )
+  );
+</script>
+</body>
+</html>

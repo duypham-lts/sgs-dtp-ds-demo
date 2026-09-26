@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Customer User – home</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;family=Noto+Sans+TC:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="customer" style="width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" home-links="{{custLinks}}" site-name="Digital Trust Platform" site-sub="Customer Portal" user-name="Wei Chen" user-email="wei.chen@abc-trading.com" notifications="{{three}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" label="Customer Portal" sections="{{nav}}" default-active="home" default-collapsed="{{no}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <div style="padding: 8px 8px 4px">
+        <h1 class="headline-medium" style="margin: 0">Good morning, Wei</h1>
+        <p class="body-medium" style="margin: 0; color: var(--text-secondary)">ABC Trading Co., Ltd. · workspaces of the scopes assigned to you</p>
+      </div>
+      <div style="flex-grow: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 20px">
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px">
+          <a href="#" style="text-decoration: none; color: inherit; padding: 16px 20px; border-radius: var(--radius-card); background: var(--layer-02); display: flex; flex-direction: column; gap: 2px"><span class="headline-medium">3</span><span class="body-medium" style="font-weight: 500">Review items to answer</span><span class="body-small" style="color: var(--text-secondary)">Audit CR-2026-015</span></a>
+          <a href="#" style="text-decoration: none; color: inherit; padding: 16px 20px; border-radius: var(--radius-card); background: var(--layer-02); display: flex; flex-direction: column; gap: 2px"><span class="headline-medium">3</span><span class="body-medium" style="font-weight: 500">Workspaces</span><span class="body-small" style="color: var(--text-secondary)">1 in audit · 1 certified · 1 preparing</span></a>
+          <a href="#" style="text-decoration: none; color: inherit; padding: 16px 20px; border-radius: var(--radius-card); background: var(--layer-02); display: flex; flex-direction: column; gap: 2px"><span class="headline-medium">3</span><span class="body-medium" style="font-weight: 500">Service requests in progress</span><span class="body-small" style="color: var(--text-secondary)">Gap Analysis, Implementation Support, Certification</span></a>
+          <a href="#" style="text-decoration: none; color: inherit; padding: 16px 20px; border-radius: var(--radius-card); background: var(--layer-02); display: flex; flex-direction: column; gap: 2px"><span class="headline-medium">1</span><span class="body-medium" style="font-weight: 500">Active certificate</span><span class="body-small" style="color: var(--text-secondary)">ISO/IEC 27001 · valid to 20 Jan 2028</span></a>
+        </div>
+        <div style="display: grid; grid-template-columns: 3fr 2fr; gap: 20px; align-items: start">
+        <section class="gr-card" style="gap: 16px">
+          <div class="gr-card__head"><div><h2 class="gr-card__title">Needs your attention</h2><p class="gr-card__sub">4 items, most urgent first</p></div></div>
+          <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px">
+            <li><a href="#" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: var(--radius-md); background: var(--layer-02); text-decoration: none; color: inherit">
+              <span style="flex-shrink: 0"><x-import component-from-global-scope="Graphite.StatusTag" status="missing-info" label="Finding" size="sm"></x-import></span>
+              <span style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column"><span class="body-medium" style="font-weight: 500">Submit corrective action · R.3.1.3 Test backup reliability</span><span class="body-small" style="color: var(--text-secondary)">Audit CR-2026-015 · Minor nonconformity · due 15 Dec</span></span>
+              <span class="body-small" style="flex-shrink: 0; color: var(--link-primary); font-weight: 500">Respond</span>
+            </a></li>
+            <li><a href="#" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: var(--radius-md); background: var(--layer-02); text-decoration: none; color: inherit">
+              <span style="flex-shrink: 0"><x-import component-from-global-scope="Graphite.StatusTag" status="missing-info" label="Finding" size="sm"></x-import></span>
+              <span style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column"><span class="body-medium" style="font-weight: 500">Submit corrective action · R.4.1.2 Multi-factor authentication</span><span class="body-small" style="color: var(--text-secondary)">Audit CR-2026-015 · Major nonconformity · due 10 Dec</span></span>
+              <span class="body-small" style="flex-shrink: 0; color: var(--link-primary); font-weight: 500">Respond</span>
+            </a></li>
+            <li><a href="#" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: var(--radius-md); background: var(--layer-02); text-decoration: none; color: inherit">
+              <span style="flex-shrink: 0"><x-import component-from-global-scope="Graphite.StatusTag" status="needs-description" label="Clarification" size="sm"></x-import></span>
+              <span style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column"><span class="body-medium" style="font-weight: 500">Answer the auditor · R.1.1.4 Account lifecycle review</span><span class="body-small" style="color: var(--text-secondary)">Audit CR-2026-015 · due 25 Nov</span></span>
+              <span class="body-small" style="flex-shrink: 0; color: var(--link-primary); font-weight: 500">Respond</span>
+            </a></li>
+            <li><a href="#" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: var(--radius-md); background: var(--layer-02); text-decoration: none; color: inherit">
+              <span style="flex-shrink: 0"><x-import component-from-global-scope="Graphite.StatusTag" status="needs-description" label="Expires soon" size="sm"></x-import></span>
+              <span style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column"><span class="body-medium" style="font-weight: 500">Penetration test report 2025 expires on 30 Oct 2026</span><span class="body-small" style="color: var(--text-secondary)">Appendix 10 · Customer data platform · R.5.4.2</span></span>
+              <span class="body-small" style="flex-shrink: 0; color: var(--link-primary); font-weight: 500">Upload new version</span>
+            </a></li>
+          </ul>
+        </section>
+        <section class="gr-card" style="gap: 16px">
+          <div class="gr-card__head"><div><h2 class="gr-card__title">Suggested next step</h2></div></div>
+          <div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: var(--radius-md); background: var(--layer-02)">
+            <span class="title-small">ISO 22301 · Head office is at 12%</span>
+            <span class="body-small" style="color: var(--text-secondary)">46 requirements still need their mandatory evidence. Start with the Business Impact Analysis requirements.</span>
+            <div><x-import component-from-global-scope="Graphite.Button" size="sm" variant="tertiary">Open workspace</x-import></div>
+          </div>
+        </section>
+        </div>
+        <section class="gr-card" style="gap: 16px">
+          <div class="gr-card__head"><div><h2 class="gr-card__title">Coverage by control group</h2><p class="gr-card__sub">Appendix 10 · 2022 · Medium · Customer data platform</p></div><x-import component-from-global-scope="Graphite.Link" href="#">Open workspace</x-import></div>
+          <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px">
+            <li style="display: grid; grid-template-columns: 28px 1fr 48px; align-items: center; gap: 12px"><span class="gr-rnav__code" style="justify-self: start">1</span><x-import component-from-global-scope="Graphite.ProgressBar" label="Access Control" value="58" size="sm"></x-import><span class="body-small" style="text-align: right; font-weight: 500">58%</span></li>
+            <li style="display: grid; grid-template-columns: 28px 1fr 48px; align-items: center; gap: 12px"><span class="gr-rnav__code" style="justify-self: start">2</span><x-import component-from-global-scope="Graphite.ProgressBar" label="Event Logging and Accountability" value="70" size="sm"></x-import><span class="body-small" style="text-align: right; font-weight: 500">70%</span></li>
+            <li style="display: grid; grid-template-columns: 28px 1fr 48px; align-items: center; gap: 12px"><span class="gr-rnav__code" style="justify-self: start">3</span><x-import component-from-global-scope="Graphite.ProgressBar" label="Business Continuity Plan" value="50" size="sm"></x-import><span class="body-small" style="text-align: right; font-weight: 500">50%</span></li>
+            <li style="display: grid; grid-template-columns: 28px 1fr 48px; align-items: center; gap: 12px"><span class="gr-rnav__code" style="justify-self: start">4</span><x-import component-from-global-scope="Graphite.ProgressBar" label="Identification and Authentication" value="64" size="sm"></x-import><span class="body-small" style="text-align: right; font-weight: 500">64%</span></li>
+            <li style="display: grid; grid-template-columns: 28px 1fr 48px; align-items: center; gap: 12px"><span class="gr-rnav__code" style="justify-self: start">5</span><x-import component-from-global-scope="Graphite.ProgressBar" label="System and Service Acquisition" value="55" size="sm"></x-import><span class="body-small" style="text-align: right; font-weight: 500">55%</span></li>
+            <li style="display: grid; grid-template-columns: 28px 1fr 48px; align-items: center; gap: 12px"><span class="gr-rnav__code" style="justify-self: start">6</span><x-import component-from-global-scope="Graphite.ProgressBar" label="System and Communication Protection" value="80" size="sm"></x-import><span class="body-small" style="text-align: right; font-weight: 500">80%</span></li>
+            <li style="display: grid; grid-template-columns: 28px 1fr 48px; align-items: center; gap: 12px"><span class="gr-rnav__code" style="justify-self: start">7</span><x-import component-from-global-scope="Graphite.ProgressBar" label="System and Information Integrity" value="60" size="sm"></x-import><span class="body-small" style="text-align: right; font-weight: 500">60%</span></li>
+          </ul>
+        </section>
+        <section class="gr-card" style="gap: 16px">
+          <div class="gr-card__head"><div><h2 class="gr-card__title">Workspaces</h2><p class="gr-card__sub">Evidence coverage is preparation progress, not a compliance decision</p></div><x-import component-from-global-scope="Graphite.Link" href="#">All workspaces</x-import></div>
+          <x-import component-from-global-scope="Graphite.DataTable" columns="{{wsCols}}" rows="{{wsRows}}" layout="table" paginate="{{no}}"></x-import>
+        </section>
+        <section class="gr-card gr-card--extend" style="gap: 16px">
+          <div class="gr-card__head"><div><h2 class="gr-card__title">Service requests</h2></div><x-import component-from-global-scope="Graphite.Link" href="#">All requests</x-import></div>
+          <x-import component-from-global-scope="Graphite.DataTable" columns="{{srCols}}" rows="{{srRows}}" layout="table" paginate="{{no}}"></x-import>
+        </section>
+      </div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite;
+
+    var SR = { id: 'sr', label: 'Service Requests', icon: 'task', badge: 1, badgeTone: 'attention', badgeLabel: 'request needs action', children: [
+      { id: 'sr-all', label: 'All requests' }, { id: 'sr-cert', label: 'Certification Services' }, { id: 'sr-train', label: 'Training Courses' },
+      { type: 'label', label: 'Other services' }, { id: 'sr-gap', label: 'Gap Analysis', badge: 1, badgeTone: 'attention', badgeLabel: 'needs action' }, { id: 'sr-impl', label: 'Implementation Support' } ] };
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' }, { id: 'scopes', label: 'Scopes', icon: 'category' }, { id: 'ws', label: 'Workspaces', icon: 'folders' },
+      { id: 'docs', label: 'Documents', icon: 'document--multiple-01' }, { id: 'reviews', label: 'Reviews', icon: 'view', badge: 3, badgeTone: 'attention', badgeLabel: 'items need your response' }, SR, { id: 'certs', label: 'Certifications', icon: 'checkmark' }, { id: 'training', label: 'Training', icon: 'education' },
+      { id: 'settings', label: 'Settings', icon: 'settings' } ] }];
+
+    var extra = {};
+    extra.wsCols = [
+      { key: 'fw', header: 'Workspace', render: function(r){ return h('span', { style: { display: 'flex', flexDirection: 'column' } }, h('a', { href: '#', className: 'gr-link', style: { fontWeight: 500 } }, r.fw), h('span', { className: 'body-small', style: { color: 'var(--text-secondary)' } }, r.scope)); } },
+      { key: 'cov', header: 'Evidence coverage', width: 220, render: function(r){ return h(G.ProgressBar, { value: r.v, size: 'sm', label: r.fw + ' coverage', helperText: r.cov }); } },
+      { key: 'stage', header: 'Certification progress', width: 420, render: function(r){ var S = ['Preparing', 'Requested', 'In audit', 'Certified']; return h('ol', { 'aria-label': 'Stage: ' + S[r.stage], style: { listStyle: 'none', margin: 0, padding: 0, display: 'flex', alignItems: 'center', gap: 6 } }, S.map(function(n, i){ var done = i < r.stage, cur = i === r.stage; return h('li', { key: n, style: { display: 'flex', alignItems: 'center', gap: 6 } }, h('span', { 'aria-hidden': true, style: { width: 10, height: 10, borderRadius: 999, background: done ? 'var(--support-success)' : cur ? 'var(--brand-orange)' : 'var(--border-subtle-01)' } }), h('span', { className: 'body-small', style: { fontWeight: cur ? 500 : 400, color: cur || done ? 'var(--text-primary)' : 'var(--text-secondary)' } }, n), i < S.length - 1 ? h('span', { 'aria-hidden': true, style: { width: 16, height: 1, background: 'var(--border-subtle-01)' } }) : null); })); } } ];
+    extra.wsRows = [
+      { id: 'a', fw: 'Appendix 10 · 2022 · Medium', scope: 'Customer data platform', v: 62, cov: '38 of 61', stage: 2 },
+      { id: 'b', fw: 'ISO/IEC 27001 · 2022', scope: 'Head office · Taipei', v: 100, cov: '116 of 116', stage: 3 },
+      { id: 'c', fw: 'ISO 22301 · 2019', scope: 'Head office · Taipei', v: 12, cov: '6 of 52', stage: 0 } ];
+    extra.srCols = [
+      { key: 'id', header: 'Request', width: 130, render: function(r){ return h('a', { href: '#', className: 'gr-link', style: { fontWeight: 500 } }, r.id); } },
+      { key: 's', header: 'Service' },
+      { key: 'st', header: 'Status', width: 190, render: function(r){ return h(G.StatusTag, { status: r.sts, size: 'sm', label: r.st }); } } ];
+    extra.srRows = [
+      { id: 'CR-2026-015', s: 'Certification · Appendix 10', sts: 'under-review', st: 'Audit in progress' },
+      { id: 'GA-2026-004', s: 'Gap Analysis · ISO/IEC 42001', sts: 'info', st: 'In progress' },
+      { id: 'IS-2026-004', s: 'Implementation Support · ISO/IEC 27701', sts: 'under-review', st: 'Submitted' } ];
+    extra.custLinks = [{ label: 'Request Applications', icon: 'folder', brand: true, href: '#' }];
+    return Object.assign({ yes: true, no: false, three: 3, nav: nav }, typeof extra === 'object' ? extra : {});
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SGS Operations – Sign in (mobile)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:Roboto,"Helvetica Neue",Arial,sans-serif;background:#EEF1F3}
+a{color:#CA4300}a:hover{color:#A33600}
+input::placeholder{color:#8A9AA1}
+input:focus{outline:none}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 412px; height: 900px; position: relative; background: linear-gradient(160deg, #FBD6C3 0%, #F1E3DB 45%, #DCE4E8 100%); font-family: Roboto, 'Helvetica Neue', Arial, sans-serif; color: #28373E; overflow: hidden; display: flex; flex-direction: column">
+  <div style="position: relative; height: 272px; box-sizing: border-box; padding: 24px 24px 0 24px; background: #1F2C32; overflow: hidden; display: flex; flex-direction: column; gap: 36px; flex-shrink: 0">
+    <svg width="420" height="420" viewBox="0 0 640 640" fill="none" stroke="#F28A5B" stroke-width="1.4" aria-hidden="true" style="position: absolute; right: -200px; top: -120px">
+      <ellipse cx="320" cy="320" rx="300" ry="250" stroke-opacity="0.10"></ellipse>
+      <ellipse cx="310" cy="330" rx="240" ry="196" stroke-opacity="0.14"></ellipse>
+      <ellipse cx="300" cy="338" rx="180" ry="144" stroke-opacity="0.18"></ellipse>
+      <ellipse cx="290" cy="346" rx="120" ry="94" stroke-opacity="0.24"></ellipse>
+      <ellipse cx="284" cy="352" rx="60" ry="46" stroke-opacity="0.30"></ellipse>
+    </svg>
+    <a href="#" aria-label="SGS Digital Trust Platform – home" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: #FFFFFF; position: relative">
+      <span style="font-size: 24px; font-weight: 700; letter-spacing: 1px">SGS</span>
+      <span style="width: 1px; height: 26px; background: #4A5C64"></span>
+      <span style="display: flex; flex-direction: column; gap: 1px">
+        <span style="font-size: 10px; font-weight: 500; letter-spacing: 1.2px; color: #F28A5B">DIGITAL TRUST PLATFORM</span>
+        <span style="font-size: 12px; color: #D3DCE0">Operations Console</span>
+      </span>
+    </a>
+    <h2 style="margin: 0; font-size: 26px; line-height: 32px; font-weight: 500; color: #FFFFFF; position: relative">One record of what a customer has proven, and when.</h2>
+  </div>
+
+  <form style="margin: -56px 16px 0 16px; position: relative; box-sizing: border-box; padding: 28px 24px; background: #FFFFFF; border-radius: 16px; box-shadow: 0 12px 32px rgba(40,55,62,0.12); display: flex; flex-direction: column">
+    <span style="font-size: 11px; font-weight: 700; letter-spacing: 1.4px; color: #CA4300">SGS OPERATIONS</span>
+    <h1 style="margin: 6px 0 0 0; font-size: 26px; line-height: 32px; font-weight: 500">Sign in</h1>
+    <p style="margin: 6px 0 0 0; font-size: 14px; line-height: 20px; color: #3C525D">Internal access for SGS teams and appointed auditors.</p>
+
+    <button type="button" style="margin-top: 24px; height: 48px; border: none; border-radius: 24px; background: #CA4300; color: #FFFFFF; font-size: 15px; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 10px">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
+      Continue with SGS SSO
+    </button>
+
+    <div style="margin-top: 22px; display: flex; align-items: center; gap: 12px">
+      <span style="flex-grow: 1; height: 1px; background: #D5DDE1"></span>
+      <span style="font-size: 12px; color: #3C525D">or sign in with email</span>
+      <span style="flex-grow: 1; height: 1px; background: #D5DDE1"></span>
+    </div>
+
+    <div style="margin-top: 20px; box-sizing: border-box; padding: 8px 16px 6px 16px; background: #EEF2F4; border-radius: 4px 4px 0 0; border-bottom: 1px solid #3C525D; display: flex; flex-direction: column; gap: 2px">
+      <label for="email-m" style="font-size: 12px; color: #3C525D">Email <span style="color: #CA4300">*</span></label>
+      <input id="email-m" type="email" autocomplete="username" placeholder="name@sgs.com" style="border: none; background: transparent; padding: 0; font-size: 16px; line-height: 24px; color: #28373E; font-family: inherit">
+    </div>
+
+    <div style="margin-top: 16px; box-sizing: border-box; padding: 8px 4px 6px 16px; background: #EEF2F4; border-radius: 4px 4px 0 0; border-bottom: 1px solid #3C525D; display: flex; align-items: center; gap: 8px">
+      <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px">
+        <label for="password-m" style="font-size: 12px; color: #3C525D">Password <span style="color: #CA4300">*</span></label>
+        <input id="password-m" type="password" autocomplete="current-password" placeholder="Enter your password" style="border: none; background: transparent; padding: 0; font-size: 16px; line-height: 24px; color: #28373E; font-family: inherit">
+      </div>
+      <button type="button" aria-label="Show password" style="width: 44px; height: 44px; border: none; background: transparent; display: flex; align-items: center; justify-content: center">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3C525D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.7 5.1A10.4 10.4 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-2.2 3.2"></path><path d="M6.6 6.6C3.9 8.4 2 12 2 12s3.5 7 10 7a9.7 9.7 0 0 0 5.4-1.6"></path><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"></path><path d="m2 2 20 20"></path></svg>
+      </button>
+    </div>
+
+    <div style="margin-top: 12px; display: flex; align-items: center; justify-content: space-between">
+      <label style="display: flex; align-items: center; gap: 8px; font-size: 14px; color: #3C525D; min-height: 44px">
+        <input type="checkbox" style="width: 18px; height: 18px; margin: 0; accent-color: #CA4300">
+        Keep me signed in
+      </label>
+      <a href="#" style="font-size: 14px; font-weight: 500; text-decoration: none; padding: 12px 0">Forgot password?</a>
+    </div>
+
+    <button type="submit" style="margin-top: 12px; height: 48px; border: none; border-radius: 24px; background: #28373E; color: #FFFFFF; font-size: 15px; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 8px">
+      Sign in
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+    </button>
+  </form>
+
+  <p style="margin: 20px 0 0 0; text-align: center; font-size: 14px; color: #3C525D">Trouble signing in? <a href="#" style="text-decoration: underline">Contact Service Desk</a></p>
+
+  <div style="margin-top: auto; padding: 0 24px 24px 24px; display: flex; flex-direction: column; align-items: center; gap: 8px">
+    <span style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #3C525D">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3C525D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+      Every action is recorded in the audit trail.
+    </span>
+    <span style="font-size: 12px; color: #3C525D">© 2026 SGS SA · English</span>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":412,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

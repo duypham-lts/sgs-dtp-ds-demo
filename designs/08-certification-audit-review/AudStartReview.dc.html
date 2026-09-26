@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Auditor – start audit review</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="sgs-ops" style="position: relative; width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" tone="dark" site-name="Digital Trust Platform" site-sub="Operations Console" badge="Internal" home-links="{{noLinks}}" user-name="David Wu" user-email="david.wu@sgs.com" notifications="{{one}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" tone="dark" label="SGS Operations" sections="{{nav}}" default-active="aud" default-collapsed="{{collapsed}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <x-import component-from-global-scope="Graphite.PageHeader" title="CR-2026-017 · TISAX" subtitle="Formosa Chips Inc. · Hsinchu fab · initial certification" on-back="{{noop}}" status="{{status}}" actions="{{hdr}}"></x-import>
+      <div style="flex-grow: 1; min-height: 0; display: grid; grid-template-columns: 14fr 62fr 21fr; gap: 20px">
+        <div style="min-width: 0; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02)">
+          <x-import component-from-global-scope="Graphite.SectionNav" label="Sections" items="{{sections}}" default-active="st"></x-import>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 20px">
+          <section class="gr-card">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">1</span><div><h2 class="gr-card__title">Request</h2><p class="gr-card__sub">Submitted 20 Sep 2026 by Chen Wei-Ting</p></div></div></div>
+            <dl style="margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 24px"><div><dt class="body-small" style="color: var(--text-secondary)">Workspace</dt><dd class="body-medium" style="margin: 0">TISAX · ISA 6.0 · Hsinchu fab</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">Tier</dt><dd class="body-medium" style="margin: 0">High</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">Requirements</dt><dd class="body-medium" style="margin: 0">78</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">Evidence coverage</dt><dd class="body-medium" style="margin: 0">71% (customer view)</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">Preferred period</dt><dd class="body-medium" style="margin: 0">December 2026</dd></div><div style="grid-column: 1 / -1"><dt class="body-small" style="color: var(--text-secondary)">Message</dt><dd class="body-medium" style="margin: 0">Please audit prototype protection on day 2.</dd></div></dl>
+          </section>
+          <section class="gr-card gr-card--extend">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">2</span><div><h2 class="gr-card__title">Before you start</h2></div></div></div>
+            <ul class="body-medium" style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px">
+              <li>Agree the audit dates and contract with the customer outside the platform.</li>
+              <li>Starting the review creates one item per requirement and locks the workspace.</li>
+            </ul>
+          </section>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02); display: flex; flex-direction: column; gap: 16px">
+          <div class="title-medium">Customer</div>
+          <div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: var(--radius-md); background: var(--layer-01)">
+            <span class="title-small">Formosa Chips Inc.</span>
+            <span class="body-small" style="color: var(--text-secondary)">Contact: Chen Wei-Ting · CISO</span>
+            <x-import component-from-global-scope="Graphite.Link" href="mailto:wt.chen@formosachips.com">wt.chen@formosachips.com</x-import>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <x-import component-from-global-scope="Graphite.Modal" inline="{{yes}}" open="{{yes}}" size="fit" title="Start audit review" on-close="{{noop}}" primary-action="{{primary}}" secondary-action="{{secondary}}">
+    <div style="display: flex; flex-direction: column; gap: 12px; width: 520px; max-width: 100%">
+      <p class="body-medium" style="margin: 0">Start the audit review of <strong>TISAX · ISA 6.0 · Hsinchu fab</strong>?</p>
+      <ul class="body-medium" style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; color: var(--text-secondary)">
+        <li>78 review items are created, one per requirement of tier High.</li>
+        <li>The customer’s workspace is locked; they can only add files by responding to you.</li>
+        <li>The request moves to In progress and the customer is notified.</li>
+      </ul>
+    </div>
+  </x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite, F = window.React.Fragment;
+
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' },
+      { id: 'aud', label: 'My audits', icon: 'task', badge: 2, badgeTone: 'attention', badgeLabel: 'audits need action' },
+      { id: 'settings', label: 'Settings', icon: 'settings' } ] }];
+    var extra = {};
+
+    extra.noop = function(){};
+    extra.status = { status: 'info', label: 'Assigned to you', shortLabel: 'Assigned' };
+    extra.hdr = h(G.Button, { size: 'md' }, 'Start audit review');
+    extra.sections = [{ id: 'st', label: 'Request' }, { id: 'bf', label: 'Before you start' }];
+    extra.noop = function(){}; extra.primary = { label: 'Start review' }; extra.secondary = { label: 'Cancel' };
+    return Object.assign({ yes: true, no: false, one: 1, two: 2, three: 3, s16: 16, nav: nav, noLinks: [], noop: function(){}, collapsed: true }, extra);
+  }
+}
+</script>
+</body>
+</html>

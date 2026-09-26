@@ -1,0 +1,22 @@
+<!-- @dsCard group="Overlay" height=440 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Modal — preview</title></head>
+<body style="margin:0">
+<div id="root"></div>
+<script>
+  var G = window.Graphite, h = React.createElement;
+  function row(){ return h.apply(null, ['div', { className: 'gr-demo__row' }].concat([].slice.call(arguments))); }
+  function cap(t){ return h('div', { className: 'gr-demo__cap' }, t); }
+  function Demo(){ var s = React.useState(false); return h('div', null, h(G.Button, { size: 'md', variant: 'danger', onClick: function(){ s[1](true); } }, 'Open real modal'), h(G.Modal, { open: s[0], size: 'sm', danger: true, title: 'Delete document?', onClose: function(){ s[1](false); }, primaryAction: { label: 'Delete', onClick: function(){ s[1](false); } }, secondaryAction: { label: 'Cancel', onClick: function(){ s[1](false); } } }, 'invoice234657.pdf will be removed from this request.')); }
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'gr-demo' },
+      h('div', { style: { position: 'relative', height: 360, borderRadius: 8, overflow: 'hidden', background: 'var(--background)' } },
+        h(G.Modal, { inline: true, open: true, title: 'Submit service request?', onClose: function(){}, primaryAction: { label: 'Submit Request' }, secondaryAction: { label: 'Cancel' } },
+          'You will not be able to edit the request details after submission. SGS will review it within 2 working days.')),
+      h(Demo)
+    )
+  );
+</script>
+</body>
+</html>

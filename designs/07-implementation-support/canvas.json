@@ -1,0 +1,214 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "IsAdminApprove.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Approve & assign",
+      "w": 1440,
+      "x": 3040,
+      "y": 1280
+    },
+    "IsAdminQueue.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Queue",
+      "w": 1440,
+      "x": 0,
+      "y": 1280
+    },
+    "IsAdminReject.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Reject",
+      "w": 1440,
+      "x": 4560,
+      "y": 1280
+    },
+    "IsAdminReview.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Review request",
+      "w": 1440,
+      "x": 1520,
+      "y": 1280
+    },
+    "IsConsAssignments.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "My assignments",
+      "w": 1440,
+      "x": 0,
+      "y": 2560
+    },
+    "IsConsComplete.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Complete request",
+      "w": 1440,
+      "x": 4560,
+      "y": 2560
+    },
+    "IsConsDeliverable.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Share a deliverable",
+      "w": 1440,
+      "x": 3040,
+      "y": 2560
+    },
+    "IsConsDetail.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Request detail",
+      "w": 1440,
+      "x": 1520,
+      "y": 2560
+    },
+    "IsConsWorkspace.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Workspace (read only)",
+      "w": 1440,
+      "x": 6080,
+      "y": 2560
+    },
+    "IsConsWorkspaceEnded.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Workspace – access ended",
+      "w": 1440,
+      "x": 7600,
+      "y": 2560
+    },
+    "IsDetailCompleted.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Detail · Completed",
+      "w": 1440,
+      "x": 9120,
+      "y": 0
+    },
+    "IsDetailProgress.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Detail · In progress",
+      "w": 1440,
+      "x": 7600,
+      "y": 0
+    },
+    "IsDetailRejected.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Detail · Rejected",
+      "w": 1440,
+      "x": 10640,
+      "y": 0
+    },
+    "IsDetailSubmitted.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Detail · Submitted",
+      "w": 1440,
+      "x": 6080,
+      "y": 0
+    },
+    "IsListEmpty.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "List – empty",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "IsWizard1.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Wizard 1 · Framework & scope",
+      "w": 1440,
+      "x": 3040,
+      "y": 0
+    },
+    "IsWizard2.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Wizard 2 · Support & submit",
+      "w": 1440,
+      "x": 4560,
+      "y": 0
+    },
+    "Main.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "List",
+      "w": 1440,
+      "x": 1520,
+      "y": 0
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-09-24T17:00:00Z",
+    "v": 1
+  },
+  "designSystems": [
+    {
+      "artifact": "https://claude.ai/artifact/CEneLQNFxsQuEaagfERSqo",
+      "copiedAt": "2026-09-24T19:02:00Z",
+      "namespace": "graphite",
+      "title": "Graphite DS",
+      "version": "1790310317-cfa1"
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  },
+  "notes": {
+    "r0": {
+      "kind": "title1",
+      "maxW": 8000,
+      "text": "\\[MVP\\] Customer",
+      "w": 240,
+      "x": 0,
+      "y": -260
+    },
+    "r1": {
+      "kind": "title1",
+      "maxW": 6000,
+      "text": "\\[MVP\\] SGS Admin",
+      "w": 240,
+      "x": 0,
+      "y": 1020
+    },
+    "r2": {
+      "kind": "title1",
+      "maxW": 8000,
+      "text": "\\[MVP\\] SGS Consultant",
+      "w": 240,
+      "x": 0,
+      "y": 2300
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "IsListEmpty.dc.html",
+    "IsWizard1.dc.html",
+    "IsWizard2.dc.html",
+    "IsDetailSubmitted.dc.html",
+    "IsDetailProgress.dc.html",
+    "IsDetailCompleted.dc.html",
+    "IsDetailRejected.dc.html",
+    "IsAdminQueue.dc.html",
+    "IsAdminReview.dc.html",
+    "IsAdminApprove.dc.html",
+    "IsAdminReject.dc.html",
+    "IsConsAssignments.dc.html",
+    "IsConsDetail.dc.html",
+    "IsConsDeliverable.dc.html",
+    "IsConsComplete.dc.html",
+    "IsConsWorkspace.dc.html",
+    "IsConsWorkspaceEnded.dc.html"
+  ],
+  "pages": [],
+  "title": "DTP – Implementation Support"
+}

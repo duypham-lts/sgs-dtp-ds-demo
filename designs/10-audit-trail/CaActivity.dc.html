@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Customer Admin – activity log</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;family=Noto+Sans+TC:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="customer" style="width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" site-name="Digital Trust Platform" site-sub="Customer Portal" user-name="Linh Tran" user-email="linh.tran@abc-trading.com" notifications="{{three}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" label="Customer Portal" sections="{{nav}}" default-active="audit" default-collapsed="{{no}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <div style="padding: 8px 8px 4px">
+        <x-import component-from-global-scope="Graphite.Breadcrumb" items="{{crumbs}}"></x-import>
+        <h1 class="headline-medium" style="margin: 8px 0 0 0">Activity log</h1>
+        <p class="body-medium" style="margin: 0; color: var(--text-secondary)">Everything done on ABC Trading’s evidence, requests, certificates and users — by your team, by SGS and by the system.</p>
+      </div>
+      <section class="gr-card gr-card--extend" style="padding: 16px 24px; gap: 12px">
+        <div class="gr-dt__tools" style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px">
+          <x-import component-from-global-scope="Graphite.SearchInput" label="Search events" placeholder="Search person, action or object" size="s" width="280px" value="{{q}}" on-change="{{onQ}}"></x-import>
+          <x-import component-from-global-scope="Graphite.Select" label="Action" size="s" width="200px" value="{{cat}}" on-change="{{onCat}}" options="{{cats}}"></x-import>
+          <x-import component-from-global-scope="Graphite.DatePicker" label="From date" placeholder="From" size="s" width="160px" today="2026-10-01" value="{{from}}" on-change="{{onFrom}}"></x-import>
+          <x-import component-from-global-scope="Graphite.DatePicker" label="To date" placeholder="To" size="s" width="160px" today="2026-10-01" value="{{to}}" on-change="{{onTo}}"></x-import>
+          <x-import component-from-global-scope="Graphite.Button" variant="ghost" size="sm" on-click="{{onClear}}" disabled="{{notFiltered}}">Clear filters</x-import>
+        </div>
+        <div style="flex-grow: 1; min-height: 0"><x-import component-from-global-scope="Graphite.DataTable" title="{{count}}" description="Recorded once and never changed." columns="{{cols}}" rows="{{rows}}" toolbar-actions="{{exportBtn}}" row-actions="{{rowActions}}" layout="table" page-size="{{eight}}" default-sort="{{sort}}"></x-import></div>
+      </section>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { q: '', cat: 'all', ten: 'all', from: '', to: '' }; }
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite;
+
+    var SR = { id: 'sr', label: 'Service Requests', icon: 'task', badge: 1, badgeTone: 'attention', badgeLabel: 'request needs action', children: [
+      { id: 'sr-all', label: 'All requests' }, { id: 'sr-cert', label: 'Certification Services' }, { id: 'sr-train', label: 'Training Courses' },
+      { type: 'label', label: 'Other services' }, { id: 'sr-gap', label: 'Gap Analysis', badge: 1, badgeTone: 'attention', badgeLabel: 'needs action' }, { id: 'sr-impl', label: 'Implementation Support' } ] };
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' }, { id: 'scopes', label: 'Scopes', icon: 'category' }, { id: 'ws', label: 'Workspaces', icon: 'folders' },
+      { id: 'docs', label: 'Documents', icon: 'document--multiple-01' }, SR, { id: 'training', label: 'Training', icon: 'education' },
+      { id: 'audit', label: 'Audit Logs', icon: 'catalog' }, { id: 'settings', label: 'Settings', icon: 'settings' } ] },
+      { label: 'Administration', items: [{ id: 'users', label: 'Users', icon: 'user--multiple' }, { id: 'access', label: 'Workspace access', icon: 'user--access' }] }];
+
+    var self = this, st = Object.assign({}, this.state || {});
+    var CAT = {"access": ["Access", "neutral"], "users": ["Users", "neutral"], "config": ["Configuration", "neutral"], "evidence": ["Evidence", "info"], "review": ["Review", "info"], "request": ["Service request", "info"], "consultant": ["Consultant activity", "required"], "cert": ["Certificate", "neutral"], "system": ["System", "neutral"]};
+    var all = [{"id": "e01", "ts": "2026-09-30 16:42", "who": "System", "atype": "system", "role": "—", "cat": "request", "act": "Status changed to Completed", "otype": "Service request", "obj": "GA-2026-002", "ten": "ABC Trading Co., Ltd.", "ctx": "GA-2026-002"}, {"id": "e02", "ts": "2026-09-30 16:40", "who": "Anna Lee", "atype": "user", "role": "SGS Consultant", "cat": "consultant", "act": "Uploaded final report", "otype": "Document", "obj": "GA-2026-002 – Gap Analysis Report.pdf", "ten": "ABC Trading Co., Ltd.", "ctx": "GA-2026-002"}, {"id": "e03", "ts": "2026-09-29 10:15", "who": "Anna Lee", "atype": "user", "role": "SGS Consultant", "cat": "consultant", "act": "Downloaded evidence", "otype": "Evidence", "obj": "asset-inventory-2026.xlsx", "ten": "ABC Trading Co., Ltd.", "ctx": "GA-2026-002"}, {"id": "e04", "ts": "2026-09-29 10:12", "who": "Anna Lee", "atype": "user", "role": "SGS Consultant", "cat": "consultant", "act": "Opened workspace (read only)", "otype": "Workspace", "obj": "ISO/IEC 27001 · Head office", "ten": "ABC Trading Co., Ltd.", "ctx": "GA-2026-002"}, {"id": "e05", "ts": "2026-09-26 11:02", "who": "Minh Nguyen", "atype": "user", "role": "SGS Admin", "cat": "request", "act": "Approved and assigned consultant", "otype": "Service request", "obj": "GA-2026-005", "ten": "ABC Trading Co., Ltd.", "ctx": "GA-2026-005"}, {"id": "e06", "ts": "2026-09-25 14:03", "who": "Linh Tran", "atype": "user", "role": "Customer Admin", "cat": "evidence", "act": "Uploaded evidence", "otype": "Evidence", "obj": "asset-inventory-2026.xlsx", "ten": "ABC Trading Co., Ltd.", "ctx": "A.5.9"}, {"id": "e07", "ts": "2026-09-25 14:03", "who": "System", "atype": "system", "role": "—", "cat": "evidence", "act": "Virus scan passed", "otype": "Evidence", "obj": "asset-inventory-2026.xlsx", "ten": "ABC Trading Co., Ltd.", "ctx": "A.5.9"}, {"id": "e08", "ts": "2026-09-24 17:20", "who": "Wei Lin", "atype": "user", "role": "SGS Consultant", "cat": "consultant", "act": "Shared deliverable", "otype": "Document", "obj": "IS-2026-003 – Access control policy v2.docx", "ten": "ABC Trading Co., Ltd.", "ctx": "IS-2026-003"}, {"id": "e12", "ts": "2026-09-22 10:20", "who": "Linh Tran", "atype": "user", "role": "Customer Admin", "cat": "users", "act": "Added scope access", "otype": "User", "obj": "Wei Chen · Plant, Taichung", "ten": "ABC Trading Co., Ltd.", "ctx": ""}, {"id": "e14", "ts": "2026-09-18 13:10", "who": "System", "atype": "system", "role": "—", "cat": "cert", "act": "Surveillance reminder sent", "otype": "Certificate", "obj": "CERT-TW-2025-118", "ten": "ABC Trading Co., Ltd.", "ctx": ""}, {"id": "c20", "ts": "2026-09-23 18:02", "who": "Wei Chen", "atype": "user", "role": "Customer User", "cat": "evidence", "act": "Replaced evidence with new version", "otype": "Evidence", "obj": "isms-policy-v4.pdf", "ten": "ABC Trading Co., Ltd.", "ctx": "A.5.1"}, {"id": "c21", "ts": "2026-09-21 08:44", "who": "Wei Chen", "atype": "user", "role": "Customer User", "cat": "access", "act": "Activated account", "otype": "Account", "obj": "wei.chen@abc-trading.com", "ten": "ABC Trading Co., Ltd.", "ctx": ""}];
+    var M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    function fmt(ts){ var d = ts.slice(0, 10).split('-'); return d[2] + ' ' + M[+d[1] - 1] + ' ' + d[0] + ', ' + ts.slice(11); }
+    function two(a, b){ return h('span', { style: { display: 'flex', flexDirection: 'column' } }, h('span', { style: { fontWeight: 500 } }, a), b ? h('span', { className: 'body-small', style: { color: 'var(--text-secondary)' } }, b) : null); }
+    var q = (st.q || '').toLowerCase();
+    var rows = all.filter(function(r){ var d = r.ts.slice(0, 10);
+      return (!q || (r.who + ' ' + r.act + ' ' + r.obj + ' ' + r.ctx).toLowerCase().indexOf(q) >= 0) && (st.cat === 'all' || r.cat === st.cat) && (st.ten === 'all' || r.ten === st.ten) && (!st.from || d >= st.from) && (!st.to || d <= st.to); });
+    var extra = { crumbs: [{ label: 'Audit Logs', href: '#' }, { label: 'Activity log' }] };
+    extra.rows = rows;
+    extra.count = rows.length + (rows.length === 1 ? ' event' : ' events');
+    extra.cols = [
+      { key: 'ts', header: 'Date & time', sortable: true, width: 160, render: function(r){ return fmt(r.ts); } },
+      { key: 'who', header: 'Who', sortable: true, render: function(r){ return two(r.who, r.atype === 'system' ? 'Automatic' : r.role); } },
+      { key: 'act', header: 'Action', sortable: true, render: function(r){ return h('span', { style: { display: 'flex', flexDirection: 'column', gap: 4, alignItems: 'flex-start' } }, h('span', null, r.act), h(G.Tag, { tone: CAT[r.cat][1] }, CAT[r.cat][0])); } },
+      { key: 'obj', header: 'Object', render: function(r){ return two(r.obj, r.otype); } },
+      
+      { key: 'ctx', header: 'Context', width: 120, render: function(r){ return r.ctx || '—'; } } ];
+    extra.rowActions = function(){ return [{ label: 'View details' }, { label: 'Show related events' }]; };
+    extra.q = st.q; extra.cat = st.cat; extra.ten = st.ten; extra.from = st.from; extra.to = st.to;
+    extra.onQ = function(e){ self.setState({ q: e.target.value }); };
+    extra.onCat = function(e, v){ self.setState({ cat: v }); };
+    extra.onTen = function(e, v){ self.setState({ ten: v }); };
+    extra.onFrom = function(v){ self.setState({ from: v }); };
+    extra.onTo = function(v){ self.setState({ to: v }); };
+    extra.onClear = function(){ self.setState({ q: '', cat: 'all', ten: 'all', from: '', to: '' }); };
+    extra.notFiltered = !(st.q || st.cat !== 'all' || st.ten !== 'all' || st.from || st.to);
+    extra.cats = [{ value: 'all', label: 'All actions' }].concat(Object.keys(CAT).filter(function(k){ return all.some(function(r){ return r.cat === k; }); }).map(function(k){ return { value: k, label: CAT[k][0] }; }));
+    extra.tens = [{ value: 'all', label: 'All customers' }, { value: 'ABC Trading Co., Ltd.', label: 'ABC Trading Co., Ltd.' }, { value: 'Lotus Cosmetics JSC', label: 'Lotus Cosmetics JSC' }, { value: 'Formosa Chips Inc.', label: 'Formosa Chips Inc.' }];
+    extra.exportBtn = h(G.Button, { variant: 'tertiary', size: 'sm', icon: 'download', iconPosition: 'left' }, 'Export CSV');
+    extra.eight = 8; extra.sort = { key: 'ts', dir: 'desc' };
+    return Object.assign({ yes: true, no: false, three: 3, nav: nav }, typeof extra === 'object' ? extra : {});
+  }
+}
+</script>
+</body>
+</html>

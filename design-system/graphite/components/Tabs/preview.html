@@ -1,0 +1,22 @@
+<!-- @dsCard group="Navigation" height=340 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Tabs — preview</title></head>
+<body style="margin:0">
+<div id="root"></div>
+<script>
+  var G = window.Graphite, h = React.createElement;
+  function row(){ return h.apply(null, ['div', { className: 'gr-demo__row' }].concat([].slice.call(arguments))); }
+  function cap(t){ return h('div', { className: 'gr-demo__cap' }, t); }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'gr-demo' },
+      cap('line (default)'),
+      h(G.Tabs, { label: 'Request sections', tabs: [{ id: 'd', label: 'Request Details', content: 'Country of Destination: Saudi Arabia · Service Required: Product Conformity Assessment' }, { id: 'doc', label: 'Documents', badge: 3, content: '3 documents attached.' }, { id: 'tp', label: 'Trade Parties', content: 'Seller, Buyer' }, { id: 'x', label: 'Shipment Details', disabled: true }] }),
+      cap('contained — tabs on a card, selected tab joins the panel'),
+      h(G.Tabs, { variant: 'contained', label: 'Profile', tabs: [{ id: 'a', label: 'Client Identification', content: 'Legal name, registration number, HQ address.' }, { id: 'b', label: 'Contact Person', content: 'Primary and billing contacts.' }, { id: 'c', label: 'Administrator(s)', content: 'Users who can manage this tenant.' }] })
+    )
+  );
+</script>
+</body>
+</html>

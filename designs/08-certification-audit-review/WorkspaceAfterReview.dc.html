@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Customer – workspace after the audit</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;family=Noto+Sans+TC:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="customer" style="width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" site-name="Digital Trust Platform" site-sub="Customer Portal" user-name="Wei Chen" user-email="wei.chen@abc-trading.com" notifications="{{three}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" label="Customer Portal" sections="{{nav}}" default-active="ws" default-collapsed="{{yes}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <x-import component-from-global-scope="Graphite.PageHeader" title="Appendix 10 · 2022 · Medium" subtitle="Customer data platform · System scope" on-back="{{noop}}" status="{{status}}" actions="{{hdr}}"></x-import>
+      <x-import component-from-global-scope="Graphite.InlineNotification" kind="success" title="Audit review closed on 08 Dec 2026 · workspace unlocked">Results of audit CR-2026-015 are shown on each requirement. You can upload new versions again; the evidence the auditor accepted is kept on record.</x-import>
+      <div style="flex-grow: 1; min-height: 0; display: grid; grid-template-columns: 360px 1fr; gap: 20px">
+        <div style="min-width: 0; min-height: 0; overflow: auto; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02)">
+          <x-import component-from-global-scope="Graphite.RequirementNavigator" label="Requirements" framework="{{fw}}" groups="{{groups}}" default-expanded="{{exp}}" default-selected="R.3.1.3" filter-options="{{filters}}" status-labels="{{labels}}"></x-import>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 20px">
+          <section class="gr-card">
+            <x-import component-from-global-scope="Graphite.Breadcrumb" items="{{path}}"></x-import>
+            <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px">
+              <div style="display: flex; flex-direction: column; gap: 4px"><span class="body-small" style="color: var(--text-secondary)">R.3.1.3 · from Medium</span><h2 class="headline-small" style="margin: 0">Periodically test backup reliability and integrity</h2></div>
+              <x-import component-from-global-scope="Graphite.StatusTag" status="needs-description" label="Closed with finding" size="sm"></x-import>
+            </div>
+            <p class="body-large" style="margin: 0">Backup data shall be tested periodically to verify the reliability of backup media and the integrity of information.</p>
+          </section>
+          <section class="gr-card">
+            <div class="gr-card__head"><div><h2 class="gr-card__title">Last audit result</h2><p class="gr-card__sub">Audit CR-2026-015 · David Wu · closed 08 Dec 2026</p></div></div>
+            <div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: var(--radius-md); background: var(--layer-02)">
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px"><span class="title-small">F-003 · Minor nonconformity</span><x-import component-from-global-scope="Graphite.StatusTag" status="completed" label="Closed" size="sm"></x-import></div>
+              <span class="body-medium">No record of a restore test in the last 12 months.</span>
+              <span class="body-small" style="color: var(--text-secondary)">Corrective action accepted on 05 Dec 2026 · restore test report and backup procedure v3</span>
+            </div>
+          </section>
+          <section class="gr-card gr-card--extend">
+            <div class="gr-card__head"><div><h2 class="gr-card__title">Evidence</h2><p class="gr-card__sub">Editable again</p></div><div style="display: flex; gap: 8px"><x-import component-from-global-scope="Graphite.Button" variant="tertiary" size="sm">Link existing evidence</x-import><x-import component-from-global-scope="Graphite.Button" size="sm" icon="upload" icon-position="left">Upload evidence</x-import></div></div>
+            <x-import component-from-global-scope="Graphite.DocumentItem" doc-type="Backup procedure" file-name="backup-procedure-v3.pdf" date-label="Uploaded Dec 02, 2026 by Kevin Ho" size="610 KB" status="completed" status-label="Provided" actions="{{docActs}}"></x-import>
+            <x-import component-from-global-scope="Graphite.DocumentItem" doc-type="Restore test report" file-name="restore-test-2026-12.pdf" date-label="Uploaded Dec 02, 2026 by Kevin Ho" size="540 KB" status="completed" status-label="Provided" actions="{{docActs}}"></x-import>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite;
+
+    var SR = { id: 'sr', label: 'Service Requests', icon: 'task', badge: 1, badgeTone: 'attention', badgeLabel: 'request needs action', children: [
+      { id: 'sr-all', label: 'All requests' }, { id: 'sr-cert', label: 'Certification Services' }, { id: 'sr-train', label: 'Training Courses' },
+      { type: 'label', label: 'Other services' }, { id: 'sr-gap', label: 'Gap Analysis', badge: 1, badgeTone: 'attention', badgeLabel: 'needs action' }, { id: 'sr-impl', label: 'Implementation Support' } ] };
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' }, { id: 'scopes', label: 'Scopes', icon: 'category' }, { id: 'ws', label: 'Workspaces', icon: 'folders' },
+      { id: 'docs', label: 'Documents', icon: 'document--multiple-01' }, { id: 'reviews', label: 'Reviews', icon: 'view', badge: 3, badgeTone: 'attention', badgeLabel: 'items need your response' }, SR, { id: 'certs', label: 'Certifications', icon: 'checkmark' }, { id: 'training', label: 'Training', icon: 'education' },
+      { id: 'audit', label: 'Audit Logs', icon: 'catalog' }, { id: 'settings', label: 'Settings', icon: 'settings' } ] }];
+
+    var extra = { noop: function(){} };
+    extra.status = { status: 'completed', label: 'Audit completed · 08 Dec 2026', shortLabel: 'Audited' };
+    extra.hdr = h('a', { href: '#', className: 'gr-btn gr-btn--tertiary gr-btn--md' }, 'Evidence library');
+    extra.fw = { name: 'Appendix 10 · 2022 · Medium', progress: 95, caption: 'Last audit CR-2026-015 · 58 accepted · 3 closed with finding' };
+    extra.labels = { acc: ['completed', 'Accepted'], cwf: ['needs-description', 'Closed with finding'], none: ['draft', 'Not in last audit'] };
+    extra.filters = [{ value: 'all', label: 'All' }, { value: 'acc', label: 'Accepted' }, { value: 'cwf', label: 'Closed with finding' }];
+    extra.exp = ['3'];
+    extra.path = [{ label: '3 Business Continuity Plan', href: '#' }, { label: '3.1 Data backup', href: '#' }, { label: 'R.3.1.3' }];
+    extra.docActs = [{ type: 'view' }, { type: 'open' }];
+    extra.groups = [
+      { id: '1', code: '1', title: 'Access Control', progress: 80, children: [{ id: 'R.1.1.1', code: 'R.1.1.1', title: 'Account management mechanism', status: 'acc' }, { id: 'R.1.1.4', code: 'R.1.1.4', title: 'Periodically review account lifecycle', status: 'cwf' }, { id: 'R.1.2.1', code: 'R.1.2.1', title: 'Least privilege', status: 'acc' }] },
+      { id: '2', code: '2', title: 'Event Logging and Accountability', progress: 70, children: [{ id: 'R.2.1.1', code: 'R.2.1.1', title: 'Log retention policy', status: 'acc' }] },
+      { id: '3', code: '3', title: 'Business Continuity Plan', progress: 40, children: [{ id: 'R.3.1.2', code: 'R.3.1.2', title: 'Perform data backup', status: 'acc' }, { id: 'R.3.1.3', code: 'R.3.1.3', title: 'Test backup reliability and integrity', status: 'cwf' }, { id: 'R.3.2.2', code: 'R.3.2.2', title: 'Test redundancy failover', status: 'acc' }] },
+      { id: '4', code: '4', title: 'Identification and Authentication', progress: 60, children: [{ id: 'R.4.1.2', code: 'R.4.1.2', title: 'Multi-factor authentication', status: 'cwf' }] },
+      { id: '5', code: '5', title: 'System and Service Acquisition', progress: 50, children: [{ id: 'R.5.4.2', code: 'R.5.4.2', title: 'Penetration testing', status: 'acc' }] } ];
+    return Object.assign({ yes: true, no: false, three: 3, nav: nav }, typeof extra === 'object' ? extra : {});
+  }
+}
+</script>
+</body>
+</html>

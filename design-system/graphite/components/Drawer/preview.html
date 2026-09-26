@@ -1,0 +1,23 @@
+<!-- @dsCard group="Overlay" height=460 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Drawer — preview</title></head>
+<body style="margin:0">
+<div id="root"></div>
+<script>
+  var G = window.Graphite, h = React.createElement;
+  function row(){ return h.apply(null, ['div', { className: 'gr-demo__row', style: { alignItems: 'flex-start' } }].concat([].slice.call(arguments))); }
+  function cap(t){ return h('div', { className: 'gr-demo__cap' }, t); }
+  function Demo(){ var s = React.useState(false); return h('div', null, h(G.Button, { size: 'md', variant: 'secondary', onClick: function(){ s[1](true); } }, 'Open real drawer'), h(G.Drawer, { open: s[0], title: 'Review comment', onClose: function(){ s[1](false); } }, 'Drawer content')); }
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'gr-demo' },
+      h('div', { style: { position: 'relative', height: 380, borderRadius: 8, overflow: 'hidden', background: 'var(--background)' } },
+        h(G.Drawer, { inline: true, open: true, title: 'Evidence details', subtitle: 'Information security policy', onClose: function(){},
+          footer: h(React.Fragment, null, h(G.Button, { variant: 'ghost', size: 'md' }, 'Cancel'), h(G.Button, { size: 'md' }, 'Save')) },
+          h('div', { style: { display: 'flex', flexDirection: 'column', gap: 16 } }, h(G.StatusTag, { status: 'under-review', size: 'sm' }), h(G.Textarea, { label: 'Description', width: '100%', defaultValue: 'Approved ISMS policy v3, signed by the CISO on 12 Jan 2026.' })))),
+      h(Demo)
+    )
+  );
+</script>
+</body>
+</html>

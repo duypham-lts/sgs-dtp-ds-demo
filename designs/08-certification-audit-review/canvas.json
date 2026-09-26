@@ -1,0 +1,321 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "AudChangeDueDate.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Auditor · change a due date",
+      "w": 1440,
+      "x": 6080,
+      "y": 3840
+    },
+    "AudClarification.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Request clarification",
+      "w": 1440,
+      "x": 6080,
+      "y": 2560
+    },
+    "AudCloseReview.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Close review",
+      "w": 1440,
+      "x": 12160,
+      "y": 2560
+    },
+    "AudEvaluate.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Evaluate corrective action",
+      "w": 1440,
+      "x": 9120,
+      "y": 2560
+    },
+    "AudEvaluateClarification.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Auditor · evaluate a clarification answer",
+      "w": 1440,
+      "x": 4560,
+      "y": 3840
+    },
+    "AudFindings.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Findings",
+      "w": 1440,
+      "x": 10640,
+      "y": 2560
+    },
+    "AudMyAudits.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "My audits",
+      "w": 1440,
+      "x": 0,
+      "y": 2560
+    },
+    "AudRaiseFinding.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Raise finding",
+      "w": 1440,
+      "x": 7600,
+      "y": 2560
+    },
+    "AudRequest.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Request detail",
+      "w": 1440,
+      "x": 1520,
+      "y": 2560
+    },
+    "AudReview.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Review workspace",
+      "w": 1440,
+      "x": 4560,
+      "y": 2560
+    },
+    "AudStartReview.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Start audit review",
+      "w": 1440,
+      "x": 3040,
+      "y": 2560
+    },
+    "Certifications.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Certifications",
+      "w": 1440,
+      "x": 15200,
+      "y": 0
+    },
+    "CorrectiveNotAccepted.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Customer · corrective action not accepted",
+      "w": 1440,
+      "x": 1520,
+      "y": 3840
+    },
+    "Main.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Request certification",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "ReqAssigned.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Request · Assigned",
+      "w": 1440,
+      "x": 1520,
+      "y": 0
+    },
+    "ReqCertIssued.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Request · Certificate issued",
+      "w": 1440,
+      "x": 13680,
+      "y": 0
+    },
+    "ReqCompleted.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Request · Audit completed",
+      "w": 1440,
+      "x": 12160,
+      "y": 0
+    },
+    "ReqInProgress.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Request · Audit in progress",
+      "w": 1440,
+      "x": 3040,
+      "y": 0
+    },
+    "RespondClarification.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Respond to clarification",
+      "w": 1440,
+      "x": 9120,
+      "y": 0
+    },
+    "ReviewFeedback.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Review · items to answer",
+      "w": 1440,
+      "x": 7600,
+      "y": 0
+    },
+    "ReviewOverdue.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Customer · overdue item",
+      "w": 1440,
+      "x": 3040,
+      "y": 3840
+    },
+    "Reviews.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Reviews",
+      "w": 1440,
+      "x": 6080,
+      "y": 0
+    },
+    "SgsAssignAuditor.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Assign auditor",
+      "w": 1440,
+      "x": 1520,
+      "y": 1280
+    },
+    "SgsCertRequests.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Certification requests",
+      "w": 1440,
+      "x": 0,
+      "y": 1280
+    },
+    "SgsCertifications.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Certifications",
+      "w": 1440,
+      "x": 4560,
+      "y": 1280
+    },
+    "SgsCreateCert.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Create certification record (SGS User)",
+      "w": 1440,
+      "x": 3040,
+      "y": 1280
+    },
+    "SubmitCorrectiveAction.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Submit corrective action",
+      "w": 1440,
+      "x": 10640,
+      "y": 0
+    },
+    "WorkspaceAfterReview.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Customer · workspace after the audit",
+      "w": 1440,
+      "x": 0,
+      "y": 3840
+    },
+    "WorkspaceLocked.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Workspace · locked",
+      "w": 1440,
+      "x": 4560,
+      "y": 0
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-09-25T10:00:00Z",
+    "v": 1
+  },
+  "designSystems": [
+    {
+      "artifact": "https://claude.ai/artifact/CEneLQNFxsQuEaagfERSqo",
+      "copiedAt": "2026-09-25T10:00:00Z",
+      "namespace": "graphite",
+      "title": "Graphite DS",
+      "version": "1790312340-e7be"
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  },
+  "notes": {
+    "r0": {
+      "kind": "title1",
+      "maxW": 8000,
+      "text": "Customer · certification & audit",
+      "w": 240,
+      "x": 0,
+      "y": -260
+    },
+    "r1": {
+      "kind": "title1",
+      "maxW": 6000,
+      "text": "SGS Admin / SGS User",
+      "w": 240,
+      "x": 0,
+      "y": 1020
+    },
+    "r2": {
+      "kind": "title1",
+      "maxW": 8000,
+      "text": "SGS Auditor/Certification",
+      "w": 240,
+      "x": 0,
+      "y": 2300
+    },
+    "r_add": {
+      "kind": "title1",
+      "maxW": 7520,
+      "text": "After the review · edge cases",
+      "w": 240,
+      "x": 0,
+      "y": 3580
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "ReqAssigned.dc.html",
+    "ReqInProgress.dc.html",
+    "WorkspaceLocked.dc.html",
+    "ReviewFeedback.dc.html",
+    "RespondClarification.dc.html",
+    "SubmitCorrectiveAction.dc.html",
+    "ReqCompleted.dc.html",
+    "ReqCertIssued.dc.html",
+    "Certifications.dc.html",
+    "SgsCertRequests.dc.html",
+    "SgsAssignAuditor.dc.html",
+    "SgsCreateCert.dc.html",
+    "SgsCertifications.dc.html",
+    "AudMyAudits.dc.html",
+    "AudRequest.dc.html",
+    "AudStartReview.dc.html",
+    "AudReview.dc.html",
+    "AudClarification.dc.html",
+    "AudRaiseFinding.dc.html",
+    "AudEvaluate.dc.html",
+    "AudFindings.dc.html",
+    "AudCloseReview.dc.html",
+    "Reviews.dc.html",
+    "WorkspaceAfterReview.dc.html",
+    "CorrectiveNotAccepted.dc.html",
+    "ReviewOverdue.dc.html",
+    "AudEvaluateClarification.dc.html",
+    "AudChangeDueDate.dc.html"
+  ],
+  "pages": [],
+  "title": "DTP – Certification & Audit Review"
+}

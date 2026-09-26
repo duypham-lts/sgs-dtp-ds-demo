@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Four places to one thread</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=Roboto+Mono:wght@400&amp;display=swap">
+  <style>
+    body { margin: 0; font-family: Roboto, "Noto Sans", system-ui, sans-serif; background: #FFFFFF; color: #161616; }
+    a { color: #CA4300; } a:hover { color: #B13B00; }
+    code { font-family: "Roboto Mono", ui-monospace, Menlo, monospace; }
+  </style>
+</helmet>
+<div style="width: 1280px; height: 820px; box-sizing: border-box; padding: 38px 40px; background: #FFFFFF; display: flex; flex-direction: column; gap: 22px;">
+
+  <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 32px;">
+    <div style="display: flex; flex-direction: column; gap: 5px;">
+      <div style="font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: #6E7C85; font-weight: 500;">Why this changes</div>
+      <h1 style="margin: 0; font-size: 26px; font-weight: 700; color: #001F3F;">Four places to one thread</h1>
+    </div>
+    <p style="margin: 0; max-width: 560px; font-size: 14px; line-height: 1.55; color: #5A6B72;">On the Service Request detail page today, a conversation is split across four blocks separated by hundreds of pixels of scroll. Nothing tells a consultant what the customer saw, or in what order any of it happened.</p>
+  </div>
+
+  <div style="display: flex; align-items: stretch; gap: 20px;">
+
+    <div style="width: 470px; flex-shrink: 0; display: flex; flex-direction: column; gap: 9px;">
+      <span style="font-size: 11.5px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #6E7C85;">Today</span>
+      <div style="display: flex; flex-direction: column; gap: 10px; padding: 16px; border: 1px solid #E0E0E0; border-radius: 10px; background: #EDF2F7;">
+        <div style="padding: 11px 13px; background: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 7px;">
+          <p style="margin: 0; font-size: 13px; font-weight: 700; color: #29343A;">Consulting comments</p>
+          <p style="margin: 3px 0 0 0; font-size: 12px; color: #6E7C85;">Customer-visible · consultant writes here</p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px; padding-left: 4px;">
+          <span style="flex-grow: 1; height: 1px; background: #D3DCE4;"></span>
+          <span style="font-size: 11px; color: #8A98A0;">scroll</span>
+          <span style="flex-grow: 1; height: 1px; background: #D3DCE4;"></span>
+        </div>
+        <div style="padding: 11px 13px; background: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 7px;">
+          <p style="margin: 0; font-size: 13px; font-weight: 700; color: #29343A;">Service Request actions</p>
+          <p style="margin: 3px 0 0 0; font-size: 12px; color: #6E7C85;">Holds a second, unlabelled comment box</p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px; padding-left: 4px;">
+          <span style="flex-grow: 1; height: 1px; background: #D3DCE4;"></span>
+          <span style="font-size: 11px; color: #8A98A0;">scroll</span>
+          <span style="flex-grow: 1; height: 1px; background: #D3DCE4;"></span>
+        </div>
+        <div style="padding: 11px 13px; background: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 7px;">
+          <p style="margin: 0; font-size: 13px; font-weight: 700; color: #29343A;">Status timeline</p>
+          <p style="margin: 3px 0 0 0; font-size: 12px; color: #6E7C85;">Same events, a third ordering</p>
+        </div>
+        <div style="padding: 11px 13px; background: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 7px;">
+          <p style="margin: 0; font-size: 13px; font-weight: 700; color: #29343A;">Internal SGS comments</p>
+          <p style="margin: 3px 0 0 0; font-size: 12px; color: #6E7C85;">Where the box above actually posts to</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; padding-top: 26px;">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#CA4300" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15"></path><path d="m13 6 6 6-6 6"></path></svg>
+    </div>
+
+    <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 9px;">
+      <span style="font-size: 11.5px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #6E7C85;">Proposed</span>
+      <div style="display: flex; flex-direction: column; gap: 10px; padding: 16px; border: 1px solid #CA4300; border-radius: 10px; background: #FDF6F2; flex-grow: 1;">
+        <p style="margin: 0; font-size: 13px; font-weight: 700; color: #A63700;">Discussion — one chronological session</p>
+        <div style="display: flex; gap: 8px; align-items: stretch;">
+          <span style="width: 4px; border-radius: 2px; background: #0F62FE;"></span>
+          <p style="margin: 0; flex-grow: 1; padding: 8px 11px; background: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 6px; font-size: 12.5px; color: #29343A;">Customer request and replies</p>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: stretch;">
+          <span style="width: 4px; border-radius: 2px; background: #B6BFC6;"></span>
+          <p style="margin: 0; flex-grow: 1; padding: 8px 11px; background: #F4F6F8; border: 1px solid #E0E0E0; border-radius: 6px; font-size: 12.5px; color: #29343A;">Status events, inline where they happened</p>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: stretch;">
+          <span style="width: 4px; border-radius: 2px; background: #CA4300;"></span>
+          <p style="margin: 0; flex-grow: 1; padding: 8px 11px; background: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 6px; font-size: 12.5px; color: #29343A;">Consulting guidance, marked visible to customer</p>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: stretch;">
+          <span style="width: 4px; border-radius: 2px; background: #001F3F;"></span>
+          <span style="width: 10px; border-radius: 2px; background-image: repeating-linear-gradient(135deg, #C8BCA6 0 1.5px, rgba(0,0,0,0) 1.5px 6px);"></span>
+          <p style="margin: 0; flex-grow: 1; padding: 8px 11px; background: #F9F7F3; border: 1px solid #DED7CB; border-radius: 6px; font-size: 12.5px; color: #29343A;">Internal notes, hatched and locked</p>
+        </div>
+        <div style="margin-top: auto; padding: 10px 12px; background: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 7px;">
+          <p style="margin: 0; font-size: 12.5px; color: #29343A;">One composer at the foot, with the audience chosen before the text is written.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px;">
+    <div style="padding: 14px 16px; border: 1px solid #E0E0E0; border-radius: 9px; background: #FAFBFC;">
+      <h3 style="margin: 0 0 6px 0; font-size: 13.5px; font-weight: 700; color: #001F3F;">What merges</h3>
+      <p style="margin: 0; font-size: 12.5px; line-height: 1.55; color: #29343A;">Consulting comments, internal SGS comments and the status timeline become one ordered list under <code style="font-size: 11.5px;">serviceRequestComments</code> plus emitted events.</p>
+    </div>
+    <div style="padding: 14px 16px; border: 1px solid #E0E0E0; border-radius: 9px; background: #FAFBFC;">
+      <h3 style="margin: 0 0 6px 0; font-size: 13.5px; font-weight: 700; color: #001F3F;">What the model needs</h3>
+      <p style="margin: 0; font-size: 12.5px; line-height: 1.55; color: #29343A;"><code style="font-size: 11.5px;">visibility</code> widens from <code style="font-size: 11.5px;">'INTERNAL'</code> to <code style="font-size: 11.5px;">'INTERNAL' | 'SHARED'</code>, and the selector keeps deciding — the Customer selector still returns shared rows only.</p>
+    </div>
+    <div style="padding: 14px 16px; border: 1px solid #E0E0E0; border-radius: 9px; background: #FAFBFC;">
+      <h3 style="margin: 0 0 6px 0; font-size: 13.5px; font-weight: 700; color: #001F3F;">What stays apart</h3>
+      <p style="margin: 0; font-size: 12.5px; line-height: 1.55; color: #29343A;">The Audit Trail. The thread is operational and can be withdrawn from; the Audit Trail is immutable and remains the record of what happened.</p>
+    </div>
+  </div>
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":820}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Consultant – workspace access ended · IS-2026-003</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="sgs-ops" style="position: relative; width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" tone="dark" site-name="Digital Trust Platform" site-sub="Operations Console" badge="Internal" home-links="{{noLinks}}" user-name="Anna Lee" user-email="anna.lee@sgs.com" notifications="{{one}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" tone="dark" label="SGS Operations" sections="{{nav}}" default-active="asg-impl" default-collapsed="{{collapsed}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <x-import component-from-global-scope="Graphite.PageHeader" title="Workspace · ISO/IEC 27001 · Head office, Taipei" subtitle="ABC Trading Co., Ltd. · opened from IS-2026-003" on-back="{{noop}}"></x-import>
+      <section class="gr-card gr-card--extend" style="align-items: center; justify-content: center">
+        <x-import component-from-global-scope="Graphite.EmptyState" icon="user--access" title="Your access to this workspace ended on 31 Jan 2027" body="IS-2026-003 was completed, so the customer’s requirements and evidence are no longer visible to you. What you submitted is still available on the request. If you need access again, ask the SGS admin." action="{{actions}}"></x-import>
+      </section>
+    </main>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite, F = window.React.Fragment;
+
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' },
+      { id: 'asg', label: 'My assignments', icon: 'user--access', badge: 1, badgeTone: 'attention', badgeLabel: 'assignment in progress', children: [
+        { id: 'asg-gap', label: 'Gap Analysis', badge: 1, badgeTone: 'attention', badgeLabel: 'in progress' }, { id: 'asg-impl', label: 'Implementation Support' } ] },
+      { id: 'fw', label: 'Frameworks', icon: 'catalog' },
+      { id: 'settings', label: 'Settings', icon: 'settings' } ] }];
+    var extra = {};
+
+    extra.actions = h(F, null, h('a', { href: 'IsConsDetail.dc.html', className: 'gr-btn gr-btn--primary gr-btn--md' }, 'Back to IS-2026-003'), h(G.Button, { variant: 'ghost', size: 'md' }, 'Contact SGS admin'));
+    return Object.assign({ yes: true, no: false, one: 1, two: 2, three: 3, s16: 16, nav: nav, noLinks: [], noop: function(){}, collapsed: true }, extra);
+  }
+}
+</script>
+</body>
+</html>

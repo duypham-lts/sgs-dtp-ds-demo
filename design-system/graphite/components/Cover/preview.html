@@ -1,0 +1,38 @@
+<!-- @dsCard height=288 -->
+<div class="cover">
+  <style>
+  html,body{margin:0}
+  .cover{position:relative;width:960px;height:288px;background:var(--background);overflow:hidden;font-family:var(--font-sans)}
+  .art{position:absolute;left:0;top:0}
+  .k{fill:var(--brand-charcoal)} .o{fill:var(--brand-orange)} .p{fill:var(--brand-peach)} .b{fill:var(--brand-burgundy)} .s{fill:var(--brand-slate)}
+  .name{position:absolute;left:40px;bottom:40px;max-width:440px}
+  .title{font-size:64px;line-height:.95;font-weight:500;color:var(--text-primary);letter-spacing:-0.5px}
+  .tag{margin-top:16px;font-size:14px;line-height:20px;color:var(--text-secondary)}
+</style>
+  <svg class="art" viewBox="0 0 960 288" width="960" height="288" aria-hidden="true">
+    <!-- blocks: brand-charcoal slab 480x288 (x=480..960) as the dark field; tiles brand-orange, brand-peach, brand-burgundy, brand-slate at 96x96 (spacing-10) -->
+    <!-- arrangement: flush 5x3 modular grid bleeding to the top, right and bottom edges, two cells left empty so the charcoal reads -->
+    <!-- pattern: literal motif row - the COPIA Graphite cover's "drop" tiles (three quarter-rounds + one square corner), chosen because the client's own cover composes exactly this way -->
+    <!-- steps/radii: pitch spacing-10 96px, corner radius 48px = half the short side (disc rule), no gaps -->
+    <rect class="k" x="480" y="0" width="480" height="288"/>
+    <path class="o" d="M528,0 A48,48 0 0 1 576,48 A48,48 0 0 1 528,96 H480 V48 A48,48 0 0 1 528,0 Z"/>
+    <path class="p" d="M624,0 A48,48 0 0 1 672,48 V96 H624 A48,48 0 0 1 576,48 A48,48 0 0 1 624,0 Z"/>
+    <path class="b" d="M720,0 A48,48 0 0 1 768,48 V96 H720 A48,48 0 0 1 672,48 A48,48 0 0 1 720,0 Z"/>
+    <path class="o" d="M816,0 A48,48 0 0 1 864,48 A48,48 0 0 1 816,96 H768 V48 A48,48 0 0 1 816,0 Z"/>
+    <path class="s" d="M912,0 A48,48 0 0 1 960,48 V96 H912 A48,48 0 0 1 864,48 A48,48 0 0 1 912,0 Z"/>
+    <path class="s" d="M528,96 A48,48 0 0 1 576,144 A48,48 0 0 1 528,192 A48,48 0 0 1 480,144 V96 H528 Z"/>
+    <path class="b" d="M624,96 H672 V144 A48,48 0 0 1 624,192 A48,48 0 0 1 576,144 A48,48 0 0 1 624,96 Z"/>
+    <path class="o" d="M720,96 A48,48 0 0 1 768,144 A48,48 0 0 1 720,192 A48,48 0 0 1 672,144 V96 H720 Z"/>
+    <path class="p" d="M816,96 A48,48 0 0 1 864,144 A48,48 0 0 1 816,192 A48,48 0 0 1 768,144 V96 H816 Z"/>
+    <path class="o" d="M624,192 H672 V240 A48,48 0 0 1 624,288 A48,48 0 0 1 576,240 A48,48 0 0 1 624,192 Z"/>
+    <path class="b" d="M720,192 A48,48 0 0 1 768,240 A48,48 0 0 1 720,288 H672 V240 A48,48 0 0 1 720,192 Z"/>
+    <path class="s" d="M816,192 A48,48 0 0 1 864,240 V288 H816 A48,48 0 0 1 768,240 A48,48 0 0 1 816,192 Z"/>
+    <path class="o" d="M912,192 H960 V240 A48,48 0 0 1 912,288 A48,48 0 0 1 864,240 A48,48 0 0 1 912,192 Z"/>
+  </svg>
+  <div class="name">
+    <div class="title">Graphite DS</div>
+    <div class="tag">SGS Digital Trust Platform · Customer &amp; Operations portals</div>
+  </div>
+</div>
+
+<script>/* static cover */</script>

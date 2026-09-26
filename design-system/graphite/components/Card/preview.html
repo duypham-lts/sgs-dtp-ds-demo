@@ -1,0 +1,24 @@
+<!-- @dsCard group="Patterns" height=560 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Card — preview</title></head>
+<body style="margin:0">
+<div id="root"></div>
+<script>
+  var G = window.Graphite, h = React.createElement;
+  function cap(t){ return h('div', { className: 'gr-demo__cap' }, t); }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'gr-demo', style: { background: 'var(--background)' } },
+      h(G.Card, { number: 1, title: 'Trade parties', subtitle: 'Add the companies involved in this request.' },
+        h('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, alignItems: 'start' } },
+          h(G.Accordion, { items: [{ id: 's', title: 'Seller', content: h('div', null, h('strong', null, 'SGS Nairobi'), h('div', { style: { color: 'var(--text-secondary)' } }, 'Museum Hill, Kipande Rd, Nairobi')) }] }),
+          h(G.Accordion, { items: [{ id: 'b', title: 'Buyer', meta: h(G.Tag, { tone: 'required' }, 'Required'), defaultOpen: true, content: h(G.Combobox, { label: 'Company name', required: true, width: '100%', placeholder: 'Search your companies', options: [{ value: 'a', label: 'ABC Trading Co., Ltd.' }] }) }] })),
+        h('div', null, h(G.Button, { variant: 'tertiary', size: 'sm', icon: 'add', iconPosition: 'left' }, 'Add another party'))),
+      h(G.Card, { number: 2, title: 'Role details', compact: true },
+        h('div', { style: { display: 'flex', gap: 16, flexWrap: 'wrap' } }, h(G.Select, { label: 'Who will pay for this service?', required: true, size: 's', placeholder: 'Select a payer...', options: [] }), h(G.MultiSelect, { label: 'Who will collect the Certificate?', required: true, size: 's', placeholder: 'Select Collector/s...', options: [{ value: 'a', label: 'Seller' }] })))
+    )
+  );
+</script>
+</body>
+</html>

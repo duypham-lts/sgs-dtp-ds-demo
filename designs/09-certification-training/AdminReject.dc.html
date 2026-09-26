@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SGS Admin – reject request</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="sgs-ops" style="position: relative; width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" tone="dark" site-name="Digital Trust Platform" site-sub="Operations Console" badge="Internal" home-links="{{noLinks}}" user-name="Minh Nguyen" user-email="minh.nguyen@sgs.com" notifications="{{three}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" tone="dark" label="SGS Operations" sections="{{nav}}" default-active="req-cert" default-collapsed="{{collapsed}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <div style="padding: 8px 8px 4px">
+        <x-import component-from-global-scope="Graphite.Breadcrumb" items="{{crumbs}}"></x-import>
+        <h1 class="headline-medium" style="margin: 8px 0 0 0">Certification requests</h1>
+        <p class="body-medium" style="margin: 0; color: var(--text-secondary)">Assign each request to an SGS contact, or reject it with a reason.</p>
+      </div>
+      <section class="gr-card gr-card--extend" style="padding: 16px 24px"><x-import component-from-global-scope="Graphite.Tabs" label="Request status" tabs="{{tabs}}"></x-import></section>
+    </main>
+  </div>
+  <x-import component-from-global-scope="Graphite.Modal" inline="{{yes}}" open="{{yes}}" size="fit" danger="{{yes}}" title="Reject this request?" on-close="{{noop}}" primary-action="{{primary}}" secondary-action="{{secondary}}">
+    <div style="display: flex; flex-direction: column; gap: 16px; width: 552px; max-width: 100%">
+      <p class="body-medium" style="margin: 0; color: var(--text-secondary)">CR-2026-012 · ABC Trading Co., Ltd. The customer sees the reason and your message.</p>
+      <x-import component-from-global-scope="Graphite.Select" label="Reason" required="{{yes}}" size="m" placeholder="Select a reason" options="{{reasons}}"></x-import>
+      <x-import component-from-global-scope="Graphite.Textarea" label="Message to the customer" required="{{yes}}" size="l" rows="{{three}}"></x-import>
+    </div>
+  </x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite, F = window.React.Fragment;
+
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' },
+      { id: 'req', label: 'Requests', icon: 'task', badge: 3, badgeTone: 'attention', badgeLabel: 'requests need triage', children: [
+        { id: 'req-all', label: 'All requests' }, { id: 'req-cert', label: 'Certification' }, { id: 'req-train', label: 'Training' },
+        { type: 'label', label: 'Other services' }, { id: 'req-gap', label: 'Gap Analysis', badge: 3, badgeTone: 'attention', badgeLabel: 'need triage' }, { id: 'req-impl', label: 'Implementation Support' } ] },
+      { id: 'cust', label: 'Customers', icon: 'user--multiple' },
+      { id: 'fw', label: 'Frameworks', icon: 'catalog' },
+      { id: 'asg', label: 'Assignments', icon: 'user--access' },
+      { id: 'audit', label: 'Audit Logs', icon: 'document' },
+      { id: 'settings', label: 'Settings', icon: 'settings' } ] }];
+    var extra = {};
+
+    var ST = { submitted: ['under-review', 'Submitted'], assigned: ['info', 'Assigned'], rejected: ['rejected', 'Rejected'] };
+    var all = [{"id": "CR-2026-012", "cust": "ABC Trading Co., Ltd.", "svc": "ISO/IEC 27001", "scope": "Head office \u00b7 Taipei", "type": "Initial", "per": "Q1 2027", "sub": "23 Sep 2026", "owner": "\u2014", "st": "submitted"}, {"id": "CR-2026-013", "cust": "Lotus Cosmetics JSC", "svc": "ISO 22301", "scope": "Head office", "type": "Recertification", "per": "Q4 2026", "sub": "24 Sep 2026", "owner": "\u2014", "st": "submitted"}, {"id": "CR-2026-008", "cust": "ABC Trading Co., Ltd.", "svc": "TISAX", "scope": "Plant \u00b7 Taichung", "type": "Initial", "per": "Q4 2026", "sub": "02 Aug 2026", "owner": "David Wu", "st": "assigned"}, {"id": "CR-2026-004", "cust": "Formosa Chips Inc.", "svc": "ISO/IEC 27017", "scope": "Cloud services", "type": "Initial", "per": "Q3 2026", "sub": "11 May 2026", "owner": "\u2014", "st": "rejected"}];
+    function two(a, b){ return h('span', { style: { display: 'flex', flexDirection: 'column' } }, h('span', { style: { fontWeight: 500 } }, a), h('span', { className: 'body-small', style: { color: 'var(--text-secondary)' } }, b)); }
+    var cols = [
+      { key: 'id', header: 'Request', width: 130, render: function(r){ return h('a', { href: '#', className: 'gr-link', style: { fontWeight: 500 } }, r.id); } },
+      { key: 'cust', header: 'Customer · scope', sortable: true, render: function(r){ return two(r.cust, r.scope); } },
+      { key: 'svc', header: 'Service', sortable: true, render: function(r){ return two(r.svc, r.type); } },
+      { key: 'per', header: 'Preferred period' },
+      { key: 'sub', header: 'Submitted', sortable: true },
+      { key: 'owner', header: 'SGS contact' },
+      { key: 'st', header: 'Status', render: function(r){ return h(G.StatusTag, { status: ST[r.st][0], size: 'sm', label: ST[r.st][1] }); } } ];
+    function T(st, acts){ return h(G.DataTable, { columns: cols, rows: all.filter(function(r){ return st.indexOf(r.st) >= 0; }), layout: 'table', searchable: true, searchPlaceholder: 'Search requests or customers', rowActions: function(){ return acts; } }); }
+    extra.crumbs = [{ label: 'Requests', href: '#' }, { label: 'Certification' }];
+    extra.tabs = [
+      { id: 'todo', label: 'To assign', badge: all.filter(function(r){ return r.st === 'submitted'; }).length, content: T(['submitted'], [{ label: 'Assign' }, { label: 'Reject', danger: true }]) },
+      { id: 'as', label: 'Assigned', badge: all.filter(function(r){ return r.st === 'assigned'; }).length, content: T(['assigned'], [{ label: 'Open' }]) },
+      { id: 'rj', label: 'Rejected', badge: all.filter(function(r){ return r.st === 'rejected'; }).length, content: T(['rejected'], [{ label: 'Open' }]) } ];
+    extra.noop = function(){}; extra.three = 3; extra.primary = { label: 'Reject request' }; extra.secondary = { label: 'Cancel' };
+    extra.reasons = [{ value: 'offer', label: 'Service not offered by this affiliate' }, { value: 'dup', label: 'Duplicate of an open request' }, { value: 'info', label: 'Not enough information' }, { value: 'other', label: 'Other' }];
+    return Object.assign({ yes: true, no: false, three: 3, nav: nav, noLinks: [], noop: function(){}, collapsed: false }, extra);
+  }
+}
+</script>
+</body>
+</html>

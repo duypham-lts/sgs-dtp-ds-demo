@@ -1,0 +1,23 @@
+<!-- @dsCard group="Forms" height=420 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>FormField — preview</title></head>
+<body style="margin:0">
+<div id="root"></div>
+<script>
+  var G = window.Graphite, h = React.createElement;
+  function row(){ return h.apply(null, ['div', { className: 'gr-demo__row' }].concat([].slice.call(arguments))); }
+  function cap(t){ return h('div', { className: 'gr-demo__cap' }, t); }
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'gr-demo' },
+      cap('Anatomy: label (+ orange * when required) · field · one message below (help text OR error)'),
+      h(G.TextInput, { label: 'Company name', required: true, placeholder: 'Search your companies', helpText: 'Results are from companies used in past transactions.' }),
+      cap('Error replaces the help text; typing removes it immediately'),
+      h(G.TextInput, { label: 'Email', required: true, defaultValue: 'linh.tran@sgs', error: 'Enter a valid email address.' }),
+      cap('Disabled'),
+      h(G.TextInput, { label: 'Tax ID', disabled: true, placeholder: 'Not editable', helpText: 'Set by SGS after onboarding.' })
+    )
+  );
+</script>
+</body>
+</html>

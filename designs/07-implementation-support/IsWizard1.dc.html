@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Implementation Support – step 1</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;family=Noto+Sans+TC:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="customer" style="width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" site-name="Digital Trust Platform" site-sub="Customer Portal" user-name="Linh Tran" user-email="linh.tran@abc-trading.com" notifications="{{three}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" label="Customer Portal" sections="{{nav}}" default-active="sr-impl" default-collapsed="{{yes}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <x-import component-from-global-scope="Graphite.PageHeader" title="New Implementation Support request" subtitle="Step 1 of 2" on-back="{{noop}}" status="{{draft}}" autosave="saved"></x-import>
+      <div style="flex-grow: 1; min-height: 0; display: flex; gap: 20px">
+        <div style="width: 220px; flex-shrink: 0; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02)"><x-import component-from-global-scope="Graphite.SectionNav" label="Steps" items="{{steps}}" default-active="s1"></x-import></div>
+        <div style="flex-grow: 1; min-width: 0; min-height: 0; overflow: auto; display: flex; flex-direction: column">
+          <section class="gr-card gr-card--extend">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">1</span><div><h2 class="gr-card__title">Framework & scope</h2><p class="gr-card__sub">Pick the framework you want to implement and the part of your organisation.</p></div></div></div>
+            <div style="display: flex; gap: 16px; flex-wrap: wrap">
+              <x-import component-from-global-scope="Graphite.Select" label="Framework" required="{{yes}}" size="m" default-value="27001" options="{{fws}}" help-text="The standard you want to implement."></x-import>
+              <x-import component-from-global-scope="Graphite.Select" label="Scope" required="{{yes}}" size="m" default-value="hq" options="{{scopes}}" help-text="Only scopes assigned to you are listed."></x-import>
+            </div>
+            <div style="max-width: 588px"><x-import component-from-global-scope="Graphite.InlineNotification" kind="info" title="Workspace linked automatically">The consultant reads evidence in your ISO/IEC 27001 · Head office workspace.</x-import></div>
+            <div style="display: flex; justify-content: space-between; margin-top: auto"><div></div><x-import component-from-global-scope="Graphite.Button" size="md" icon="arrow--right">Next</x-import></div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite;
+
+    var SR = { id: 'sr', label: 'Service Requests', icon: 'task', badge: 1, badgeTone: 'attention', badgeLabel: 'request needs action', children: [
+      { id: 'sr-all', label: 'All requests' }, { id: 'sr-cert', label: 'Certification Services' }, { id: 'sr-train', label: 'Training Courses' },
+      { type: 'label', label: 'Other services' }, { id: 'sr-gap', label: 'Gap Analysis', badge: 1, badgeTone: 'attention', badgeLabel: 'needs action' }, { id: 'sr-impl', label: 'Implementation Support' } ] };
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' }, { id: 'scopes', label: 'Scopes', icon: 'category' }, { id: 'ws', label: 'Workspaces', icon: 'folders' },
+      { id: 'docs', label: 'Documents', icon: 'document--multiple-01' }, SR, { id: 'training', label: 'Training', icon: 'education' },
+      { id: 'audit', label: 'Audit Logs', icon: 'catalog' }, { id: 'settings', label: 'Settings', icon: 'settings' } ] },
+      { label: 'Administration', items: [{ id: 'users', label: 'Users', icon: 'user--multiple' }, { id: 'access', label: 'Workspace access', icon: 'user--access' }] }];
+
+    var extra = { noop: function(){}, steps: [{"id": "s1", "label": "1. Framework & scope", "status": "incomplete"}, {"id": "s2", "label": "2. Support & submit", "status": "optional"}], draft: { status: 'draft', label: 'Draft', shortLabel: 'Draft' } };
+    extra.fws = [{ value: '27001', label: 'ISO/IEC 27001' }, { value: '42001', label: 'ISO/IEC 42001' }, { value: '27701', label: 'ISO/IEC 27701' }, { value: '22301', label: 'ISO 22301' }, { value: '20000', label: 'ISO/IEC 20000' }, { value: 'tisax', label: 'TISAX' }, { value: 'nist', label: 'NIST CSF' }];
+    extra.scopes = [{ value: 'hq', label: 'Head office · Taipei', description: 'Organisation scope' }, { value: 'ai', label: 'AI platform', description: 'Product scope' }, { value: 'tc', label: 'Plant · Taichung', description: 'Site scope' }];
+    return Object.assign({ yes: true, no: false, three: 3, nav: nav }, typeof extra === 'object' ? extra : {});
+  }
+}
+</script>
+</body>
+</html>

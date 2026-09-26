@@ -1,0 +1,22 @@
+<!-- @dsCard group="Feedback" height=240 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Snackbar — preview</title></head>
+<body style="margin:0">
+<div id="root"></div>
+<script>
+  var G = window.Graphite, h = React.createElement;
+  function row(){ return h.apply(null, ['div', { className: 'gr-demo__row' }].concat([].slice.call(arguments))); }
+  function cap(t){ return h('div', { className: 'gr-demo__cap' }, t); }
+  function Demo(){ var s = React.useState(false); return h('div', null, h(G.Button, { size: 'md', variant: 'secondary', onClick: function(){ s[1](true); } }, 'Trigger real snackbar'), h(G.Snackbar, { open: s[0], message: 'All changes saved.', onClose: function(){ s[1](false); } })); }
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'gr-demo' },
+      cap('Process feedback: bottom centre, auto-dismiss (5 s default). Inline here for the preview.'),
+      h(G.Snackbar, { inline: true, message: 'Draft saved.' }),
+      h(G.Snackbar, { inline: true, message: 'Service request submitted.', action: { label: 'View', onClick: function(){} }, onClose: function(){}, duration: 0 }),
+      h(Demo)
+    )
+  );
+</script>
+</body>
+</html>

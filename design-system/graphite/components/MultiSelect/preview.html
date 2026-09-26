@@ -1,0 +1,21 @@
+<!-- @dsCard group="Forms" height=380 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>MultiSelect — preview</title></head>
+<body style="margin:0">
+<div id="root"></div>
+<script>
+  var G = window.Graphite, h = React.createElement;
+  function row(){ return h.apply(null, ['div', { className: 'gr-demo__row', style: { alignItems: 'flex-start' } }].concat([].slice.call(arguments))); }
+  function cap(t){ return h('div', { className: 'gr-demo__cap' }, t); }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'gr-demo' },
+      cap('Selected values show as removable chips; the list stays open while choosing'),
+      row(h(G.MultiSelect, { label: 'Role/s', required: true, placeholder: 'No roles selected', defaultValue: ['payer', 'collector'], defaultOpen: true, options: [{ value: 'payer', label: 'Payer' }, { value: 'collector', label: 'CoC Collector' }, { value: 'manufacturer', label: 'Manufacturer' }, { value: 'supplier', label: 'Supplier' }] }),
+        h(G.MultiSelect, { label: 'Frameworks', size: 's', placeholder: 'Select frameworks', options: [{ value: '27001', label: 'ISO/IEC 27001' }, { value: '42001', label: 'ISO/IEC 42001' }] }))
+    )
+  );
+</script>
+</body>
+</html>

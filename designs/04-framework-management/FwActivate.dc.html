@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SGS Admin – activate framework</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="sgs-ops" style="position: relative; width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" tone="dark" site-name="Digital Trust Platform" site-sub="Operations Console" badge="Internal" home-links="{{noLinks}}" user-name="Minh Nguyen" user-email="minh.nguyen@sgs.com" notifications="{{three}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" tone="dark" label="SGS Operations" sections="{{nav}}" default-active="fw" default-collapsed="{{collapsed}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <x-import component-from-global-scope="Graphite.PageHeader" title="Security Baselines for ICT Systems (Appendix 10)" subtitle="TW_ISRM_ANNEX10_EN · Appendix 10 per Article 11 – amended version · MODA" on-back="{{noop}}" status="{{status}}" actions="{{hdr}}"></x-import>
+      <div style="flex-grow: 1; min-height: 0; display: grid; grid-template-columns: 14fr 62fr 21fr; gap: 20px">
+        <div style="min-width: 0; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02)">
+          <x-import component-from-global-scope="Graphite.SectionNav" label="Sections" items="{{sections}}" default-active="fw"></x-import>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 20px">
+          <section class="gr-card">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">1</span><div><h2 class="gr-card__title">Framework</h2><p class="gr-card__sub">From the Framework sheet</p></div></div></div>
+            <dl style="margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 24px"><div><dt class="body-small" style="color: var(--text-secondary)">Code</dt><dd class="body-medium" style="margin: 0">TW_ISRM_ANNEX10_EN</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">Issued by</dt><dd class="body-medium" style="margin: 0">MODA</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">Version</dt><dd class="body-medium" style="margin: 0">Appendix 10 per Article 11 – amended version</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">Effective date</dt><dd class="body-medium" style="margin: 0">Not set</dd></div><div style="grid-column: 1 / -1"><dt class="body-small" style="color: var(--text-secondary)">Description</dt><dd class="body-medium" style="margin: 0">Appendix 10 to the Regulations on Cyber Security Responsibility Levels (Article 11), covering the High / Medium / Basic protection levels.</dd></div></dl>
+          </section>
+          <section class="gr-card">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">2</span><div><h2 class="gr-card__title">Tiers</h2><p class="gr-card__sub">Higher tiers include every requirement of the tiers below</p></div></div></div>
+            <x-import component-from-global-scope="Graphite.Table" density="compact" columns="{{tCols}}" rows="{{tRows}}"></x-import>
+          </section>
+          <section class="gr-card gr-card--extend">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">3</span><div><h2 class="gr-card__title">Requirements</h2><p class="gr-card__sub">7 dimensions · 27 control measures · 79 requirements · 79 expected evidence items</p></div></div></div>
+            <div style="display: grid; grid-template-columns: 300px 1fr; gap: 20px; min-height: 480px">
+              <div style="min-width: 0; min-height: 0; overflow: auto"><x-import component-from-global-scope="Graphite.RequirementNavigator" label="Requirements" groups="{{groups}}" default-expanded="{{exp}}" default-selected="R.1.1.3" filter-options="{{tierFilter}}" status-labels="{{tierLabels}}" empty-status-label=""></x-import></div>
+              <div style="min-width: 0; display: flex; flex-direction: column; gap: 16px">
+                <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px">
+                  <div style="display: flex; flex-direction: column"><span class="body-small" style="color: var(--text-secondary)">R.1.1.3 · Account management</span><span class="title-medium">Disable inactive accounts automatically</span></div>
+                  <x-import component-from-global-scope="Graphite.Tag" tone="info">From Medium</x-import>
+                </div>
+                <p class="body-medium" style="margin: 0">Accounts that have not been used for a defined period shall be disabled automatically.</p>
+                <dl style="margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 24px"><div><dt class="body-small" style="color: var(--text-secondary)">Applies to</dt><dd class="body-medium" style="margin: 0">Medium and High</dd></div><div><dt class="body-small" style="color: var(--text-secondary)">Source</dt><dd class="body-medium" style="margin: 0">Regulations on Cyber Security Responsibility Levels, Article 11, Appendix 10</dd></div></dl>
+                <div style="display: flex; flex-direction: column; gap: 8px">
+                  <span class="title-small">Expected evidence</span>
+                  <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-radius: var(--radius-md); background: var(--layer-02)">
+                    <span style="display: flex; flex-direction: column"><span class="body-medium" style="font-weight: 500">EE-003 · Inactive Account Disablement Configuration</span><span class="body-small" style="color: var(--text-secondary)">System configuration or log showing inactive accounts are automatically disabled.</span></span>
+                    <x-import component-from-global-scope="Graphite.Tag" tone="required">Mandatory</x-import>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02); display: flex; flex-direction: column; gap: 16px">
+          <div class="title-medium">Import</div>
+          <x-import component-from-global-scope="Graphite.InlineNotification" kind="success" title="File check passed">No errors. The draft is ready to activate.</x-import>
+          <div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: var(--radius-md); background: var(--layer-01)">
+            <span class="title-small">After activation</span>
+            <span class="body-small" style="color: var(--text-secondary)">Customers can activate this framework on their scopes. SGS assigns each scope a tier. Requirements can’t be edited in the platform; import a new version to change them.</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <x-import component-from-global-scope="Graphite.Modal" inline="{{yes}}" open="{{yes}}" size="fit" title="Activate framework" on-close="{{noop}}" primary-action="{{primary}}" secondary-action="{{secondary}}">
+    <div style="display: flex; flex-direction: column; gap: 16px; width: 520px; max-width: 100%">
+      <p class="body-medium" style="margin: 0">Activate <strong>Security Baselines for ICT Systems (Appendix 10)</strong> · Appendix 10 per Article 11 – amended version?</p>
+      <ul class="body-medium" style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; color: var(--text-secondary)">
+        <li>Customers can activate it on their scopes.</li>
+        <li>SGS assigns each scope a tier: Basic, Medium or High.</li>
+        <li>The content is locked. Changes need a new version.</li>
+      </ul>
+    </div>
+  </x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite, F = window.React.Fragment;
+
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' },
+      { id: 'req', label: 'Requests', icon: 'task', badge: 3, badgeTone: 'attention', badgeLabel: 'requests need triage', children: [
+        { id: 'req-all', label: 'All requests' }, { id: 'req-cert', label: 'Certification' }, { id: 'req-train', label: 'Training' },
+        { type: 'label', label: 'Other services' }, { id: 'req-gap', label: 'Gap Analysis', badge: 3, badgeTone: 'attention', badgeLabel: 'need triage' }, { id: 'req-impl', label: 'Implementation Support' } ] },
+      { id: 'cust', label: 'Customers', icon: 'user--multiple' },
+      { id: 'fw', label: 'Frameworks', icon: 'catalog' },
+      { id: 'asg', label: 'Assignments', icon: 'user--access' },
+      { id: 'audit', label: 'Audit Logs', icon: 'document' },
+      { id: 'settings', label: 'Settings', icon: 'settings' } ] }];
+    var extra = {};
+
+    var extra = { noop: function(){} };
+    extra.status = { status: 'draft', label: 'Draft · not active', shortLabel: 'Draft' };
+    extra.hdr = h(F, null, h(G.Button, { variant: 'tertiary', size: 'md' }, 'Discard draft'), h(G.Button, { size: 'md' }, 'Activate'));
+    extra.sections = [{"id": "fw", "label": "Framework"}, {"id": "tiers", "label": "Tiers"}, {"id": "req", "label": "Requirements"}];
+    extra.tCols = [{ key: 'c', header: 'Code', width: 80 }, { key: 'n', header: 'Tier' }, { key: 'r', header: 'Rank', align: 'end', width: 80 }, { key: 'nw', header: 'New at this tier', align: 'end' }, { key: 'tot', header: 'Total to meet', align: 'end' }];
+    extra.tRows = [{ c: 'P', n: 'Basic', r: 1, nw: 44, tot: 44 }, { c: 'M', n: 'Medium', r: 2, nw: 17, tot: 61 }, { c: 'H', n: 'High', r: 3, nw: 18, tot: 79 }];
+    extra.tierLabels = { P: ['draft', 'Basic'], M: ['info', 'From Medium'], H: ['under-review', 'From High'] };
+    extra.tierFilter = [{ value: 'all', label: 'All tiers' }, { value: 'P', label: 'Basic' }, { value: 'M', label: 'Medium' }, { value: 'H', label: 'High' }];
+    extra.exp = ['1'];
+    extra.groups = [
+      { id: '1', code: '1', title: 'Access Control', count: '14', children: [
+        { id: 'R.1.1.1', code: 'R.1.1.1', title: 'Establish an account management mechanism', status: 'P' },
+        { id: 'R.1.1.2', code: 'R.1.1.2', title: 'Delete or disable expired temporary accounts', status: 'P' },
+        { id: 'R.1.1.3', code: 'R.1.1.3', title: 'Disable inactive accounts automatically', status: 'M' },
+        { id: 'R.1.1.4', code: 'R.1.1.4', title: 'Review account lifecycle periodically', status: 'M' },
+        { id: 'R.1.1.8', code: 'R.1.1.8', title: 'Monitor and report abnormal account use', status: 'H' },
+        { id: 'R.1.2.1', code: 'R.1.2.1', title: 'Least privilege', status: 'M' },
+        { id: 'R.1.3.1', code: 'R.1.3.1', title: 'Authorise remote access', status: 'P' } ] },
+      { id: '2', code: '2', title: 'Event Logging and Accountability', count: '14', children: [{ id: 'R.2.1.1', code: 'R.2.1.1', title: 'Log retention', status: 'P' }] },
+      { id: '3', code: '3', title: 'Business Continuity Plan', count: '8', children: [{ id: 'R.3.1.1', code: 'R.3.1.1', title: 'Tolerable data loss', status: 'P' }] },
+      { id: '4', code: '4', title: 'Identification and Authentication', count: '11', children: [{ id: 'R.4.1.1', code: 'R.4.1.1', title: 'Identify users', status: 'P' }] },
+      { id: '5', code: '5', title: 'System and Service Acquisition', count: '15', children: [{ id: 'R.5.1.1', code: 'R.5.1.1', title: 'Security requirements', status: 'P' }] },
+      { id: '6', code: '6', title: 'System and Communication Protection', count: '7', children: [{ id: 'R.6.1.1', code: 'R.6.1.1', title: 'Encrypt transmission', status: 'M' }] },
+      { id: '7', code: '7', title: 'System and Information Integrity', count: '10', children: [{ id: 'R.7.1.1', code: 'R.7.1.1', title: 'Fix vulnerabilities', status: 'P' }] } ];
+    extra.vCols = [{ key: 'v', header: 'Version', render: function(r){ return h('a', { href: 'FwPreview.dc.html', className: 'gr-link' }, r.v); } }, { key: 's', header: 'Status', render: function(r){ return h(G.StatusTag, { status: r.st, size: 'sm', label: r.s }); } }, { key: 'b', header: 'Imported by' }, { key: 'd', header: 'Activated', align: 'end' }];
+    extra.vRows = [{ v: 'Appendix 10 · amended version', st: 'draft', s: 'Draft · not active', b: 'Minh Nguyen', d: '—' }];
+    extra.primary = { label: 'Activate framework' }; extra.secondary = { label: 'Cancel' };
+    return Object.assign({ yes: true, no: false, three: 3, nav: nav, noLinks: [], noop: function(){}, collapsed: false }, extra);
+  }
+}
+</script>
+</body>
+</html>

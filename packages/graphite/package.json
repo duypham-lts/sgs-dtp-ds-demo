@@ -1,0 +1,37 @@
+{
+  "name": "@sgs/graphite",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Graphite DS for SGS DTP — TypeScript port of design-system/graphite/dist (same component names, props, tokens and CSS).",
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "default": "./src/index.ts"
+    },
+    "./tokens.css": "./styles/tokens.css",
+    "./styles.css": "./styles/components.css",
+    "./tokens.json": "./tokens.json"
+  },
+  "scripts": {
+    "port": "node scripts/port-bundle.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit && node scripts/check-api.mjs",
+    "verify": "node scripts/check-api.mjs && node scripts/verify-render.mjs && node scripts/verify-interaction.mjs"
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "acorn": "^8.14.0",
+    "acorn-walk": "^8.3.4",
+    "esbuild": "^0.25.0",
+    "happy-dom": "^20.14.5",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "typescript": "^5.7.0"
+  }
+}

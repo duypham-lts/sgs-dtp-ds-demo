@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Gap Analysis – history</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/graphite/tokens.css">
+<link rel="stylesheet" href="ds/graphite/components/bundle.css">
+<script src="ds/graphite/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;family=Noto+Sans+TC:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="customer" style="width: 1440px; height: 900px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; font-family: var(--font-sans); color: var(--text-primary); background: var(--background)">
+  <x-import component-from-global-scope="Graphite.TopBar" variant="home" site-name="Digital Trust Platform" site-sub="Customer Portal" user-name="Linh Tran" user-email="linh.tran@abc-trading.com" notifications="{{three}}"></x-import>
+  <div style="flex-grow: 1; min-height: 0; display: flex; gap: 12px">
+    <div style="flex-shrink: 0; display: flex">
+      <x-import component-from-global-scope="Graphite.AppSidebar" label="Customer Portal" sections="{{nav}}" default-active="sr-gap" default-collapsed="{{yes}}"></x-import>
+    </div>
+    <main style="flex-grow: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px">
+      <x-import component-from-global-scope="Graphite.PageHeader" title="GA-2026-002 · ISO/IEC 27001" subtitle="Gap Analysis · Head office, Taipei" on-back="{{noop}}" status="{{status}}" actions="{{menu}}"></x-import>
+      <div style="flex-grow: 1; min-height: 0; display: grid; grid-template-columns: 14fr 62fr 21fr; gap: 20px">
+        <div style="min-width: 0; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02)">
+          <x-import component-from-global-scope="Graphite.SectionNav" label="Sections" items="{{sections}}" default-active="hist"></x-import>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; scroll-behavior: smooth; display: flex; flex-direction: column; gap: 20px">
+          <section class="gr-card gr-card--extend">
+            <div class="gr-card__head"><div class="gr-card__heading"><span class="gr-card__num" aria-hidden="true">4</span><div><h2 class="gr-card__title">History</h2><p class="gr-card__sub">Audit log of this request. Entries come from the audit trail and cannot be edited or deleted.</p></div></div><x-import component-from-global-scope="Graphite.Button" variant="tertiary" size="sm" icon="download" icon-position="left">Export CSV</x-import></div>
+            <x-import component-from-global-scope="Graphite.DataTable" columns="{{logCols}}" rows="{{logRows}}" toolbar-actions="{{filters}}" page-size="{{ten}}" layout="table" default-sort="{{logSort}}" density="compact"></x-import>
+          </section>
+        </div>
+        <div style="min-width: 0; min-height: 0; overflow: auto; box-sizing: border-box; padding: 12px; border-radius: var(--radius-card); background: var(--layer-02); display: flex; flex-direction: column; gap: 16px">
+          <div class="title-medium">SGS Requests &amp; Communications</div>
+          <x-import component-from-global-scope="Graphite.InlineNotification" kind="success" title="Completed on 30 Sep 2026">The final report is available and consultant access to your workspace has ended.</x-import>
+          <div style="display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: var(--radius-md); background: var(--layer-01)">
+            <span class="title-small">Your SGS consultant</span>
+            <div style="display: flex; align-items: center; gap: 12px">
+              <x-import component-from-global-scope="Graphite.Avatar" name="Anna Lee" size="lg"></x-import>
+              <div style="display: flex; flex-direction: column"><span class="body-medium" style="font-weight: 500">Anna Lee</span><span class="body-small" style="color: var(--text-secondary)">Lead consultant · ISMS</span></div>
+            </div>
+            <div class="body-small" style="display: flex; flex-direction: column; gap: 4px">
+              <x-import component-from-global-scope="Graphite.Link" href="mailto:anna.lee@sgs.com">anna.lee@sgs.com</x-import>
+              <span style="color: var(--text-secondary)">[CONSULTANT PHONE]</span>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: var(--radius-md); background: var(--layer-01)">
+            <span class="title-small">Need help?</span>
+            <span class="body-small" style="color: var(--text-secondary)">Questions about this request go to your consultant. For access or account problems, contact SGS support.</span>
+            <div><x-import component-from-global-scope="Graphite.Button" variant="tertiary" size="sm">Contact support</x-import></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { from: '', to: '', cat: 'all' }; }
+  renderVals() {
+    var h = window.React.createElement, G = window.Graphite;
+
+    var SR = { id: 'sr', label: 'Service Requests', icon: 'task', badge: 1, badgeTone: 'attention', badgeLabel: 'request needs action', children: [
+      { id: 'sr-all', label: 'All requests' }, { id: 'sr-cert', label: 'Certification Services' }, { id: 'sr-train', label: 'Training Courses' },
+      { type: 'label', label: 'Other services' }, { id: 'sr-gap', label: 'Gap Analysis', badge: 1, badgeTone: 'attention', badgeLabel: 'needs action' }, { id: 'sr-impl', label: 'Implementation Support' } ] };
+    var nav = [{ items: [
+      { id: 'home', label: 'Home', icon: 'dashboard' }, { id: 'scopes', label: 'Scopes', icon: 'category' }, { id: 'ws', label: 'Workspaces', icon: 'folders' },
+      { id: 'docs', label: 'Documents', icon: 'document--multiple-01' }, SR, { id: 'training', label: 'Training', icon: 'education' },
+      { id: 'audit', label: 'Audit Logs', icon: 'catalog' }, { id: 'settings', label: 'Settings', icon: 'settings' } ] },
+      { label: 'Administration', items: [{ id: 'users', label: 'Users', icon: 'user--multiple' }, { id: 'access', label: 'Workspace access', icon: 'user--access' }] }];
+
+    var extra = { noop: function(){}, ready: 64,
+      menu: h(G.OverflowMenu, { size: 'md', label: 'Request actions', items: [{ label: 'Download summary (PDF)' }, { label: 'Withdraw request', danger: true }] }),
+      sgsActs: [{ type: 'open' }, { type: 'download' }], upload: [{ type: 'upload' }], viewActs: [{ type: 'view' }, { type: 'open' }] };
+    extra.status = { status: 'completed', label: 'Completed · report available', shortLabel: 'Completed' };
+    extra.sections = [{ id: 'ov', label: 'Overview', status: 'complete', href: 'DetailReport.dc.html' }, { id: 'doc', label: 'Documents', status: 'complete', href: 'DetailReport.dc.html#sec-doc' }, { id: 'res', label: 'Results', status: 'complete', href: 'DetailResults.dc.html' }, { id: 'hist', label: 'History', href: 'DetailHistory.dc.html' }];
+    extra.rcols = [{ key: 'c', header: 'Clause' }, { key: 'm', header: 'Met', align: 'end' }, { key: 'p', header: 'Partially met', align: 'end' }, { key: 'n', header: 'Not met', align: 'end' }, { key: 'na', header: 'N/A', align: 'end' }];
+    extra.rrows = [{ c: '4–10 Management system clauses', m: 18, p: 4, n: 1, na: 0 }, { c: 'A.5 Organizational controls', m: 24, p: 9, n: 4, na: 0 }, { c: 'A.6 People controls', m: 6, p: 2, n: 0, na: 0 }, { c: 'A.7 Physical controls', m: 10, p: 3, n: 1, na: 0 }, { c: 'A.8 Technological controls', m: 19, p: 10, n: 4, na: 1 }];
+
+
+    var self = this, st = this.state || {};
+    var CAT = { status: ['neutral', 'Status'], doc: ['info', 'Document'], access: ['required', 'Access'] };
+    var log = [
+      ['2026-09-30 16:42', 'Status changed: Completed', 'status', 'System', '—', 'Final report published · consultant access to the workspace ended'],
+      ['2026-09-30 16:40', 'Final report submitted', 'doc', 'Anna Lee', 'SGS consultant', 'GA-2026-002-final.pdf · 2.6 MB'],
+      ['2026-09-29 10:15', 'Workspace viewed', 'access', 'Anna Lee', 'SGS consultant', '8 requirements, 12 documents'],
+      ['2026-09-25 14:05', 'Action required cleared', 'status', 'System', '—', 'Asset inventory (A.5.9) received'],
+      ['2026-09-25 14:03', 'Document uploaded', 'doc', 'Linh Tran', 'Customer User', 'asset-inventory-2026.xlsx · 310 KB'],
+      ['2026-09-21 18:10', 'Draft report shared', 'doc', 'Anna Lee', 'SGS consultant', 'GA-2026-002-draft.pdf · 1.8 MB'],
+      ['2026-09-18 17:20', 'Document requested · Action required', 'doc', 'Anna Lee', 'SGS consultant', 'Asset inventory (A.5.9) · due 27 Sep 2026'],
+      ['2026-09-18 17:00', 'On-site visit finished', 'status', 'Anna Lee', 'SGS consultant', 'Taipei HQ, Hsinchu data centre'],
+      ['2026-09-14 09:00', 'On-site visit started', 'status', 'Anna Lee', 'SGS consultant', 'Taipei HQ'],
+      ['2026-09-12 10:30', 'Workspace viewed', 'access', 'Anna Lee', 'SGS consultant', 'Preparation · 41 requirements, 96 documents'],
+      ['2026-09-11 00:00', 'Status changed: In progress', 'status', 'System', '—', 'Consultant access started (Anna Lee · read and comment · until completed)'],
+      ['2026-09-08 11:12', 'Visit agenda shared', 'doc', 'Minh Nguyen', 'SGS admin', 'GA-2026-002-agenda.pdf · 220 KB'],
+      ['2026-09-05 15:30', 'Status changed: Scheduled', 'status', 'Minh Nguyen', 'SGS admin', 'Approved · consultant Anna Lee · on site 14 – 18 Sep · access from 11 Sep'],
+      ['2026-09-02 10:47', 'Document uploaded', 'doc', 'Linh Tran', 'Customer User', 'isms-policy-v3.pdf · 2.4 MB'],
+      ['2026-09-02 10:46', 'Status changed: Submitted', 'status', 'Linh Tran', 'Customer User', 'GA-2026-002 · ISO/IEC 27001 · Head office'] ]
+      .map(function(r, i){ return { id: 'e' + i, ts: r[0], d: r[0].slice(0, 10), ev: r[1], cat: r[2], who: r[3], role: r[4], det: r[5] }; });
+    var rows = log.filter(function(r){ return (!st.from || r.d >= st.from) && (!st.to || r.d <= st.to) && (st.cat === 'all' || !st.cat || r.cat === st.cat); });
+    var M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    function fmt(ts){ var d = ts.slice(0, 10).split('-'); return d[2] + ' ' + M[+d[1] - 1] + ' ' + d[0] + ', ' + ts.slice(11); }
+    extra.logRows = rows;
+    extra.ten = 10;
+    extra.logSort = { key: 'ts', dir: 'desc' };
+    extra.logCols = [
+      { key: 'ts', header: 'Date & time', sortable: true, width: 170, render: function(r){ return fmt(r.ts); } },
+      { key: 'ev', header: 'Event', sortable: true, render: function(r){ return h('span', { style: { fontWeight: 500 } }, r.ev); } },
+      { key: 'cat', header: 'Category', sortable: true, width: 120, sortValue: function(r){ return CAT[r.cat][1]; }, searchValue: function(r){ return CAT[r.cat][1]; }, render: function(r){ return h(G.Tag, { tone: CAT[r.cat][0] }, CAT[r.cat][1]); } },
+      { key: 'who', header: 'By', sortable: true, render: function(r){ return h('span', { style: { display: 'flex', flexDirection: 'column' } }, h('span', null, r.who), r.role !== '—' ? h('span', { className: 'body-small', style: { color: 'var(--text-secondary)' } }, r.role) : null); } },
+      { key: 'det', header: 'Details' } ];
+    var filtered = !!(st.from || st.to || (st.cat && st.cat !== 'all'));
+    extra.filters = h('div', { style: { display: 'flex', alignItems: 'center', gap: 8 } },
+      h(G.DatePicker, { label: 'From date', placeholder: 'From', size: 's', width: 160, today: '2026-10-01', value: st.from, max: st.to || undefined, onChange: function(v){ self.setState({ from: v }); } }),
+      h(G.DatePicker, { label: 'To date', placeholder: 'To', size: 's', width: 160, today: '2026-10-01', value: st.to, min: st.from || undefined, onChange: function(v){ self.setState({ to: v }); } }),
+      h(G.Select, { label: 'Category', size: 's', width: 176, value: st.cat || 'all', onChange: function(e){ self.setState({ cat: e.target.value }); }, options: [{ value: 'all', label: 'All categories' }, { value: 'status', label: 'Status' }, { value: 'doc', label: 'Document' }, { value: 'access', label: 'Access' }] }),
+      filtered ? h('div', { style: { alignSelf: 'center' } }, h(G.Button, { variant: 'ghost', size: 'sm', onClick: function(){ self.setState({ from: '', to: '', cat: 'all' }); } }, 'Clear')) : null);
+    return Object.assign({ yes: true, no: false, three: 3, nav: nav }, typeof extra === 'object' ? extra : {});
+  }
+}
+</script>
+</body>
+</html>

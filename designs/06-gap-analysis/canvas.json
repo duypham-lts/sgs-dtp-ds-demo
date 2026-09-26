@@ -1,0 +1,585 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "AdminAccessWindow.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "SGS Admin · Change access window",
+      "w": 1440,
+      "x": 4560,
+      "y": 7680
+    },
+    "AdminApprove.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "SGS Admin · Approve & assign",
+      "w": 1440,
+      "x": 3040,
+      "y": 3840
+    },
+    "AdminApproveCOI.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "SGS Admin · Approve – conflict of interest",
+      "w": 1440,
+      "x": 4560,
+      "y": 3840
+    },
+    "AdminCancel.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "SGS Admin · Cancel request",
+      "w": 1440,
+      "x": 6080,
+      "y": 7680
+    },
+    "AdminChangeConsultant.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "SGS Admin · Change consultant",
+      "w": 1440,
+      "x": 3040,
+      "y": 7680
+    },
+    "AdminMonitor.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "SGS Admin · Monitor request",
+      "w": 1440,
+      "x": 1520,
+      "y": 7680
+    },
+    "AdminQueue.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "SGS Admin · Queue",
+      "w": 1440,
+      "x": 0,
+      "y": 3840
+    },
+    "AdminReject.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "SGS Admin · Reject",
+      "w": 1440,
+      "x": 6080,
+      "y": 3840
+    },
+    "AdminRejectReasons.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "SGS Admin · Reject – reasons list",
+      "w": 1440,
+      "x": 7600,
+      "y": 3840
+    },
+    "AdminReview.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "SGS Admin · Review request",
+      "w": 1440,
+      "x": 1520,
+      "y": 3840
+    },
+    "AdminTriageNotSure.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "SGS Admin · Triage “not sure”",
+      "w": 1440,
+      "x": 0,
+      "y": 7680
+    },
+    "ConsultantAssess.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Consultant · Assess requirements",
+      "w": 1440,
+      "x": 3040,
+      "y": 5120
+    },
+    "ConsultantAssignments.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Consultant · My assignments",
+      "w": 1440,
+      "x": 0,
+      "y": 5120
+    },
+    "ConsultantCompleted.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Consultant · Completed assignment",
+      "w": 1440,
+      "x": 9120,
+      "y": 7680
+    },
+    "ConsultantRequestDoc.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Consultant · Request a document",
+      "w": 1440,
+      "x": 4560,
+      "y": 5120
+    },
+    "ConsultantReviewUpload.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Consultant · Review uploaded document",
+      "w": 1440,
+      "x": 7600,
+      "y": 7680
+    },
+    "ConsultantScheduled.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Consultant · Scheduled (access not open yet)",
+      "w": 1440,
+      "x": 1520,
+      "y": 5120
+    },
+    "ConsultantSubmit.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Consultant · Submit final report",
+      "w": 1440,
+      "x": 7600,
+      "y": 5120
+    },
+    "ConsultantSubmitBlocked.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Consultant · Submit report – blocked",
+      "w": 1440,
+      "x": 6080,
+      "y": 5120
+    },
+    "Detail.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Detail · In progress",
+      "w": 1440,
+      "x": 0,
+      "y": 2560
+    },
+    "DetailHistory.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Detail · History",
+      "w": 1440,
+      "x": 4560,
+      "y": 2560
+    },
+    "DetailRejected.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Detail · Rejected",
+      "w": 1440,
+      "x": 7600,
+      "y": 6400
+    },
+    "DetailReport.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Detail · Report delivered",
+      "w": 1440,
+      "x": 1520,
+      "y": 2560
+    },
+    "DetailResults.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Detail · Results",
+      "w": 1440,
+      "x": 3040,
+      "y": 2560
+    },
+    "DetailScheduled.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Detail · Scheduled",
+      "w": 1440,
+      "x": 4560,
+      "y": 6400
+    },
+    "DetailSubmitted.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Detail · Submitted",
+      "w": 1440,
+      "x": 1520,
+      "y": 6400
+    },
+    "EmptyList.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "List – first visit (empty)",
+      "w": 1440,
+      "x": 1520,
+      "y": 0
+    },
+    "Main.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "List",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "MvpAdminApprove.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Approve & assign",
+      "w": 1440,
+      "x": 3040,
+      "y": 10380
+    },
+    "MvpAdminQueue.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Queue",
+      "w": 1440,
+      "x": 0,
+      "y": 10380
+    },
+    "MvpAdminReject.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Reject",
+      "w": 1440,
+      "x": 4560,
+      "y": 10380
+    },
+    "MvpAdminReview.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Review request",
+      "w": 1440,
+      "x": 1520,
+      "y": 10380
+    },
+    "MvpConsAssignments.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "My assignments",
+      "w": 1440,
+      "x": 0,
+      "y": 11660
+    },
+    "MvpConsDetail.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Request detail",
+      "w": 1440,
+      "x": 1520,
+      "y": 11660
+    },
+    "MvpConsUpload.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Upload report & complete",
+      "w": 1440,
+      "x": 3040,
+      "y": 11660
+    },
+    "MvpDetailCompleted.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Detail · Completed",
+      "w": 1440,
+      "x": 9120,
+      "y": 9100
+    },
+    "MvpDetailProgress.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Detail · In progress",
+      "w": 1440,
+      "x": 7600,
+      "y": 9100
+    },
+    "MvpDetailRejected.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Detail · Rejected",
+      "w": 1440,
+      "x": 10640,
+      "y": 9100
+    },
+    "MvpDetailSubmitted.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Detail · Submitted",
+      "w": 1440,
+      "x": 6080,
+      "y": 9100
+    },
+    "MvpList.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "List",
+      "w": 1440,
+      "x": 1520,
+      "y": 9100
+    },
+    "MvpListEmpty.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "List – empty",
+      "w": 1440,
+      "x": 0,
+      "y": 9100
+    },
+    "MvpWizard1.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Wizard 1 · Framework & scope",
+      "w": 1440,
+      "x": 3040,
+      "y": 9100
+    },
+    "MvpWizard2.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Wizard 2 · Details & submit",
+      "w": 1440,
+      "x": 4560,
+      "y": 9100
+    },
+    "Step1Framework.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Wizard 1 · Framework",
+      "w": 1440,
+      "x": 0,
+      "y": 1280
+    },
+    "Step2Scope.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Wizard 2 · Scope",
+      "w": 1440,
+      "x": 1520,
+      "y": 1280
+    },
+    "Step3Workspace.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Wizard 3 · Workspace",
+      "w": 1440,
+      "x": 3040,
+      "y": 1280
+    },
+    "Step4Details.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Wizard 4 · Details",
+      "w": 1440,
+      "x": 4560,
+      "y": 1280
+    },
+    "Step5Review.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Wizard 5 · Review & submit",
+      "w": 1440,
+      "x": 6080,
+      "y": 1280
+    },
+    "SubmitSuccess.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Request sent (after step 5)",
+      "w": 1440,
+      "x": 0,
+      "y": 6400
+    },
+    "UploadRequested.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Detail · Upload requested document",
+      "w": 1440,
+      "x": 6080,
+      "y": 6400
+    },
+    "WithdrawModal.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "title": "Detail · Withdraw request",
+      "w": 1440,
+      "x": 3040,
+      "y": 6400
+    },
+    "MvpConsWorkspace.dc.html": {
+      "x": 4560,
+      "y": 11660,
+      "w": 1440,
+      "h": 900,
+      "title": "Workspace (read only)",
+      "is_interactive": true
+    },
+    "MvpConsWorkspaceEnded.dc.html": {
+      "x": 6080,
+      "y": 11660,
+      "w": 1440,
+      "h": 900,
+      "title": "Workspace – access ended",
+      "is_interactive": true
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-09-24T12:30:00Z",
+    "v": 1
+  },
+  "designSystems": [
+    {
+      "artifact": "https://claude.ai/artifact/CEneLQNFxsQuEaagfERSqo",
+      "copiedAt": "2026-09-24T19:02:00Z",
+      "namespace": "graphite",
+      "title": "Graphite DS",
+      "version": "1790310317-cfa1"
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  },
+  "notes": {
+    "mvp0": {
+      "kind": "title1",
+      "maxW": 8000,
+      "text": "[MVP] Customer",
+      "w": 240,
+      "x": 0,
+      "y": 8840
+    },
+    "mvp1": {
+      "kind": "title1",
+      "maxW": 6000,
+      "text": "[MVP] SGS Admin",
+      "w": 240,
+      "x": 0,
+      "y": 10120
+    },
+    "mvp2": {
+      "kind": "title1",
+      "maxW": 7520,
+      "text": "[MVP] SGS Consultant",
+      "w": 240,
+      "x": 0,
+      "y": 11400
+    },
+    "row-admin": {
+      "kind": "title1",
+      "maxW": 8000,
+      "text": "SGS Operations · Admin",
+      "w": 240,
+      "x": 0,
+      "y": 3580
+    },
+    "row-consultant": {
+      "kind": "title1",
+      "maxW": 8000,
+      "text": "SGS Operations · Consultant",
+      "w": 240,
+      "x": 0,
+      "y": 4860
+    },
+    "row-cust2": {
+      "kind": "title1",
+      "maxW": 8000,
+      "text": "Customer · other states",
+      "w": 240,
+      "x": 0,
+      "y": 6140
+    },
+    "row-sgs2": {
+      "kind": "title1",
+      "maxW": 8000,
+      "text": "SGS Operations · other states",
+      "w": 240,
+      "x": 0,
+      "y": 7420
+    },
+    "row0": {
+      "kind": "title1",
+      "maxW": 2960,
+      "text": "Gap Analysis · List",
+      "w": 240,
+      "x": 0,
+      "y": -260
+    },
+    "row1": {
+      "kind": "title1",
+      "maxW": 7520,
+      "text": "Request wizard (5 steps)",
+      "w": 240,
+      "x": 0,
+      "y": 1020
+    },
+    "row2": {
+      "kind": "title1",
+      "maxW": 7520,
+      "text": "Request detail",
+      "w": 240,
+      "x": 0,
+      "y": 2300
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "EmptyList.dc.html",
+    "Step1Framework.dc.html",
+    "Step2Scope.dc.html",
+    "Step3Workspace.dc.html",
+    "Step4Details.dc.html",
+    "Step5Review.dc.html",
+    "Detail.dc.html",
+    "DetailReport.dc.html",
+    "DetailResults.dc.html",
+    "DetailHistory.dc.html",
+    "AdminQueue.dc.html",
+    "AdminReview.dc.html",
+    "AdminApprove.dc.html",
+    "AdminApproveCOI.dc.html",
+    "AdminReject.dc.html",
+    "AdminRejectReasons.dc.html",
+    "ConsultantAssignments.dc.html",
+    "ConsultantScheduled.dc.html",
+    "ConsultantAssess.dc.html",
+    "ConsultantRequestDoc.dc.html",
+    "ConsultantSubmitBlocked.dc.html",
+    "ConsultantSubmit.dc.html",
+    "SubmitSuccess.dc.html",
+    "DetailSubmitted.dc.html",
+    "WithdrawModal.dc.html",
+    "DetailScheduled.dc.html",
+    "UploadRequested.dc.html",
+    "DetailRejected.dc.html",
+    "AdminTriageNotSure.dc.html",
+    "AdminMonitor.dc.html",
+    "AdminChangeConsultant.dc.html",
+    "AdminAccessWindow.dc.html",
+    "AdminCancel.dc.html",
+    "ConsultantReviewUpload.dc.html",
+    "ConsultantCompleted.dc.html",
+    "MvpListEmpty.dc.html",
+    "MvpList.dc.html",
+    "MvpWizard1.dc.html",
+    "MvpWizard2.dc.html",
+    "MvpDetailSubmitted.dc.html",
+    "MvpDetailProgress.dc.html",
+    "MvpDetailCompleted.dc.html",
+    "MvpDetailRejected.dc.html",
+    "MvpAdminQueue.dc.html",
+    "MvpAdminReview.dc.html",
+    "MvpAdminApprove.dc.html",
+    "MvpAdminReject.dc.html",
+    "MvpConsAssignments.dc.html",
+    "MvpConsDetail.dc.html",
+    "MvpConsUpload.dc.html",
+    "MvpConsWorkspace.dc.html",
+    "MvpConsWorkspaceEnded.dc.html"
+  ],
+  "pages": [],
+  "title": "DTP – Gap Analysis"
+}

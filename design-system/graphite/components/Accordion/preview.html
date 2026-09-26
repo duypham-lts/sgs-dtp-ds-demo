@@ -1,0 +1,24 @@
+<!-- @dsCard group="Containers" height=400 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Accordion — preview</title></head>
+<body style="margin:0">
+<div id="root"></div>
+<script>
+  var G = window.Graphite, h = React.createElement;
+  function row(){ return h.apply(null, ['div', { className: 'gr-demo__row' }].concat([].slice.call(arguments))); }
+  function cap(t){ return h('div', { className: 'gr-demo__cap' }, t); }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'gr-demo' },
+      h(G.Accordion, { items: [
+        { id: 'seller', title: 'Seller', content: h('div', null, h('strong', null, 'SGS Nairobi'), h('div', { style: { color: 'var(--text-secondary)' } }, 'Museum Hill, Kipande Rd, P.O. Box 40658 - 00100, Nairobi')) },
+        { id: 'buyer', title: 'Buyer', meta: h(G.Tag, { tone: 'required' }, 'Required'), defaultOpen: true, content: h(G.TextInput, { label: 'Company name', required: true, placeholder: 'Search your companies', helpText: 'Results are from companies used in past transactions.' }) }
+      ] }),
+      cap('Without action label — e.g. "Affected Products" inside a Document Item'),
+      h(G.Accordion, { showActionLabel: false, items: [{ id: 'ap', title: 'Affected Products', content: 'Table of affected products goes here.' }] })
+    )
+  );
+</script>
+</body>
+</html>

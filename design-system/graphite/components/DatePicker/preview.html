@@ -1,0 +1,21 @@
+<!-- @dsCard group="Forms" height=470 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>DatePicker — preview</title></head>
+<body style="margin:0">
+<div id="root"></div>
+<script>
+  var G = window.Graphite, h = React.createElement;
+  function row(){ return h.apply(null, ['div', { className: 'gr-demo__row', style: { alignItems: 'flex-start' } }].concat([].slice.call(arguments))); }
+  function cap(t){ return h('div', { className: 'gr-demo__cap' }, t); }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'gr-demo' },
+      cap('Monday-first calendar, today outlined, selected in orange; arrow keys move between days'),
+      row(h(G.DatePicker, { label: 'Evidence valid until', required: true, defaultValue: '2026-10-12', today: '2026-09-24', min: '2026-09-24', defaultOpen: true, helpText: 'Past dates are not allowed.' }),
+        h(G.DatePicker, { label: 'Audit date', placeholder: 'DD MMM YYYY', today: '2026-09-24' }))
+    )
+  );
+</script>
+</body>
+</html>
