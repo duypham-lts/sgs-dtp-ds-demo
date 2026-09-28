@@ -1,6 +1,6 @@
 # MultiSelect
 
-Chọn nhiều giá trị (Role/s, Collector/s, Frameworks); giá trị đã chọn hiện thành chip có nút xoá.
+Select several values (Role/s, Collector/s, Frameworks); selected values appear as chips with a remove control.
 
 ## Anatomy
 | Part | Class | Triển khai |

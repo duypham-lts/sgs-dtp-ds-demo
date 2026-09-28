@@ -1,6 +1,6 @@
 # Drawer
 
-Panel trượt vào từ bên phải, dùng cho chi tiết hoặc sửa nhanh mà không rời trang: chi tiết evidence, review comment, lịch sử.
+A panel that slides in from the right for detail or a quick edit without leaving the page: evidence detail, review comment, history.
 
 ## Anatomy
 | Part | Class | Radix |

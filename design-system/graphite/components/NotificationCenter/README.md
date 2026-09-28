@@ -1,6 +1,6 @@
 # NotificationCenter
 
-Hộp thông báo **dùng chung** cho cả Customer Portal và SGS Operations, mở ra từ **chuông trên TopBar**. Không có trang riêng. Đáp ứng UC-NTF-002 (View Notification Inbox and History); nội dung do UC-NTF-001 (hệ thống sinh thông báo) tạo ra.
+A notification inbox **shared** by the Customer Portal and SGS Operations, opened from the **bell on the TopBar**. There is no separate page. It covers UC-NTF-002 (View Notification Inbox and History); the content is produced by UC-NTF-001 (the system generates notifications).
 
 ## Dùng trong TopBar
 Truyền `notificationItems` cho TopBar. Chuông tự hiện số chưa đọc, và bấm vào sẽ mở NotificationCenter trong Popover rộng 420px (căn phải).

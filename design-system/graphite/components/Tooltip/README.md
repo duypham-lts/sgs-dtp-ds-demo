@@ -1,6 +1,6 @@
 # Tooltip
 
-Nhãn ngắn hiện khi hover hoặc focus bằng bàn phím; bắt buộc cho mọi control chỉ có icon và mọi status chỉ có icon (UI Guidelines §8).
+A short label shown on hover or keyboard focus; required for every icon-only control and every icon-only status (UI Guidelines §8).
 
 - IconButton và StatusTag `compact` đã **tự bọc sẵn** Tooltip. Không cần thêm.
 - Dùng để hiện nội dung bị cắt: tên file, metadata dài trong Document Item ở breakpoint nhỏ. Trên mobile, nội dung hiện khi chạm giữ.

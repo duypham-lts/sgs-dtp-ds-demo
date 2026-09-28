@@ -1,6 +1,6 @@
 # Tabs
 
-Chuyển giữa các nhóm nội dung ngang hàng trong cùng một ngữ cảnh.
+Switches between peer groups of content in the same context.
 
 - `line` (mặc định): gạch chân cam 2px dưới tab đang chọn, dùng ở cấp trang.
 - `contained`: tab nằm trên card, tab đang chọn liền với panel, dùng cho nhóm field trong card (Client Identification / Contact Person).

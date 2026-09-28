@@ -1,6 +1,6 @@
 # RequirementNavigator
 
-Danh sách requirement của một framework, chia theo clause hoặc nhóm control; **mỗi dòng là một khối riêng**. Dùng ở cột trái của các màn làm việc trên requirement: consultant đánh giá gap, khách hàng upload evidence trong workspace, reviewer duyệt.
+The requirement list of a framework, grouped by clause or control group; **each row is its own block**. Used in the left column of requirement working screens: the consultant assesses the gap, the customer uploads evidence in the workspace, the reviewer decides.
 
 ## Anatomy
 | Part | Class | Vai trò |

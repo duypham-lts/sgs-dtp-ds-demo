@@ -1,6 +1,6 @@
 # Button
 
-Nút hành động dạng pill; mỗi màn chỉ có **một** nút `primary` (cam) cho hành động chính.
+Pill-shaped action button; each screen has **one** `primary` (orange) button for the main action.
 
 | Variant | Khi nào | Ví dụ DTP |
 |---|---|---|

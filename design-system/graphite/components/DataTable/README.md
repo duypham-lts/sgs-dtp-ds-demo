@@ -1,6 +1,6 @@
 # DataTable
 
-Bảng dữ liệu đầy đủ: tìm kiếm, sort, chọn dòng kèm thanh bulk action, menu action trên từng dòng, phân trang, và các trạng thái loading, empty, error. Trên màn hẹp, bảng tự chuyển thành danh sách card (pattern mobile trong UI Guidelines).
+A full data table: search, sort, row selection with a bulk-action bar, a per-row action menu, pagination, and loading, empty, and error states. On a narrow screen the table becomes a card list (the mobile pattern in the UI Guidelines).
 
 ## Anatomy
 

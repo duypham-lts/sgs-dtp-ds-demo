@@ -1,6 +1,6 @@
 # Tag
 
-Nhãn ngắn một đến hai từ để phân loại, không mang trạng thái; muốn thể hiện trạng thái thì dùng StatusTag.
+A short one- or two-word label for classification, with no status meaning; to show status, use StatusTag.
 
 | Tone | Dùng cho |
 |---|---|

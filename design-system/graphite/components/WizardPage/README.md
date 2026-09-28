@@ -1,6 +1,6 @@
 # WizardPage (page template)
 
-Luồng tạo mới gồm nhiều bước: Gap Analysis (5 bước), Service Request, tạo Scope.
+A multi-step create flow: Gap Analysis (5 steps), Service Request, create Scope.
 
 | Vùng | Nội dung |
 |---|---|

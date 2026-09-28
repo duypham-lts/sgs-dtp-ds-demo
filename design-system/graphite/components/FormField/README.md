@@ -1,6 +1,6 @@
 # FormField
 
-Khung chung cho mọi control nhập liệu: label, vùng field kiểu filled (có underline), và **một** thông điệp bên dưới.
+The shared frame for every input control: a label, a filled field (with an underline), and **one** message underneath.
 
 - **Label:** 12/20 Regular, màu `text-secondary` #3C525D. Field bắt buộc có dấu `*` cam ở **cuối** label.
 - **Help text:** nằm ngay dưới field, canh trái trùng với label và nội dung field (lùi 16px), 12/20 Regular `text-secondary`. Không lặp lại thông tin đã có trong label.

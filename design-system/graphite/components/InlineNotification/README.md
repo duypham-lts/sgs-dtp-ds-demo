@@ -1,6 +1,6 @@
 # InlineNotification
 
-Khung thông báo nằm trong trang, không tự ẩn, dùng cho thông tin người dùng cần thấy khi đang làm việc: "Required Information", "Action required", "Need help?".
+An in-page notice that does not dismiss itself, for information the user needs while they work: "Required Information", "Action required", "Need help?".
 
 | `kind` | Khi nào |
 |---|---|

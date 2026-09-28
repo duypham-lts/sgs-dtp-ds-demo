@@ -1,6 +1,6 @@
 # Link
 
-Liên kết văn bản màu cam `link-primary` (#CA4300), weight chỉ Regular hoặc Semibold.
+Orange text link in `link-primary` (#CA4300); weight is Regular or Semibold only.
 
 - Link đứng riêng (ví dụ *Forgot your password?*): không gạch chân, gạch chân khi hover.
 - Link trong câu hoặc help text: `inline`, luôn gạch chân. Chỉ phần tương tác có màu cam, phần còn lại giữ `text-secondary`. **Không bao giờ in đậm** trong help text.

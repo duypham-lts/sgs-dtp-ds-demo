@@ -1,6 +1,6 @@
 # Modal
 
-Hộp thoại chặn tương tác để xác nhận hoặc nhập một việc ngắn; khi mở, **toàn bộ nền bị làm tối** bằng `overlay` (UI Guidelines §9).
+A blocking dialog for a confirmation or a short input; while it is open, **the whole background is dimmed** with `overlay` (UI Guidelines §9).
 
 - Cỡ `sm` 400 / `md` 560 / `lg` 800px, hoặc **`fit`**: rộng đúng bằng nội dung cộng 24px mỗi bên, dùng khi form trong modal có độ rộng field cố định (ví dụ Approve & assign). Radius `radius-card`.
 - Tiêu đề là câu hỏi hoặc hành động ("Submit service request?"). Nút chính đặt bên phải, nút huỷ (`ghost`) bên trái nó. Thao tác xoá dùng `danger`.

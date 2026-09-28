@@ -1,6 +1,6 @@
 # TopBar
 
-Thanh trên cùng của ứng dụng. Có 3 loại theo UI Guidelines §11.
+The bar across the top of the application. There are 3 kinds, per UI Guidelines §11.
 
 | `variant` | Nền | Bên trái | Bên phải |
 |---|---|---|---|

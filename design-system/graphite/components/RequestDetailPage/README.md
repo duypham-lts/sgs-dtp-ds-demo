@@ -1,6 +1,6 @@
 # RequestDetailPage (page template)
 
-Trang chi tiết một request (SR, Gap Analysis, Implementation Support). Theo bố cục **3 cột** của UI Guidelines, phần *Responsiveness · SR creation*.
+The detail page for one request (SR, Gap Analysis, Implementation Support). It follows the **3-column** layout in the UI Guidelines, section *Responsiveness · SR creation*.
 
 | Cột | Tỷ lệ | Nội dung |
 |---|---|---|

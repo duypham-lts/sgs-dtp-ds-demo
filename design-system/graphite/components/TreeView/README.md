@@ -1,6 +1,6 @@
 # TreeView
 
-Cây phân cấp, ví dụ Framework → Clause → Requirement (bảng REQUIREMENT có `parent_id`), dùng để duyệt requirement và gắn evidence.
+A hierarchy, for example Framework → Clause → Requirement (the REQUIREMENT table has `parent_id`), used to browse requirements and attach evidence.
 
 ## Anatomy
 | Part | Class · ARIA |

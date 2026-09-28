@@ -1,6 +1,6 @@
 # ReadinessRing
 
-Vòng tròn thể hiện readiness: tỷ lệ requirement đã có evidence được chấp nhận trong một framework.
+A ring that shows readiness: the share of requirements in a framework that have accepted evidence.
 
 ## Anatomy
 | Part | Class |

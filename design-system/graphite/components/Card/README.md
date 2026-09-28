@@ -1,6 +1,6 @@
 # Card
 
-Khối nội dung chính ở cột giữa màn SR, gồm số thứ tự bước, tiêu đề và mô tả, rồi nội dung.
+The main content block in the middle column of an SR screen: step number, title and description, then the body.
 
 ## Anatomy
 | Part | Class |

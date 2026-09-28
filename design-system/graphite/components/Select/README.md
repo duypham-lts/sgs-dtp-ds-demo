@@ -1,6 +1,6 @@
 # Select
 
-Dropdown chọn một giá trị, theo anatomy của **Radix Select**: nút trigger nằm trong FormField, danh sách mở ra ngay bên dưới, rộng bằng đúng field.
+A dropdown that selects one value, following the **Radix Select** anatomy: the trigger sits inside FormField, and the list opens directly below, the same width as the field.
 
 ## Anatomy
 | Part | Class | Radix |

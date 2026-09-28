@@ -1,6 +1,6 @@
 # ListPage (page template)
 
-Trang liệt kê bản ghi: Service Requests, Gap Analysis, Workspaces, Documents, Users, Audit Logs.
+A page that lists records: Service Requests, Gap Analysis, Workspaces, Documents, Users, Audit Logs.
 
 | Vùng | Nội dung |
 |---|---|

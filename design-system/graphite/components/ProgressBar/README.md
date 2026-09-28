@@ -1,6 +1,6 @@
 # ProgressBar
 
-Thanh tiến độ cho upload, readiness và các bước xử lý; luôn hiện kèm số % hoặc nội dung.
+A progress bar for uploads, readiness, and processing steps; always shown with a percentage or supporting text.
 
 ## Anatomy
 | Part | Class | Radix |

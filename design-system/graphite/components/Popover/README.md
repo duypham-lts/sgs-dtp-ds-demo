@@ -1,6 +1,6 @@
 # Popover
 
-Khung nổi gắn vào một trigger, dùng cho bộ lọc, form nhỏ hoặc thông tin phụ; không làm tối nền như Modal.
+A floating panel anchored to a trigger, for filters, a small form, or secondary information; it does not dim the background the way a Modal does.
 
 ## Anatomy
 | Part | Class | Radix |

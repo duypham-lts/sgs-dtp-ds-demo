@@ -1,6 +1,6 @@
 # AppSidebar
 
-Điều hướng chính của Customer Portal, nằm dọc bên trái. Có 2 cấp: mục chính, và mục con dưới một nhóm. Các mục hiện ra khác nhau tuỳ theo role.
+Primary navigation of the Customer Portal, running down the left side. It has two levels: top-level items, and child items under a group. Which items appear depends on the role.
 
 ## Mục theo role
 

@@ -1,6 +1,6 @@
 # DatePicker
 
-Chọn một ngày qua lịch bật ra; hiển thị dạng **DD MMM YYYY** (12 Oct 2026) để tránh nhầm giữa định dạng ngày/tháng của các nước.
+Pick a date from a popover calendar; shown as **DD MMM YYYY** (12 Oct 2026) so day/month order is not confused across locales.
 
 ## Anatomy
 | Part | Class | Triển khai |

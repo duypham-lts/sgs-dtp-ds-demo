@@ -1,6 +1,6 @@
 # PageHeader
 
-Tiêu đề trang của các màn làm việc (SR creation, edit, review): nút quay lại, tiêu đề và mô tả, status, autosave, và các action.
+The page heading for working screens (SR creation, edit, review): back button, title and description, status, autosave, and actions.
 
 ## Anatomy
 | Part | Class |

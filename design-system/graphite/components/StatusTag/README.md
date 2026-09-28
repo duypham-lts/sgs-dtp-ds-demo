@@ -1,6 +1,6 @@
 # StatusTag
 
-Trạng thái của tài liệu, SR hay evidence, luôn gồm icon và chữ; icon và màu lấy theo bộ Status icons.
+The status of a document, SR, or evidence, always icon plus text; the icon and colour come from the Status icons set.
 
 | `status` | Nhãn mặc định | Nền |
 |---|---|---|

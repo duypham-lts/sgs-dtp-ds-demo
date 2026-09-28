@@ -1,6 +1,6 @@
 # Combobox
 
-Ô vừa gõ vừa chọn một giá trị trong danh sách dài: công ty, quốc gia, framework.
+A field you type into and pick one value from a long list: company, country, framework.
 
 ## Anatomy
 | Part | Class · attribute | Triển khai |

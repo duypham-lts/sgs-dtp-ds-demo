@@ -1,6 +1,6 @@
 # FileUpload
 
-Vùng kéo-thả file kèm danh sách file và trạng thái từng file; là trung tâm của Evidence Management.
+A drag-and-drop area with a file list and a status for each file; the centre of Evidence Management.
 
 ## Anatomy
 | Part | Class · attribute | Vai trò |

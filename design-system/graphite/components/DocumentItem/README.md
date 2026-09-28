@@ -1,6 +1,6 @@
 # DocumentItem
 
-Một tài liệu trong SR, theo đúng spec "Document Item UI Guidelines", gồm 5 vùng.
+One document in an SR, following the "Document Item UI Guidelines" spec, made of 5 regions.
 
 ## Anatomy (theo guideline)
 | Vùng | Part | Class |

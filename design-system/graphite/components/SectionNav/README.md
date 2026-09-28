@@ -1,6 +1,6 @@
 # SectionNav
 
-Điều hướng dọc giữa các section của một form dài (cột trái màn SR creation), kèm trạng thái hoàn thành của từng section.
+Vertical navigation between sections of a long form (the left column of SR creation), with a completion state for each section.
 
 ## Anatomy
 | Part | Class |

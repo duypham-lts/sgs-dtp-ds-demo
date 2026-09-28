@@ -1,6 +1,6 @@
 # Table
 
-Bảng tĩnh, chỉ để đọc, dùng cho tập dữ liệu nhỏ nằm trong card: General Information, Accessible Group(s), Affected Products. Cần sort, lọc, chọn dòng hay phân trang thì dùng **DataTable**.
+A static, read-only table for a small data set inside a card: General Information, Accessible Group(s), Affected Products. For sort, filter, row selection, or pagination, use **DataTable**.
 
 ## Anatomy
 

@@ -1,6 +1,6 @@
 # AppShell (page template)
 
-Khung vỏ dùng chung cho mọi màn sau khi đăng nhập: **TopBar** (`home`) ở trên, **AppSidebar** bên trái, **vùng nội dung** ở giữa.
+Shared shell for every screen after sign-in: **TopBar** (`home`) on top, **AppSidebar** on the left, and the **content area** in the middle.
 
 - Nền trang dùng `background`. TopBar và sidebar nằm trên các khối `layer-02` bo `radius-md`, cách nhau 12px.
 - **Chỉ vùng nội dung cuộn**; TopBar và sidebar luôn đứng yên (guideline §12).

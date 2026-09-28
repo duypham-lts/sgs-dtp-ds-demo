@@ -1,6 +1,6 @@
 # CommentThread
 
-Luồng trao đổi giữa khách hàng và SGS (phần Messages ở cột phải màn SR, review comment, clarification).
+The conversation between the customer and SGS (the Messages pane in the right column of an SR screen, review comments, clarification).
 
 ## Anatomy
 | Part | Class |

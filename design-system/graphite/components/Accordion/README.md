@@ -1,6 +1,6 @@
 # Accordion
 
-Các khối thu gọn/mở rộng; dùng cho card Seller/Buyer ("Edit / Collapse") và "Affected Products" trong Document Item.
+Collapsible sections; used for Seller/Buyer cards ("Edit / Collapse") and "Affected Products" in Document Item.
 
 - Mỗi item là một khối nền `layer-extension`, bo `radius-md`, các khối cách nhau 8px, **không dùng đường kẻ**.
 - Góc phải hiện chữ hành động (Expand/Collapse) và chevron. `showActionLabel:false` khi chỉ cần chevron.

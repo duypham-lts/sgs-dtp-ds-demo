@@ -1,6 +1,6 @@
 # Pagination
 
-Thanh phân trang ở chân bảng, theo mẫu trong mockup SR: "Items per page" → "1–10 of 100 items" ở bên trái; ô chọn trang → "of 10 pages" → nút trước/sau ở bên phải.
+The paging bar at the foot of a table, following the SR mockup: "Items per page" → "1–10 of 100 items" on the left; a page field → "of 10 pages" → previous/next buttons on the right.
 
 ## Anatomy
 
