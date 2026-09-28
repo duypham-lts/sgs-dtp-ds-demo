@@ -1,4 +1,5 @@
 'use client';
+import { translate } from '@/i18n/locale';
 // designs/06 MvpConsWorkspace, MvpConsWorkspaceEnded; 07 IsConsWorkspace(Ended). UC-EVD-020, UC-ROL-001.
 // Read only: requirements and evidence (download only) while the request is in progress; afterwards the
 // access-ended page. Views and downloads are recorded in the customer's audit trail.
@@ -57,7 +58,7 @@ export function ConsultantWorkspace({ id, category }: { id: string; category: Co
         <section className="gr-card gr-card--extend center-card">
           <EmptyState icon="user--access" title={r.status === 'completed' ? `Your access to this workspace ended on ${fmtDate(r.completedAt)}` : 'You can’t open this workspace now'}
             body={r.status === 'completed' ? `${r.id} was completed, so the customer’s requirements and evidence are no longer visible to you. What you submitted is still available on the request. If you need access again, ask the SGS admin.` : 'Access starts when the request is in progress.'}
-            action={<div className="btn-row"><a href={back} className="gr-btn gr-btn--primary gr-btn--md">Back to {r.id}</a><Button variant="ghost" size="md" onClick={() => snack(`Write to ${r.approver?.email ?? 'your SGS admin'} to ask for access.`)}>Contact SGS admin</Button></div>} />
+            action={<div className="btn-row"><a href={back} className="gr-btn gr-btn--primary gr-btn--md">Back to {r.id}</a><Button variant="ghost" size="md" onClick={() => snack(`Write to ${r.approver?.email ?? 'your SGS admin'} to ask for access.`)}>{translate("Contact SGS admin")}</Button></div>} />
         </section>
       </>
     );
@@ -91,12 +92,12 @@ export function ConsultantWorkspace({ id, category }: { id: string; category: Co
                 <p className="body-medium" style={{ margin: 0 }}>{x.statement}</p>
               </section>
               <section className="gr-card gr-card--extend">
-                <div className="gr-card__head"><div><h2 className="gr-card__title">Evidence</h2><p className="gr-card__sub">{files.length} document{files.length === 1 ? '' : 's'} · download only · any file type</p></div></div>
+                <div className="gr-card__head"><div><h2 className="gr-card__title">{translate("Evidence")}</h2><p className="gr-card__sub">{files.length} document{files.length === 1 ? '' : 's'} · download only · any file type</p></div></div>
                 {files.length ? files.map((e) => {
                   const rv = REVIEW_LABEL[e.review];
                   return <DocumentItem key={e.id} variant={rv[0] === 'under-review' ? 'under-review' : 'standard'} docType={e.name} fileName={e.fileName} dateLabel={`Uploaded ${fmtUs(e.uploadedAt)} by ${e.uploadedBy}`} size={fsize(e.sizeBytes)} status={rv[0]} statusLabel={rv[1]}
                     actions={[{ type: 'download', label: `Download ${e.fileName}`, onClick: () => download(e.fileName, e.id) }]} />;
-                }) : <p className="body-medium muted" style={{ margin: 0 }}>The customer hasn’t uploaded evidence for this requirement yet.</p>}
+                }) : <p className="body-medium muted" style={{ margin: 0 }}>{translate("The customer hasn’t uploaded evidence for this requirement yet.")}</p>}
               </section>
             </>
           )}

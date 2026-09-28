@@ -3,5 +3,6 @@
 import { h } from '../runtime';
 import type { LinkProps } from '../../types/index';
 import { cx, omit } from '../utils';
+import { tr } from '../tr';
 
-export function Link(p: LinkProps){return h('a',Object.assign({href:'#'},omit(p,['inline','weight','className','children']),{className:cx('gr-link',p.inline&&'gr-link--inline',p.weight==='semibold'&&'gr-link--semibold',p.className)}),p.children);}
+export function Link(p: LinkProps){return h('a',Object.assign({href:'#'},omit(p,['inline','weight','className','children']),{className:cx('gr-link',p.inline&&'gr-link--inline',p.weight==='semibold'&&'gr-link--semibold',p.className)}),tr(p.children));}

@@ -1,4 +1,5 @@
 'use client';
+import { translate } from '@/i18n/locale';
 // designs/05 UploadEvidence and LinkEvidence.
 import { DatePicker, FileUpload, Modal, MultiSelect, SearchInput, TextInput, type UploadFile } from '@sgs/graphite';
 import { useEffect, useState } from 'react';
@@ -80,7 +81,7 @@ export function LinkEvidenceModal({ session, ws, code, evidence, open, onClose }
       primaryAction={{ label: sel.length ? `Link ${plural(sel.length, 'item')}` : 'Link', disabled: !sel.length, onClick: async () => { await linkEvidence(session, ws.id, code, sel); snack(`${plural(sel.length, 'file')} linked to ${code}`); close(); } }}
       secondaryAction={{ label: 'Cancel', onClick: close }}>
       <div className="modal-body" style={{ width: 552, gap: 12 }}>
-        <p className="body-small muted" style={{ margin: 0 }}>Evidence already in this workspace. Linking doesn’t copy the file; a new version updates every requirement that uses it.</p>
+        <p className="body-small muted" style={{ margin: 0 }}>{translate("Evidence already in this workspace. Linking doesn’t copy the file; a new version updates every requirement that uses it.")}</p>
         <SearchInput label="Search evidence" placeholder="Search evidence" size="l" width="100%" value={q} onChange={(e) => setQ(e.target.value)} />
         <div className="check-list">
         {candidates.length ? candidates.map((e) => (

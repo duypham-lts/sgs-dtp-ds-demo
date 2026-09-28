@@ -1,4 +1,5 @@
 // Date formats used across designs/: "21 Sep 2026", "Today, 09:12", "Yesterday, 17:40", "Yesterday".
+import { getLocale, translate } from '@/i18n/locale';
 import { TODAY } from '@/mock/seed';
 
 const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -7,6 +8,7 @@ const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct
 export function fmtDate(iso?: string | null): string {
   if (!iso) return '—';
   const [y, m, d] = iso.slice(0, 10).split('-').map(Number);
+  if (getLocale() === 'zh-Hant') return `${y}年${m}月${d}日`;
   return `${String(d).padStart(2, '0')} ${MON[m - 1]} ${y}`;
 }
 
@@ -24,8 +26,8 @@ export function fmtRelative(iso?: string | null, withTime = true): string {
   if (!iso) return '—';
   const time = iso.length > 10 ? iso.slice(11, 16) : '';
   const diff = dayDiff(iso);
-  if (diff === 0) return time && withTime ? `Today, ${time}` : 'Today';
-  if (diff === 1) return time && withTime ? `Yesterday, ${time}` : 'Yesterday';
+  if (diff === 0) return time && withTime ? translate('Today, {time}', { time }) : translate('Today');
+  if (diff === 1) return time && withTime ? translate('Yesterday, {time}', { time }) : translate('Yesterday');
   return fmtDate(iso);
 }
 
@@ -38,7 +40,7 @@ export function fmtDateTime(iso?: string | null): string {
 /** Days from TODAY to the date (negative = past). */
 export function daysUntil(iso: string): number { return -dayDiff(iso); }
 
-export function plural(n: number, one: string, many = `${one}s`): string { return `${n} ${n === 1 ? one : many}`; }
+export function plural(n: number, one: string, many = `${one}s`): string { return `${n} ${translate(n === 1 ? one : many)}`; }
 
 /** "Sep 12, 2026" and "Sep 2027" (designs/05 DocumentItem date labels). */
 export function fmtUs(iso?: string | null): string {

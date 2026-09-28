@@ -5,8 +5,9 @@ import type { StatusTagProps } from '../../types/index';
 import { Icon } from './Icon';
 import { Tooltip } from './Tooltip';
 import { cx } from '../utils';
+import { tr } from '../tr';
 
 export var STATUS={'completed':['Completed','checkmark--filled'],'under-review':['Under Review','time--filled'],'needs-description':['Needs Description','warning--alt--filled'],'missing-info':['Missing Info','warning--filled'],'rejected':['Rejected','misuse'],'draft':['Draft','circle-dash'],'info':['Info','information--filled']};
-export function StatusTag(p: StatusTagProps){var st=STATUS[p.status]?p.status:'info';var def=STATUS[st];var label=p.label||def[0];var sz=p.size||'md';
+export function StatusTag(p: StatusTagProps){var st=STATUS[p.status]?p.status:'info';var def=STATUS[st];var label=tr(p.label||def[0]);var sz=p.size||'md';
  if(p.compact){return h(Tooltip,{label:label},h('span',{className:cx('gr-status','gr-status--'+st,'gr-status--compact',p.className),role:'img','aria-label':label,tabIndex:0},h(Icon,{name:def[1],size:16})));}
  return h('span',{className:cx('gr-status','gr-status--'+st,'gr-status--'+sz,p.className)},p.showIcon===false?null:h(Icon,{name:def[1],size:16}),h('span',null,label));}

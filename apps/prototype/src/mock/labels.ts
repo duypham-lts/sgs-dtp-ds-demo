@@ -1,15 +1,27 @@
 // Display labels shared by several modules (copy as in designs/).
+// Status text is translated at read time so list screens follow the active UI language.
+import { translate } from '@/i18n/locale';
 import type { ScopeType, SgsRole, UserStatus } from './types';
+
+function localize<T extends Record<string, readonly [string, string]>>(table: T): { [K in keyof T]: [T[K][0], string] } {
+  return new Proxy(table, {
+    get(target, prop, receiver) {
+      if (typeof prop !== 'string') return Reflect.get(target, prop, receiver);
+      const row = target[prop as keyof T] as readonly [string, string] | undefined;
+      return row ? [row[0], translate(row[1])] : undefined;
+    },
+  }) as unknown as { [K in keyof T]: [T[K][0], string] };
+}
 
 export const SCOPE_TYPE_LABEL: Record<ScopeType, string> = { organization: 'Organisation', product: 'Product', system: 'System' };
 
 /** designs/03 Users: StatusTag per user status. */
-export const USER_STATUS: Record<UserStatus, ['completed' | 'under-review' | 'missing-info' | 'draft', string]> = {
+export const USER_STATUS: Record<UserStatus, ['completed' | 'under-review' | 'missing-info' | 'draft', string]> = localize({
   active: ['completed', 'Active'],
   invited: ['under-review', 'Invitation pending'],
   expired: ['missing-info', 'Invitation expired'],
   deactivated: ['draft', 'Deactivated'],
-};
+} as const);
 
 /** designs/03 SgsInviteSgs role options. */
 export const SGS_ROLE_OPTIONS: { value: SgsRole; label: string; description: string }[] = [
@@ -35,8 +47,8 @@ export const COUNTRIES = [
   { value: 'Saudi Arabia', label: 'Saudi Arabia' }, { value: 'Singapore', label: 'Singapore' },
 ];
 
-/** Service request status → StatusTag (docs/prototype-plan.md §3.1, list labels). */
-export const SR_STATUS: Record<string, ['completed' | 'under-review' | 'needs-description' | 'missing-info' | 'rejected' | 'draft' | 'info', string]> = {
+/** English source. The dashboard stores these words; the UI translates them when it renders. */
+export const SR_STATUS_EN = {
   draft: ['draft', 'Draft'],
   submitted: ['under-review', 'Submitted'],
   information_requested: ['missing-info', 'Action required'],
@@ -47,4 +59,7 @@ export const SR_STATUS: Record<string, ['completed' | 'under-review' | 'needs-de
   certificate_issued: ['completed', 'Certificate issued'],
   rejected: ['rejected', 'Rejected'],
   withdrawn: ['draft', 'Withdrawn'],
-};
+} as const;
+
+/** Service request status → StatusTag (docs/prototype-plan.md §3.1, list labels). */
+export const SR_STATUS: Record<string, ['completed' | 'under-review' | 'needs-description' | 'missing-info' | 'rejected' | 'draft' | 'info', string]> = localize(SR_STATUS_EN);

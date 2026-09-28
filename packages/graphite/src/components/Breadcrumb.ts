@@ -4,7 +4,8 @@ import { h } from '../runtime';
 import type { BreadcrumbProps } from '../../types/index';
 import { Link } from './Link';
 import { cx } from '../utils';
+import { tr } from '../tr';
 
 export function Breadcrumb(p: BreadcrumbProps){var items=p.items||[];
- return h('nav',{'aria-label':p.label||'Breadcrumb',className:cx('gr-crumb',p.className)},h('ol',{className:'gr-crumb__list'},items.map(function(it,i){var last=i===items.length-1;
-  return h('li',{key:i,className:'gr-crumb__item'},last?h('span',{'aria-current':'page',className:'gr-crumb__current'},it.label):h(Link,{href:it.href||'#'},it.label),last?null:h('span',{className:'gr-crumb__sep','aria-hidden':true},'/'));})));}
+ return h('nav',{'aria-label':tr(p.label||'Breadcrumb'),className:cx('gr-crumb',p.className)},h('ol',{className:'gr-crumb__list'},items.map(function(it,i){var last=i===items.length-1;
+  return h('li',{key:i,className:'gr-crumb__item'},last?h('span',{'aria-current':'page',className:'gr-crumb__current'},tr(it.label)):h(Link,{href:it.href||'#'},tr(it.label)),last?null:h('span',{className:'gr-crumb__sep','aria-hidden':true},'/'));})));}

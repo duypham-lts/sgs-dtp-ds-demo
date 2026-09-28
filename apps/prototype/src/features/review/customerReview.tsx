@@ -1,4 +1,5 @@
 'use client';
+import { translate } from '@/i18n/locale';
 // Customer side of the audit review: designs/08 Reviews, ReviewFeedback, ReviewOverdue, RespondClarification,
 // SubmitCorrectiveAction. UC-REV-004/011/012/013. Labels follow design-questions Q13.
 import { Button, DataTable, DatePicker, FileUpload, InlineNotification, Modal, Skeleton, StatusTag, Tabs, Tag, Textarea, type TableColumn } from '@sgs/graphite';
@@ -117,14 +118,14 @@ export function ReviewFeedbackPage({ id }: { id: string }) {
   for (const i of rv.items) {
     const c = i.clarifications[i.clarifications.length - 1];
     if (c) rows.push({ id: c.id, code: i.requirement.code, title: i.requirement.title, kind: 'clar', tone: ['needs-description', 'Clarification requested'], msg: c.question, due: c.dueOn, overdue: c.overdue,
-      action: c.answeredAt ? <StatusTag status="under-review" size="sm" label="Response submitted" /> : writer && !closed ? <Button size="sm" variant="tertiary" onClick={() => setRespond(c)}>Respond</Button> : <span className="body-small muted">Waiting</span> });
+      action: c.answeredAt ? <StatusTag status="under-review" size="sm" label="Response submitted" /> : writer && !closed ? <Button size="sm" variant="tertiary" onClick={() => setRespond(c)}>{translate("Respond")}</Button> : <span className="body-small muted">{translate("Waiting")}</span> });
     for (const f of i.findings) {
       const resubmit = f.status === 'open' && f.actions.some((a) => a.decision === 'not_accepted');
       rows.push({ id: f.id, code: i.requirement.code, title: i.requirement.title, kind: 'finding', tone: [f.classification === 'observation' || f.classification === 'ofi' ? 'info' : 'missing-info', FINDING_LABEL[f.classification]], msg: f.text, due: f.dueOn, overdue: f.overdue,
-        action: !f.correctiveRequired ? <span className="body-small muted">No response needed</span>
+        action: !f.correctiveRequired ? <span className="body-small muted">{translate("No response needed")}</span>
           : f.status === 'closed' ? <StatusTag status="completed" size="sm" label="Closed" />
           : f.status === 'response_submitted' ? <StatusTag status="under-review" size="sm" label="Response submitted" />
-          : writer && !closed ? <Button size="sm" onClick={() => setCorr(f)}>{resubmit ? 'Submit again' : 'Submit corrective action'}</Button> : <span className="body-small muted">Waiting</span> });
+          : writer && !closed ? <Button size="sm" onClick={() => setCorr(f)}>{resubmit ? 'Submit again' : 'Submit corrective action'}</Button> : <span className="body-small muted">{translate("Waiting")}</span> });
     }
   }
   const overdue = rows.filter((r) => r.overdue);

@@ -4,13 +4,14 @@ import { h, useState } from '../runtime';
 import type { SectionNavProps } from '../../types/index';
 import { Icon } from './Icon';
 import { cx } from '../utils';
+import { tr } from '../tr';
 
 export var NAV_ST={complete:['checkmark--filled','Complete'],incomplete:[null,'Required information missing'],error:['warning--filled','Has errors'],optional:[null,'']};
 export function SectionNav(p: SectionNavProps){var items=p.items||[];var sa=useState(p.defaultActive||(items[0]&&items[0].id)),a=sa[0],setA=sa[1];var act=p.active!==undefined?p.active:a;var mode=p.variant||'text';
- return h('nav',{'aria-label':p.label||'Sections',className:cx('gr-snav','gr-snav--'+mode,p.className)},h('ul',{className:'gr-snav__list'},items.map(function(it){var cur=it.id===act;var st=NAV_ST[it.status]||NAV_ST.optional;
+ return h('nav',{'aria-label':tr(p.label||'Sections'),className:cx('gr-snav','gr-snav--'+mode,p.className)},h('ul',{className:'gr-snav__list'},items.map(function(it){var cur=it.id===act;var st=NAV_ST[it.status]||NAV_ST.optional;
   var dot=it.status==='complete'?h(Icon,{name:'checkmark--filled',size:16,className:'gr-snav__ok'}):it.status==='error'?h(Icon,{name:'warning--filled',size:16,className:'gr-snav__bad'}):it.status==='incomplete'?h('span',{className:'gr-snav__dot'}):null;
   return h('li',{key:it.id},h('a',{href:it.href||'#'+it.id,className:cx('gr-snav__item',cur&&'is-current'),'aria-current':cur?'step':undefined,onClick:function(e){if(!it.href)e.preventDefault();if(p.active===undefined)setA(it.id);if(p.onSelect)p.onSelect(it.id);}},
    mode==='icon'&&it.icon?h(Icon,{name:it.icon,size:20,className:'gr-snav__icon'}):null,
-   h('span',{className:'gr-snav__label'},it.label),
+   h('span',{className:'gr-snav__label'},tr(it.label)),
    dot?h('span',{className:'gr-snav__st'},dot):null,
-   st[1]?h('span',{className:'gr-sr'},' – '+st[1]):null));})));}
+   st[1]?h('span',{className:'gr-sr'},' – '+tr(st[1])):null));})));}

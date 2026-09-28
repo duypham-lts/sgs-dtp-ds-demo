@@ -10,6 +10,7 @@ import { Pagination } from './Pagination';
 import { SearchInput } from './SearchInput';
 import { cellValue } from './Table';
 import { cx } from '../utils';
+import { tr } from '../tr';
 
 export function sortRows(rows,cols,sort){if(!sort||!sort.key||sort.dir==='none')return rows;var col=cols.filter(function(c){return c.key===sort.key;})[0];if(!col)return rows;
  var get=col.sortValue||function(r){return r[col.key];};var out=rows.slice();out.sort(function(a,b){var x=get(a),y=get(b);if(x==null)return 1;if(y==null)return -1;var r=typeof x==='number'&&typeof y==='number'?x-y:String(x).localeCompare(String(y),undefined,{numeric:true});return sort.dir==='desc'?-r:r;});return out;}
@@ -27,33 +28,33 @@ export function DataTable(p: DataTableProps<any>){var cols=p.columns||[],all=p.r
  var selectedRows=all.filter(function(r,i){return selected[getId(r,i)];});
  var hasHead=!!(p.title||p.description||p.searchable||p.toolbarActions||(selIds.length&&p.bulkActions));
  var head=!hasHead?null:h('div',{className:'gr-dt__toolbar'},
-   selIds.length&&p.bulkActions?h('div',{className:'gr-dt__batch',role:'region','aria-label':'Bulk actions'},
-     h('span',{className:'gr-dt__batch-count'},selIds.length+' selected'),
-     h('div',{className:'gr-dt__batch-actions'},p.bulkActions.map(function(a,i){return h('button',{key:i,type:'button',className:'gr-dt__batch-btn',onClick:function(){if(a.onClick)a.onClick(selectedRows);}},a.label);}),
-      h('button',{type:'button',className:'gr-dt__batch-btn',onClick:function(){setSelected({});}},'Cancel'))):
+   selIds.length&&p.bulkActions?h('div',{className:'gr-dt__batch',role:'region','aria-label':tr('Bulk actions')},
+     h('span',{className:'gr-dt__batch-count'},tr('{count} selected',{count:selIds.length})),
+     h('div',{className:'gr-dt__batch-actions'},p.bulkActions.map(function(a,i){return h('button',{key:i,type:'button',className:'gr-dt__batch-btn',onClick:function(){if(a.onClick)a.onClick(selectedRows);}},tr(a.label));}),
+      h('button',{type:'button',className:'gr-dt__batch-btn',onClick:function(){setSelected({});}},tr('Cancel')))):
    h(React.Fragment,null,
-    (p.title||p.description)?h('div',{className:'gr-dt__heading'},p.title?h('h3',{className:'gr-dt__title'},p.title):null,p.description?h('p',{className:'gr-dt__desc'},p.description):null):null,
+    (p.title||p.description)?h('div',{className:'gr-dt__heading'},p.title?h('h3',{className:'gr-dt__title'},tr(p.title)):null,p.description?h('p',{className:'gr-dt__desc'},tr(p.description)):null):null,
     h('div',{className:'gr-dt__tools'},
-     p.searchable?h(SearchInput,{size:'s',placeholder:p.searchPlaceholder||'Search',label:'Search '+(p.title||'table'),value:q,onChange:function(e){setQ(e.target.value);setPage(1);}}):null,
+     p.searchable?h(SearchInput,{size:'s',placeholder:tr(p.searchPlaceholder||'Search'),label:tr('Search {title}',{title:p.title||'table'}),value:q,onChange:function(e){setQ(e.target.value);setPage(1);}}):null,
      p.toolbarActions||null)));
  var body;
- if(p.error){body=h('div',{className:'gr-dt__state'},h(InlineNotification,{kind:'error',title:p.error.title||'Couldn’t load data',live:true},p.error.message||null));}
- else if(!p.loading&&!sorted.length){var es=p.emptyState||{};body=h('div',{className:'gr-dt__state gr-dt__empty'},h('div',{className:'gr-dt__empty-title'},q?'No results for “'+q+'”':(es.title||'Nothing here yet')),h('div',{className:'gr-dt__empty-body'},q?'Try a different search term.':(es.body||'')),(!q&&es.action)?h('div',{className:'gr-dt__empty-action'},es.action):null);}
+ if(p.error){body=h('div',{className:'gr-dt__state'},h(InlineNotification,{kind:'error',title:tr(p.error.title||'Couldn’t load data'),live:true},tr(p.error.message)||null));}
+ else if(!p.loading&&!sorted.length){var es=p.emptyState||{};body=h('div',{className:'gr-dt__state gr-dt__empty'},h('div',{className:'gr-dt__empty-title'},q?tr('No results for “{query}”',{query:q}):tr(es.title||'Nothing here yet')),h('div',{className:'gr-dt__empty-body'},q?tr('Try a different search term.'):tr(es.body||'')),(!q&&es.action)?h('div',{className:'gr-dt__empty-action'},es.action):null);}
  else if(cards){body=h('ul',{className:'gr-dt__cards'},(p.loading?[0,1,2]:paged).map(function(r,i){if(p.loading)return h('li',{key:'sk'+i,className:'gr-dt__card'},h('span',{className:'gr-skel',style:{width:'60%'}}),h('span',{className:'gr-skel',style:{width:'40%'}}),h('span',{className:'gr-skel'}));
    var id=getId(r,i);var tcol=cols.filter(function(c){return c.key===p.cardTitleKey;})[0]||cols[0];var scol=cols.filter(function(c){return c.key===p.cardStatusKey;})[0];
    return h('li',{key:id,className:'gr-dt__card','data-state':selected[id]?'selected':undefined},
-    h('div',{className:'gr-dt__card-head'},p.selectable?h(Checkbox,{'aria-label':'Select row',checked:!!selected[id],onChange:function(){toggle(id);}}):null,h('div',{className:'gr-dt__card-title'},cellValue(tcol,r)),p.rowActions?h(OverflowMenu,{items:p.rowActions(r),label:'Row actions'}):null),
+    h('div',{className:'gr-dt__card-head'},p.selectable?h(Checkbox,{'aria-label':tr('Select row'),checked:!!selected[id],onChange:function(){toggle(id);}}):null,h('div',{className:'gr-dt__card-title'},cellValue(tcol,r)),p.rowActions?h(OverflowMenu,{items:p.rowActions(r),label:tr('Row actions')}):null),
     scol?h('div',null,cellValue(scol,r)):null,
-    h('dl',{className:'gr-dt__card-grid'},cols.filter(function(c){return c!==tcol&&c!==scol&&!c.hideOnCard;}).map(function(c){return h('div',{key:c.key},h('dt',null,c.header),h('dd',null,cellValue(c,r)));})));}));}
+    h('dl',{className:'gr-dt__card-grid'},cols.filter(function(c){return c!==tcol&&c!==scol&&!c.hideOnCard;}).map(function(c){return h('div',{key:c.key},h('dt',null,tr(c.header)),h('dd',null,cellValue(c,r)));})));}));}
  else{body=h('div',{className:'gr-tbl__scroll',style:p.maxHeight?{maxHeight:p.maxHeight}:undefined},
    h('table',{className:'gr-tbl__table','aria-busy':p.loading?true:undefined},
-    h('caption',{className:'gr-sr'},p.title||'Table'),
+    h('caption',{className:'gr-sr'},tr(p.title||'Table')),
     h('thead',{className:'gr-tbl__head'},h('tr',null,
-     p.selectable?h('th',{scope:'col',className:'gr-tbl__th gr-tbl__check'},h(Checkbox,{'aria-label':'Select all rows on this page',checked:allOnPage,indeterminate:someOnPage&&!allOnPage,onChange:toggleAll})):null,
+     p.selectable?h('th',{scope:'col',className:'gr-tbl__th gr-tbl__check'},h(Checkbox,{'aria-label':tr('Select all rows on this page'),checked:allOnPage,indeterminate:someOnPage&&!allOnPage,onChange:toggleAll})):null,
      cols.map(function(c){var dir=sort&&sort.key===c.key?sort.dir:'none';
       return h('th',{key:c.key,scope:'col',className:'gr-tbl__th','data-align':c.align||'start','aria-sort':c.sortable?(dir==='asc'?'ascending':dir==='desc'?'descending':'none'):undefined,style:c.width?{width:c.width}:undefined},
-       c.sortable?h('button',{type:'button',className:'gr-tbl__sort','data-sort':dir,onClick:function(){sortBy(c);}},c.header,h(Icon,{name:dir==='asc'?'arrow--up':dir==='desc'?'arrow--down':'arrows--vertical',size:16})):c.header);}),
-     p.rowActions?h('th',{scope:'col',className:'gr-tbl__th gr-tbl__actions'},h('span',{className:'gr-sr'},'Actions')):null)),
+       c.sortable?h('button',{type:'button',className:'gr-tbl__sort','data-sort':dir,onClick:function(){sortBy(c);}},tr(c.header),h(Icon,{name:dir==='asc'?'arrow--up':dir==='desc'?'arrow--down':'arrows--vertical',size:16})):tr(c.header));}),
+     p.rowActions?h('th',{scope:'col',className:'gr-tbl__th gr-tbl__actions'},h('span',{className:'gr-sr'},tr('Actions'))):null)),
     h('tbody',null,p.loading?[0,1,2,3,4].map(function(i){return h('tr',{key:'sk'+i,className:'gr-tbl__row'},p.selectable?h('td',{className:'gr-tbl__td gr-tbl__check'}):null,cols.map(function(c){return h('td',{key:c.key,className:'gr-tbl__td'},h('span',{className:'gr-skel'}));}),p.rowActions?h('td',{className:'gr-tbl__td'}):null);}):
      paged.map(function(r,i){var id=getId(r,i);return h('tr',{key:id,className:'gr-tbl__row','data-state':selected[id]?'selected':undefined,'aria-selected':p.selectable?!!selected[id]:undefined},
       p.selectable?h('td',{className:'gr-tbl__td gr-tbl__check'},h(Checkbox,{'aria-label':'Select row',checked:!!selected[id],onChange:function(){toggle(id);}})):null,

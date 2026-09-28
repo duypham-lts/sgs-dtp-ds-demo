@@ -177,3 +177,4 @@ barrel.push("export type * from '../types/index';", '');
 writeFileSync(join(pkg, 'src/index.ts'), ["'use client';", ...barrel.filter((l) => l !== "'use client';")].join('\n'));
 
 console.log(`Ported ${order.length} public components into ${modules.size} modules.`);
+await import('./inject-i18n.mjs');

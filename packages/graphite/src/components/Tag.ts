@@ -3,5 +3,6 @@
 import { h } from '../runtime';
 import type { TagProps } from '../../types/index';
 import { cx } from '../utils';
+import { tr } from '../tr';
 
-export function Tag(p: TagProps){return h('span',{className:cx('gr-tag','gr-tag--'+(p.tone||'neutral'),p.className)},p.children);}
+export function Tag(p: TagProps){return h('span',{className:cx('gr-tag','gr-tag--'+(p.tone||'neutral'),p.className)},tr(p.children));}

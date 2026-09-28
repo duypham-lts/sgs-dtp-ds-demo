@@ -1,4 +1,5 @@
 'use client';
+import { translate } from '@/i18n/locale';
 // Invitation email (designs/01 InviteEmail, 720px). The prototype shows sent emails in a demo mailbox
 // (/mail); the button opens the activation page of the right portal (UC-USR-003, UC-AUTH-005).
 import { Link, Logo } from '@sgs/graphite';
@@ -11,7 +12,7 @@ export function InviteEmail({ email }: { email: MockEmail }) {
   return (
     <div data-theme="customer" className="mail">
       <div className="body-small mail__head">
-        <span className="muted">From: SGS Digital Trust Platform &lt;no-reply@dtp.sgs.com&gt;</span>
+        <span className="muted">{translate("From: SGS Digital Trust Platform <no-reply@dtp.sgs.com>")}</span>
         <span className="muted">To: {email.to}</span>
         <span className="title-small">Subject: {email.subject}</span>
       </div>
@@ -24,12 +25,12 @@ export function InviteEmail({ email }: { email: MockEmail }) {
             Hi {email.toName},<br />
             {sgs
               ? <>{email.inviterName} ({email.inviterRole}) invited you to the SGS Operations Console of the Digital Trust Platform for <strong>{email.orgName}</strong>.</>
-              : <>{email.inviterName} ({email.inviterRole}) invited you to work on compliance evidence for <strong>{email.orgName}</strong> on the SGS Digital Trust Platform.</>}
+              : <>{email.inviterName} ({email.inviterRole}) invited you to work on compliance evidence for <strong>{email.orgName}</strong> {translate("on the SGS Digital Trust Platform.")}</>}
           </p>
-          <div><a href={href} className="gr-btn gr-btn--primary gr-btn--lg">Activate my account</a></div>
+          <div><a href={href} className="gr-btn gr-btn--primary gr-btn--lg">{translate("Activate my account")}</a></div>
           <p className="body-small muted" style={{ margin: 0 }}>This link works once and expires on {fmtDate(email.expiresAt)}. If you didn’t expect this email, you can ignore it.</p>
           <div className="mail__rule" />
-          <p className="body-small muted" style={{ margin: 0 }}>SGS Digital Trust Platform · {sgs ? email.orgName : 'SGS Taiwan'} · <Link href="#" inline>Privacy notice</Link></p>
+          <p className="body-small muted" style={{ margin: 0 }}>SGS Digital Trust Platform · {sgs ? email.orgName : 'SGS Taiwan'} · <Link href="#" inline>{translate("Privacy notice")}</Link></p>
         </div>
       </div>
     </div>

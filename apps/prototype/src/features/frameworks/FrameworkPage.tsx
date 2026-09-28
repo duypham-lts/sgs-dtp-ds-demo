@@ -1,4 +1,5 @@
 'use client';
+import { translate } from '@/i18n/locale';
 // designs/04 FwPreview (draft), FwActivate, FwDetail (active), FwRequirements; "Other versions" has no
 // exported design (design-questions Q20): a version table built from the columns defined in FwPreview.
 import { Breadcrumb, Button, Card, Modal, OverflowMenu, RequirementNavigator, Skeleton, StatusTag, Table, Tag, InlineNotification, type RequirementGroup, type StatusTagProps } from '@sgs/graphite';
@@ -87,7 +88,7 @@ function RequirementsBrowser({ f, full }: { f: FrameworkDetail; full: boolean })
   const pre = f.requirements.find((r) => r.code === 'R.1.1.3') ?? f.requirements[0];
   const [sel, setSel] = useState(pre?.code);
   const r = f.requirements.find((x) => x.code === sel) ?? pre;
-  if (!r) return <p className="body-medium muted">No requirements.</p>;
+  if (!r) return <p className="body-medium muted">{translate("No requirements.")}</p>;
   return (
     <div className={full ? 'req-split req-split--full' : 'req-split'}>
       <div className="req-split__nav">
@@ -118,7 +119,7 @@ export function FrameworkPage({ id, view }: { id: string; view: FrameworkView })
   const header = {
     title: f.name, subtitle, status,
     actions: draft
-      ? (admin ? <div className="btn-row"><Button variant="tertiary" size="md" onClick={() => setDiscard(true)}>Discard draft</Button><Button size="md" onClick={() => setActivate(true)}>Activate</Button></div> : undefined)
+      ? (admin ? <div className="btn-row"><Button variant="tertiary" size="md" onClick={() => setDiscard(true)}>{translate("Discard draft")}</Button><Button size="md" onClick={() => setActivate(true)}>{translate("Activate")}</Button></div> : undefined)
       : (admin ? <OverflowMenu size="md" label="Framework actions" items={[{ label: 'Import new version', onClick: () => router.push('/ops/frameworks?import=1') }]} /> : undefined),
   };
   const counts = f.counts;
@@ -143,12 +144,12 @@ export function FrameworkPage({ id, view }: { id: string; view: FrameworkView })
         primaryAction={{ label: 'Activate framework', onClick: async () => { await activateFramework(session, id); setActivate(false); snack(`${f.shortName} · ${f.version} is active. Customers can now activate it on their scopes.`); } }}
         secondaryAction={{ label: 'Cancel', onClick: () => setActivate(false) }}>
         <div className="modal-body" style={{ width: 520 }}>
-          <p className="body-medium" style={{ margin: 0 }}>Activate <strong>{f.name}</strong> · {f.versionFull}?</p>
+          <p className="body-medium" style={{ margin: 0 }}>{translate("Activate")} <strong>{f.name}</strong> · {f.versionFull}?</p>
           <ul className="body-medium muted" style={{ margin: 0, paddingLeft: 20, display: 'flex', flexDirection: 'column', gap: 4 }}>
-            <li>Customers can activate it on their scopes.</li>
+            <li>{translate("Customers can activate it on their scopes.")}</li>
             {/* Copy per design-questions Q11: the customer sets the tier (designs/04 says SGS does). */}
             {f.tiers.length ? <li>Each customer chooses the tier of their scope: {f.tiers.map((t) => t.label).join(', ').replace(/, ([^,]*)$/, ' or $1')}.</li> : null}
-            <li>The content is locked. Changes need a new version.</li>
+            <li>{translate("The content is locked. Changes need a new version.")}</li>
           </ul>
         </div>
       </Modal>
@@ -156,7 +157,7 @@ export function FrameworkPage({ id, view }: { id: string; view: FrameworkView })
         primaryAction={{ label: 'Discard draft', onClick: async () => { await discardDraft(session, id); setDiscard(false); snack('Draft discarded. Nothing was published.'); router.push('/ops/frameworks'); } }}
         secondaryAction={{ label: 'Cancel', onClick: () => setDiscard(false) }}>
         <div className="modal-body" style={{ width: 440 }}>
-          <p className="body-medium" style={{ margin: 0 }}>The imported draft of <strong>{f.shortName} · {f.version}</strong> is removed. Customers never saw it. You can import the file again later.</p>
+          <p className="body-medium" style={{ margin: 0 }}>{translate("The imported draft of")} <strong>{f.shortName} · {f.version}</strong> {translate("is removed. Customers never saw it. You can import the file again later.")}</p>
         </div>
       </Modal>
     </>
@@ -167,9 +168,9 @@ export function FrameworkPage({ id, view }: { id: string; view: FrameworkView })
       <DetailLayout backHref="/ops/frameworks" sidebar="expanded" header={header}
         sections={[{ id: 'fw', label: 'Framework' }, ...(f.tiers.length ? [{ id: 'tiers', label: 'Tiers' }] : []), { id: 'req', label: 'Requirements' }]}
         aside={<>
-          <div className="title-medium">Import</div>
-          <InlineNotification kind="success" title="File check passed">No errors. The draft is ready to activate.</InlineNotification>
-          <AsideBox title="After activation"><span className="body-small muted">Customers can activate this framework on their scopes and choose the tier. Requirements can’t be edited in the platform; import a new version to change them.</span></AsideBox>
+          <div className="title-medium">{translate("Import")}</div>
+          <InlineNotification kind="success" title="File check passed">{translate("No errors. The draft is ready to activate.")}</InlineNotification>
+          <AsideBox title="After activation"><span className="body-small muted">{translate("Customers can activate this framework on their scopes and choose the tier. Requirements can’t be edited in the platform; import a new version to change them.")}</span></AsideBox>
         </>}>
         {frameworkCard(1)}
         {tierCard(2)}

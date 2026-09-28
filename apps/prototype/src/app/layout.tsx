@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import '@sgs/graphite/tokens.css';
 import '@sgs/graphite/styles.css';
 import './globals.css';
+import { I18nProvider } from '@/i18n/I18nProvider';
 import { PersonaProvider } from '@/demo/persona';
 import { DemoSwitcher } from '@/demo/DemoSwitcher';
 import { SnackbarProvider } from '@/ui/snackbar';
@@ -22,12 +23,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet" />
       </head>
       <body>
-        <PersonaProvider>
-          <SnackbarProvider>
-            {children}
-            <DemoSwitcher />
-          </SnackbarProvider>
-        </PersonaProvider>
+        <I18nProvider>
+          <PersonaProvider>
+            <SnackbarProvider>
+              {children}
+              <DemoSwitcher />
+            </SnackbarProvider>
+          </PersonaProvider>
+        </I18nProvider>
       </body>
     </html>
   );

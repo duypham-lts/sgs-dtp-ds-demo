@@ -1,4 +1,5 @@
 'use client';
+import { translate } from '@/i18n/locale';
 // Modals of service requests: WithdrawModal (designs/06 old set, decisions D4, all categories),
 // Request information (D3, no design), Approve & assign (06 MvpAdminApprove, 07 IsAdminApprove),
 // Reject (06 MvpAdminReject, 07 IsAdminReject).
@@ -114,7 +115,7 @@ export function RejectModal({ session, request, open, onClose }: { session: Sess
       } }}
       secondaryAction={{ label: 'Cancel', onClick: close }}>
       <div className="modal-body" style={{ width: 552 }}>
-        <p className="body-medium muted" style={{ margin: 0 }}>The customer sees the reason and your message.</p>
+        <p className="body-medium muted" style={{ margin: 0 }}>{translate("The customer sees the reason and your message.")}</p>
         <Select label="Reason" required size="m" placeholder="Select a reason" options={opts(REJECT_REASONS)} value={v.reason} error={e.reason} onChange={(_, x) => { setV({ ...v, reason: x }); clearOn(setE, 'reason'); }} />
         <Textarea label="Message to the customer" required size="l" rows={3} helpText="Be specific about what they can do next." value={v.message} error={e.message} onChange={(x) => { setV({ ...v, message: x.target.value }); clearOn(setE, 'message'); }} />
       </div>

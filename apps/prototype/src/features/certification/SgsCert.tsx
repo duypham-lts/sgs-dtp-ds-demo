@@ -1,4 +1,5 @@
 'use client';
+import { translate } from '@/i18n/locale';
 // SGS side of certification: designs/08 SgsCertRequests (tabs To assign / In audit / Ready for certificate /
 // Closed), SgsAssignAuditor, SgsCreateCert, SgsCertifications; reject with the shared modal (09 AdminReject).
 // The request detail for SGS has no design (docs/prototype-plan.md §4.5): same layout as the other SGS detail pages.
@@ -155,13 +156,13 @@ export function SgsCertRequestDetail({ id }: { id: string }) {
   if (!r) return <Skeleton lines={8} />;
   const st = SR_STATUS[r.status];
   const actions = r.status === 'submitted'
-    ? <div className="btn-row"><Button variant="tertiary" size="md" onClick={() => setModal('reject')}>Reject</Button><Button size="md" onClick={() => setModal('assign')}>Assign auditor</Button></div>
-    : r.status === 'audit_completed' ? <Button size="md" onClick={() => setModal('cert')}>Create certification record</Button> : undefined;
+    ? <div className="btn-row"><Button variant="tertiary" size="md" onClick={() => setModal('reject')}>{translate("Reject")}</Button><Button size="md" onClick={() => setModal('assign')}>{translate("Assign auditor")}</Button></div>
+    : r.status === 'audit_completed' ? <Button size="md" onClick={() => setModal('cert')}>{translate("Create certification record")}</Button> : undefined;
   return (
     <DetailLayout backHref="/ops/requests/certification" sidebar="expanded" sections={[{ id: 'rq', label: 'Request' }, { id: 'hist', label: 'History' }, { id: 'notes', label: 'Internal notes' }]}
       header={{ title: `${r.id} · ${r.serviceFramework}`, subtitle: `${r.customerName} · ${r.scopeName} · ${r.certType?.toLowerCase()}`, status: { status: st[0], label: st[1], shortLabel: st[1] }, actions }}
       aside={<>
-        <div className="title-medium">Customer</div>
+        <div className="title-medium">{translate("Customer")}</div>
         <AsideBox title={r.customerName}><span className="body-small muted">Contact: {r.requester?.name}</span></AsideBox>
         {r.assignee ? <PersonBox title="Auditor" person={r.assignee} sub="SGS Auditor/Certification" /> : null}
       </>}>
@@ -191,7 +192,7 @@ export function SgsCertificationsPage() {
     { key: 'status', header: 'Status', width: 120, render: (r) => <StatusTag status={r.status === 'active' ? 'completed' : 'draft'} size="sm" label={r.status === 'active' ? 'Active' : 'Expired'} /> },
   ];
   return (
-    <ListLayout crumbs={[{ label: 'Certifications' }]} title="Certifications" description={`Certificates issued to customers of ${session.affiliate.name}.`}>
+    <ListLayout crumbs={[{ label: 'Certifications' }]} title="Certifications" description={translate('Certificates issued to customers of {org}.', { org: session.affiliate.name })}>
       <DataTable<CertificationRow> title={`${rows.length} certificate${rows.length === 1 ? '' : 's'}`} columns={cols} rows={rows} searchable searchPlaceholder="Search number, customer or framework" layout="table" getRowId={(r) => r.id} loading={q.loading && !q.data} />
     </ListLayout>
   );

@@ -5,17 +5,18 @@ import type { PaginationProps } from '../../types/index';
 import { Icon } from './Icon';
 import { IconButton } from './IconButton';
 import { cx } from '../utils';
+import { tr } from '../tr';
 
 export function Pagination(p: PaginationProps){var total=p.totalItems||0,size=p.pageSize||10;var pages=Math.max(1,Math.ceil(total/size));var page=Math.min(Math.max(1,p.page||1),pages);
  var from=total?(page-1)*size+1:0,to=Math.min(total,page*size);var sizes=p.pageSizeOptions||[10,25,50,100];var auto=useId();
  var pageOpts=[];for(var i=1;i<=pages;i++)pageOpts.push(i);
- return h('nav',{className:cx('gr-pg',p.className),'aria-label':p.label||'Pagination'},
+ return h('nav',{className:cx('gr-pg',p.className),'aria-label':tr(p.label||'Pagination')},
   h('div',{className:'gr-pg__left'},
-   p.onPageSizeChange?h('label',{className:'gr-pg__group',htmlFor:auto+'-size'},h('span',{className:'gr-pg__text'},'Items per page'),
+   p.onPageSizeChange?h('label',{className:'gr-pg__group',htmlFor:auto+'-size'},h('span',{className:'gr-pg__text'},tr('Items per page')),
     h('span',{className:'gr-pg__selwrap'},h('select',{id:auto+'-size',className:'gr-pg__select',value:size,onChange:function(e){p.onPageSizeChange(Number(e.target.value));}},sizes.map(function(s){return h('option',{key:s,value:s},s);})),h(Icon,{name:'chevron--down',size:16}))):null,
-   h('span',{className:'gr-pg__text','aria-live':'polite'},from+'–'+to+' of '+total+' items')),
+   h('span',{className:'gr-pg__text','aria-live':'polite'},tr('{from}–{to} of {total} items',{from:from,to:to,total:total}))),
   h('div',{className:'gr-pg__right'},
-   h('span',{className:'gr-pg__selwrap'},h('select',{className:'gr-pg__select','aria-label':'Page',value:page,onChange:function(e){if(p.onPageChange)p.onPageChange(Number(e.target.value));}},pageOpts.map(function(n){return h('option',{key:n,value:n},n);})),h(Icon,{name:'chevron--down',size:16})),
-   h('span',{className:'gr-pg__text'},'of '+pages+(pages===1?' page':' pages')),
-   h(IconButton,{icon:'chevron--left',label:'Previous page',size:'md',disabled:page<=1,onClick:function(){if(p.onPageChange)p.onPageChange(page-1);}}),
-   h(IconButton,{icon:'chevron--right',label:'Next page',size:'md',disabled:page>=pages,onClick:function(){if(p.onPageChange)p.onPageChange(page+1);}})));}
+   h('span',{className:'gr-pg__selwrap'},h('select',{className:'gr-pg__select','aria-label':tr('Page'),value:page,onChange:function(e){if(p.onPageChange)p.onPageChange(Number(e.target.value));}},pageOpts.map(function(n){return h('option',{key:n,value:n},n);})),h(Icon,{name:'chevron--down',size:16})),
+   h('span',{className:'gr-pg__text'},tr(pages===1?'of {count} page':'of {count} pages',{count:pages})),
+   h(IconButton,{icon:'chevron--left',label:tr('Previous page'),size:'md',disabled:page<=1,onClick:function(){if(p.onPageChange)p.onPageChange(page-1);}}),
+   h(IconButton,{icon:'chevron--right',label:tr('Next page'),size:'md',disabled:page>=pages,onClick:function(){if(p.onPageChange)p.onPageChange(page+1);}})));}

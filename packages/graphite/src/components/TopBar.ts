@@ -21,6 +21,7 @@ export function TopBar(p: TopBarProps){var v=p.variant||'home';var compact=!!p.c
  if(v==='landing'){right=h('div',{className:'gr-top__right'},h('nav',{'aria-label':'Main',className:'gr-top__nav'},(p.links||['Services','Contact Us','How It Works']).map(function(l,i){return h('a',{key:i,href:'#',className:'gr-top__link'},l);})),h(Button,{size:'md',variant:'primary'},p.loginLabel||'Log In'),h(LanguageSelector,{compact:true}));}
  else if(v==='login'){right=p.showLanguage===false?null:h('div',{className:'gr-top__right'},h(LanguageSelector,{compact:compact}));}
  else{var n=p.notifications||0;right=h('div',{className:'gr-top__right'},
+   p.onLanguageChange?h(LanguageSelector,{compact:compact,value:p.language||'en',onChange:p.onLanguageChange}):null,
    (p.homeLinks||[{label:'Request Applications',icon:'folder',brand:true},{label:'Communications',icon:'events'}]).map(function(l,i){return compact?h(IconButton,{key:i,icon:l.icon||'folder',label:l.label,size:'md'}):h('a',{key:i,href:l.href||'#',className:cx('gr-top__link',l.brand&&'gr-top__link--brand')},l.label);}),
    p.notificationItems?(function(){var un=p.notificationItems.filter(function(x){return x.unread;}).length;
      return h(Popover,{align:'end',label:'Notifications',width:420,defaultOpen:p.notificationsOpen,trigger:h('button',{type:'button',className:'gr-top__bell','aria-label':'Notifications'+(un?', '+un+' unread':'')},h(Icon,{name:'notification',size:20}),un?h('span',{className:'gr-badge','aria-hidden':true},un>99?'99+':String(un)):null)},

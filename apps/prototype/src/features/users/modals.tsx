@@ -1,4 +1,5 @@
 'use client';
+import { translate } from '@/i18n/locale';
 // Modals of designs/03-user-management. Each validates like CLAUDE.md asks: errors on submit, orange,
 // one per field, cleared on edit; server conflicts (duplicate email) land on the field they are about.
 import { InlineNotification, Modal, MultiSelect, Select, Tag, TextInput, Textarea } from '@sgs/graphite';
@@ -60,7 +61,7 @@ export function RevokeModal({ session, user, onClose, onDone }: { session: Sessi
       primaryAction={{ label: 'Revoke invitation', disabled: submit.busy, onClick: () => submit.run() }}
       secondaryAction={{ label: 'Cancel', onClick: onClose }}>
       <div className="modal-body" style={{ width: 440 }}>
-        <p className="body-medium" style={{ margin: 0 }}>The link sent to <strong>{user?.email}</strong> stops working. You can invite them again later.</p>
+        <p className="body-medium" style={{ margin: 0 }}>{translate("The link sent to")} <strong>{user?.email}</strong> {translate("stops working. You can invite them again later.")}</p>
         {error ? <InlineNotification kind="error" title="Couldn’t revoke">{error}</InlineNotification> : null}
       </div>
     </Modal>
@@ -84,7 +85,7 @@ export function AssignScopesModal({ session, user, scopes, onClose }: {
       <div className="modal-body" style={{ width: 552 }}>
         <p className="body-medium muted" style={{ margin: 0 }}>{user?.displayName} can see and work on requests, workspaces and documents of the scopes you tick.</p>
         <fieldset className="check-rows">
-          <legend className="gr-sr">Scopes</legend>
+          <legend className="gr-sr">{translate("Scopes")}</legend>
           {scopes.map((o) => (
             <label key={o.value} className="check-row">
               <input type="checkbox" className="gr-check" checked={chosen.includes(o.value)} onChange={() => toggle(o.value)} />
@@ -146,7 +147,7 @@ export function CustomerFormModal({ session, open, customer, onClose, onCreated 
         <Select label="Country" required size="m" placeholder="Choose a country" options={COUNTRIES} value={f.values.country} onChange={(_, v) => f.set('country', v)} error={f.errors.country} />
         {customer ? null : <TextInput label="SGS affiliate" size="m" value={session.affiliate.name} readOnly helpText={`The customer is visible only to ${session.affiliate.name} staff.`} />}
         <Textarea label="Internal note (optional)" size="l" rows={2} placeholder={customer ? undefined : 'Only visible to SGS, e.g. contract reference'} {...f.field('note')} />
-        {customer ? null : <p className="body-small muted" style={{ margin: 0 }}>Next, create the customer’s admin. Nobody can sign in for this customer until then.</p>}
+        {customer ? null : <p className="body-small muted" style={{ margin: 0 }}>{translate("Next, create the customer’s admin. Nobody can sign in for this customer until then.")}</p>}
       </div>
     </Modal>
   );

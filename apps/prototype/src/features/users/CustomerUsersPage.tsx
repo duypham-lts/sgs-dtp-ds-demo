@@ -1,4 +1,5 @@
 'use client';
+import { translate } from '@/i18n/locale';
 // designs/03 Main, CaUsersEmpty (+ CaInvite, CaRevoke, CaAssignScopes). UC-USR-001/003/006. Customer Admin only.
 import { Button, DataTable, StatusTag, type TableColumn } from '@sgs/graphite';
 import { useRouter } from 'next/navigation';
@@ -40,14 +41,14 @@ export function CustomerUsersPage() {
     { key: 'status', header: 'Status', sortable: true, width: 190, sortValue: (r) => USER_STATUS[r.status][1], render: (r) => <StatusTag status={USER_STATUS[r.status][0]} size="sm" label={USER_STATUS[r.status][1]} /> },
     { key: 'last', header: 'Last sign-in', width: 150, sortValue: (r) => r.lastSignInAt ?? '', render: (r) => fmtRelative(r.lastSignInAt, true).replace(/^Yesterday, .*/, 'Yesterday') },
   ];
-  const inviteBtn = <Button size="md" icon="add" iconPosition="left" onClick={() => setInvite(true)}>Invite user</Button>;
+  const inviteBtn = <Button size="md" icon="add" iconPosition="left" onClick={() => setInvite(true)}>{translate("Invite user")}</Button>;
 
   return (
-    <ListLayout crumbs={[{ label: 'Administration', href: '/admin/users' }, { label: 'Users' }]} title="Users" description={`People in ${session.tenant?.name} who can use the Customer Portal.`}>
+    <ListLayout crumbs={[{ label: 'Administration', href: '/admin/users' }, { label: 'Users' }]} title="Users" description={translate('People in {org} who can use the Customer Portal.', { org: session.tenant?.name ?? '' })}>
       <DataTable<UserRow>
         title={plural(shown.length, 'user')} columns={cols} rows={shown} loading={users.loading && !users.data}
         searchable searchPlaceholder="Search name or email" toolbarActions={inviteBtn} layout="table" getRowId={(r) => r.id}
-        emptyState={{ title: 'You’re the only user so far', body: `Invite the colleagues who will upload evidence and follow service requests for ${session.tenant?.name.replace(/ Co\., Ltd\.| Inc\.$/, '')}. Each gets an email to activate their account.`, action: <Button size="md" icon="add" iconPosition="left" onClick={() => setInvite(true)}>Invite your first colleague</Button> }}
+        emptyState={{ title: 'You’re the only user so far', body: `Invite the colleagues who will upload evidence and follow service requests for ${session.tenant?.name.replace(/ Co\., Ltd\.| Inc\.$/, '')}. Each gets an email to activate their account.`, action: <Button size="md" icon="add" iconPosition="left" onClick={() => setInvite(true)}>{translate("Invite your first colleague")}</Button> }}
         rowActions={(r) => r.status === 'invited' || r.status === 'expired'
           ? [{ label: 'View', onClick: () => router.push(href(r)) },
              { label: 'Resend invitation', onClick: async () => { const x = await resendInvitation(session, r.id); snack(`Invitation sent again. The link expires on ${fmtDate(x.expiresAt)}.`); } },

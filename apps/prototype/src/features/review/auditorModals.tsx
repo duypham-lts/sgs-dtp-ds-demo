@@ -1,4 +1,5 @@
 'use client';
+import { translate } from '@/i18n/locale';
 // Auditor modals and drawers of designs/08: AudStartReview, AudClarification, AudRaiseFinding, AudEvaluate,
 // AudEvaluateClarification, AudChangeDueDate, AudCloseReview.
 import { Button, Checkbox, DatePicker, DocumentItem, Drawer, FileUpload, InlineNotification, Modal, MultiSelect, Radio, Select, Textarea } from '@sgs/graphite';
@@ -21,11 +22,11 @@ export function StartReviewModal({ session, request, open, onClose, onStarted }:
       primaryAction={{ label: 'Start review', onClick: async () => { await startReview(session, request.id); snack(`Audit review started. ${request.customerName}’s workspace is locked.`); onClose(); onStarted(); } }}
       secondaryAction={{ label: 'Cancel', onClick: onClose }}>
       <div className="modal-body" style={{ width: 520, gap: 12 }}>
-        <p className="body-medium" style={{ margin: 0 }}>Start the audit review of <strong>{request.serviceFrameworkVersion} · {request.scopeName}</strong>?</p>
+        <p className="body-medium" style={{ margin: 0 }}>{translate("Start the audit review of")} <strong>{request.serviceFrameworkVersion} · {request.scopeName}</strong>?</p>
         <ul className="body-medium muted plain-list">
           <li>{request.workspaceStats?.requirements} review items are created, one per requirement{tier ? ' of the workspace tier' : ''}.</li>
-          <li>The customer’s workspace is locked; they can only add files by responding to you.</li>
-          <li>The request moves to In progress and the customer is notified.</li>
+          <li>{translate("The customer’s workspace is locked; they can only add files by responding to you.")}</li>
+          <li>{translate("The request moves to In progress and the customer is notified.")}</li>
         </ul>
       </div>
     </Modal>
@@ -54,7 +55,7 @@ export function ClarificationModal({ session, item, onClose }: { session: Sessio
         <p className="body-small muted" style={{ margin: 0 }}>{item?.requirement.code} · {item?.requirement.title}</p>
         <Textarea label="Question for the customer" required size="l" rows={3} value={q} error={e.q} onChange={(x) => { setQ(x.target.value); setE((y) => ({ ...y, q: undefined })); }} />
         <fieldset className="plain-fieldset">
-          <legend className="label-small muted" style={{ marginBottom: 4 }}>Expected response</legend>
+          <legend className="label-small muted" style={{ marginBottom: 4 }}>{translate("Expected response")}</legend>
           <div className="btn-row" style={{ gap: 24 }}><Radio name="exp" label="Answer and files" checked={expect === 'answer_files'} onChange={() => setExpect('answer_files')} /><Radio name="exp" label="Answer only" checked={expect === 'answer'} onChange={() => setExpect('answer')} /></div>
         </fieldset>
         <DatePicker label="Due date" required today={TODAY} min={TODAY} value={due} error={e.due} onChange={(v) => { setDue(v); setE((y) => ({ ...y, due: undefined })); }} />
@@ -115,17 +116,17 @@ export function EvaluateDrawer({ session, finding, onClose }: { session: Session
   return (
     <Drawer open={!!finding} size="lg" onClose={close} title={`Evaluate corrective action · ${finding?.code ?? ''}`}
       subtitle={finding && a ? `${FINDING_LABEL[finding.classification]} · ${finding.requirementCode} · submitted ${fmtDate(a.submittedAt)}` : undefined}
-      footer={<><span style={{ flexGrow: 1 }} /><Button variant="tertiary" size="md" onClick={close}>Cancel</Button><Button size="md" onClick={async () => {
+      footer={<><span style={{ flexGrow: 1 }} /><Button variant="tertiary" size="md" onClick={close}>{translate("Cancel")}</Button><Button size="md" onClick={async () => {
         if (dec === 'not_accepted' && !comment.trim()) { setErr('Tell the customer what is missing.'); return; }
         await evaluateCorrective(session, finding!.id, { decision: dec, comment }); snack(dec === 'accepted' ? `${finding!.code} closed` : `${finding!.code} sent back to the customer`); close();
-      }}>Save decision</Button></>}>
+      }}>{translate("Save decision")}</Button></>}>
       {finding && a ? (
         <div className="drawer-body" style={{ gap: 20 }}>
-          <div className="drawer-section" style={{ gap: 4 }}><span className="title-small">Finding</span><span className="body-medium">{finding.text}</span></div>
+          <div className="drawer-section" style={{ gap: 4 }}><span className="title-small">{translate("Finding")}</span><span className="body-medium">{finding.text}</span></div>
           <div className="drawer-section" style={{ gap: 4 }}><span className="title-small">Action taken · completed {fmtDate(a.completedOn)}</span><span className="body-medium">{a.actionTaken}</span>{a.note ? <span className="body-small muted">Note: {a.note}</span> : null}</div>
           <div className="drawer-section"><span className="title-small">Evidence ({a.files.length})</span><FileRows files={finding.files.filter((f) => a.files.includes(f.id))} /></div>
           <fieldset className="plain-fieldset" style={{ gap: 4 }}>
-            <legend className="label-small muted" style={{ marginBottom: 4 }}>Decision <span className="gr-req">*</span></legend>
+            <legend className="label-small muted" style={{ marginBottom: 4 }}>{translate("Decision")} <span className="gr-req">*</span></legend>
             <Radio name="dec" label="Accept — close the finding" checked={dec === 'accepted'} onChange={() => setDec('accepted')} />
             <Radio name="dec" label="Not accepted — send back to the customer" checked={dec === 'not_accepted'} onChange={() => setDec('not_accepted')} />
           </fieldset>
@@ -145,18 +146,18 @@ export function EvaluateAnswerDrawer({ session, item, clarification, onClose, on
   const c = clarification;
   return (
     <Drawer open={!!c} size="lg" onClose={close} title={`Evaluate answer · ${item?.requirement.code ?? ''}`} subtitle={c ? `Clarification sent ${fmtDate(c.askedAt).slice(0, 6)} · answered ${fmtDate(c.answeredAt)} by ${c.answeredByName}` : undefined}
-      footer={<><span style={{ flexGrow: 1 }} /><Button variant="tertiary" size="md" onClick={close}>Cancel</Button><Button size="md" onClick={async () => {
+      footer={<><span style={{ flexGrow: 1 }} /><Button variant="tertiary" size="md" onClick={close}>{translate("Cancel")}</Button><Button size="md" onClick={async () => {
         if (next === 'finding') { close(); onRaiseFinding(); return; }
         if (next === 'followup' && !msg.trim()) { setErr('Write the follow-up question.'); return; }
         await evaluateAnswer(session, item!.id, { next, message: msg }); snack(next === 'accept' ? `${item!.requirement.code} accepted` : 'Follow-up question sent'); close();
-      }}>Save</Button></>}>
+      }}>{translate("Save")}</Button></>}>
       {c ? (
         <div className="drawer-body" style={{ gap: 20 }}>
-          <div className="drawer-section" style={{ gap: 4 }}><span className="title-small">Your question</span><span className="body-medium">{c.question}</span></div>
-          <div className="drawer-section" style={{ gap: 4 }}><span className="title-small">Answer</span><span className="body-medium">{c.answer}</span></div>
+          <div className="drawer-section" style={{ gap: 4 }}><span className="title-small">{translate("Your question")}</span><span className="body-medium">{c.question}</span></div>
+          <div className="drawer-section" style={{ gap: 4 }}><span className="title-small">{translate("Answer")}</span><span className="body-medium">{c.answer}</span></div>
           {c.fileRows.length ? <div className="drawer-section"><span className="title-small">Files ({c.fileRows.length})</span><FileRows files={c.fileRows} /></div> : null}
           <fieldset className="plain-fieldset" style={{ gap: 4 }}>
-            <legend className="label-small muted" style={{ marginBottom: 4 }}>Next step <span className="gr-req">*</span></legend>
+            <legend className="label-small muted" style={{ marginBottom: 4 }}>{translate("Next step")} <span className="gr-req">*</span></legend>
             <Radio name="nx" label="Accept the requirement" checked={next === 'accept'} onChange={() => setNext('accept')} />
             <Radio name="nx" label="Ask a follow-up question" checked={next === 'followup'} onChange={() => setNext('followup')} />
             <Radio name="nx" label="Raise a finding instead" checked={next === 'finding'} onChange={() => setNext('finding')} />
@@ -223,7 +224,7 @@ export function CloseReviewModal({ session, review, open, onClose }: { session: 
           : <InlineNotification kind="warning" title="Not ready to close">{c.total - c.accepted - c.cwf} items are not final or a finding is still open.</InlineNotification>}
         <FileUpload label="Audit report (optional)" multiple={false} hint="PDF · shown to the customer on the request" onFilesAdded={(l) => setReport(plainFiles(l)[0])} onRemove={() => setReport(undefined)} />
         <div><Checkbox label="The review is complete. Closing unlocks the customer’s workspace and ends my access." checked={ok} onChange={(x) => { setOk(x.target.checked); setErr(undefined); }} /><FieldError>{err}</FieldError></div>
-        <p className="body-small muted" style={{ margin: 0 }}>Closing the review is not the certification decision. An SGS User creates the certificate afterwards.</p>
+        <p className="body-small muted" style={{ margin: 0 }}>{translate("Closing the review is not the certification decision. An SGS User creates the certificate afterwards.")}</p>
       </div>
     </Modal>
   );

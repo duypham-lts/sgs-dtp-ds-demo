@@ -1,4 +1,5 @@
 'use client';
+import { translate } from '@/i18n/locale';
 // designs/05 Documents and EvidenceLibrary (same page opened from a workspace: filtered, with
 // "Back to workspace"). UC-EVD-006. Tabs: All / Expiring or expired / Not linked.
 import { DataTable, IconButton, Link, Select, StatusTag, Tabs, Tag, type TableColumn } from '@sgs/graphite';
@@ -30,7 +31,7 @@ export function DocumentsPage() {
   const cols: TableColumn<EvidenceRow>[] = [
     { key: 'name', header: 'Evidence', sortable: true, render: (r) => <TwoLine top={r.name} sub={r.fileName} href={`#evidence-${r.id}`} />, searchValue: (r) => `${r.name} ${r.fileName}` },
     { key: 'workspaceLabel', header: 'Workspace', sortable: true, width: 260 },
-    { key: 'usedFor', header: 'Used for', width: 150, render: (r) => (r.usedFor.length ? r.usedFor.join(', ') : <Tag tone="required">Not linked</Tag>) },
+    { key: 'usedFor', header: 'Used for', width: 150, render: (r) => (r.usedFor.length ? r.usedFor.join(', ') : <Tag tone="required">{translate("Not linked")}</Tag>) },
     { key: 'validUntil', header: 'Valid until', width: 120, render: (r) => (r.validUntil ? fmtDate(r.validUntil) : '—') },
     { key: 'validity', header: 'Validity', width: 140, render: (r) => <StatusTag status={VALIDITY[r.validity][0]} size="sm" label={VALIDITY[r.validity][1]} /> },
     { key: 'uploadedAt', header: 'Uploaded', width: 190, render: (r) => `${r.uploadedBy} · ${fmtDate(r.uploadedAt)}` },
@@ -42,7 +43,7 @@ export function DocumentsPage() {
   return (
     <>
       <PageHead crumbs={[{ label: 'Documents' }]} title="Documents" description="Evidence uploaded to the workspaces you can access. Each file belongs to one workspace."
-        action={from ? <Link href={`/workspaces/${from}`}>Back to workspace</Link> : undefined} />
+        action={from ? <Link href={`/workspaces/${from}`}>{translate("Back to workspace")}</Link> : undefined} />
       {/* Names open the drawer: rows use #evidence-<id> links so the list stays plain links. */}
       <section className="gr-card gr-card--extend docs-card" onClickCapture={(e) => {
         const a = (e.target as HTMLElement).closest('a[href^="#evidence-"]');

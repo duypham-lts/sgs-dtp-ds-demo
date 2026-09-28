@@ -4,6 +4,7 @@ import { h } from '../runtime';
 import type { ButtonProps } from '../../types/index';
 import { Icon } from './Icon';
 import { cx, omit } from '../utils';
+import { tr } from '../tr';
 
 export function Button(p: ButtonProps){var v=p.variant||'primary',sz=p.size||'lg',pos=p.iconPosition||'right';var ic=p.icon?h(Icon,{name:p.icon,size:sz==='sm'?16:20}):null;
- return h('button',Object.assign({type:'button'},omit(p,['variant','size','icon','iconPosition','children','className','fullWidth']),{className:cx('gr-btn','gr-btn--'+v,'gr-btn--'+sz,p.fullWidth&&'gr-btn--full',p.className)}),pos==='left'?ic:null,p.children,pos!=='left'?ic:null);}
+ return h('button',Object.assign({type:'button'},omit(p,['variant','size','icon','iconPosition','children','className','fullWidth']),{className:cx('gr-btn','gr-btn--'+v,'gr-btn--'+sz,p.fullWidth&&'gr-btn--full',p.className)}),pos==='left'?ic:null,tr(p.children),pos!=='left'?ic:null);}

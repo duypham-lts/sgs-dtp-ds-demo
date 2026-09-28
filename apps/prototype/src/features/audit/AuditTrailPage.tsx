@@ -1,4 +1,5 @@
 'use client';
+import { translate } from '@/i18n/locale';
 // Audit trail (UC-AUD-002, SGS Admin): designs/10 Main, SgsAuditConsultant, SgsAuditDetail.
 // Activity log (UC-AUD-004, Customer Admin): designs/10 CaActivity, CaActivityDetail.
 // One page for both portals: the customer version has no Customer filter or column and is limited to the own tenant.
@@ -29,7 +30,7 @@ function EventDrawer({ id, onClose }: { id?: string; onClose: () => void }) {
           </dl>
           {d.changes.length ? (
             <div className="audit-detail__change">
-              <h3 className="title-small" style={{ margin: 0 }}>Change</h3>
+              <h3 className="title-small" style={{ margin: 0 }}>{translate("Change")}</h3>
               <Table density="compact" columns={[{ key: 'field', header: 'Field', width: 160 }, { key: 'before', header: 'Before' }, { key: 'after', header: 'After' }]} rows={d.changes} getRowId={(r) => r.field} />
             </div>
           ) : null}
@@ -79,12 +80,12 @@ export function AuditTrailPage() {
           {sgs ? <Select label="Customer" size="s" width="200px" value={f.ten} options={tenants} onChange={(_, v) => set('ten', v)} /> : null}
           <DatePicker label="From date" placeholder="From" size="s" width="160px" today={TODAY} max={f.to || undefined} value={f.from} onChange={(v) => set('from', v)} />
           <DatePicker label="To date" placeholder="To" size="s" width="160px" today={TODAY} min={f.from || undefined} value={f.to} onChange={(v) => set('to', v)} />
-          <Button variant="ghost" size="sm" disabled={!filtered} onClick={() => setF(EMPTY)}>Clear filters</Button>
+          <Button variant="ghost" size="sm" disabled={!filtered} onClick={() => setF(EMPTY)}>{translate("Clear filters")}</Button>
         </div>
         <DataTable<AuditRow> title={`${rows.length} ${rows.length === 1 ? 'event' : 'events'}`} description="Recorded once and never changed." columns={cols} rows={rows} layout="table" pageSize={10}
           defaultSort={{ key: 'occurredAt', dir: 'desc' }} getRowId={(r) => r.id} loading={q.loading && !q.data}
           // No UC for the export (docs/prototype-plan.md §4.5: no UC-AUD-003): the button only explains.
-          toolbarActions={<Button variant="tertiary" size="sm" icon="download" iconPosition="left" onClick={() => snack(`The CSV export of ${rows.length} events is not part of the MVP (no use case). The prototype does not create the file.`)}>Export CSV</Button>}
+          toolbarActions={<Button variant="tertiary" size="sm" icon="download" iconPosition="left" onClick={() => snack(`The CSV export of ${rows.length} events is not part of the MVP (no use case). The prototype does not create the file.`)}>{translate("Export CSV")}</Button>}
           rowActions={(r) => [{ label: 'View details', onClick: () => setOpen(r.id) }, { label: 'Show related events', onClick: () => setF({ ...EMPTY, q: r.context || r.objectLabel }) }]}
           emptyState={{ title: 'No events match', body: 'Change or clear the filters.' }} />
       </section>

@@ -1,4 +1,5 @@
 'use client';
+import { translate } from '@/i18n/locale';
 // designs/05 Workspace (+ UploadEvidence, LinkEvidence, EvidenceDetail). UC-EVD-004/005/007/008/011/012/016.
 // Left: RequirementNavigator with Missing / Partial / Provided per requirement; right: the selected requirement
 // and its expected evidence. Owner per requirement (D6) has no design and carries the "Chưa có design" tag.
@@ -87,8 +88,8 @@ export function WorkspacePage({ id }: { id: string }) {
     : { status: 'draft' as const, label: `Preparing · ${w.percent}% coverage`, shortLabel: `${w.percent}%` };
   const headActions = mode === 'locked' ? undefined : (
     <div className="btn-row">
-      <a href={`/documents?workspace=${id}`} className="gr-btn gr-btn--tertiary gr-btn--md">Evidence library</a>
-      {mode === 'prep' && certifiable && writer && !openCert ? <Button size="md" onClick={() => setCertModal(true)}>Request certification</Button> : null}
+      <a href={`/documents?workspace=${id}`} className="gr-btn gr-btn--tertiary gr-btn--md">{translate("Evidence library")}</a>
+      {mode === 'prep' && certifiable && writer && !openCert ? <Button size="md" onClick={() => setCertModal(true)}>{translate("Request certification")}</Button> : null}
     </div>
   );
   const rnCaption = mode === 'locked' ? `Audit ${review!.requestTitle} · ${review!.auditorName}` : mode === 'after' ? `Last audit ${review!.requestTitle} · ${review!.counts.accepted} accepted · ${review!.counts.cwf} closed with finding` : `${w.provided} of ${w.total} requirements have their mandatory evidence · not a compliance decision`;
@@ -133,8 +134,8 @@ export function WorkspacePage({ id }: { id: string }) {
                 <div className="gr-card__head">
                   <div><h2 className="gr-card__title">{mode === 'after' ? 'Evidence' : 'Expected evidence'}</h2><p className="gr-card__sub">{mode === 'after' ? 'Editable again' : `${plural(mandatory.length, 'mandatory item')} · ${provided} provided`}</p></div>
                   {w.canWrite ? <div className="btn-row" style={{ gap: 8 }}>
-                    <Button variant="tertiary" size="sm" onClick={() => setLink(true)}>Link existing evidence</Button>
-                    <Button size="sm" icon="upload" iconPosition="left" onClick={() => setUpload(true)}>Upload evidence</Button>
+                    <Button variant="tertiary" size="sm" onClick={() => setLink(true)}>{translate("Link existing evidence")}</Button>
+                    <Button size="sm" icon="upload" iconPosition="left" onClick={() => setUpload(true)}>{translate("Upload evidence")}</Button>
                   </div> : null}
                 </div>
                 {r.items.map((it) => (

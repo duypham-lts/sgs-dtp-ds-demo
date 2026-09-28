@@ -6,13 +6,14 @@ import { Icon } from './Icon';
 import { IconButton } from './IconButton';
 import { StatusTag } from './StatusTag';
 import { cx } from '../utils';
+import { tr } from '../tr';
 
 export var SAVE={saved:['checkmark','All changes saved'],saving:['save','Saving…'],error:['warning--filled','Changes not saved']};
 export function PageHeader(p: PageHeaderProps){var compact=!!p.compact;var sv=p.autosave&&SAVE[p.autosave];
  return h('div',{className:cx('gr-ph',compact&&'gr-ph--compact',p.className)},
   h('div',{className:'gr-ph__left'},
-   p.onBack?h(IconButton,{icon:'arrow--left',label:p.backLabel||'Back',variant:'ghost',size:'md',className:'gr-ph__back',onClick:p.onBack}):null,
-   h('div',{className:'gr-ph__titles'},h('h1',{className:'gr-ph__title'},p.title),p.subtitle?h('p',{className:'gr-ph__sub'},p.subtitle):null),
-   p.status?h(StatusTag,{status:p.status.status,label:compact&&p.status.shortLabel?p.status.shortLabel:p.status.label,showIcon:!compact,size:'sm'}):null,
-   sv?h('span',{className:cx('gr-ph__save','gr-ph__save--'+p.autosave),role:'status'},compact?h('span',{className:'gr-ph__save-ic'},h(Icon,{name:'save',size:16}),h(Icon,{name:sv[0],size:16,title:sv[1]})):h(React.Fragment,null,h(Icon,{name:sv[0],size:16}),sv[1])):null),
+   p.onBack?h(IconButton,{icon:'arrow--left',label:tr(p.backLabel||'Back'),variant:'ghost',size:'md',className:'gr-ph__back',onClick:p.onBack}):null,
+   h('div',{className:'gr-ph__titles'},h('h1',{className:'gr-ph__title'},tr(p.title)),p.subtitle?h('p',{className:'gr-ph__sub'},tr(p.subtitle)):null),
+   p.status?h(StatusTag,{status:p.status.status,label:tr(compact&&p.status.shortLabel?p.status.shortLabel:p.status.label),showIcon:!compact,size:'sm'}):null,
+   sv?h('span',{className:cx('gr-ph__save','gr-ph__save--'+p.autosave),role:'status'},compact?h('span',{className:'gr-ph__save-ic'},h(Icon,{name:'save',size:16}),h(Icon,{name:sv[0],size:16,title:sv[1]})):h(React.Fragment,null,h(Icon,{name:sv[0],size:16}),tr(sv[1]))):null),
   p.actions?h('div',{className:'gr-ph__actions'},compact&&p.compactActions?p.compactActions:p.actions):null);}

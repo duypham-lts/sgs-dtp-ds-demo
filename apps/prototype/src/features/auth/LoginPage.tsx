@@ -10,6 +10,7 @@ import { useEffect, useState, type FormEvent } from 'react';
 import { sessionFor, type Portal } from '@/mock';
 import { lockedUntil, signIn } from '@/mock/api/auth';
 import { homeFor, usePersona } from '@/demo/persona';
+import { useI18n } from '@/i18n/I18nProvider';
 import { useSnackbar } from '@/ui/snackbar';
 import { AuthCard, AuthFoot, PORTAL_SUB } from './AuthCard';
 
@@ -23,6 +24,7 @@ export function LoginPage({ portal }: { portal: Portal }) {
   const params = useSearchParams();
   const snack = useSnackbar();
   const { ready, signedIn, session, setPersona } = usePersona();
+  const { t } = useI18n();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [keep, setKeep] = useState(false);
@@ -35,7 +37,7 @@ export function LoginPage({ portal }: { portal: Portal }) {
   // Already signed in to this portal: go home.
   useEffect(() => { if (ready && signedIn && session.portal === portal) router.replace(homeFor(session)); }, [ready, signedIn, session, portal, router]);
   useEffect(() => {
-    if (params.get('reason') === 'timeout') snack('You have been signed out after 30 minutes of inactivity.');
+    if (params.get('reason') === 'timeout') snack(t('You have been signed out after 30 minutes of inactivity.'));
   }, [params, snack]);
   // A lock survives edits of the password and reloads; it ends after 15 minutes.
   useEffect(() => {
@@ -48,13 +50,13 @@ export function LoginPage({ portal }: { portal: Portal }) {
 
   async function submit(e: FormEvent) {
     e.preventDefault();
-    if (!email.trim()) { setEmailError('Enter your email address.'); return; }
-    if (!password) { setError('Enter your password.'); return; }
+    if (!email.trim()) { setEmailError(t('Enter your email address.')); return; }
+    if (!password) { setError(t('Enter your password.')); return; }
     setBusy(true);
     const r = await signIn(portal, email, password);
     setBusy(false);
     if (r.ok) { setPersona(r.userId, keep); router.push(homeFor(sessionFor(r.userId))); return; }
-    if (r.reason === 'invalid') { setError('Incorrect email or password.'); setNotice(undefined); }
+    if (r.reason === 'invalid') { setError(t('Incorrect email or password.')); setNotice(undefined); }
     else setNotice(r.reason);
   }
 
@@ -68,19 +70,19 @@ export function LoginPage({ portal }: { portal: Portal }) {
   return (
     <AuthCard portal={portal}>
       <form className="auth__stack" onSubmit={submit} noValidate>
-        <div className="auth__logo"><Logo siteName="Digital Trust Platform" siteSub={PORTAL_SUB[portal]} /></div>
+        <div className="auth__logo"><Logo siteName={t('Digital Trust Platform')} siteSub={t(PORTAL_SUB[portal])} /></div>
         {notice === 'locked' ? (
-          <InlineNotification kind="error" title="Sign-in is temporarily locked" live>Too many failed attempts. Try again in 15 minutes.</InlineNotification>
+          <InlineNotification kind="error" title={t('Sign-in is temporarily locked')} live>{t('Too many failed attempts. Try again in 15 minutes.')}</InlineNotification>
         ) : notice === 'inactive' ? (
-          <InlineNotification kind="error" title="Your account is not active" live>{c.inactive}</InlineNotification>
+          <InlineNotification kind="error" title={t('Your account is not active')} live>{t(c.inactive)}</InlineNotification>
         ) : null}
         <div className="auth__fields">
-          <TextInput label="Email" type="email" required placeholder={c.placeholder} autoComplete="username" width="100%" value={email} onChange={edit(setEmail)} error={emailError} />
-          <TextInput label="Password" type="password" required placeholder="Enter your password" autoComplete="current-password" width="100%" value={password} onChange={edit(setPassword)} error={error} />
+          <TextInput label={t('Email')} type="email" required placeholder={t(c.placeholder)} autoComplete="username" width="100%" value={email} onChange={edit(setEmail)} error={emailError} />
+          <TextInput label={t('Password')} type="password" required placeholder={t('Enter your password')} autoComplete="current-password" width="100%" value={password} onChange={edit(setPassword)} error={error} />
         </div>
-        <div style={{ marginTop: -16 }}><Checkbox label="Keep me signed in" checked={keep} onChange={(e) => setKeep(e.target.checked)} /></div>
-        <Button variant="primary" fullWidth type="submit" disabled={notice === 'locked' || busy}>Sign in</Button>
-        <AuthFoot>{c.help} <Link href="#" inline>{c.helpLink}</Link></AuthFoot>
+        <div style={{ marginTop: -16 }}><Checkbox label={t('Keep me signed in')} checked={keep} onChange={(e) => setKeep(e.target.checked)} /></div>
+        <Button variant="primary" fullWidth type="submit" disabled={notice === 'locked' || busy}>{t('Sign in')}</Button>
+        <AuthFoot>{t(c.help)} <Link href="#" inline>{t(c.helpLink)}</Link></AuthFoot>
       </form>
     </AuthCard>
   );

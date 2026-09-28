@@ -1,4 +1,5 @@
 'use client';
+import { translate } from '@/i18n/locale';
 // designs/06 MvpWizard1/2, 07 IsWizard1/2. UC-SRQ-001. Two columns (steps | card) by design (design-questions Q1).
 // Every change is saved to a draft ("All changes saved"); errors show on Next / Submit and clear on edit.
 import { Button, Checkbox, DatePicker, FileUpload, InlineNotification, Link, PageHeader, Radio, SectionNav, Select, Textarea } from '@sgs/graphite';
@@ -124,7 +125,7 @@ export function ConsultingWizard({ category }: { category: ConsultingCategory })
         <div className="wizard__main">
           {step === 1 ? (
             <section className="gr-card gr-card--extend">
-              <div className="gr-card__head"><div className="gr-card__heading"><span className="gr-card__num" aria-hidden="true">1</span><div><h2 className="gr-card__title">Framework &amp; scope</h2><p className="gr-card__sub">{c.step1Sub}</p></div></div></div>
+              <div className="gr-card__head"><div className="gr-card__heading"><span className="gr-card__num" aria-hidden="true">1</span><div><h2 className="gr-card__title">{translate("Framework & scope")}</h2><p className="gr-card__sub">{c.step1Sub}</p></div></div></div>
               {category === 'gap_analysis' ? (
                 <>
                   <div className="fw-grid-wrap">
@@ -140,17 +141,17 @@ export function ConsultingWizard({ category }: { category: ConsultingCategory })
                 </div>
               )}
               {linkNote}
-              <div className="wizard__foot"><div /><Button size="md" icon="arrow--right" onClick={next}>Next</Button></div>
+              <div className="wizard__foot"><div /><Button size="md" icon="arrow--right" onClick={next}>{translate("Next")}</Button></div>
             </section>
           ) : (
             <section className="gr-card gr-card--extend">
               <div className="gr-card__head"><div className="gr-card__heading"><span className="gr-card__num" aria-hidden="true">2</span><div><h2 className="gr-card__title">{c.step2}</h2><p className="gr-card__sub">{c.step2Sub}</p></div></div></div>
               <div className="summary-strip">
-                <span className="body-medium"><strong>{v.serviceFramework}</strong> · {scopeName?.replace(' · ', ', ')}</span><Link href="#" onClick={(e) => { e.preventDefault(); goStep(1); }}>Edit</Link>
+                <span className="body-medium"><strong>{v.serviceFramework}</strong> · {scopeName?.replace(' · ', ', ')}</span><Link href="#" onClick={(e) => { e.preventDefault(); goStep(1); }}>{translate("Edit")}</Link>
               </div>
               {category === 'implementation_support' ? (
                 <fieldset className="plain-fieldset">
-                  <legend className="label-small muted" style={{ marginBottom: 4 }}>What do you need help with? <span className="gr-req">*</span></legend>
+                  <legend className="label-small muted" style={{ marginBottom: 4 }}>{translate("What do you need help with?")} <span className="gr-req">*</span></legend>
                   {SUPPORT_OPTIONS.map(([k, sub]) => (
                     <Checkbox key={k} label={`${k} — ${sub}`} checked={!!v.supportNeeded?.includes(k)}
                       onChange={(e) => update({ supportNeeded: e.target.checked ? [...(v.supportNeeded ?? []), k] : (v.supportNeeded ?? []).filter((x) => x !== k) }, ['supportNeeded'])} />
@@ -164,7 +165,7 @@ export function ConsultingWizard({ category }: { category: ConsultingCategory })
               {category === 'gap_analysis' ? (
                 <>
                   <fieldset className="plain-fieldset">
-                    <legend className="label-small muted">Delivery <span className="gr-req">*</span></legend>
+                    <legend className="label-small muted">{translate("Delivery")} <span className="gr-req">*</span></legend>
                     <div style={{ display: 'flex', gap: 24 }}>
                       <Radio name="del" label="On site" checked={v.delivery === 'on_site'} onChange={() => update({ delivery: 'on_site' }, ['delivery'])} />
                       <Radio name="del" label="Remote" checked={v.delivery === 'remote'} onChange={() => update({ delivery: 'remote' }, ['delivery'])} />
@@ -191,7 +192,7 @@ export function ConsultingWizard({ category }: { category: ConsultingCategory })
                 <Checkbox label="I confirm the information is accurate and I am authorised to request this service." checked={!!v.attested} onChange={(e) => update({ attested: e.target.checked }, ['consent'])} />
                 <FieldError>{errors.consent}</FieldError>
               </div>
-              <div className="wizard__foot"><div><Button variant="ghost" size="md" onClick={() => goStep(1)}>Back</Button></div><Button size="md" onClick={submit}>Submit request</Button></div>
+              <div className="wizard__foot"><div><Button variant="ghost" size="md" onClick={() => goStep(1)}>{translate("Back")}</Button></div><Button size="md" onClick={submit}>{translate("Submit request")}</Button></div>
             </section>
           )}
         </div>

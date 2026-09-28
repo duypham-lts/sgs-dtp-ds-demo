@@ -7,6 +7,7 @@ import { Icon } from './Icon';
 import { useOutside } from './Popover';
 import { useErrorRecovery } from './TextInput';
 import { cx } from '../utils';
+import { tr } from '../tr';
 
 export function Select(p: SelectProps){var auto=useId();var id=p.id||auto;var opts=p.options||[];var sv=useState(p.defaultValue!==undefined?p.defaultValue:''),cur=sv[0],setCur=sv[1];var val=p.value!==undefined?p.value:cur;
  var r=useErrorRecovery(p.error,null);var so=useState(!!p.defaultOpen),open=so[0],setOpen=so[1];var sa=useState(0),act=sa[0],setAct=sa[1];var ref=useRef(null);
@@ -16,9 +17,9 @@ export function Select(p: SelectProps){var auto=useId();var id=p.id||auto;var op
  function openAt(){var k=opts.findIndex(function(o){return o.value===val;});setAct(k<0?0:k);setOpen(true);}
  function onKey(e){if(e.key==='ArrowDown'){e.preventDefault();if(!open)openAt();else setAct(Math.min(act+1,opts.length-1));}else if(e.key==='ArrowUp'){e.preventDefault();if(open)setAct(Math.max(act-1,0));}else if((e.key==='Enter'||e.key===' ')&&open&&opts[act]){e.preventDefault();choose(opts[act]);}else if(e.key==='Escape'){setOpen(false);}else if(e.key==='Home'&&open){e.preventDefault();setAct(0);}else if(e.key==='End'&&open){e.preventDefault();setAct(opts.length-1);}}
  var btn=h('button',{type:'button',id:id,className:'gr-sel__btn','aria-haspopup':'listbox','aria-expanded':open,'aria-controls':id+'-list','aria-activedescendant':open&&opts[act]?id+'-o-'+act:undefined,'aria-invalid':r.error?true:undefined,'aria-describedby':(r.error||p.helpText)?id+'-msg':undefined,disabled:p.disabled,onClick:function(){open?setOpen(false):openAt();},onKeyDown:onKey},
-  sel?sel.label:h('span',{className:'gr-ms__ph'},p.placeholder||'Select...'));
+  sel?tr(sel.label):h('span',{className:'gr-ms__ph'},tr(p.placeholder||'Select...')));
  return h('div',{ref:ref,className:'gr-pickwrap'},
   h(FormField,{id:id,label:p.label,required:p.required,helpText:p.helpText,error:r.error,size:p.size,width:p.width,disabled:p.disabled,className:p.className,kind:'select',trailing:h('span',{className:'gr-field__deco'},h(Icon,{name:'chevron--down',size:20,className:cx('gr-sel__chev',open&&'is-open')}))},btn),
   open?h('ul',{id:id+'-list',role:'listbox','aria-labelledby':id,className:'gr-list'},opts.map(function(o,i){var on=o.value===val;
    return h('li',{key:o.value,id:id+'-o-'+i,role:'option','aria-selected':on,className:cx('gr-list__opt',i===act&&'is-active',on&&'is-selected'),onMouseDown:function(e){e.preventDefault();choose(o);},onMouseEnter:function(){setAct(i);}},
-    h('span',{className:'gr-list__label'},o.label,o.description?h('span',{className:'gr-list__desc'},o.description):null),on?h(Icon,{name:'checkmark',size:16,className:'gr-list__check'}):null);})):null);}
+    h('span',{className:'gr-list__label'},tr(o.label),o.description?h('span',{className:'gr-list__desc'},tr(o.description)):null),on?h(Icon,{name:'checkmark',size:16,className:'gr-list__check'}):null);})):null);}

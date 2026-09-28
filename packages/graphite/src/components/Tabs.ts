@@ -3,6 +3,7 @@
 import { h, useState, useRef, useId } from '../runtime';
 import type { TabsProps } from '../../types/index';
 import { cx } from '../utils';
+import { tr } from '../tr';
 
 export function Tabs(p: TabsProps){var tabs=p.tabs||[];var auto=useId();var s=useState(p.defaultTab||(tabs[0]&&tabs[0].id)),cur=s[0],setCur=s[1];var active=p.value!==undefined?p.value:cur;var listRef=useRef(null);
  function pick(id){if(p.value===undefined)setCur(id);if(p.onChange)p.onChange(id);}
@@ -12,5 +13,5 @@ export function Tabs(p: TabsProps){var tabs=p.tabs||[];var auto=useId();var s=us
  var at=tabs.filter(function(t){return t.id===active;})[0];
  return h('div',{className:cx('gr-tabs','gr-tabs--'+(p.variant||'line'),p.className)},
   h('div',{ref:listRef,role:'tablist','aria-label':p.label,className:'gr-tabs__list',onKeyDown:onKey},tabs.map(function(t){var sel=t.id===active;
-   return h('button',{key:t.id,type:'button',role:'tab',id:auto+'-t-'+t.id,'data-tab':t.id,'aria-selected':sel,'aria-controls':auto+'-p-'+t.id,tabIndex:sel?0:-1,disabled:t.disabled,className:cx('gr-tabs__tab',sel&&'is-selected'),onClick:function(){pick(t.id);}},t.label,t.badge!==undefined?h('span',{className:'gr-tabs__badge'},t.badge):null);})),
+   return h('button',{key:t.id,type:'button',role:'tab',id:auto+'-t-'+t.id,'data-tab':t.id,'aria-selected':sel,'aria-controls':auto+'-p-'+t.id,tabIndex:sel?0:-1,disabled:t.disabled,className:cx('gr-tabs__tab',sel&&'is-selected'),onClick:function(){pick(t.id);}},tr(t.label),t.badge!==undefined?h('span',{className:'gr-tabs__badge'},t.badge):null);})),
   at&&at.content!==undefined?h('div',{role:'tabpanel',id:auto+'-p-'+at.id,'aria-labelledby':auto+'-t-'+at.id,tabIndex:0,className:'gr-tabs__panel'},at.content):null);}

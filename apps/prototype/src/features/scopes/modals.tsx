@@ -1,4 +1,5 @@
 'use client';
+import { translate } from '@/i18n/locale';
 // designs/05 ScopeCreate (also Edit scope, UC-SCP-004: same form, no own design), LinkFramework,
 // ChangeTier / ChangeTierLocked, AssignUsers. Field widths follow design-questions Q4: 552 / 268.
 import { InlineNotification, Modal, Select, TextInput, Textarea } from '@sgs/graphite';
@@ -105,7 +106,7 @@ export function LinkFrameworkModal({ session, scope, open, onClose }: { session:
             {errors.tier ? <div className="gr-field is-error" style={{ marginTop: -8 }}><div className="gr-field__msg" role="alert">{errors.tier}</div></div> : null}
           </>
         ) : null}
-        <p className="body-small muted" style={{ margin: 0 }}>A workspace is created for this scope with the requirements of the chosen tier. You can change the tier later; uploaded evidence stays.</p>
+        <p className="body-small muted" style={{ margin: 0 }}>{translate("A workspace is created for this scope with the requirements of the chosen tier. You can change the tier later; uploaded evidence stays.")}</p>
       </div>
     </Modal>
   );

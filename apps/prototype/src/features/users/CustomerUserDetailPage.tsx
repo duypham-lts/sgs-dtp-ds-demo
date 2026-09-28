@@ -1,4 +1,5 @@
 'use client';
+import { translate } from '@/i18n/locale';
 // designs/03 CaUserDetail (active user) and CaUserPending (invitation pending / expired). UC-USR-002/003/006.
 import { Button, Card, InlineNotification, OverflowMenu, Skeleton, Table } from '@sgs/graphite';
 import { useRouter } from 'next/navigation';
@@ -46,7 +47,7 @@ export function CustomerUserDetailPage({ id }: { id: string }) {
     <DetailLayout backHref="/admin/users" sections={SECTIONS}
       header={{ title: u.displayName, subtitle: u.email, status, actions: <OverflowMenu size="md" label="User actions" items={menu} /> }}
       aside={<>
-        <div className="title-medium">Access summary</div>
+        <div className="title-medium">{translate("Access summary")}</div>
         {pending
           ? <AsideBox title="Before activation"><span className="body-small muted">{first} can’t sign in or see any data until they activate the account from the email.</span></AsideBox>
           : <AsideBox title={`What ${u.displayName} can do`}><AsideList items={u.role === 'customer_admin'
@@ -59,7 +60,7 @@ export function CustomerUserDetailPage({ id }: { id: string }) {
             <InlineNotification kind={u.status === 'expired' ? 'warning' : 'info'} title={`Invitation sent on ${fmtDate(u.invitedAt)}`}>
               {u.status === 'expired' ? `The link expired on ${fmtDate(u.invitationExpiresAt)}. Resend it to give ${first} a new link.` : `The link expires on ${fmtDate(u.invitationExpiresAt)}. Resend it if ${first} didn’t get the email; revoke it if you invited the wrong person.`}
             </InlineNotification>
-            <div className="btn-row"><Button variant="secondary" size="md" onClick={resend}>Resend invitation</Button><Button variant="tertiary" size="md" onClick={() => setRevoke(true)}>Revoke invitation</Button></div>
+            <div className="btn-row"><Button variant="secondary" size="md" onClick={resend}>{translate("Resend invitation")}</Button><Button variant="tertiary" size="md" onClick={() => setRevoke(true)}>{translate("Revoke invitation")}</Button></div>
           </>
         ) : (
           <Facts items={[['Account', u.status === 'deactivated' ? `Deactivated on ${fmtDate(u.deactivatedAt)}` : `Active since ${fmtDate(u.activatedAt)}`], ['Last sign-in', fmtRelative(u.lastSignInAt)]]} />
@@ -71,8 +72,8 @@ export function CustomerUserDetailPage({ id }: { id: string }) {
       <div data-section="role"><Card number={3} title="Role" subtitle={`${ROLE_NAME[u.role]} — ${pending ? 'given when the invitation is accepted' : ROLE_SUMMARY[u.role]}`} /></div>
       <div data-section="sc"><Card number={4} title="Scope access"
         subtitle={u.role === 'customer_admin' ? 'All scopes' : pending ? `${plural(u.scopes.length, 'scope')}, given when the invitation is accepted` : `${u.scopes.length} of ${plural(u.tenantScopeCount, 'scope')}`}
-        actions={!pending && canAssign ? <Button variant="tertiary" size="sm" onClick={() => setAssign(true)}>Assign scopes</Button> : undefined}>
-        {u.scopes.length ? <Table density="compact" columns={scopeCols} rows={u.scopes} getRowId={(r) => r.scopeId} /> : <p className="body-medium muted" style={{ margin: 0 }}>No scopes yet.</p>}
+        actions={!pending && canAssign ? <Button variant="tertiary" size="sm" onClick={() => setAssign(true)}>{translate("Assign scopes")}</Button> : undefined}>
+        {u.scopes.length ? <Table density="compact" columns={scopeCols} rows={u.scopes} getRowId={(r) => r.scopeId} /> : <p className="body-medium muted" style={{ margin: 0 }}>{translate("No scopes yet.")}</p>}
       </Card></div>
       <div data-section="hist" className="card-extend"><Card number={5} title="History" extend><Timeline steps={history} /></Card></div>
       <RevokeModal session={session} user={revoke ? u : undefined} onClose={() => setRevoke(false)} onDone={() => router.push('/admin/users')} />

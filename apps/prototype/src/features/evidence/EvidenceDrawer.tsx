@@ -1,4 +1,5 @@
 'use client';
+import { translate } from '@/i18n/locale';
 // designs/05 EvidenceDetail: drawer with workspace, validity, SGS review, the requirements that use the
 // file and its versions. Footer: unlink (when opened from a requirement), download, upload new version.
 import { Button, Drawer, Skeleton, Table } from '@sgs/graphite';
@@ -24,8 +25,8 @@ export function EvidenceDrawer({ id, requirement, onClose }: { id?: string; requ
     <>
       {mapped && e.canWrite ? <Button variant="ghost" size="md" onClick={async () => { const r = await unlinkEvidence(session, e.id, requirement!.id); snack(`Mapping removed from ${r.code}. The file stays in your library.`); onClose(); }}>Unlink from {requirement!.code}</Button> : null}
       <span style={{ flexGrow: 1 }} />
-      <Button variant="tertiary" size="md" icon="download" iconPosition="left" onClick={() => download(e.fileName)}>Download</Button>
-      {e.canWrite ? <Button size="md" icon="upload" iconPosition="left" onClick={() => file.current?.click()}>Upload new version</Button> : null}
+      <Button variant="tertiary" size="md" icon="download" iconPosition="left" onClick={() => download(e.fileName)}>{translate("Download")}</Button>
+      {e.canWrite ? <Button size="md" icon="upload" iconPosition="left" onClick={() => file.current?.click()}>{translate("Upload new version")}</Button> : null}
       <input ref={file} type="file" className="gr-sr" tabIndex={-1} aria-label="New version file" onChange={async (ev) => {
         const f = ev.target.files?.[0];
         ev.target.value = '';
@@ -41,16 +42,16 @@ export function EvidenceDrawer({ id, requirement, onClose }: { id?: string; requ
       {!e ? <Skeleton lines={6} /> : (
         <div className="drawer-body">
           <dl className="body-medium kv">
-            <div className="kv__row"><dt>Workspace</dt><dd>{e.workspaceTitle}</dd></div>
-            <div className="kv__row"><dt>Valid</dt><dd>{e.validFrom || e.validUntil ? `${fmtDate(e.validFrom)} – ${e.validUntil ? fmtDate(e.validUntil) : 'no end date'}` : 'Doesn’t expire'}</dd></div>
-            <div className="kv__row"><dt>Review</dt><dd>{REVIEW[e.review]}</dd></div>
+            <div className="kv__row"><dt>{translate("Workspace")}</dt><dd>{e.workspaceTitle}</dd></div>
+            <div className="kv__row"><dt>{translate("Valid")}</dt><dd>{e.validFrom || e.validUntil ? `${fmtDate(e.validFrom)} – ${e.validUntil ? fmtDate(e.validUntil) : 'no end date'}` : 'Doesn’t expire'}</dd></div>
+            <div className="kv__row"><dt>{translate("Review")}</dt><dd>{REVIEW[e.review]}</dd></div>
           </dl>
-          <div className="drawer-section"><h3 className="title-small" style={{ margin: 0 }}>Used for</h3>
+          <div className="drawer-section"><h3 className="title-small" style={{ margin: 0 }}>{translate("Used for")}</h3>
             {e.usedForRows.length
               ? <Table density="compact" getRowId={(r) => r.requirementId} rows={e.usedForRows} columns={[{ key: 'requirement', header: 'Requirement' }, { key: 'expected', header: 'Expected evidence' }]} />
-              : <p className="body-medium muted" style={{ margin: 0 }}>Not linked to any requirement. It stays in the library until you link it.</p>}
+              : <p className="body-medium muted" style={{ margin: 0 }}>{translate("Not linked to any requirement. It stays in the library until you link it.")}</p>}
           </div>
-          <div className="drawer-section"><h3 className="title-small" style={{ margin: 0 }}>Versions</h3>
+          <div className="drawer-section"><h3 className="title-small" style={{ margin: 0 }}>{translate("Versions")}</h3>
             <Table density="compact" getRowId={(r) => r.id} rows={e.versions} columns={[{ key: 'versionNo', header: 'Version', width: 80 }, { key: 'fileName', header: 'File' }, { key: 'at', header: 'Uploaded', render: (r) => `${fmtDate(r.uploadedAt)} · ${r.by}` }]} />
           </div>
         </div>

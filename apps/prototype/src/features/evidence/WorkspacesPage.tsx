@@ -1,6 +1,7 @@
 'use client';
 // designs/05 Workspaces. UC-EVD-003. Workspaces of the scopes the user can access.
 import { DataTable, ProgressBar, StatusTag, type TableColumn } from '@sgs/graphite';
+import { translate } from '@/i18n/locale';
 import { WS_STATUS } from '@/mock/labels2';
 import { listWorkspaces } from '@/mock/api/evidence';
 import type { WorkspaceRow } from '@/mock/api/scopes';
@@ -22,7 +23,7 @@ export function WorkspacesPage() {
   ];
   return (
     <ListLayout crumbs={[{ label: 'Workspaces' }]} title="Workspaces"
-      description={`Workspaces of the scopes ${session.user.role === 'customer_admin' ? 'of your organisation' : 'assigned to you'}. Coverage shows how much evidence is in place — it is not a compliance decision.`}>
+      description={translate(session.user.role === 'customer_admin' ? 'Workspaces of the scopes of your organisation. Coverage shows how much evidence is in place — it is not a compliance decision.' : 'Workspaces of the scopes assigned to you. Coverage shows how much evidence is in place — it is not a compliance decision.')}>
       <DataTable<WorkspaceRow> title={plural(rows.length, 'workspace')} columns={cols} rows={rows} loading={q.loading && !q.data} searchable searchPlaceholder="Search workspaces" layout="table" getRowId={(r) => r.id}
         emptyState={{ title: 'No workspaces yet', body: 'A workspace is created when a framework is linked to a scope.' }} />
     </ListLayout>

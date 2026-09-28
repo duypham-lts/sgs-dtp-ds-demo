@@ -1,4 +1,5 @@
 'use client';
+import { translate } from '@/i18n/locale';
 // designs/06 MvpDetailSubmitted / Progress / Completed / Rejected; 07 IsDetail*. UC-SRQ-003/004/010.
 // Withdraw (D4) sits in the header menu while SGS has not started; an open information request (D3)
 // shows the answer panel on top. Copy promising email is replaced by in-portal notifications (Q12).
@@ -41,9 +42,9 @@ export function CustomerConsultingDetail({ id, category }: { id: string; categor
 
   const aside = (
     <>
-      <div className="title-medium">SGS Requests &amp; Communications</div>
-      {r.status === 'submitted' ? <InlineNotification kind="info" title="SGS is reviewing your request">SGS will accept or decline it and let you know in the portal.</InlineNotification> : null}
-      {r.status === 'information_requested' ? <InlineNotification kind="warning" title="SGS is waiting for you">Answer the question on this page. Nothing moves until you reply.</InlineNotification> : null}
+      <div className="title-medium">{translate("SGS Requests & Communications")}</div>
+      {r.status === 'submitted' ? <InlineNotification kind="info" title="SGS is reviewing your request">{translate("SGS will accept or decline it and let you know in the portal.")}</InlineNotification> : null}
+      {r.status === 'information_requested' ? <InlineNotification kind="warning" title="SGS is waiting for you">{translate("Answer the question on this page. Nothing moves until you reply.")}</InlineNotification> : null}
       {r.status === 'withdrawn' ? <InlineNotification kind="info" title={`Withdrawn on ${fmtDate(r.withdrawnAt)}`}>SGS stopped reviewing this request.{r.withdrawReason ? ` Reason: ${r.withdrawReason}.` : ''}</InlineNotification> : null}
       {r.status === 'completed' ? <InlineNotification kind="success" title={`Completed on ${fmtDate(r.completedAt)}`}>{ga ? 'The report is final. Consultant access to your workspace has ended.' : 'Deliverables stay available here. Consultant access to your workspace has ended.'}</InlineNotification> : null}
       {r.assignee && r.status !== 'rejected' ? <PersonBox title="Your SGS consultant" person={r.assignee} /> : null}
@@ -64,7 +65,7 @@ export function CustomerConsultingDetail({ id, category }: { id: string; categor
     body = (<>
       <div data-section="ov"><Card number={1} title={ga ? 'Decision' : 'Status'} subtitle={`Rejected by SGS on ${fmtDate(r.rejectedAt)}`}>
         <InlineNotification kind="error" title={`Reason: ${r.rejectReason}`}>{r.rejectMessage}</InlineNotification>
-        {r.can.requestAgain ? <div><Button size="md" icon="add" iconPosition="left" onClick={again}>Request again</Button></div> : null}
+        {r.can.requestAgain ? <div><Button size="md" icon="add" iconPosition="left" onClick={again}>{translate("Request again")}</Button></div> : null}
       </Card></div>
       <div data-section="rq"><Card number={2} title="Request" subtitle={submittedSub}><Facts items={facts} /></Card></div>
       {history(3)}
@@ -91,7 +92,7 @@ export function CustomerConsultingDetail({ id, category }: { id: string; categor
       <div data-section="st"><Card number={1} title="Status" subtitle={r.status === 'completed' ? `Completed ${fmtDate(r.completedAt)} by ${r.assignee?.name}` : r.approvedAt ? `In progress since ${fmtDate(r.approvedAt)}` : submittedSub}>
         {r.status === 'completed' && r.closingNote ? <Note label={`Closing summary from ${r.assignee?.name}`}>{r.closingNote}</Note>
           : r.approvedAt ? <Facts items={[['SGS consultant', r.assignee?.name ?? '—'], ['Period', fmtRange(r.periodFrom, r.periodTo)], ['Deliverables shared', deliverables.length ? `${deliverables.length} · latest on ${fmtDate(deliverables[0].uploadedAt)}` : 'None yet'], ...(r.sgsMessage ? [['Message from SGS', r.sgsMessage] as [string, string]] : [])]} />
-          : <p className="body-medium muted" style={{ margin: 0 }}>SGS reviews the request and assigns a consultant.</p>}
+          : <p className="body-medium muted" style={{ margin: 0 }}>{translate("SGS reviews the request and assigns a consultant.")}</p>}
       </Card></div>
       <div data-section="rq"><Card number={2} title="Request" subtitle={submittedSub}><Facts items={facts} /></Card></div>
       {hasDel ? <div data-section="del"><Card number={3} title="Deliverables" subtitle="Review and approve these documents, then upload the approved version to your workspace as evidence.">

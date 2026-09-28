@@ -3,6 +3,7 @@
 // They say what will be here and which use cases they cover, so a click never lands on a dead end.
 import { Card, EmptyState } from '@sgs/graphite';
 import { usePathname } from 'next/navigation';
+import { translate } from '@/i18n/locale';
 import { ListLayout } from '@/ui/layout';
 import { PageHead } from './PageHead';
 import { useSidebar } from './ShellContext';
@@ -11,7 +12,7 @@ export function Placeholder({ crumbs, title, description, what, ucs }: { crumbs?
   return (
     <ListLayout crumbs={crumbs} title={title} description={description} noDesign>
       <Card extend>
-        <EmptyState icon="document" title="This page has no design yet" body={`${what} Use cases: ${ucs}.`} />
+        <EmptyState icon="document" title={translate('This page has no design yet')} body={translate('{what} Use cases: {ucs}.', { what, ucs })} />
       </Card>
     </ListLayout>
   );
@@ -25,7 +26,7 @@ export function NotBuiltYet() {
     <>
       <PageHead title="Not built yet" description={<code>{path}</code>} />
       <Card extend>
-        <EmptyState icon="task" title="Màn này sẽ được dựng ở Pha 3" body="Route đã có trong sơ đồ điều hướng. Màn hình theo design sẽ được dựng khi làm module tương ứng." />
+        <EmptyState icon="task" title={translate('This screen will be built in phase 3')} body={translate('This route is in the navigation. The designed screen will be built with its module.')} />
       </Card>
     </>
   );

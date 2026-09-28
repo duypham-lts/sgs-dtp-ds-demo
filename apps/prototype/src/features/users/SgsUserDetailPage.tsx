@@ -1,4 +1,5 @@
 'use client';
+import { translate } from '@/i18n/locale';
 // designs/03 SgsUserDetail. UC-USR-002. Assignments are read only (managed in each request).
 import { Button, Card, InlineNotification, OverflowMenu, Skeleton, StatusTag, Table } from '@sgs/graphite';
 import { useRouter } from 'next/navigation';
@@ -43,7 +44,7 @@ export function SgsUserDetailPage({ id }: { id: string }) {
     <DetailLayout backHref="/ops/admin/users" sections={sections} sidebar="expanded"
       header={{ title: u.displayName, subtitle: `${u.email} · ${u.orgName}`, status, actions: pending ? <OverflowMenu size="md" label="User actions" items={[{ label: 'Resend invitation', onClick: resend }, { label: 'Revoke invitation', danger: true, onClick: () => setRevoke(true) }]} /> : undefined }}
       aside={<>
-        <div className="title-medium">Access summary</div>
+        <div className="title-medium">{translate("Access summary")}</div>
         <AsideBox title={pending ? 'Before activation' : `What ${u.displayName} can do`}>
           {pending ? <span className="body-small muted">{u.displayName} can’t sign in until they activate the account from the email.</span> : <AsideList items={CAN[u.role] ?? []} />}
         </AsideBox>
@@ -52,7 +53,7 @@ export function SgsUserDetailPage({ id }: { id: string }) {
         {pending ? (
           <>
             <InlineNotification kind="info" title={`Invitation sent on ${fmtDate(u.invitedAt)}`}>The link expires on {fmtDate(u.invitationExpiresAt)}.</InlineNotification>
-            <div className="btn-row"><Button variant="secondary" size="md" onClick={resend}>Resend invitation</Button><Button variant="tertiary" size="md" onClick={() => setRevoke(true)}>Revoke invitation</Button></div>
+            <div className="btn-row"><Button variant="secondary" size="md" onClick={resend}>{translate("Resend invitation")}</Button><Button variant="tertiary" size="md" onClick={() => setRevoke(true)}>{translate("Revoke invitation")}</Button></div>
           </>
         ) : <Facts items={[['Account', `Active since ${fmtDate(u.activatedAt)}`], ['Last sign-in', fmtRelative(u.lastSignInAt)]]} />}
       </Card></div>
@@ -61,7 +62,7 @@ export function SgsUserDetailPage({ id }: { id: string }) {
       </Card></div>
       <div data-section="role"><Card number={3} title="Role" subtitle={`${roleName} — ${ROLE_SUMMARY[u.role]} · set when the user was invited`} /></div>
       <div data-section="as" className="card-extend"><Card number={4} title="Current assignments" subtitle="Read only · managed in each request" extend>
-        {u.assignments.length ? <Table density="compact" columns={aCols} rows={u.assignments} getRowId={(r) => r.requestId} /> : <p className="body-medium muted" style={{ margin: 0 }}>No open assignments.</p>}
+        {u.assignments.length ? <Table density="compact" columns={aCols} rows={u.assignments} getRowId={(r) => r.requestId} /> : <p className="body-medium muted" style={{ margin: 0 }}>{translate("No open assignments.")}</p>}
       </Card></div>
       <RevokeModal session={session} user={revoke ? u : undefined} onClose={() => setRevoke(false)} onDone={() => router.push('/ops/admin/users')} />
     </DetailLayout>

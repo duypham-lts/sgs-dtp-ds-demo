@@ -1,4 +1,5 @@
 'use client';
+import { translate } from '@/i18n/locale';
 // Request certification (decisions D2): from a workspace (designs/08 Main: scope, framework and tier filled
 // in) or from the catalogue (designs/09 CertRequest: choose scope and type).
 import { FileUpload, Modal, Radio, Select, Textarea } from '@sgs/graphite';
@@ -60,7 +61,7 @@ export function CertRequestModal({ session, ctx, open, onClose }: { session: Ses
           <>
             <Select label="Scope" required size="m" placeholder="Choose a scope" options={scopes} value={scopeId} error={e.scope} helpText="Only scopes assigned to you are listed." onChange={(_, v) => { setScopeId(v); setE((y) => ({ ...y, scope: undefined, form: undefined })); }} />
             <fieldset className="plain-fieldset">
-              <legend className="label-small muted">Type <span className="gr-req">*</span></legend>
+              <legend className="label-small muted">{translate("Type")} <span className="gr-req">*</span></legend>
               <div className="btn-row" style={{ gap: 24 }}>{CERT_TYPES.map((t) => <Radio key={t} name="ct" label={t} checked={type === t} onChange={() => setType(t)} />)}</div>
             </fieldset>
           </>
@@ -70,7 +71,7 @@ export function CertRequestModal({ session, ctx, open, onClose }: { session: Ses
           placeholder={ctx.kind === 'workspace' ? 'e.g. Hosting is in the Hsinchu data centre; please plan one day on site.' : 'e.g. Number of sites and employees, current certificates, deadlines'} />
         <FileUpload label="Documents (optional)" hint={ctx.kind === 'workspace' ? 'e.g. organisation chart · up to 20 MB each' : 'e.g. current certificate, organisation chart · up to 20 MB each'}
           onFilesAdded={(l) => { const add = Array.from(l).map((x) => ({ fileName: x.name, sizeBytes: x.size })); setFiles((f) => [...f, ...add]); }} onRemove={(r) => setFiles((f) => f.filter((x) => x.fileName !== r.name))} />
-        {ctx.kind === 'workspace' ? <p className="body-small muted" style={{ margin: 0 }}>When the audit review starts, this workspace is locked so the auditor reviews the evidence as submitted.</p> : null}
+        {ctx.kind === 'workspace' ? <p className="body-small muted" style={{ margin: 0 }}>{translate("When the audit review starts, this workspace is locked so the auditor reviews the evidence as submitted.")}</p> : null}
         <FieldError>{e.form}</FieldError>
       </div>
     </Modal>

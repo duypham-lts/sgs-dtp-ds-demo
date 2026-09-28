@@ -5,6 +5,7 @@
 import { LanguageSelector } from '@sgs/graphite';
 import type { ReactNode } from 'react';
 import type { Portal } from '@/mock';
+import { useI18n } from '@/i18n/I18nProvider';
 
 const P = [
   'M36,0 A36,36 0 0 1 72,36 A36,36 0 0 1 36,72 H0 V36 A36,36 0 0 1 36,0 Z',
@@ -35,18 +36,21 @@ export const PORTAL_SUB: Record<Portal, string> = { customer: 'Customer Portal',
 const PANEL_SUB: Record<Portal, string> = { customer: 'Customer Portal', 'sgs-ops': 'SGS Operations · internal access' };
 
 export function AuthCard({ portal, children }: { portal: Portal; children: ReactNode }) {
+  const { locale, setLocale, t } = useI18n();
   return (
     <div data-theme={portal} className="auth">
       <div className="auth__card">
         <div data-theme={portal === 'sgs-ops' ? 'inverse' : 'customer'} className={`auth__brand auth__brand--${portal}`}>
           <Mosaic portal={portal} />
           <div className="auth__brand-text">
-            <span className="headline-small">Digital Trust Platform</span>
-            <span className="body-medium auth__muted">{PANEL_SUB[portal]}</span>
+            <span className="headline-small">{t('Digital Trust Platform')}</span>
+            <span className="body-medium auth__muted">{t(PANEL_SUB[portal])}</span>
           </div>
         </div>
         <div className="auth__form">
-          <div className="auth__lang"><LanguageSelector compact /></div>
+          <div className="auth__lang">
+            <LanguageSelector compact value={locale} onChange={(code) => setLocale(code === 'zh-Hant' ? 'zh-Hant' : 'en')} />
+          </div>
           {children}
         </div>
       </div>

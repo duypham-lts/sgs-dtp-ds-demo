@@ -1,4 +1,5 @@
 'use client';
+import { translate } from '@/i18n/locale';
 // designs/08 AudMyAudits, AudRequest (+ AudStartReview), AudReview (+ modals), AudFindings. UC-REV-001…016.
 import { Breadcrumb, Button, Card, CommentThread, DataTable, DocumentItem, PageHeader, RequirementNavigator, Skeleton, StatusTag, Tabs, Tag, type TableColumn } from '@sgs/graphite';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -81,9 +82,9 @@ export function AuditRequestPage({ id }: { id: string }) {
   return (
     <DetailLayout backHref="/ops/audits" sections={[{ id: 'st', label: 'Request' }, { id: 'bf', label: 'Before you start' }]}
       header={{ title: `${r.id} · ${r.frameworkLabel}`, subtitle: `${r.customerName} · ${r.scopeName} · ${r.certType?.toLowerCase()}`, status: { status: 'info', label: 'Assigned to you', shortLabel: 'Assigned' },
-        actions: ws ? <Button size="md" onClick={() => setStart(true)}>Start audit review</Button> : undefined }}
+        actions: ws ? <Button size="md" onClick={() => setStart(true)}>{translate("Start audit review")}</Button> : undefined }}
       aside={<>
-        <div className="title-medium">Customer</div>
+        <div className="title-medium">{translate("Customer")}</div>
         <AsideBox title={r.customerName}>
           <span className="body-small muted">Contact: {r.contact?.name ?? r.requester?.name}{r.contactTitle ? ` · ${r.contactTitle}` : ''}</span>
           {(r.contact ?? r.requester) ? <Link href={`mailto:${(r.contact ?? r.requester)!.email}`}>{(r.contact ?? r.requester)!.email}</Link> : null}
@@ -95,8 +96,8 @@ export function AuditRequestPage({ id }: { id: string }) {
       </Card></div>
       <div data-section="bf" className="card-extend"><Card number={2} title="Before you start" extend>
         <ul className="body-medium plain-list">
-          <li>Agree the audit dates and contract with the customer outside the platform.</li>
-          <li>Starting the review creates one item per requirement and locks the workspace.</li>
+          <li>{translate("Agree the audit dates and contract with the customer outside the platform.")}</li>
+          <li>{translate("Starting the review creates one item per requirement and locks the workspace.")}</li>
         </ul>
       </Card></div>
       <StartReviewModal session={session} request={r} open={start} onClose={() => setStart(false)} onStarted={() => router.push(`/ops/audits/${id}/review`)} />
@@ -139,7 +140,7 @@ export function AuditReviewPage({ requestId }: { requestId: string }) {
       <PageHeader title={`Audit review · ${rv.workspaceTitle}`} subtitle={`${rv.requestTitle} · ${rv.customerName} · ${rv.scopeName}`} onBack={() => router.push('/ops/audits')}
         status={{ status: st[0], label: statusLabel, shortLabel: st[1].split(' ')[0] }}
         actions={<div className="btn-row"><a href={`/ops/audits/${requestId}/findings`} className="gr-btn gr-btn--tertiary gr-btn--md">Findings ({rv.counts.findings})</a>
-          {act ? <Button size="md" disabled={rv.state !== 'ready'} onClick={() => setModal({ kind: 'close' })}>Close review</Button> : null}</div>} />
+          {act ? <Button size="md" disabled={rv.state !== 'ready'} onClick={() => setModal({ kind: 'close' })}>{translate("Close review")}</Button> : null}</div>} />
       <div className="review-grid">
         <div className="ws-grid__nav">
           <RequirementNavigator label="Review items" groups={groups} defaultExpanded={[item.requirement.groupCode]} selected={item.requirement.code} onSelect={setItem} statusLabels={RN_LABELS}
@@ -156,9 +157,9 @@ export function AuditReviewPage({ requestId }: { requestId: string }) {
             <p className="body-medium" style={{ margin: 0 }}>{item.requirement.statement}</p>
             {act && item.status !== 'closed_with_finding' ? (
               <div className="btn-row" style={{ gap: 8 }}>
-                <Button size="md" disabled={!!openFinding || item.status === 'accepted'} onClick={async () => { await acceptItem(session, item.id); snack(`${item.requirement.code} accepted`); }}>Accept</Button>
-                <Button variant="secondary" size="md" disabled={!!openFinding} onClick={() => setModal({ kind: 'clar' })}>Request clarification</Button>
-                <Button variant="secondary" size="md" disabled={!!openFinding} onClick={() => setModal({ kind: 'finding' })}>Raise finding</Button>
+                <Button size="md" disabled={!!openFinding || item.status === 'accepted'} onClick={async () => { await acceptItem(session, item.id); snack(`${item.requirement.code} accepted`); }}>{translate("Accept")}</Button>
+                <Button variant="secondary" size="md" disabled={!!openFinding} onClick={() => setModal({ kind: 'clar' })}>{translate("Request clarification")}</Button>
+                <Button variant="secondary" size="md" disabled={!!openFinding} onClick={() => setModal({ kind: 'finding' })}>{translate("Raise finding")}</Button>
               </div>
             ) : null}
           </section>
@@ -167,8 +168,8 @@ export function AuditReviewPage({ requestId }: { requestId: string }) {
               <div className="gr-card__head">
                 <div><h2 className="gr-card__title">Finding {f.code} · {FINDING_LABEL[f.classification]}</h2>
                   <p className="gr-card__sub">{f.status === 'response_submitted' ? `Corrective action submitted on ${fmtDate(f.actions[f.actions.length - 1]?.submittedAt)} · due ${fmtDate(f.dueOn).slice(0, 6)}` : f.status === 'closed' ? `Closed ${fmtDate(f.closedAt)}` : `Raised ${fmtDate(f.raisedAt)} by ${f.raisedByName}${f.dueOn ? ` · due ${fmtDate(f.dueOn)}${f.overdue ? ' · overdue' : ''}` : ''}`}</p></div>
-                {act && f.status === 'response_submitted' ? <Button size="sm" onClick={() => setModal({ kind: 'eval', finding: f })}>Evaluate</Button>
-                  : act && f.status === 'open' && f.dueOn ? <Button variant="tertiary" size="sm" onClick={() => setModal({ kind: 'due', finding: f })}>Change due date</Button> : null}
+                {act && f.status === 'response_submitted' ? <Button size="sm" onClick={() => setModal({ kind: 'eval', finding: f })}>{translate("Evaluate")}</Button>
+                  : act && f.status === 'open' && f.dueOn ? <Button variant="tertiary" size="sm" onClick={() => setModal({ kind: 'due', finding: f })}>{translate("Change due date")}</Button> : null}
               </div>
               <span className="body-medium">{f.text}</span>
               {f.internalNote ? <span className="body-small muted">Internal note: {f.internalNote}</span> : null}
@@ -177,16 +178,16 @@ export function AuditReviewPage({ requestId }: { requestId: string }) {
           {lastClar ? (
             <section className="gr-card">
               <div className="gr-card__head">
-                <div><h2 className="gr-card__title">Clarification</h2><p className="gr-card__sub">Asked {fmtDate(lastClar.askedAt)} · {lastClar.answeredAt ? `answered ${fmtDate(lastClar.answeredAt)} by ${lastClar.answeredByName}` : `due ${fmtDate(lastClar.dueOn)}${lastClar.overdue ? ' · overdue' : ''}`}</p></div>
-                {act && pendingAnswer && !openFinding ? <Button size="sm" onClick={() => setModal({ kind: 'answer', c: pendingAnswer })}>Evaluate answer</Button> : null}
+                <div><h2 className="gr-card__title">{translate("Clarification")}</h2><p className="gr-card__sub">Asked {fmtDate(lastClar.askedAt)} · {lastClar.answeredAt ? `answered ${fmtDate(lastClar.answeredAt)} by ${lastClar.answeredByName}` : `due ${fmtDate(lastClar.dueOn)}${lastClar.overdue ? ' · overdue' : ''}`}</p></div>
+                {act && pendingAnswer && !openFinding ? <Button size="sm" onClick={() => setModal({ kind: 'answer', c: pendingAnswer })}>{translate("Evaluate answer")}</Button> : null}
               </div>
               <span className="body-medium">{lastClar.question}</span>
-              {lastClar.answer ? <div className="note-box"><span className="body-small muted">Answer</span><span className="body-medium">{lastClar.answer}</span></div> : null}
+              {lastClar.answer ? <div className="note-box"><span className="body-small muted">{translate("Answer")}</span><span className="body-medium">{lastClar.answer}</span></div> : null}
             </section>
           ) : null}
           <section className="gr-card gr-card--extend">
-            <div className="gr-card__head"><div className="gr-card__heading"><div><h2 className="gr-card__title">Evidence</h2><p className="gr-card__sub">{rv.closedAt ? 'As reviewed' : `Locked · as submitted on ${lockedDate}`}</p></div></div></div>
-            {item.evidence.length || correctiveFiles.length ? <EvidenceList files={[...item.evidence.filter((e) => !correctiveFiles.some((c) => c.id === e.id)), ...correctiveFiles]} /> : <p className="body-medium muted" style={{ margin: 0 }}>No evidence for this requirement.</p>}
+            <div className="gr-card__head"><div className="gr-card__heading"><div><h2 className="gr-card__title">{translate("Evidence")}</h2><p className="gr-card__sub">{rv.closedAt ? 'As reviewed' : `Locked · as submitted on ${lockedDate}`}</p></div></div></div>
+            {item.evidence.length || correctiveFiles.length ? <EvidenceList files={[...item.evidence.filter((e) => !correctiveFiles.some((c) => c.id === e.id)), ...correctiveFiles]} /> : <p className="body-medium muted" style={{ margin: 0 }}>{translate("No evidence for this requirement.")}</p>}
           </section>
         </div>
         <div className="review-grid__notes">

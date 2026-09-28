@@ -1,4 +1,5 @@
 'use client';
+import { translate } from '@/i18n/locale';
 // designs/05 ScopeDetail (+ AssignUsers, LinkFramework, ChangeTier, ChangeTierLocked). UC-SCP-002/004/006,
 // UC-USR-006. "Change tier" sits on each tiered framework row (design-questions Q19).
 import { Button, Card, DataTable, OverflowMenu, ProgressBar, Skeleton, StatusTag, Table, type TableColumn } from '@sgs/graphite';
@@ -33,7 +34,7 @@ export function ScopeDetailPage({ id }: { id: string }) {
     { key: 'tierLabel', header: 'Tier', width: 150 },
     { key: 'cov', header: 'Coverage', width: 220, render: (r) => <ProgressBar value={r.percent} size="sm" label={`${r.fw} coverage`} helperText={`${r.provided} / ${r.total}`} /> },
     { key: 'status', header: 'Status', width: 190, render: (r) => <StatusTag status={WS_STATUS[r.status][0]} size="sm" label={WS_STATUS[r.status][1]} /> },
-    ...(admin && sc.workspaces.some((w) => w.tiered) ? [{ key: 'act', header: '', align: 'end' as const, width: 130, render: (r: WorkspaceRow) => (r.tiered ? <Button variant="ghost" size="sm" onClick={() => setTierFor(r)}>Change tier</Button> : null) }] : []),
+    ...(admin && sc.workspaces.some((w) => w.tiered) ? [{ key: 'act', header: '', align: 'end' as const, width: 130, render: (r: WorkspaceRow) => (r.tiered ? <Button variant="ghost" size="sm" onClick={() => setTierFor(r)}>{translate("Change tier")}</Button> : null) }] : []),
   ];
   const facts: [string, string][] = [['Type', typeName]];
   if (sc.type === 'system') facts.push(['Belongs to', sc.belongsTo]);
@@ -43,26 +44,26 @@ export function ScopeDetailPage({ id }: { id: string }) {
       header={{ title: sc.name, subtitle: `${typeName} scope · ${session.tenant?.name}`, status: { status: 'completed', label: 'Active', shortLabel: 'Active' },
         actions: admin ? <OverflowMenu size="md" label="Scope actions" items={[{ label: 'Edit scope', onClick: onEdit }]} /> : undefined }}
       aside={<>
-        <div className="title-medium">Summary</div>
+        <div className="title-medium">{translate("Summary")}</div>
         <AsideBox title="Evidence coverage">
-          {sc.workspaces.length ? sc.workspaces.map((w) => <ProgressBar key={w.id} label={w.title} value={w.percent} helperText={`${w.provided} of ${w.total} requirements have their mandatory evidence`} />) : <span className="body-small muted">No framework linked yet.</span>}
-          <span className="body-small muted">Preparation progress only — not a compliance decision.</span>
+          {sc.workspaces.length ? sc.workspaces.map((w) => <ProgressBar key={w.id} label={w.title} value={w.percent} helperText={`${w.provided} of ${w.total} requirements have their mandatory evidence`} />) : <span className="body-small muted">{translate("No framework linked yet.")}</span>}
+          <span className="body-small muted">{translate("Preparation progress only — not a compliance decision.")}</span>
         </AsideBox>
       </>}>
-      <div data-section="ov"><Card number={1} title="Overview" actions={admin ? <Button variant="tertiary" size="sm" icon="edit" iconPosition="left" onClick={onEdit}>Edit</Button> : undefined}>
+      <div data-section="ov"><Card number={1} title="Overview" actions={admin ? <Button variant="tertiary" size="sm" icon="edit" iconPosition="left" onClick={onEdit}>{translate("Edit")}</Button> : undefined}>
         <dl className="facts" style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
           {facts.map(([k, v]) => <div key={k}><dt className="body-small facts__k">{k}</dt><dd className="body-medium facts__v">{v}</dd></div>)}
-          <div style={{ gridColumn: '1 / -1' }}><dt className="body-small facts__k">In scope</dt><dd className="body-medium facts__v">{sc.description}</dd></div>
-          <div style={{ gridColumn: '1 / -1' }}><dt className="body-small facts__k">Out of scope</dt><dd className="body-medium facts__v">{sc.outOfScope || '—'}</dd></div>
+          <div style={{ gridColumn: '1 / -1' }}><dt className="body-small facts__k">{translate("In scope")}</dt><dd className="body-medium facts__v">{sc.description}</dd></div>
+          <div style={{ gridColumn: '1 / -1' }}><dt className="body-small facts__k">{translate("Out of scope")}</dt><dd className="body-medium facts__v">{sc.outOfScope || '—'}</dd></div>
         </dl>
       </Card></div>
       <div data-section="fw"><Card number={2} title="Frameworks" subtitle="Each framework gets its own workspace"
-        actions={admin ? <Button size="sm" icon="add" iconPosition="left" onClick={() => setLink(true)}>Link framework</Button> : undefined}>
+        actions={admin ? <Button size="sm" icon="add" iconPosition="left" onClick={() => setLink(true)}>{translate("Link framework")}</Button> : undefined}>
         {sc.workspaces.length ? <DataTable<WorkspaceRow> columns={fwCols} rows={sc.workspaces} layout="table" paginate={false} getRowId={(r) => r.id} />
-          : <p className="body-medium muted" style={{ margin: 0 }}>No framework linked yet. Link one to create a workspace and start collecting evidence.</p>}
+          : <p className="body-medium muted" style={{ margin: 0 }}>{translate("No framework linked yet. Link one to create a workspace and start collecting evidence.")}</p>}
       </Card></div>
       <div data-section="us" className="card-extend"><Card number={3} title="Users" subtitle="Can work in every workspace of this scope" extend
-        actions={admin ? <Button variant="tertiary" size="sm" onClick={() => setAssign(true)}>Assign users</Button> : undefined}>
+        actions={admin ? <Button variant="tertiary" size="sm" onClick={() => setAssign(true)}>{translate("Assign users")}</Button> : undefined}>
         <Table density="compact" getRowId={(r) => r.id} rows={sc.members} columns={[{ key: 'name', header: 'User' }, { key: 'role', header: 'Role' }, { key: 'grantedAt', header: 'Given', align: 'end', render: (r) => (r.grantedAt ? fmtDate(r.grantedAt) : '—') }]} />
       </Card></div>
       {admin ? <>

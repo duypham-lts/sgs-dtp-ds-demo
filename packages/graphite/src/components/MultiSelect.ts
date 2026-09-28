@@ -7,6 +7,7 @@ import { FormField } from './FormField';
 import { Icon } from './Icon';
 import { useOutside } from './Popover';
 import { cx } from '../utils';
+import { tr } from '../tr';
 
 export function MultiSelect(p: MultiSelectProps){var auto=useId();var id=p.id||auto;var opts=p.options||[];var sv=useState(p.defaultValue||[]),cur=sv[0],setCur=sv[1];var val=p.value!==undefined?p.value:cur;var so=useState(!!p.defaultOpen),open=so[0],setOpen=so[1];var ref=useRef(null);
  useOutside(ref,open,function(){setOpen(false);});
@@ -15,8 +16,8 @@ export function MultiSelect(p: MultiSelectProps){var auto=useId();var id=p.id||a
  var chosen=opts.filter(function(o){return val.indexOf(o.value)>=0;});
  var trigger=h('div',{className:'gr-ms__value'},
   h('button',{type:'button',id:id,className:'gr-ms__trigger','aria-haspopup':'listbox','aria-expanded':open,'aria-controls':id+'-list','aria-describedby':(p.error||p.helpText)?id+'-msg':undefined,disabled:p.disabled,onClick:function(){setOpen(!open);},onKeyDown:function(e){if(e.key==='Escape')setOpen(false);if(e.key==='ArrowDown'){e.preventDefault();setOpen(true);}}},
-   chosen.length?h('span',{className:'gr-sr'},chosen.map(function(c){return c.label;}).join(', ')):h('span',{className:'gr-ms__ph'},p.placeholder||'Select...')),
-  chosen.length?h('span',{className:'gr-ms__chips'},chosen.map(function(c){return h('span',{key:c.value,className:'gr-chip'},c.label,h('button',{type:'button',className:'gr-chip__x','aria-label':'Remove '+c.label,onClick:function(){toggle(c.value);}},h(Icon,{name:'close',size:16})));})):null);
+   chosen.length?h('span',{className:'gr-sr'},chosen.map(function(c){return tr(c.label);}).join(', ')):h('span',{className:'gr-ms__ph'},tr(p.placeholder||'Select...'))),
+  chosen.length?h('span',{className:'gr-ms__chips'},chosen.map(function(c){return h('span',{key:c.value,className:'gr-chip'},tr(c.label),h('button',{type:'button',className:'gr-chip__x','aria-label':tr('Remove {name}',{name:c.label}),onClick:function(){toggle(c.value);}},h(Icon,{name:'close',size:16})));})):null);
  return h('div',{ref:ref,className:'gr-pickwrap',onKeyDown:function(e){if(e.key==='Escape')setOpen(false);}},
   h(FormField,{id:id,label:p.label,required:p.required,helpText:p.helpText,error:p.error,size:p.size,width:p.width,disabled:p.disabled,kind:'select',className:'gr-ms',trailing:h('span',{className:'gr-field__deco'},h(Icon,{name:'chevron--down',size:20}))},trigger),
   open?h('ul',{id:id+'-list',role:'listbox','aria-multiselectable':true,'aria-labelledby':id,className:'gr-list'},opts.map(function(o){var on=val.indexOf(o.value)>=0;

@@ -4,11 +4,12 @@ import { h, useEffect } from '../runtime';
 import type { SnackbarProps } from '../../types/index';
 import { Icon } from './Icon';
 import { cx } from '../utils';
+import { tr } from '../tr';
 
 export function Snackbar(p: SnackbarProps){var open=p.open!==false;var dur=p.duration===undefined?5000:p.duration;
  useEffect(function(){if(!open||!dur||!p.onClose)return;var t=setTimeout(p.onClose,dur);return function(){clearTimeout(t);};},[open,dur,p.onClose]);
  if(!open)return null;
  return h('div',{className:cx('gr-snack',p.inline&&'gr-snack--inline',p.className),role:'status','aria-live':'polite'},
-  h('span',{className:'gr-snack__msg'},p.message),
-  p.action?h('button',{type:'button',className:'gr-snack__action',onClick:p.action.onClick},p.action.label):null,
-  p.onClose?h('button',{type:'button',className:'gr-snack__close','aria-label':'Dismiss',onClick:p.onClose},h(Icon,{name:'close',size:20})):null);}
+  h('span',{className:'gr-snack__msg'},tr(p.message)),
+  p.action?h('button',{type:'button',className:'gr-snack__action',onClick:p.action.onClick},tr(p.action.label)):null,
+  p.onClose?h('button',{type:'button',className:'gr-snack__close','aria-label':tr('Dismiss'),onClick:p.onClose},h(Icon,{name:'close',size:20})):null);}

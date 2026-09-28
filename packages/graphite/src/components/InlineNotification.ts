@@ -5,14 +5,15 @@ import type { InlineNotificationProps } from '../../types/index';
 import { Icon } from './Icon';
 import { IconButton } from './IconButton';
 import { cx } from '../utils';
+import { tr } from '../tr';
 
 export var NOTE_ICON={info:'information--filled',warning:'warning--alt--filled',error:'warning--filled',success:'checkmark--filled'};
 export function InlineNotification(p: InlineNotificationProps){var k=NOTE_ICON[p.kind]?p.kind:'info';
  return h('div',{className:cx('gr-note','gr-note--'+k,p.className),role:p.live?(k==='error'?'alert':'status'):undefined},
   h('span',{className:'gr-note__icon'},h(Icon,{name:NOTE_ICON[k],size:20})),
   h('div',{className:'gr-note__body'},
-   p.title?h('div',{className:'gr-note__title'},p.title):null,
-   p.children?h('div',{className:'gr-note__text'},p.children):null,
-   p.items?h('ul',{className:'gr-note__list'},p.items.map(function(it,i){return h('li',{key:i},h(Icon,{name:NOTE_ICON[k],size:16}),h('span',null,it));})):null,
+   p.title?h('div',{className:'gr-note__title'},tr(p.title)):null,
+   p.children?h('div',{className:'gr-note__text'},tr(p.children)):null,
+   p.items?h('ul',{className:'gr-note__list'},p.items.map(function(it,i){return h('li',{key:i},h(Icon,{name:NOTE_ICON[k],size:16}),h('span',null,tr(it)));})):null,
    p.action?h('div',{className:'gr-note__action'},p.action):null),
-  p.onClose?h(IconButton,{icon:'close',label:'Dismiss',size:'md',className:'gr-note__close',onClick:p.onClose}):null);}
+  p.onClose?h(IconButton,{icon:'close',label:tr('Dismiss'),size:'md',className:'gr-note__close',onClick:p.onClose}):null);}

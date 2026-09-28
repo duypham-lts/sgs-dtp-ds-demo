@@ -1,4 +1,5 @@
 'use client';
+import { translate } from '@/i18n/locale';
 // Customer side of certification (decisions D2):
 // - designs/09 Main (Certification Services: catalogue + my requests) and CertRequest;
 // - request detail: 09 CertDetail / CertDetailAssigned, 08 ReqAssigned / ReqInProgress / ReqCompleted / ReqCertIssued;
@@ -38,7 +39,7 @@ export function CertServicesPage() {
   const svcCols: TableColumn<Svc & { id: string }>[] = [
     { key: 'std', header: 'Standard', sortable: true, width: 220, render: (r) => <span style={{ fontWeight: 500 }}>{r.std}</span> },
     { key: 'name', header: 'Service', sortable: true, render: (r) => <span className="two-line"><span>{r.name}</span><span className="body-small two-line__sub" lang="zh-Hant">{r.zh}</span></span>, searchValue: (r) => `${r.std} ${r.name} ${r.zh}` },
-    { key: 'act', header: '', align: 'end', width: 140, render: (r) => (canRequest ? <Button variant="tertiary" size="sm" onClick={() => setStd(r.std)}>Request</Button> : null) },
+    { key: 'act', header: '', align: 'end', width: 140, render: (r) => (canRequest ? <Button variant="tertiary" size="sm" onClick={() => setStd(r.std)}>{translate("Request")}</Button> : null) },
   ];
   const reqCols: TableColumn<RequestRow>[] = [
     { key: 'id', header: 'Request', width: 140, render: (r) => <a href={customerHref('certification', r.id)} className="gr-link" style={{ fontWeight: 500 }}>{r.id}</a> },
@@ -91,20 +92,20 @@ export function CustomerCertDetail({ id }: { id: string }) {
   const facts = certFacts(r, tier);
   const title = `${r.id} · ${fw ? `${fw.shortName} certification` : r.serviceFramework}`;
   const subtitle = `Certification Services · ${(r.scopeName ?? '').replace(' · ', ws ? ' · ' : ', ')}${tier ? ` · tier ${tier}` : ''}`;
-  const againBtn = r.can.requestAgain ? <div><Button size="md" icon="add" iconPosition="left" onClick={async () => { await requestAgain(session, r.id).catch(() => undefined); router.push('/service-requests/certification'); }}>Request again</Button></div> : null;
+  const againBtn = r.can.requestAgain ? <div><Button size="md" icon="add" iconPosition="left" onClick={async () => { await requestAgain(session, r.id).catch(() => undefined); router.push('/service-requests/certification'); }}>{translate("Request again")}</Button></div> : null;
   let status: React.ReactNode;
-  if (r.status === 'submitted' || r.status === 'information_requested') status = <InlineNotification kind="info" title="SGS is reviewing your request">An SGS auditor will be assigned and get in touch to plan the audit. You’ll be notified in the portal.</InlineNotification>;
+  if (r.status === 'submitted' || r.status === 'information_requested') status = <InlineNotification kind="info" title="SGS is reviewing your request">{translate("An SGS auditor will be assigned and get in touch to plan the audit. You’ll be notified in the portal.")}</InlineNotification>;
   else if (r.status === 'assigned') status = <Facts items={[['SGS auditor', r.assignee?.name ?? '—'], ['Assigned on', fmtDate(r.approvedAt)], ['Next step', r.sgsMessage ?? `${r.assignee?.name.split(' ')[0]} will contact you to agree the audit dates. The workspace stays open until the audit review starts.`]]} />;
   else if (r.status === 'in_progress' && review) status = (<>
     <ProgressBar label="Requirements reviewed" value={Math.round((review.counts.reviewed / review.counts.total) * 100)} helperText={`${review.counts.reviewed} of ${review.counts.total} reviewed by ${review.auditorName}`} />
     <div className="stat-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}><StatTile value={review.counts.needYou} label="Need your response" /><StatTile value={review.counts.findings} label="Findings" /><StatTile value={review.counts.accepted} label="Accepted" /></div>
-    <div className="btn-row"><Button size="md" onClick={() => router.push(`/reviews/${review.id}`)}>Open review</Button><Button variant="tertiary" size="md" onClick={() => router.push(`/workspaces/${r.workspaceId}`)}>Open workspace (locked)</Button></div>
+    <div className="btn-row"><Button size="md" onClick={() => router.push(`/reviews/${review.id}`)}>{translate("Open review")}</Button><Button variant="tertiary" size="md" onClick={() => router.push(`/workspaces/${r.workspaceId}`)}>{translate("Open workspace (locked)")}</Button></div>
   </>);
   else if (r.status === 'audit_completed' || r.status === 'certificate_issued') {
     const f = review?.items.flatMap((i) => i.findings) ?? [];
     status = r.status === 'certificate_issued' && cert ? (<>
       <InlineNotification kind="success" title={`Certificate ${cert.number} issued on ${fmtDate(cert.certificateDate)}`}>Valid until {fmtDate(cert.validTo)}.</InlineNotification>
-      <div><Button size="md" onClick={() => router.push(`/certifications?cert=${cert.id}`)}>View certificate</Button></div>
+      <div><Button size="md" onClick={() => router.push(`/certifications?cert=${cert.id}`)}>{translate("View certificate")}</Button></div>
     </>) : (<>
       <div className="stat-grid">
         <StatTile value={review?.counts.accepted ?? 0} label="Accepted" /><StatTile value={f.filter((x) => x.classification === 'major' && x.status !== 'closed').length} label="Major open" />
@@ -112,7 +113,7 @@ export function CustomerCertDetail({ id }: { id: string }) {
       </div>
       {review?.reportFileName ? <DocumentItem variant="sgs" docType="Audit report" fileName={review.reportFileName} dateLabel={`Issued ${fmtUs(review.closedAt)} by ${review.auditorName}`} size={fsize(review.reportSizeBytes ?? 0)}
         actions={[{ type: 'open', label: 'Open audit report', onClick: () => download(review.reportFileName!) }, { type: 'download', label: 'Download audit report', onClick: () => download(review.reportFileName!) }]} /> : null}
-      <p className="body-small muted" style={{ margin: 0 }}>The workspace is unlocked. SGS now decides on the certificate; you’ll be notified.</p>
+      <p className="body-small muted" style={{ margin: 0 }}>{translate("The workspace is unlocked. SGS now decides on the certificate; you’ll be notified.")}</p>
     </>);
   } else if (r.status === 'rejected') status = <><InlineNotification kind="error" title={`Reason: ${r.rejectReason}`}>{r.rejectMessage}</InlineNotification>{againBtn}</>;
   else if (r.status === 'withdrawn') status = <InlineNotification kind="info" title={`Withdrawn on ${fmtDate(r.withdrawnAt)}`}>SGS stopped reviewing this request.{r.withdrawReason ? ` Reason: ${r.withdrawReason}.` : ''}</InlineNotification>;
@@ -121,9 +122,9 @@ export function CustomerCertDetail({ id }: { id: string }) {
     <DetailLayout backHref="/service-requests/certification?tab=mine" sections={[...(r.openInfo ? [{ id: 'info', label: 'Action required' }] : []), { id: 'st', label: 'Status' }, { id: 'rq', label: 'Request' }, { id: 'hist', label: 'History' }]}
       header={{ title, subtitle, status: { status: st[0], label, shortLabel: st[1] }, actions: r.can.withdraw ? <OverflowMenu size="md" label="Request actions" items={[{ label: 'Withdraw request', danger: true, onClick: () => setWithdraw(true) }]} /> : undefined }}
       aside={<>
-        <div className="title-medium">SGS Requests &amp; Communications</div>
+        <div className="title-medium">{translate("SGS Requests & Communications")}</div>
         {r.assignee && r.status !== 'rejected' ? <PersonBox title="Your SGS auditor" person={r.assignee} sub="SGS Auditor/Certification" /> : null}
-        <AsideBox title="Need help?"><span className="body-small muted">Questions about this request? Contact {r.assignee ? 'your SGS auditor or ' : ''}SGS support.</span><div><Button variant="tertiary" size="sm" onClick={() => snack(r.assignee ? `Write to ${r.assignee.email} or SGS support (support.tw@sgs.com, sample contact).` : 'SGS support: support.tw@sgs.com · +886 2 2793 5000 (sample contact).')}>Contact support</Button></div></AsideBox>
+        <AsideBox title="Need help?"><span className="body-small muted">Questions about this request? Contact {r.assignee ? 'your SGS auditor or ' : ''}SGS support.</span><div><Button variant="tertiary" size="sm" onClick={() => snack(r.assignee ? `Write to ${r.assignee.email} or SGS support (support.tw@sgs.com, sample contact).` : 'SGS support: support.tw@sgs.com · +886 2 2793 5000 (sample contact).')}>{translate("Contact support")}</Button></div></AsideBox>
       </>}>
       {r.openInfo ? <RespondPanel session={session} request={r} /> : null}
       <div data-section="st"><Card number={1} title="Status">{status}</Card></div>
@@ -155,7 +156,7 @@ export function CustomerCertificationsPage() {
   return (
     <div className="cert-grid">
       <div className="cert-grid__list">
-        <h1 className="headline-small" style={{ margin: 0 }}>Certifications</h1>
+        <h1 className="headline-small" style={{ margin: 0 }}>{translate("Certifications")}</h1>
         <SearchInput label="Search certificates" placeholder="Search certificates" size="s" width="100%" value={search} onChange={(e) => setSearch(e.target.value)} />
         {q.loading && !q.data ? <Skeleton lines={4} /> : rows.map(card)}
         <span className="body-small muted">{rows.length} certificate{rows.length === 1 ? '' : 's'}</span>
@@ -169,9 +170,9 @@ export function CustomerCertificationsPage() {
             </div>
             <Facts columns={3} items={[['Certificate date', long(sel.certificateDate)], ['Valid to', long(sel.validTo)], ['Accreditation', sel.accreditation]]} />
             <dl className="facts" style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
-              <div><dt className="body-small facts__k">Certified company</dt><dd className="body-medium facts__v">{sel.customerName}</dd></div>
-              <div><dt className="body-small facts__k">Scope · tier</dt><dd className="body-medium facts__v">{sel.scopeName}{sel.tier ? ` · ${getDb().frameworks.find((f) => f.id === sel.frameworkId)?.tiers.find((t) => t.code === sel.tier)?.label}` : ''}</dd></div>
-              <div style={{ gridColumn: '1 / -1' }}><dt className="body-small facts__k">Certificate scope</dt><dd className="body-medium facts__v">{sel.certificateScope}</dd></div>
+              <div><dt className="body-small facts__k">{translate("Certified company")}</dt><dd className="body-medium facts__v">{sel.customerName}</dd></div>
+              <div><dt className="body-small facts__k">{translate("Scope · tier")}</dt><dd className="body-medium facts__v">{sel.scopeName}{sel.tier ? ` · ${getDb().frameworks.find((f) => f.id === sel.frameworkId)?.tiers.find((t) => t.code === sel.tier)?.label}` : ''}</dd></div>
+              <div style={{ gridColumn: '1 / -1' }}><dt className="body-small facts__k">{translate("Certificate scope")}</dt><dd className="body-medium facts__v">{sel.certificateScope}</dd></div>
             </dl>
             <Facts columns={3} items={[['Certificate number', sel.number], ['Contract number', sel.contractNumber ?? '—'], ['Certified by', sel.certifiedBy]]} />
             <div className="drawer-section"><span className="title-small">Certified sites ({sel.sites.length})</span>

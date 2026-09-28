@@ -6,6 +6,7 @@ import { FormField } from './FormField';
 import { Icon } from './Icon';
 import { useOutside } from './Popover';
 import { cx } from '../utils';
+import { tr } from '../tr';
 
 export function Combobox(p: ComboboxProps){var auto=useId();var id=p.id||auto;var opts=p.options||[];var sv=useState(p.defaultValue||''),cur=sv[0],setCur=sv[1];var val=p.value!==undefined?p.value:cur;
  var sel=opts.filter(function(o){return o.value===val;})[0];var sq=useState(sel?sel.label:''),q=sq[0],setQ=sq[1];var so=useState(!!p.defaultOpen),open=so[0],setOpen=so[1];var sa=useState(0),act=sa[0],setAct=sa[1];var ref=useRef(null);
@@ -17,4 +18,4 @@ export function Combobox(p: ComboboxProps){var auto=useId();var id=p.id||auto;va
   onChange:function(e){setQ(e.target.value);setOpen(true);setAct(0);},onFocus:function(){setOpen(true);},onKeyDown:onKey});
  return h('div',{ref:ref,className:'gr-pickwrap'},
   h(FormField,{id:id,label:p.label,required:p.required,helpText:p.helpText,error:p.error,size:p.size,width:p.width,disabled:p.disabled,kind:'icon',trailing:h('span',{className:'gr-field__deco'},h(Icon,{name:'search',size:20}))},input),
-  open?h('ul',{id:id+'-list',role:'listbox',className:'gr-list'},list.length?list.map(function(o,i){return h('li',{key:o.value,id:id+'-o-'+i,role:'option','aria-selected':o.value===val,className:cx('gr-list__opt',i===act&&'is-active',o.value===val&&'is-selected'),onMouseDown:function(e){e.preventDefault();choose(o);},onMouseEnter:function(){setAct(i);}},h('span',{className:'gr-list__label'},o.label,o.description?h('span',{className:'gr-list__desc'},o.description):null),o.value===val?h(Icon,{name:'checkmark',size:16,className:'gr-list__check'}):null);}):h('li',{className:'gr-list__empty',role:'presentation'},p.emptyText||'No matches')):null);}
+  open?h('ul',{id:id+'-list',role:'listbox',className:'gr-list'},list.length?list.map(function(o,i){return h('li',{key:o.value,id:id+'-o-'+i,role:'option','aria-selected':o.value===val,className:cx('gr-list__opt',i===act&&'is-active',o.value===val&&'is-selected'),onMouseDown:function(e){e.preventDefault();choose(o);},onMouseEnter:function(){setAct(i);}},h('span',{className:'gr-list__label'},tr(o.label),o.description?h('span',{className:'gr-list__desc'},tr(o.description)):null),o.value===val?h(Icon,{name:'checkmark',size:16,className:'gr-list__check'}):null);}):h('li',{className:'gr-list__empty',role:'presentation'},tr(p.emptyText||'No matches'))):null);}

@@ -1,4 +1,5 @@
 'use client';
+import { translate } from '@/i18n/locale';
 // Training (SGS Academy) requests, decisions D2:
 // - customer: designs/09 TrainList (Services 33 / My requests), TrainRequest, TrainDetail;
 // - SGS: designs/09 TrainAdminQueue (To assign / Assigned / Rejected), TrainAdminAssign, reject with 09 AdminReject.
@@ -87,7 +88,7 @@ export function TrainingCoursesPage() {
     { key: 'course', header: 'Course', sortable: true, render: (r) => <span style={{ fontWeight: 500 }}>{r.course}</span>, searchValue: (r) => `${r.course} ${r.std} ${r.cat}` },
     { key: 'std', header: 'Standard', sortable: true, width: 240 },
     { key: 'cat', header: 'Category', sortable: true, width: 200, render: (r) => <Tag tone="neutral">{r.cat}</Tag> },
-    { key: 'act', header: '', align: 'end', width: 140, render: (r) => (canRequest ? <Button variant="tertiary" size="sm" onClick={() => setCourse(r)}>Request</Button> : null) },
+    { key: 'act', header: '', align: 'end', width: 140, render: (r) => (canRequest ? <Button variant="tertiary" size="sm" onClick={() => setCourse(r)}>{translate("Request")}</Button> : null) },
   ];
   const reqCols: TableColumn<RequestRow>[] = [
     { key: 'id', header: 'Request', width: 140, render: (r) => <a href={customerHref('training', r.id)} className="gr-link" style={{ fontWeight: 500 }}>{r.id}</a> },
@@ -126,11 +127,11 @@ export function CustomerTrainingDetail({ id }: { id: string }) {
   const st = TR_STATUS(r.status);
   const label = r.status === 'submitted' ? 'Submitted · waiting for SGS' : st[1];
   let status: React.ReactNode;
-  if (r.status === 'submitted' || r.status === 'information_requested') status = <InlineNotification kind="info" title="SGS is reviewing your request">An SGS Academy contact will confirm dates, location and price with you by email.</InlineNotification>;
+  if (r.status === 'submitted' || r.status === 'information_requested') status = <InlineNotification kind="info" title="SGS is reviewing your request">{translate("An SGS Academy contact will confirm dates, location and price with you by email.")}</InlineNotification>;
   else if (r.status === 'assigned') status = <Facts items={[['SGS contact', r.assignee?.name ?? '—'], ['Assigned on', fmtDate(r.approvedAt)], ['Next step', r.sgsMessage ?? `${r.assignee?.name.split(' ')[0]} will confirm dates, location and price with you by email.`]]} />;
   else if (r.status === 'rejected') status = <>
     <InlineNotification kind="error" title={`Reason: ${r.rejectReason}`}>{r.rejectMessage}</InlineNotification>
-    {r.can.requestAgain ? <div><Button size="md" icon="add" iconPosition="left" onClick={async () => { await requestAgain(session, r.id).catch(() => undefined); router.push('/service-requests/training'); }}>Request again</Button></div> : null}
+    {r.can.requestAgain ? <div><Button size="md" icon="add" iconPosition="left" onClick={async () => { await requestAgain(session, r.id).catch(() => undefined); router.push('/service-requests/training'); }}>{translate("Request again")}</Button></div> : null}
   </>;
   else if (r.status === 'withdrawn') status = <InlineNotification kind="info" title={`Withdrawn on ${fmtDate(r.withdrawnAt)}`}>SGS stopped handling this request.{r.withdrawReason ? ` Reason: ${r.withdrawReason}.` : ''}</InlineNotification>;
   return (
@@ -138,9 +139,9 @@ export function CustomerTrainingDetail({ id }: { id: string }) {
       header={{ title: `${r.id} · ${shortCourse(r)}`, subtitle: `Training Courses · ${r.participants} participant${r.participants === 1 ? '' : 's'}`, status: { status: st[0] as 'info', label, shortLabel: st[1] },
         actions: r.can.withdraw ? <OverflowMenu size="md" label="Request actions" items={[{ label: 'Withdraw request', danger: true, onClick: () => setWithdraw(true) }]} /> : undefined }}
       aside={<>
-        <div className="title-medium">SGS Requests &amp; Communications</div>
+        <div className="title-medium">{translate("SGS Requests & Communications")}</div>
         {r.assignee && r.status === 'assigned' ? <PersonBox title="Your SGS contact" person={r.assignee} sub={r.assignee.title ?? 'SGS Academy'} /> : null}
-        <AsideBox title="Need help?"><span className="body-small muted">Questions about this request? Contact SGS support and quote the request number.</span><div><Button variant="tertiary" size="sm" onClick={() => snack(`SGS support: support.tw@sgs.com · +886 2 2793 5000 (sample contact). Quote ${r.id}.`)}>Contact support</Button></div></AsideBox>
+        <AsideBox title="Need help?"><span className="body-small muted">{translate("Questions about this request? Contact SGS support and quote the request number.")}</span><div><Button variant="tertiary" size="sm" onClick={() => snack(`SGS support: support.tw@sgs.com · +886 2 2793 5000 (sample contact). Quote ${r.id}.`)}>{translate("Contact support")}</Button></div></AsideBox>
       </>}>
       {r.openInfo ? <RespondPanel session={session} request={r} /> : null}
       <div data-section="st"><Card number={1} title="Status">{status}</Card></div>
@@ -170,10 +171,10 @@ export function AssignTrainingModal({ session, request, onClose }: { session: Se
       {request ? (
         <div className="modal-body" style={{ width: 552 }}>
           <dl className="summary-box summary-grid">
-            <div><dt className="body-small muted">Request</dt><dd className="body-medium">{request.id} · {request.customerName}</dd></div>
-            <div><dt className="body-small muted">Course</dt><dd className="body-medium">{shortCourse(request)}</dd></div>
-            <div><dt className="body-small muted">Participants · format</dt><dd className="body-medium">{request.participants} · {request.format}</dd></div>
-            <div><dt className="body-small muted">Preferred</dt><dd className="body-medium" lang={request.language === '繁體中文' ? 'zh-Hant' : undefined}>{request.preferredMonth} · {request.language}</dd></div>
+            <div><dt className="body-small muted">{translate("Request")}</dt><dd className="body-medium">{request.id} · {request.customerName}</dd></div>
+            <div><dt className="body-small muted">{translate("Course")}</dt><dd className="body-medium">{shortCourse(request)}</dd></div>
+            <div><dt className="body-small muted">{translate("Participants · format")}</dt><dd className="body-medium">{request.participants} · {request.format}</dd></div>
+            <div><dt className="body-small muted">{translate("Preferred")}</dt><dd className="body-medium" lang={request.language === '繁體中文' ? 'zh-Hant' : undefined}>{request.preferredMonth} · {request.language}</dd></div>
           </dl>
           <Select label="Assign to" required size="m" placeholder="Choose a person" options={trainingContactOptions(getDb(), session)} value={who} error={err} helpText="They get an email and contact the customer." onChange={(_, v) => { setWho(v); setErr(undefined); }} />
           {/* TODO(open-question #16): placeholder copy of the design mentions an audit; training wording used. */}
@@ -233,12 +234,12 @@ export function SgsTrainingDetail({ id }: { id: string }) {
   if (!r) return <Skeleton lines={8} />;
   const st = TR_STATUS(r.status);
   const actions = r.status === 'submitted'
-    ? <div className="btn-row"><Button variant="tertiary" size="md" onClick={() => setModal('reject')}>Reject</Button><Button size="md" onClick={() => setModal('assign')}>Assign</Button></div> : undefined;
+    ? <div className="btn-row"><Button variant="tertiary" size="md" onClick={() => setModal('reject')}>{translate("Reject")}</Button><Button size="md" onClick={() => setModal('assign')}>{translate("Assign")}</Button></div> : undefined;
   return (
     <DetailLayout backHref="/ops/requests/training" sidebar="expanded" sections={[{ id: 'rq', label: 'Request' }, { id: 'hist', label: 'History' }, { id: 'notes', label: 'Internal notes' }]}
       header={{ title: `${r.id} · ${shortCourse(r)}`, subtitle: `${r.customerName} · ${people(r.participants)}`, status: { status: st[0] as 'info', label: st[1], shortLabel: st[1] }, actions }}
       aside={<>
-        <div className="title-medium">Customer</div>
+        <div className="title-medium">{translate("Customer")}</div>
         <AsideBox title={r.customerName}><span className="body-small muted">Contact: {r.requester?.name} · {r.requester?.email}</span></AsideBox>
         {r.assignee ? <PersonBox title="SGS contact" person={r.assignee} sub={r.assignee.title ?? 'SGS'} /> : null}
       </>}>

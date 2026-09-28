@@ -1,4 +1,5 @@
 'use client';
+import { translate } from '@/i18n/locale';
 // designs/03 TenantDetail (admin active), TenantNew (no admin yet), TenantScopes, TenantEdit, TenantCreateAdmin.
 // UC-ACC-002/004/007. An invited admin (no design) shows the admin row with "Invitation pending".
 import { Avatar, Button, Card, DataTable, EmptyState, Link, Skeleton, StatusTag, Table, Tag } from '@sgs/graphite';
@@ -39,17 +40,17 @@ export function CustomerDetailPage({ id, view }: { id: string; view: 'overview' 
   const noAdmin = t.status === 'no_admin';
   const aside = (
     <>
-      <div className="title-medium">Account</div>
+      <div className="title-medium">{translate("Account")}</div>
       <AsideBox title="Status">
         {noAdmin || !t.lastSignIn
-          ? <span className="body-small muted">Nobody can sign in for this customer until the Customer Admin activates their account.</span>
+          ? <span className="body-small muted">{translate("Nobody can sign in for this customer until the Customer Admin activates their account.")}</span>
           : <><span className="body-medium">{plural(t.users, 'user')} · {plural(t.scopes, 'scope')}</span><span className="body-small muted">Last sign-in {fmtRelative(t.lastSignIn.at, false).toLowerCase().replace(/^(\d)/, 'on $1')} by {t.lastSignIn.name}</span></>}
       </AsideBox>
     </>
   );
   const header = {
     title: t.name, subtitle: `${t.country} · ${t.affiliateName}`, status: { status: st, label, shortLabel: short },
-    actions: noAdmin && manage ? <Button size="md" icon="add" iconPosition="left" onClick={() => setCreateAdmin(true)}>Create admin</Button> : undefined,
+    actions: noAdmin && manage ? <Button size="md" icon="add" iconPosition="left" onClick={() => setCreateAdmin(true)}>{translate("Create admin")}</Button> : undefined,
   };
 
   if (view === 'scopes') {
@@ -57,7 +58,7 @@ export function CustomerDetailPage({ id, view }: { id: string; view: 'overview' 
       { key: 'name', header: 'Scope', sortable: true, render: (r: TenantScopeRow) => <span style={{ fontWeight: 500 }}>{r.name}</span> },
       { key: 'type', header: 'Type', sortable: true, width: 140, render: (r: TenantScopeRow) => <Tag tone={TYPE_TONE[r.type]}>{r.type}</Tag> },
       { key: 'belongsTo', header: 'Belongs to', width: 220 },
-      { key: 'frameworks', header: 'Framework · version', render: (r: TenantScopeRow) => r.frameworks.length ? <span className="two-line">{r.frameworks.map((f) => <span key={f}>{f}</span>)}</span> : <span className="body-small muted">None linked</span> },
+      { key: 'frameworks', header: 'Framework · version', render: (r: TenantScopeRow) => r.frameworks.length ? <span className="two-line">{r.frameworks.map((f) => <span key={f}>{f}</span>)}</span> : <span className="body-small muted">{translate("None linked")}</span> },
       { key: 'tiers', header: 'Tier (set by customer)', width: 180, render: (r: TenantScopeRow) => r.tiers.length ? <span className="two-line">{r.tiers.map((x, i) => <span key={i}>{x}</span>)}</span> : '—' },
       { key: 'users', header: 'Users', align: 'end' as const, width: 80 },
       { key: 'createdAt', header: 'Created', width: 120, render: (r: TenantScopeRow) => fmtDate(r.createdAt) },
@@ -88,22 +89,22 @@ export function CustomerDetailPage({ id, view }: { id: string; view: 'overview' 
           </div>
         ) : (
           <EmptyState size="sm" icon="user--access" title="No Customer Admin yet" body="Create the admin to activate this customer. They get an email to set up their account."
-            action={manage ? <Button size="md" icon="add" iconPosition="left" onClick={() => setCreateAdmin(true)}>Create admin</Button> : undefined} />
+            action={manage ? <Button size="md" icon="add" iconPosition="left" onClick={() => setCreateAdmin(true)}>{translate("Create admin")}</Button> : undefined} />
         )}
       </Card></div>
       <div data-section="pf"><Card number={2} title="Profile" subtitle="Maintained by SGS"
-        actions={manage ? <Button variant="tertiary" size="sm" icon="edit" iconPosition="left" onClick={() => setEdit(true)}>Edit</Button> : undefined}>
+        actions={manage ? <Button variant="tertiary" size="sm" icon="edit" iconPosition="left" onClick={() => setEdit(true)}>{translate("Edit")}</Button> : undefined}>
         <Facts items={[['Company name', t.name], ['Country', t.country], ['SGS affiliate', t.affiliateName], ['Created', `${created} by ${t.creatorName ?? 'SGS'}`], ...(t.internalNote ? [['Internal note', t.internalNote] as [string, string]] : [])]} />
       </Card></div>
       <div data-section="us"><Card number={3} title="Users" subtitle="Managed by the Customer Admin · read only">
         {t.members.length
           ? <><Table density="compact" columns={userCols} rows={t.members.filter((m) => m.status !== 'deactivated' && m.status !== 'expired').slice(0, 6)} getRowId={(r) => r.id} />
-              <div><Link href="/ops/admin/users?tab=cust">Open in Users</Link></div></>
+              <div><Link href="/ops/admin/users?tab=cust">{translate("Open in Users")}</Link></div></>
           : <EmptyState size="sm" title="No users yet" body="Users appear here once the Customer Admin invites them." />}
       </Card></div>
       <div data-section="sc" className="card-extend"><Card number={4} title="Scopes" extend
         subtitle={t.scopes ? `${plural(t.scopes, 'scope')} · ${plural(t.frameworkCount, 'framework')} linked · managed by the customer` : 'Scopes are created by the customer. The customer sets the tier of each framework.'}
-        actions={t.scopes ? <Link href={`${base}/scopes`}>View scopes</Link> : undefined}>
+        actions={t.scopes ? <Link href={`${base}/scopes`}>{translate("View scopes")}</Link> : undefined}>
         {t.scopes ? null : <EmptyState size="sm" title="No scopes yet" body="The Customer Admin creates scopes after signing in." />}
       </Card></div>
       <CustomerFormModal key={`${t.name}${t.country}${t.internalNote}`} session={session} open={edit} customer={t} onClose={() => setEdit(false)} />

@@ -3,8 +3,9 @@
 import { h } from '../runtime';
 import type { CardProps } from '../../types/index';
 import { cx } from '../utils';
+import { tr } from '../tr';
 
 export function Card(p: CardProps){return h('section',{className:cx('gr-card',p.compact&&'gr-card--compact',p.extend&&'gr-card--extend',p.className),'aria-labelledby':p.title?undefined:undefined},
-  (p.title||p.actions)?h('div',{className:'gr-card__head'},h('div',{className:'gr-card__heading'},p.number!=null?h('span',{className:'gr-card__num','aria-hidden':true},p.number):null,h('div',null,h('h2',{className:'gr-card__title'},p.number!=null?h('span',{className:'gr-sr'},'Step '+p.number+': '):null,p.title),p.subtitle?h('p',{className:'gr-card__sub'},p.subtitle):null)),p.actions?h('div',{className:'gr-card__actions'},p.actions):null):null,
+  (p.title||p.actions)?h('div',{className:'gr-card__head'},h('div',{className:'gr-card__heading'},p.number!=null?h('span',{className:'gr-card__num','aria-hidden':true},p.number):null,h('div',null,h('h2',{className:'gr-card__title'},p.number!=null?h('span',{className:'gr-sr'},tr('Step {number}: ',{number:p.number})):null,tr(p.title)),p.subtitle?h('p',{className:'gr-card__sub'},tr(p.subtitle)):null)),p.actions?h('div',{className:'gr-card__actions'},p.actions):null):null,
   h('div',{className:'gr-card__body'},p.children),
   p.footer?h('div',{className:'gr-card__foot'},p.footer):null);}

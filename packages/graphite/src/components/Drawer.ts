@@ -5,6 +5,7 @@ import type { DrawerProps } from '../../types/index';
 import { IconButton } from './IconButton';
 import { FOCUSABLE } from './Modal';
 import { cx } from '../utils';
+import { tr } from '../tr';
 
 export function Drawer(p: DrawerProps){var ref=useRef(null);var auto=useId();
  useEffect(function(){if(!p.open||p.inline)return;var prev=document.activeElement;var f=ref.current&&ref.current.querySelectorAll(FOCUSABLE);if(f&&f.length)f[0].focus();var ov=document.body.style.overflow;document.body.style.overflow='hidden';return function(){document.body.style.overflow=ov;if(prev&&prev.focus)prev.focus();};},[p.open,p.inline]);
@@ -12,6 +13,6 @@ export function Drawer(p: DrawerProps){var ref=useRef(null);var auto=useId();
  function onKey(e){if(e.key==='Escape'&&p.onClose){e.stopPropagation();p.onClose();}if(e.key==='Tab'){var f=ref.current.querySelectorAll(FOCUSABLE);if(!f.length)return;var a=f[0],z=f[f.length-1];if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus();}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus();}}}
  return h('div',{className:cx('gr-drawer',p.inline&&'gr-drawer--inline'),onMouseDown:function(e){if(e.target===e.currentTarget&&p.onClose)p.onClose();}},
   h('div',{ref:ref,role:'dialog','aria-modal':true,'aria-labelledby':auto,className:cx('gr-drawer__panel','gr-drawer__panel--'+(p.size||'md')),onKeyDown:onKey},
-   h('div',{className:'gr-drawer__head'},h('div',null,h('h2',{id:auto,className:'gr-drawer__title'},p.title),p.subtitle?h('div',{className:'gr-drawer__sub'},p.subtitle):null),p.onClose?h(IconButton,{icon:'close',label:'Close',size:'md',tooltip:false,onClick:p.onClose}):null),
+   h('div',{className:'gr-drawer__head'},h('div',null,h('h2',{id:auto,className:'gr-drawer__title'},tr(p.title)),p.subtitle?h('div',{className:'gr-drawer__sub'},tr(p.subtitle)):null),p.onClose?h(IconButton,{icon:'close',label:tr('Close'),size:'md',tooltip:false,onClick:p.onClose}):null),
    h('div',{className:'gr-drawer__body'},p.children),
    p.footer?h('div',{className:'gr-drawer__foot'},p.footer):null));}

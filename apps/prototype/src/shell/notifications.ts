@@ -1,5 +1,6 @@
 // Maps mock notifications to the Graphite NotificationItem shape (TopBar → NotificationCenter).
 import type { NotificationItem } from '@sgs/graphite';
+import { translate } from '@/i18n/locale';
 import { TODAY, type Notification } from '@/mock';
 
 const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -11,7 +12,7 @@ export function toNotificationItem(n: Notification): NotificationItem {
   return {
     id: n.id, type: n.type, tone: n.tone, title: n.title, body: n.body, ref: n.ref, href: n.href,
     unread: !n.readAt,
-    group: day === TODAY ? 'Today' : 'Earlier',
+    group: day === TODAY ? translate('Today') : translate('Earlier'),
     time: day === TODAY ? time : `${String(d).padStart(2, '0')} ${MON[m - 1]}`,
   };
 }

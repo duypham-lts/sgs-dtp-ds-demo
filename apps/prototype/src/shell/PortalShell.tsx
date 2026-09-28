@@ -10,6 +10,7 @@ import { api, ROLE_LABEL, type Portal } from '@/mock';
 import { recordSignOut } from '@/mock/api/auth';
 import { useMockQuery } from '@/mock/react';
 import { usePersona } from '@/demo/persona';
+import { useI18n } from '@/i18n/I18nProvider';
 import { activeNavId, badgesFor, navFor } from './nav';
 import { toNotificationItem } from './notifications';
 import { SpaLinks } from './SpaLinks';
@@ -38,6 +39,7 @@ function useIdleSignOut(active: boolean, onIdle: () => void) {
 
 export function PortalShell({ portal, children }: { portal: Portal; children: ReactNode }) {
   const { session, ready, signedIn, signOut } = usePersona();
+  const { locale, setLocale, t } = useI18n();
   const pathname = usePathname();
   const router = useRouter();
   const { collapsed, setCollapsed } = useShell();
@@ -66,9 +68,11 @@ export function PortalShell({ portal, children }: { portal: Portal; children: Re
           key={session.user.id}
           variant="home"
           tone={dark ? 'dark' : undefined}
-          badge={dark ? 'Internal' : undefined}
-          siteName="Digital Trust Platform"
-          siteSub={SITE_SUB[portal]}
+          badge={dark ? t('Internal') : undefined}
+          siteName={t('Digital Trust Platform')}
+          siteSub={t(SITE_SUB[portal])}
+          language={locale}
+          onLanguageChange={(code) => setLocale(code === 'zh-Hant' ? 'zh-Hant' : 'en')}
           // No home links in any portal: "Request Applications" was removed on request (2026-09-26, design-questions
           // Q33; Service Requests stays in the sidebar) and "Communications" is out of MVP (Q18).
           homeLinks={[]}
@@ -79,7 +83,8 @@ export function PortalShell({ portal, children }: { portal: Portal; children: Re
           onNotificationOpen={(n) => { void api.markNotificationRead(session, n.id); }}
           onMarkAllRead={() => { void api.markAllNotificationsRead(session); }}
           // Only Settings: "Profile" has no MVP use case (UC-ORG-001 is Phase 2) and no design (design-questions Q27).
-          accountLinks={[{ label: 'Settings', href: SETTINGS[portal] }]}
+          accountLinks={[{ label: t('Settings'), href: SETTINGS[portal] }]}
+          signOutLabel={t('Sign out')}
           onSignOut={() => { recordSignOut(session.user.id, 'user'); signOut(); router.push(LOGIN[session.portal]); }}
         />
         <div className="shell__body">
@@ -87,20 +92,20 @@ export function PortalShell({ portal, children }: { portal: Portal; children: Re
             <AppSidebar
               key={session.user.id}
               tone={dark ? 'dark' : undefined}
-              label={dark ? 'SGS Operations' : 'Customer Portal'}
+              label={t(dark ? 'SGS Operations' : 'Customer Portal')}
               sections={sections}
               active={activeNavId(sections, pathname)}
               collapsed={collapsed}
               onCollapsedChange={setCollapsed}
             />
           </div>
-          <main className="shell__main" aria-label={`${SITE_SUB[portal]} · ${ROLE_LABEL[session.user.role]}`}>
+          <main className="shell__main" aria-label={`${t(SITE_SUB[portal])} · ${t(ROLE_LABEL[session.user.role])}`}>
             {wrongPortal ? (
               <EmptyState
                 icon="user--access"
-                title={`This page belongs to the ${SITE_SUB[portal]}`}
-                body={`You are signed in as ${session.user.displayName} (${ROLE_LABEL[session.user.role]}).`}
-                action={<Button size="md" onClick={() => router.push(HOME[session.portal])}>Go to my home</Button>}
+                title={t('This page belongs to the {portal}', { portal: t(SITE_SUB[portal]) })}
+                body={t('You are signed in as {name} ({role}).', { name: session.user.displayName, role: t(ROLE_LABEL[session.user.role]) })}
+                action={<Button size="md" onClick={() => router.push(HOME[session.portal])}>{t('Go to my home')}</Button>}
               />
             ) : children}
           </main>

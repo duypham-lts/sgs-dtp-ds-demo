@@ -1,4 +1,5 @@
 'use client';
+import { translate } from '@/i18n/locale';
 // SGS side of consulting requests.
 // - Admin/User (D8): designs/06 MvpAdminQueue, MvpAdminReview (+ Approve, Reject), 07 IsAdmin*.
 // - Consultant (D9): 06 MvpConsAssignments, MvpConsDetail (+ MvpConsUpload), 07 IsConsAssignments, IsConsDetail
@@ -96,12 +97,12 @@ export function AdminReview({ id, category }: { id: string; category: Consulting
       sections={[{ id: 'rq', label: 'Request', status: 'complete' }, { id: 'ws', label: 'Workspace' }, ...(r.infoRequests.length ? [{ id: 'info', label: 'Information' }] : []), ...(r.approvedAt || r.rejectedAt || r.withdrawnAt ? [{ id: 'dec', label: 'Decision' }] : [])]}
       header={{ title: `${r.id} · ${r.frameworkLabel}`, subtitle: `${SR_META[category].label} · ${r.customerName} · submitted ${fmtDate(r.submittedAt)}`, status: { status: st[0], label: st[1], shortLabel: st[1] },
         actions: r.can.triage ? <div className="btn-row">
-          <Button variant="ghost" size="md" onClick={() => setModal('info')}>Request information</Button>
-          <Button variant="tertiary" size="md" onClick={() => setModal('reject')}>Reject</Button>
-          <Button size="md" onClick={() => setModal('approve')}>Approve &amp; assign</Button>
+          <Button variant="ghost" size="md" onClick={() => setModal('info')}>{translate("Request information")}</Button>
+          <Button variant="tertiary" size="md" onClick={() => setModal('reject')}>{translate("Reject")}</Button>
+          <Button size="md" onClick={() => setModal('approve')}>{translate("Approve & assign")}</Button>
         </div> : undefined }}
       aside={<>
-        <div className="title-medium">Customer</div>
+        <div className="title-medium">{translate("Customer")}</div>
         <AsideBox title={r.customerName}>
           <span className="body-small muted">SGS Taiwan · Customer admin {r.customerAdmin?.name ?? '—'}</span>
           {r.customerAdmin ? <Link href={`mailto:${r.customerAdmin.email}`}>{r.customerAdmin.email}</Link> : null}
@@ -121,7 +122,7 @@ export function AdminReview({ id, category }: { id: string; category: Consulting
         {r.infoRequests.map((x) => (
           <div key={x.id} className="note-box">
             <span className="body-small muted">{x.askedByName} · {fmtDate(x.askedAt)}</span><span className="body-medium">{x.question}</span>
-            {x.answeredAt ? <><span className="body-small muted" style={{ marginTop: 8 }}>Answer · {x.answeredByName} · {fmtDate(x.answeredAt)}</span><span className="body-medium">{x.answer}</span></> : <span className="body-small muted" style={{ marginTop: 8 }}>Waiting for the customer.</span>}
+            {x.answeredAt ? <><span className="body-small muted" style={{ marginTop: 8 }}>Answer · {x.answeredByName} · {fmtDate(x.answeredAt)}</span><span className="body-medium">{x.answer}</span></> : <span className="body-small muted" style={{ marginTop: 8 }}>{translate("Waiting for the customer.")}</span>}
           </div>
         ))}
       </Card></div> : null}
@@ -282,8 +283,8 @@ export function ConsultantDetail({ id, category }: { id: string; category: Consu
   const st = SR_STATUS[r.status];
   const base = consultantHref(category, r.id);
   const actions = r.can.complete ? (ga
-    ? <div className="btn-row"><Button variant="ghost" size="md" onClick={() => setModal('info')}>Request information</Button><Button size="md" icon="upload" iconPosition="left" onClick={() => setModal('report')}>Upload report</Button></div>
-    : <div className="btn-row"><Button variant="ghost" size="md" onClick={() => setModal('info')}>Request information</Button><Button variant="secondary" size="md" icon="add" iconPosition="left" onClick={() => setModal('share')}>Share deliverable</Button><Button size="md" onClick={() => setModal('complete')}>Complete request</Button></div>) : undefined;
+    ? <div className="btn-row"><Button variant="ghost" size="md" onClick={() => setModal('info')}>{translate("Request information")}</Button><Button size="md" icon="upload" iconPosition="left" onClick={() => setModal('report')}>{translate("Upload report")}</Button></div>
+    : <div className="btn-row"><Button variant="ghost" size="md" onClick={() => setModal('info')}>{translate("Request information")}</Button><Button variant="secondary" size="md" icon="add" iconPosition="left" onClick={() => setModal('share')}>{translate("Share deliverable")}</Button><Button size="md" onClick={() => setModal('complete')}>{translate("Complete request")}</Button></div>) : undefined;
   const reqFacts: [string, React.ReactNode][] = ga
     ? [['Framework', r.serviceFrameworkVersion ?? r.frameworkLabel], ['Scope', r.scopeName ?? '—'], [r.delivery === 'remote' ? 'Remote' : 'On site', fmtRange(r.periodFrom, r.periodTo)], ['Customer contact', r.contact ? `${r.contact.name}${r.contactTitle ? ` · ${r.contactTitle}` : ''}` : '—'], ['Customer goal', r.goal ?? '—'], ...(r.sgsMessage ? [['Message from SGS admin', r.sgsMessage] as [string, string]] : [])]
     : [['Framework', r.serviceFrameworkVersion ?? r.frameworkLabel], ['Contact', r.contact?.name ?? '—'], ['Delivery', r.delivery ? DELIVERY_LABEL[r.delivery] : '—'], ['Support needed', <SupportTags key="t" items={r.supportNeeded} />], ['Customer goal', r.goal ?? '—']];
@@ -294,7 +295,7 @@ export function ConsultantDetail({ id, category }: { id: string; category: Consu
       sections={[{ id: 'rq', label: 'Request', status: 'complete' }, { id: 'ws', label: 'Workspace' }, { id: 'rep', label: ga ? 'Report' : 'Deliverables' }]}
       header={{ title: `${r.id} · ${r.frameworkLabel}`, subtitle: `${r.customerName} · ${(r.scopeName ?? '').replace(' · ', ', ')}${ga ? '' : ` · ${fmtRange(r.periodFrom, r.periodTo)}`}`, status: { status: st[0], label: st[1], shortLabel: st[1] }, actions }}
       aside={<>
-        <div className="title-medium">Assignment</div>
+        <div className="title-medium">{translate("Assignment")}</div>
         <AsideBox title="Customer"><span className="body-medium">{r.customerName}</span><span className="body-small muted">Contact: {r.contact?.name}</span>{r.contact ? <Link href={`mailto:${r.contact.email}`}>{r.contact.email}</Link> : null}</AsideBox>
         {r.approver ? <AsideBox title="SGS admin"><span className="body-medium">{r.approver.name}</span><Link href={`mailto:${r.approver.email}`}>{r.approver.email}</Link></AsideBox> : null}
       </>}>
@@ -307,18 +308,18 @@ export function ConsultantDetail({ id, category }: { id: string; category: Consu
       <div data-section="ws"><Card number={2} title="Customer workspace" subtitle={ended ? 'Your access ended when the request was completed' : 'Read only · every view is recorded'}>
         <div className="btn-row" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
           <span className="body-medium">{r.workspaceLabel ? `${r.workspaceLabel} — ${r.workspaceStats?.requirements} requirements, ${r.workspaceStats?.documents} documents` : 'No workspace linked to this request.'}</span>
-          {r.workspaceLabel ? <Button variant="secondary" size="md" icon="launch" onClick={() => router.push(`${base}/workspace`)}>Open workspace</Button> : null}
+          {r.workspaceLabel ? <Button variant="secondary" size="md" icon="launch" onClick={() => router.push(`${base}/workspace`)}>{translate("Open workspace")}</Button> : null}
         </div>
       </Card></div>
       <div data-section="rep" className="card-extend"><Card number={3} title={ga ? 'Report' : 'Deliverables'} extend
         subtitle={ga ? (ended ? `Delivered ${fmtDate(r.completedAt)}` : 'Upload the final report when the gap analysis is done') : 'Visible to the customer as soon as you share them'}>
         {ga ? (ended ? <SgsDocs docs={r.documents} kinds={['report', 'attachment']} />
           : <EmptyState size="sm" icon="upload" title="No report uploaded" body="Uploading the report completes the request: the customer is notified and your workspace access ends."
-              action={r.can.complete ? <Button size="md" icon="upload" iconPosition="left" onClick={() => setModal('report')}>Upload report</Button> : undefined} />)
+              action={r.can.complete ? <Button size="md" icon="upload" iconPosition="left" onClick={() => setModal('report')}>{translate("Upload report")}</Button> : undefined} />)
           : <>
               <SgsDocs docs={r.documents} kinds={['deliverable', 'closing']} verb="Shared" />
-              {!r.documents.some((d) => d.kind === 'deliverable') ? <p className="body-medium muted" style={{ margin: 0 }}>Nothing shared yet.</p> : null}
-              {r.can.share ? <div><Button variant="tertiary" size="sm" icon="add" iconPosition="left" onClick={() => setModal('share')}>Share deliverable</Button></div> : null}
+              {!r.documents.some((d) => d.kind === 'deliverable') ? <p className="body-medium muted" style={{ margin: 0 }}>{translate("Nothing shared yet.")}</p> : null}
+              {r.can.share ? <div><Button variant="tertiary" size="sm" icon="add" iconPosition="left" onClick={() => setModal('share')}>{translate("Share deliverable")}</Button></div> : null}
             </>}
       </Card></div>
       {ga ? <UploadReportModal session={session} r={r} open={modal === 'report'} onClose={() => setModal(undefined)} /> : <>

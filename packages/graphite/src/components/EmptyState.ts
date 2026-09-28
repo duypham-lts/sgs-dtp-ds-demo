@@ -4,5 +4,6 @@ import { h } from '../runtime';
 import type { EmptyStateProps } from '../../types/index';
 import { Icon } from './Icon';
 import { cx } from '../utils';
+import { tr } from '../tr';
 
-export function EmptyState(p: EmptyStateProps){return h('div',{className:cx('gr-empty','gr-empty--'+(p.size||'md'),p.className)},p.icon?h('span',{className:'gr-empty__icon'},h(Icon,{name:p.icon,size:24})):null,h('div',{className:'gr-empty__title'},p.title),p.body?h('div',{className:'gr-empty__body'},p.body):null,p.action?h('div',{className:'gr-empty__action'},p.action):null);}
+export function EmptyState(p: EmptyStateProps){return h('div',{className:cx('gr-empty','gr-empty--'+(p.size||'md'),p.className)},p.icon?h('span',{className:'gr-empty__icon'},h(Icon,{name:p.icon,size:24})):null,h('div',{className:'gr-empty__title'},tr(p.title)),p.body?h('div',{className:'gr-empty__body'},tr(p.body)):null,p.action?h('div',{className:'gr-empty__action'},p.action):null);}

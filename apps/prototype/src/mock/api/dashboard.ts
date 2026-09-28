@@ -4,7 +4,7 @@
 // - SGS Admin / SGS User: SgsAdminHome · SGS Consultant: ConsultantHome · SGS Auditor/Certification: AuditorHome
 import { canReadWorkspace, canSeeRequest, visibleScopeIds, visibleTenantIds } from '../access';
 import { requirementStatuses, validity, workspaceRequirements } from '../coverage';
-import { SR_STATUS } from '../labels';
+import { SR_STATUS_EN } from '../labels';
 import { consultantHref, customerHref, opsHref, SR_META } from '../requestMeta';
 import { getDb } from '../store';
 import { ROLE_LABEL, type MockDb, type Review, type ServiceRequest, type Session, type Workspace } from '../types';
@@ -61,7 +61,11 @@ export interface CustomerDashboard {
 
 const OPEN_SR = new Set(['submitted', 'information_requested', 'assigned', 'in_progress', 'audit_completed']);
 const serviceLabel = (r: ServiceRequest) => `${SR_META[r.category].label} · ${r.category === 'training' ? `${r.courseStd ?? ''} ${(r.course ?? '').replace(/ Training Course$/, '')}`.trim() : r.serviceFramework ?? r.title.split(' · ').pop()}`;
-const srStatus = (r: ServiceRequest): [Tone, string] => (r.category === 'certification' && r.status === 'in_progress' ? ['under-review', 'Audit in progress'] : SR_STATUS[r.status]);
+const srStatus = (r: ServiceRequest): [Tone, string] => {
+  if (r.category === 'certification' && r.status === 'in_progress') return ['under-review', 'Audit in progress'];
+  const row = SR_STATUS_EN[r.status];
+  return [row[0], row[1]];
+};
 
 export async function getCustomerDashboard(s: Session): Promise<CustomerDashboard> {
   await wait();
@@ -311,7 +315,7 @@ export async function getConsultantDashboard(s: Session): Promise<ConsultantDash
     ],
     next: next.map(({ rank: _r, ...x }) => x), coming: coming.map(({ at: _a, ...x }) => x),
     assignments: active.map((r) => ({ id: r.id, customer: cust(r), workspace: [SR_META[r.category].label, r.serviceFramework, db.scopes.find((x) => x.id === r.scopeId)?.name.replace(/ · Taipei$/, '')].filter(Boolean).join(' · '),
-      dates: r.periodFrom && r.periodTo ? (r.category === 'gap_analysis' ? `On site ${range(r.periodFrom, r.periodTo)} ${r.periodTo.slice(0, 4)}` : `${date(r.periodFrom)} – ${date(r.periodTo)}`) : '—', status: SR_STATUS[r.status], href: consultantHref(r.category, r.id) })),
+      dates: r.periodFrom && r.periodTo ? (r.category === 'gap_analysis' ? `On site ${range(r.periodFrom, r.periodTo)} ${r.periodTo.slice(0, 4)}` : `${date(r.periodFrom)} – ${date(r.periodTo)}`) : '—', status: srStatus(r), href: consultantHref(r.category, r.id) })),
   });
 }
 

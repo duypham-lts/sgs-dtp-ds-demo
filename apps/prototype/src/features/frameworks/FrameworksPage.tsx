@@ -1,4 +1,5 @@
 'use client';
+import { translate } from '@/i18n/locale';
 // designs/04 Main (+ FwImport, FwErrors). UC-FWK-001/009. SGS Admin imports; other SGS roles read.
 import { Button, DataTable, IconButton, StatusTag, type TableColumn } from '@sgs/graphite';
 import { useSearchParams } from 'next/navigation';
@@ -37,8 +38,8 @@ export function FrameworksPage() {
   return (
     <ListLayout crumbs={[{ label: 'Frameworks' }]} title="Frameworks" description="Frameworks customers can activate on their scopes. Import one from the Excel template."
       action={admin ? <div className="btn-row">
-        <Button variant="tertiary" size="md" icon="download" iconPosition="left" onClick={() => download('SGS_DTP_Framework_Import_Template.xlsx')}>Download template</Button>
-        <Button size="md" icon="upload" iconPosition="left" onClick={() => setImporting(true)}>Import framework</Button>
+        <Button variant="tertiary" size="md" icon="download" iconPosition="left" onClick={() => download('SGS_DTP_Framework_Import_Template.xlsx')}>{translate("Download template")}</Button>
+        <Button size="md" icon="upload" iconPosition="left" onClick={() => setImporting(true)}>{translate("Import framework")}</Button>
       </div> : undefined}>
       <DataTable<FrameworkSummary> title={plural(rows.length, 'framework')} columns={cols} rows={rows} loading={q.loading && !q.data} searchable searchPlaceholder="Search code or name" layout="table" getRowId={(r) => r.id} />
       <ImportModal session={session} open={importing} onClose={() => setImporting(false)} />

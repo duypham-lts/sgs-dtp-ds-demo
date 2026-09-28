@@ -1,4 +1,5 @@
 'use client';
+import { translate } from '@/i18n/locale';
 // designs/04 FwImport (two steps) and FwErrors (checked file had errors: nothing imported, list of problems).
 import { Button, FileUpload, InlineNotification, Modal, Table } from '@sgs/graphite';
 import { useRouter } from 'next/navigation';
@@ -49,7 +50,7 @@ export function ImportModal({ session, open, onClose }: { session: Session; open
       primaryAction={{ label: 'Check file', disabled: busy, onClick: check }} secondaryAction={{ label: 'Cancel', onClick: close }}>
       {errors ? (
         <div className="modal-body" style={{ width: 760 }}>
-          <InlineNotification kind="error" title={`${plural(errors.errors.length, 'error')} in ${errors.fileName}`}>Nothing was imported. Fix these rows in Excel and upload the file again.</InlineNotification>
+          <InlineNotification kind="error" title={`${plural(errors.errors.length, 'error')} in ${errors.fileName}`}>{translate("Nothing was imported. Fix these rows in Excel and upload the file again.")}</InlineNotification>
           <Table density="compact" columns={ERR_COLS} rows={errors.errors} getRowId={(r) => `${r.sheet}${r.row}${r.column}`} />
           {upload('Corrected file', 'Excel (.xlsx) · up to 20 MB')}
         </div>
@@ -58,15 +59,15 @@ export function ImportModal({ session, open, onClose }: { session: Session; open
           <div className="import-step">
             <span className="gr-card__num" aria-hidden="true">1</span>
             <div className="import-step__body">
-              <span className="title-small">Download the template and fill it in</span>
-              <span className="body-small muted">One file = one framework version. A new version of an existing framework (same code, different version) is added as its own entry. Sheets: Framework (one row), Tiers (leave empty if the framework has no tiers), Requirements, Expected_Evidence.</span>
-              <div><Button variant="tertiary" size="sm" icon="download" iconPosition="left" onClick={() => download('SGS_DTP_Framework_Import_Template.xlsx')}>Download template (.xlsx)</Button></div>
+              <span className="title-small">{translate("Download the template and fill it in")}</span>
+              <span className="body-small muted">{translate("One file = one framework version. A new version of an existing framework (same code, different version) is added as its own entry. Sheets: Framework (one row), Tiers (leave empty if the framework has no tiers), Requirements, Expected_Evidence.")}</span>
+              <div><Button variant="tertiary" size="sm" icon="download" iconPosition="left" onClick={() => download('SGS_DTP_Framework_Import_Template.xlsx')}>{translate("Download template (.xlsx)")}</Button></div>
             </div>
           </div>
           <div className="import-step">
             <span className="gr-card__num" aria-hidden="true">2</span>
             <div className="import-step__body">
-              <span className="title-small">Upload the completed file</span>
+              <span className="title-small">{translate("Upload the completed file")}</span>
               {upload('Framework file', 'Excel (.xlsx) · up to 20 MB · checked before anything is saved')}
             </div>
           </div>

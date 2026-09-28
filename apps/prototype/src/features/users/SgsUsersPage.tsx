@@ -1,4 +1,5 @@
 'use client';
+import { translate } from '@/i18n/locale';
 // designs/03 SgsUsers (+ SgsInviteSgs). SGS Admin: SGS users of the affiliate (invite, resend, revoke) and
 // customer users read-only. Customer Admins are created from Customers (TenantCreateAdmin).
 import { Button, DataTable, StatusTag, Tabs, type TableColumn } from '@sgs/graphite';
@@ -49,12 +50,12 @@ export function SgsUsersPage() {
   const sgsRows = sgs.data ?? [], custRows = cust.data ?? [];
 
   return (
-    <ListLayout crumbs={[{ label: 'Administration', href: '/ops/admin/users' }, { label: 'Users' }]} title="Users" description={`SGS staff of ${session.affiliate.name} and the users of its customers.`}>
+    <ListLayout crumbs={[{ label: 'Administration', href: '/ops/admin/users' }, { label: 'Users' }]} title="Users" description={translate('SGS staff of {org} and the users of its customers.', { org: session.affiliate.name })}>
       <Tabs label="User type" defaultTab={params.get('tab') === 'cust' ? 'cust' : 'sgs'} tabs={[
         { id: 'sgs', label: 'SGS users', badge: sgsRows.length, content: (
           <DataTable<UserRow> columns={sgsCols} rows={sgsRows} loading={sgs.loading && !sgs.data} searchable searchPlaceholder="Search name or email" layout="table" getRowId={(r) => r.id}
             rowActions={(r) => acts(r, `/ops/admin/users/${r.id}`)}
-            toolbarActions={<Button size="md" icon="add" iconPosition="left" onClick={() => setInvite(true)}>Invite SGS user</Button>} />) },
+            toolbarActions={<Button size="md" icon="add" iconPosition="left" onClick={() => setInvite(true)}>{translate("Invite SGS user")}</Button>} />) },
         { id: 'cust', label: 'Customer users', badge: custRows.length, content: (
           // Customer users are read-only here: they are managed by their own Customer Admin.
           <DataTable<UserRow> columns={custCols} rows={custRows} loading={cust.loading && !cust.data} searchable searchPlaceholder="Search name, email or customer" layout="table" getRowId={(r) => r.id}

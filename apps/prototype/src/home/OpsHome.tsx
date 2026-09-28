@@ -6,6 +6,7 @@ import { now } from '@/mock/api/core';
 import { getAuditorDashboard, getConsultantDashboard, getSgsDashboard, greeting, type AuditorDashboard, type ConsultantDashboard, type SgsDashboard } from '@/mock/api/dashboard';
 import { useMockQuery } from '@/mock/react';
 import { usePersona } from '@/demo/persona';
+import { translate } from '@/i18n/locale';
 import { useSidebar } from '@/shell/ShellContext';
 import { TwoLine } from '@/ui/bits';
 import { ActionList, DashHead, Section, Tiles, TwoCol } from './parts';
@@ -17,7 +18,7 @@ export function OpsHome() {
   useSidebar('expanded');
   const { session } = usePersona();
   const role = session.user.role;
-  const hello = `${greeting(now())}, ${session.user.displayName.split(' ')[0]}`;
+  const hello = `${translate(greeting(now()))}, ${session.user.displayName.split(' ')[0]}`;
   if (role === 'sgs_consultant') return <ConsultantHome hello={hello} />;
   if (role === 'sgs_auditor') return <AuditorHome hello={hello} />;
   return <SgsAdminHome hello={hello} />;
@@ -27,7 +28,7 @@ function SgsAdminHome({ hello }: { hello: string }) {
   const router = useRouter();
   const { session } = usePersona();
   const q = useMockQuery(() => getSgsDashboard(session), [session.user.id]);
-  const head = <DashHead title={hello} sub={`${session.affiliate.name} · operations overview`} />;
+  const head = <DashHead title={hello} sub={translate('{org} · operations overview', { org: session.affiliate.name })} />;
   const d = q.data;
   if (!d) return <>{head}<Skeleton lines={10} /></>;
   type W = SgsDashboard['workload'][number]; type O = SgsDashboard['onboarding'][number]; type T = SgsDashboard['triage'][number]; type A = SgsDashboard['audits'][number];
@@ -39,7 +40,7 @@ function SgsAdminHome({ hello }: { hello: string }) {
   ];
   const oCols: TableColumn<O>[] = [
     { key: 'name', header: 'Customer', render: (r) => <span className="two-line"><a href={r.href} className="gr-link" style={{ fontWeight: 500 }}>{r.name}</a><span className="body-small muted">{r.since}</span></span> },
-    { key: 'tag', header: 'Blocked at', width: 190, render: (r) => <StatusTag status={r.tag[0]} size="sm" label={r.tag[1]} /> },
+    { key: 'tag', header: 'Blocked at', width: 190, render: (r) => <StatusTag status={r.tag[0]} size="sm" label={translate(r.tag[1])} /> },
   ];
   const tCols: TableColumn<T>[] = [
     { key: 'id', header: 'Request', width: 130, render: (r) => idLink(r.href, r.id) },
@@ -52,7 +53,7 @@ function SgsAdminHome({ hello }: { hello: string }) {
     { key: 'customer', header: 'Customer · workspace', render: (r) => <TwoLine top={r.customer} sub={r.workspace} /> },
     { key: 'auditor', header: 'Auditor', width: 120 },
     { key: 'reviewed', header: 'Reviewed', width: 110, align: 'end' },
-    { key: 'status', header: 'Status', width: 190, render: (r) => <StatusTag status={r.status[0]} size="sm" label={r.status[1]} /> },
+    { key: 'status', header: 'Status', width: 190, render: (r) => <StatusTag status={r.status[0]} size="sm" label={translate(r.status[1])} /> },
   ];
   return (
     <>
@@ -81,7 +82,7 @@ function SgsAdminHome({ hello }: { hello: string }) {
 function ConsultantHome({ hello }: { hello: string }) {
   const { session } = usePersona();
   const q = useMockQuery(() => getConsultantDashboard(session), [session.user.id]);
-  const head = <DashHead title={hello} sub="SGS Consultant · your assignments" />;
+  const head = <DashHead title={hello} sub={translate('SGS Consultant · your assignments')} />;
   const d = q.data;
   if (!d) return <>{head}<Skeleton lines={10} /></>;
   type R = ConsultantDashboard['assignments'][number];
@@ -89,7 +90,7 @@ function ConsultantHome({ hello }: { hello: string }) {
     { key: 'id', header: 'Request', width: 130, render: (r) => idLink(r.href, r.id) },
     { key: 'customer', header: 'Customer · workspace', render: (r) => <TwoLine top={r.customer} sub={r.workspace} /> },
     { key: 'dates', header: 'Dates', width: 200 },
-    { key: 'status', header: 'Status', width: 170, render: (r) => <StatusTag status={r.status[0]} size="sm" label={r.status[1]} /> },
+    { key: 'status', header: 'Status', width: 170, render: (r) => <StatusTag status={r.status[0]} size="sm" label={translate(r.status[1])} /> },
   ];
   return (
     <>
@@ -112,7 +113,7 @@ function ConsultantHome({ hello }: { hello: string }) {
                   </li>
                 ))}
               </ul>
-            ) : <p className="body-medium muted" style={{ margin: 0 }}>No dates coming up.</p>}
+            ) : <p className="body-medium muted" style={{ margin: 0 }}>{translate("No dates coming up.")}</p>}
           </Section>
         </TwoCol>
         <Section title="My assignments" sub="Workspaces are read only while an assignment is in progress" link={{ label: 'All assignments', href: '/ops/my-assignments/gap-analysis' }} extend>
@@ -126,7 +127,7 @@ function ConsultantHome({ hello }: { hello: string }) {
 function AuditorHome({ hello }: { hello: string }) {
   const { session } = usePersona();
   const q = useMockQuery(() => getAuditorDashboard(session), [session.user.id]);
-  const head = <DashHead title={hello} sub="SGS Auditor/Certification · your audits" />;
+  const head = <DashHead title={hello} sub={translate('SGS Auditor/Certification · your audits')} />;
   const d = q.data;
   if (!d) return <>{head}<Skeleton lines={10} /></>;
   type R = AuditorDashboard['audits'][number];
@@ -135,7 +136,7 @@ function AuditorHome({ hello }: { hello: string }) {
     { key: 'customer', header: 'Customer · workspace', render: (r) => <TwoLine top={r.customer} sub={r.workspace} /> },
     { key: 'reviewed', header: 'Reviewed', width: 110, align: 'end' },
     { key: 'toEvaluate', header: 'To evaluate', width: 120, align: 'end' },
-    { key: 'status', header: 'Status', width: 200, render: (r) => <StatusTag status={r.status[0]} size="sm" label={r.status[1]} /> },
+    { key: 'status', header: 'Status', width: 200, render: (r) => <StatusTag status={r.status[0]} size="sm" label={translate(r.status[1])} /> },
   ];
   return (
     <>
