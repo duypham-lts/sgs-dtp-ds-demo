@@ -9,7 +9,7 @@ import { usePersona } from '@/demo/persona';
 import { translate } from '@/i18n/locale';
 import { useSidebar } from '@/shell/ShellContext';
 import { TwoLine } from '@/ui/bits';
-import { ActionList, DashHead, Section, Tiles, TwoCol } from './parts';
+import { ActionList, DashHead, Section, Tiles, TwoCol, lineText } from './parts';
 
 const dash = (n: number) => (n ? String(n) : '—');
 const idLink = (href: string, id: string) => <a href={href} className="gr-link" style={{ fontWeight: 500 }}>{id}</a>;
@@ -33,19 +33,19 @@ function SgsAdminHome({ hello }: { hello: string }) {
   if (!d) return <>{head}<Skeleton lines={10} /></>;
   type W = SgsDashboard['workload'][number]; type O = SgsDashboard['onboarding'][number]; type T = SgsDashboard['triage'][number]; type A = SgsDashboard['audits'][number];
   const wCols: TableColumn<W>[] = [
-    { key: 'name', header: 'Person', render: (r) => <TwoLine top={r.name} sub={r.role} /> },
+    { key: 'name', header: 'Person', render: (r) => <TwoLine top={r.name} sub={translate(r.role)} /> },
     { key: 'audits', header: 'Audits', align: 'end', width: 90, render: (r) => dash(r.audits) },
     { key: 'consulting', header: 'Consulting', align: 'end', width: 110, render: (r) => dash(r.consulting) },
     { key: 'training', header: 'Training', align: 'end', width: 100, render: (r) => dash(r.training) },
   ];
   const oCols: TableColumn<O>[] = [
-    { key: 'name', header: 'Customer', render: (r) => <span className="two-line"><a href={r.href} className="gr-link" style={{ fontWeight: 500 }}>{r.name}</a><span className="body-small muted">{r.since}</span></span> },
+    { key: 'name', header: 'Customer', render: (r) => <span className="two-line"><a href={r.href} className="gr-link" style={{ fontWeight: 500 }}>{r.name}</a><span className="body-small muted">{lineText(r.since, r.sinceParts)}</span></span> },
     { key: 'tag', header: 'Blocked at', width: 190, render: (r) => <StatusTag status={r.tag[0]} size="sm" label={translate(r.tag[1])} /> },
   ];
   const tCols: TableColumn<T>[] = [
     { key: 'id', header: 'Request', width: 130, render: (r) => idLink(r.href, r.id) },
-    { key: 'customer', header: 'Customer · service', render: (r) => <TwoLine top={r.customer} sub={r.service} /> },
-    { key: 'waiting', header: 'Waiting', width: 110, align: 'end' },
+    { key: 'customer', header: 'Customer · service', render: (r) => { const i = r.service.indexOf(' · '); const service = i < 0 ? translate(r.service) : `${translate(r.service.slice(0, i))} · ${r.service.slice(i + 3)}`; return <TwoLine top={r.customer} sub={service} />; } },
+    { key: 'waiting', header: 'Waiting', width: 110, align: 'end', render: (r) => lineText(r.waiting, r.waitingParts) },
     { key: 'cta', header: '', align: 'end', width: 150, render: (r) => <Button size="sm" variant="tertiary" onClick={() => router.push(r.href)}>{r.cta}</Button> },
   ];
   const aCols: TableColumn<A>[] = [
@@ -88,8 +88,8 @@ function ConsultantHome({ hello }: { hello: string }) {
   type R = ConsultantDashboard['assignments'][number];
   const cols: TableColumn<R>[] = [
     { key: 'id', header: 'Request', width: 130, render: (r) => idLink(r.href, r.id) },
-    { key: 'customer', header: 'Customer · workspace', render: (r) => <TwoLine top={r.customer} sub={r.workspace} /> },
-    { key: 'dates', header: 'Dates', width: 200 },
+    { key: 'customer', header: 'Customer · workspace', render: (r) => { const i = r.workspace.indexOf(' · '); const workspace = i < 0 ? translate(r.workspace) : `${translate(r.workspace.slice(0, i))} · ${r.workspace.slice(i + 3)}`; return <TwoLine top={r.customer} sub={workspace} />; } },
+    { key: 'dates', header: 'Dates', width: 220, render: (r) => lineText(r.dates, r.datesParts, '') },
     { key: 'status', header: 'Status', width: 170, render: (r) => <StatusTag status={r.status[0]} size="sm" label={translate(r.status[1])} /> },
   ];
   return (
@@ -107,8 +107,8 @@ function ConsultantHome({ hello }: { hello: string }) {
                 {d.coming.map((c) => (
                   <li key={c.id}>
                     <a href={c.href} className="dash-date">
-                      <span className="dash-date__day"><span className="body-small muted">{c.month}</span><span className="title-medium">{c.day}</span></span>
-                      <span className="two-line"><span className="body-medium" style={{ fontWeight: 500 }}>{c.title}</span><span className="body-small muted">{c.sub}</span></span>
+                      <span className="dash-date__day"><span className="body-small muted" style={{ textTransform: 'uppercase' }}>{translate(c.month)}</span><span className="title-medium">{c.day}</span></span>
+                      <span className="two-line"><span className="body-medium" style={{ fontWeight: 500 }}>{lineText(c.title, c.titleParts)}</span><span className="body-small muted">{lineText(c.sub, c.subParts)}</span></span>
                     </a>
                   </li>
                 ))}
@@ -151,7 +151,7 @@ function AuditorHome({ hello }: { hello: string }) {
             <ul className="dash-list">
               {d.findings.map((f) => (
                 <li key={f.label} className="dash-count">
-                  <span className="two-line"><span className="body-medium" style={{ fontWeight: 500 }}>{f.label}</span><span className="body-small muted">{f.sub}</span></span>
+                  <span className="two-line"><span className="body-medium" style={{ fontWeight: 500 }}>{translate(f.label)}</span><span className="body-small muted">{lineText(f.sub, f.subParts)}</span></span>
                   <span className="headline-small">{f.value}</span>
                 </li>
               ))}

@@ -11,7 +11,7 @@ test('customer signs in, the error clears on edit, and wrong portal accounts are
   await password(page).fill('nope');
   await signInBtn(page).click();
   await expect(page.getByText('Incorrect email or password.')).toBeVisible();
-  await password(page).fill('password123');
+  await password(page).fill('Demo-Password-01');
   await expect(page.getByText('Incorrect email or password.')).toHaveCount(0);
   await signInBtn(page).click();
   await expect(page).toHaveURL(/\/$/);
@@ -21,7 +21,7 @@ test('customer signs in, the error clears on edit, and wrong portal accounts are
   await page.getByRole('button', { name: 'Account: Linh Tran' }).click();
   await page.locator('.gr-top__acct-links').getByRole('link', { name: 'Sign out' }).click();
   await email(page).fill('minh.nguyen@sgs.com');
-  await password(page).fill('password123');
+  await password(page).fill('Demo-Password-01');
   await signInBtn(page).click();
   await expect(page.getByText('Incorrect email or password.')).toBeVisible();
 });
@@ -31,12 +31,12 @@ test('five failed attempts lock sign-in; a deactivated account is told so', asyn
   await email(page).fill('minh.nguyen@sgs.com');
   for (let i = 0; i < 5; i++) { await password(page).fill(`wrong${i}`); await signInBtn(page).click(); }
   await expect(page.getByText('Sign-in is temporarily locked')).toBeVisible();
-  await password(page).fill('password123');
+  await password(page).fill('Demo-Password-01');
   await expect(signInBtn(page)).toBeDisabled();
 
   await page.goto('/ops/login');
   await email(page).fill('peter.wang@sgs.com');
-  await password(page).fill('password123');
+  await password(page).fill('Demo-Password-01');
   await signInBtn(page).click();
   await expect(page.getByText('Your account is not active')).toBeVisible();
 });

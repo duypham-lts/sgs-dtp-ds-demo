@@ -13,7 +13,12 @@ export function fmtDate(iso?: string | null): string {
 }
 
 /** "21 Sep" (no year), as in timelines and notification meta. */
-export function fmtDay(iso?: string | null): string { return iso ? fmtDate(iso).slice(0, 6) : '—'; }
+export function fmtDay(iso?: string | null): string {
+  if (!iso) return '—';
+  const [, m, d] = iso.slice(0, 10).split('-').map(Number);
+  if (getLocale() === 'zh-Hant') return `${m}月${d}日`;
+  return `${String(d).padStart(2, '0')} ${MON[m - 1]}`;
+}
 
 function dayDiff(iso: string): number {
   const a = Date.UTC(...(TODAY.split('-').map(Number).map((v, i) => (i === 1 ? v - 1 : v)) as [number, number, number]));

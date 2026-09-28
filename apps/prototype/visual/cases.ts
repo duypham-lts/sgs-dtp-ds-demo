@@ -21,17 +21,17 @@ const auth: VisualCase[] = [
   { module: '01-authentication', board: 'CustomerLoginWrongPassword', path: '/login', persona: null,
     steps: (p) => wrongPasswords(p, 'linh.tran@abc-trading.com', 1) },
   { module: '01-authentication', board: 'CustomerLoginLocked', path: '/login', persona: null,
-    steps: async (p) => { await wrongPasswords(p, 'linh.tran@abc-trading.com', 5); await fill(p, /^Password/, 'password123'); } },
+    steps: async (p) => { await wrongPasswords(p, 'linh.tran@abc-trading.com', 5); await fill(p, /^Password/, 'Demo-Password-01'); } },
   { module: '01-authentication', board: 'CustomerLoginInactive', path: '/login', persona: null,
-    steps: async (p) => { await fill(p, /^Email/, 'amy.chou@abc-trading.com'); await fill(p, /^Password/, 'password123'); await click(p, 'Sign in'); },
+    steps: async (p) => { await fill(p, /^Email/, 'amy.chou@abc-trading.com'); await fill(p, /^Password/, 'Demo-Password-01'); await click(p, 'Sign in'); },
     note: 'Seed: deactivated account is Amy Chou (design shows Linh Tran’s email).' },
   { module: '01-authentication', board: 'SgsLogin', path: '/ops/login', persona: null },
   { module: '01-authentication', board: 'SgsLoginWrongPassword', path: '/ops/login', persona: null,
     steps: (p) => wrongPasswords(p, 'minh.nguyen@sgs.com', 1) },
   { module: '01-authentication', board: 'SgsLoginLocked', path: '/ops/login', persona: null,
-    steps: async (p) => { await wrongPasswords(p, 'minh.nguyen@sgs.com', 5); await fill(p, /^Password/, 'password123'); } },
+    steps: async (p) => { await wrongPasswords(p, 'minh.nguyen@sgs.com', 5); await fill(p, /^Password/, 'Demo-Password-01'); } },
   { module: '01-authentication', board: 'SgsLoginInactive', path: '/ops/login', persona: null,
-    steps: async (p) => { await fill(p, /^Email/, 'peter.wang@sgs.com'); await fill(p, /^Password/, 'password123'); await click(p, 'Sign in'); },
+    steps: async (p) => { await fill(p, /^Email/, 'peter.wang@sgs.com'); await fill(p, /^Password/, 'Demo-Password-01'); await click(p, 'Sign in'); },
     note: 'Seed: deactivated SGS account is Peter Wang (mock only; design shows Minh Nguyen’s email).' },
   { module: '01-authentication', board: 'InviteEmail', path: '/mail/em-kevin', persona: null,
     note: 'Seed: invitation for Kevin Ho (design: Wei Chen, who is already active in the seed).' },
@@ -188,7 +188,7 @@ const is = consulting(M7, { slug: 'implementation-support', ga: false, list: 'Ma
 async function loginAs(page: Page, email: string) {
   const sgs = email.endsWith('@sgs.com');
   await page.goto(sgs ? '/ops/login' : '/login');
-  await fill(page, /^Email/, email); await fill(page, /^Password/, 'password123'); await click(page, 'Sign in');
+  await fill(page, /^Email/, email); await fill(page, /^Password/, 'Demo-Password-01'); await click(page, 'Sign in');
   await page.waitForURL(sgs ? /\/ops$/ : /\/$/);
 }
 async function signOut(page: Page) {

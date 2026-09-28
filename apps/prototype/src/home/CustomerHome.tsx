@@ -11,7 +11,7 @@ import { useMockQuery } from '@/mock/react';
 import { usePersona } from '@/demo/persona';
 import { translate } from '@/i18n/locale';
 import { useSidebar } from '@/shell/ShellContext';
-import { ActionList, DashHead, GroupBars, Section, StageSteps, Tiles, TwoCol } from './parts';
+import { ActionList, DashHead, GroupBars, Section, StageSteps, Tiles, TwoCol, lineText } from './parts';
 
 type WsRow = CustomerDashboard['workspaces'][number];
 type SrRow = CustomerDashboard['requests'][number];
@@ -57,12 +57,12 @@ export function CustomerHome() {
 
   const wsCols: TableColumn<WsRow>[] = [
     { key: 'title', header: translate('Workspace'), render: (r) => <span className="two-line"><a href={r.href} className="gr-link" style={{ fontWeight: 500 }}>{r.title}</a><span className="body-small muted">{r.scope}</span></span> },
-    { key: 'percent', header: translate('Evidence coverage'), width: 220, render: (r) => <ProgressBar value={r.percent} size="sm" label={`${r.title} coverage`} helperText={`${r.provided} of ${r.total}`} /> },
+    { key: 'percent', header: translate('Evidence coverage'), width: 220, render: (r) => <ProgressBar value={r.percent} size="sm" label={translate('{title} coverage', { title: r.title })} helperText={translate('{done} of {total}', { done: r.provided, total: r.total })} /> },
     { key: 'stage', header: translate('Certification progress'), width: 420, render: (r) => <StageSteps stage={r.stage} /> },
   ];
   const srCols: TableColumn<SrRow>[] = [
     { key: 'id', header: translate('Request'), width: 130, render: (r) => <a href={r.href} className="gr-link" style={{ fontWeight: 500 }}>{r.id}</a> },
-    { key: 'service', header: translate('Service') },
+    { key: 'service', header: translate('Service'), render: (r) => { const i = r.service.indexOf(' · '); return i < 0 ? translate(r.service) : `${translate(r.service.slice(0, i))} · ${r.service.slice(i + 3)}`; } },
     { key: 'status', header: translate('Status'), width: 190, render: (r) => <StatusTag status={r.status[0]} size="sm" label={translate(r.status[1])} /> },
   ];
   const shown = all ? d.attention : d.attention.slice(0, ATTENTION_SHOWN);
@@ -79,9 +79,9 @@ export function CustomerHome() {
           <Section title="Suggested next step">
             {d.next ? (
               <div className="dash-panel">
-                <span className="title-small">{d.next.title}</span>
-                <span className="body-small muted">{d.next.body}</span>
-                <div><Button size="sm" variant="tertiary" onClick={() => router.push(d.next!.href)}>{d.next.cta}</Button></div>
+                <span className="title-small">{lineText(d.next.title, d.next.titleParts)}</span>
+                <span className="body-small muted">{lineText(d.next.body, d.next.bodyParts, ' ')}</span>
+                <div><Button size="sm" variant="tertiary" onClick={() => router.push(d.next!.href)}>{translate(d.next.cta)}</Button></div>
               </div>
             ) : <p className="body-medium muted" style={{ margin: 0 }}>{translate('Nothing to suggest right now: every workspace is in audit or certified.')}</p>}
           </Section>

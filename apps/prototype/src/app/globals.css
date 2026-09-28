@@ -1,5 +1,5 @@
 /* App-level layout only. Component styles come from @sgs/graphite (tokens.css + components.css). */
-html, body { margin: 0; padding: 0; }
+html, body { margin: 0; padding: 0; height: 100%; }
 body { font-family: var(--font-sans); color: var(--text-primary); background: var(--background); }
 
 /* SGS wordmark. The mark in Graphite is still the placeholder text "SGS"; this swaps in the
@@ -20,11 +20,14 @@ body { font-family: var(--font-sans); color: var(--text-primary); background: va
 /* ---------- Portal shell (AppShell page template) ----------
    Big area min 960 / max 1980px (UI Guidelines → Responsiveness); beyond 1980 the background fills both sides.
    Only the content area scrolls. Mobile breakpoints come in Pha 4. */
-.shell { min-height: 100vh; background: var(--background); color: var(--text-primary); font-family: var(--font-sans); }
-.shell__frame { height: 100vh; min-width: 960px; max-width: 1980px; margin: 0 auto; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; }
-.shell__body { flex: 1; min-height: 0; display: flex; gap: 12px; }
-.shell__side { flex-shrink: 0; display: flex; }
+.shell { height: 100%; min-height: 0; overflow: hidden; background: var(--background); color: var(--text-primary); font-family: var(--font-sans); }
+.shell__frame { height: 100%; min-height: 0; min-width: 960px; max-width: 1980px; margin: 0 auto; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; }
+.shell__body { flex: 1; min-height: 0; display: flex; gap: 12px; overflow: hidden; }
+.shell__side { flex-shrink: 0; display: flex; min-height: 0; overflow: hidden; }
 .shell__main { flex: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px; overflow: auto; }
+/* Sticky table headers leak their layout height onto the page scrollbar. Paint containment
+   keeps that height inside the table, so only .shell__main scrolls. */
+.gr-tbl__scroll { contain: paint; }
 
 /* ---------- Page heading used by list pages (designs: padding 8px 8px 4px, Breadcrumb → h1 → one line) ---------- */
 .page-head { padding: 8px 8px 4px; display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }

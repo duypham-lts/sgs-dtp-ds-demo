@@ -15,7 +15,7 @@ pnpm dev                # http://localhost:3000
 | `/_components` | Every Graphite component, rendered from the official DS previews through the TypeScript port |
 | `/` | Customer Portal (Home) |
 | `/ops` | SGS Operations (Home) |
-| `/login`, `/ops/login` | Sign-in screens (designs/01). Every seeded account uses the password `password123` |
+| `/login`, `/ops/login` | Sign-in screens (designs/01). Every seeded account uses the password `Demo-Password-01` |
 | `/mail` | Demo mailbox: invitation emails with their activation links |
 
 The **Demo** pill (top centre) switches persona (role, tenant, portal) without signing in, and resets the mock data to one of five seed scenarios: Before the audit, Audit in progress (default), Ready to close, Audit closed, Certificate issued (decisions D13). It stands in for Entra sign-in and is not part of the design.

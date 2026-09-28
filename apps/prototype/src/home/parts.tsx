@@ -3,7 +3,29 @@
 import { Link, ProgressBar, StatusTag } from '@sgs/graphite';
 import type { ReactNode } from 'react';
 import { translate } from '@/i18n/locale';
-import { STAGES, type AttentionItem, type Stage, type Tile } from '@/mock/api/dashboard';
+import { STAGES, type AttentionItem, type Phrase, type Stage, type Tile } from '@/mock/api/dashboard';
+import { fmtDate, fmtDay } from '@/ui/format';
+
+const DATE_KEYS = new Set(['when', 'date', 'from', 'to']);
+const DAY_KEYS = new Set(['day']);
+const WORD_KEYS = new Set(['item', 'doc', 'group', 'month']);
+
+export function phraseText(p: Phrase): string {
+  if (!p.v) return translate(p.k);
+  const v: Record<string, string | number> = {};
+  for (const [key, val] of Object.entries(p.v)) {
+    if (typeof val === 'string' && /^\d{4}-\d{2}-\d{2}/.test(val) && DATE_KEYS.has(key)) v[key] = fmtDate(val);
+    else if (typeof val === 'string' && /^\d{4}-\d{2}-\d{2}/.test(val) && DAY_KEYS.has(key)) v[key] = fmtDay(val);
+    else if (typeof val === 'string' && WORD_KEYS.has(key)) v[key] = translate(val);
+    else v[key] = val;
+  }
+  return translate(p.k, v);
+}
+
+export function lineText(fallback: string, parts?: Phrase[], join = ' · '): string {
+  if (!parts?.length) return translate(fallback);
+  return parts.map(phraseText).join(join);
+}
 
 export function DashHead({ title, sub }: { title: string; sub: string }) {
   return (
@@ -21,7 +43,7 @@ export function Tiles({ tiles }: { tiles: Tile[] }) {
         <a key={t.label} href={t.href} className="dash-tile">
           <span className="headline-medium">{t.value}</span>
           <span className="body-medium" style={{ fontWeight: 500 }}>{translate(t.label)}</span>
-          <span className="body-small muted">{translate(t.sub)}</span>
+          <span className="body-small muted">{lineText(t.sub, t.subParts, t.subJoin ?? ' · ')}</span>
         </a>
       ))}
     </div>
@@ -49,7 +71,7 @@ export function ActionList({ items, empty }: { items: AttentionItem[]; empty: st
         <li key={a.id}>
           <a href={a.href} className="dash-row">
             <span style={{ flexShrink: 0 }}><StatusTag status={a.tag[0]} label={translate(a.tag[1])} size="sm" /></span>
-            <span className="dash-row__text"><span className="body-medium" style={{ fontWeight: 500 }}>{translate(a.title)}</span><span className="body-small muted">{translate(a.sub)}</span></span>
+            <span className="dash-row__text"><span className="body-medium" style={{ fontWeight: 500 }}>{lineText(a.title, a.titleParts)}</span><span className="body-small muted">{lineText(a.sub, a.subParts)}</span></span>
             <span className="body-small dash-row__cta">{translate(a.cta)}</span>
           </a>
         </li>
@@ -81,7 +103,7 @@ export function GroupBars({ items }: { items: { code: string; title: string; pro
       {items.map((g) => (
         <li key={g.code}>
           <span className="gr-rnav__code" style={{ justifySelf: 'start' }}>{g.code}</span>
-          <ProgressBar label={g.title} value={g.progress} size="sm" />
+          <ProgressBar label={translate(g.title)} value={g.progress} size="sm" />
           <span className="body-small" style={{ textAlign: 'right', fontWeight: 500 }}>{g.progress}%</span>
         </li>
       ))}

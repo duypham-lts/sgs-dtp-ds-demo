@@ -11,9 +11,9 @@ import { seedAudit } from './seedAudit';
 const A10_DESC = 'Appendix 10 to the Regulations on Cyber Security Responsibility Levels (Article 11), covering the High / Medium / Basic protection levels.';
 
 export const TODAY = '2026-09-25';
-export const MOCK_DB_VERSION = 8;
+export const MOCK_DB_VERSION = 9;
 /** Password of every seeded account (demo only; production sign-in is Entra External ID). */
-export const DEMO_PASSWORD = 'password123';
+export const DEMO_PASSWORD = 'Demo-Password-01';
 
 const seedDb: MockDb = {
   version: MOCK_DB_VERSION,

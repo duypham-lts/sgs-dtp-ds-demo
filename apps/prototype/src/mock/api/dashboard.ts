@@ -13,8 +13,10 @@ import { workspaceRow } from './scopes';
 import { copy, MockApiError, today, wait } from './core';
 
 type Tone = 'completed' | 'under-review' | 'needs-description' | 'missing-info' | 'rejected' | 'draft' | 'info';
-export interface Tile { value: number; label: string; sub: string; href: string }
-export interface AttentionItem { id: string; tag: [Tone, string]; title: string; sub: string; cta: string; href: string }
+/** A catalog sentence. Placeholders `{name}` are filled at render, so the language can still change. */
+export interface Phrase { k: string; v?: Record<string, string | number> }
+export interface Tile { value: number; label: string; sub: string; href: string; subParts?: Phrase[]; subJoin?: string }
+export interface AttentionItem { id: string; tag: [Tone, string]; title: string; sub: string; cta: string; href: string; titleParts?: Phrase[]; subParts?: Phrase[] }
 
 const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const day = (iso: string) => { const [, m, d] = iso.slice(0, 10).split('-').map(Number); return `${String(d).padStart(2, '0')} ${MON[m - 1]}`; };
@@ -26,6 +28,18 @@ const range = (a?: string, b?: string) => {
 const daysBetween = (a: string, b: string) => Math.round((Date.parse(b.slice(0, 10)) - Date.parse(a.slice(0, 10))) / 86_400_000);
 const waiting = (iso: string) => { const n = daysBetween(iso, today()); return n <= 0 ? 'Today' : n === 1 ? '1 day' : `${n} days`; };
 const plural = (n: number, one: string, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
+const ph = (k: string, v?: Record<string, string | number>): Phrase => (v ? { k, v } : { k });
+function rangePhrase(a?: string, b?: string): Phrase {
+  if (!a || !b) return ph('—');
+  if (a.slice(0, 7) === b.slice(0, 7)) return ph('{from} – {to} {month}', { from: Number(a.slice(8, 10)), to: Number(b.slice(8, 10)), month: MON[Number(b.slice(5, 7)) - 1] });
+  return ph('{from} – {to}', { from: a.slice(0, 10), to: b.slice(0, 10) });
+}
+function waitPhrase(iso: string): Phrase {
+  const n = daysBetween(iso, today());
+  if (n <= 0) return ph('Today');
+  if (n === 1) return ph('1 day');
+  return ph('{n} days', { n });
+}
 const nameOf = (db: MockDb, id?: string) => db.users.find((u) => u.id === id)?.displayName ?? '—';
 const shortOrg = (name: string) => name.replace(/ (Co\., Ltd\.|Inc\.|JSC|LLC)$/, '');
 
@@ -53,7 +67,7 @@ function stageOf(db: MockDb, w: Workspace): Stage {
 export interface CustomerDashboard {
   kind: 'customer'; empty: boolean; greetingName: string; orgName: string; limited: boolean;
   tiles: Tile[]; attention: AttentionItem[];
-  next?: { title: string; body: string; href: string; cta: string };
+  next?: { title: string; body: string; href: string; cta: string; titleParts?: Phrase[]; bodyParts?: Phrase[] };
   groups?: { workspaceId: string; title: string; href: string; items: { code: string; title: string; progress: number }[] };
   workspaces: { id: string; title: string; scope: string; percent: number; provided: number; total: number; stage: Stage; href: string }[];
   requests: { id: string; service: string; status: [Tone, string]; href: string }[];
@@ -91,15 +105,18 @@ export async function getCustomerDashboard(s: Session): Promise<CustomerDashboar
     const items = db.reviewItems.filter((x) => x.reviewId === rv.id);
     for (const x of items) {
       const q = db.requirements.find((y) => y.id === x.requirementId)!;
-      for (const f of db.findings.filter((y) => y.itemId === x.id && y.status === 'open' && y.correctiveRequired))
-        attention.push({ id: f.id, rank: 0, due: f.dueOn ?? '9999', tag: ['missing-info', 'Finding'], title: `Submit corrective action · ${q.code} ${q.title}`, sub: `Audit ${req} · ${FINDING_LABEL[f.classification]}${f.dueOn ? ` · ${f.dueOn < t ? 'overdue since' : 'due'} ${day(f.dueOn)}` : ''}`, cta: canWrite ? 'Respond' : 'Open', href: `/reviews/${rv.id}` });
+      for (const f of db.findings.filter((y) => y.itemId === x.id && y.status === 'open' && y.correctiveRequired)) {
+        const due = f.dueOn ? ph(f.dueOn < t ? 'overdue since {day}' : 'due {day}', { day: f.dueOn }) : undefined;
+        attention.push({ id: f.id, rank: 0, due: f.dueOn ?? '9999', tag: ['missing-info', 'Finding'], title: `Submit corrective action · ${q.code} ${q.title}`, titleParts: [ph('Submit corrective action · {code} {item}', { code: q.code, item: q.title })], sub: `Audit ${req} · ${FINDING_LABEL[f.classification]}${f.dueOn ? ` · ${f.dueOn < t ? 'overdue since' : 'due'} ${day(f.dueOn)}` : ''}`, subParts: [ph('Audit {id}', { id: req }), ph(FINDING_LABEL[f.classification]), ...(due ? [due] : [])], cta: canWrite ? 'Respond' : 'Open', href: `/reviews/${rv.id}` });
+      }
       for (const c of db.clarifications.filter((y) => y.itemId === x.id && !y.answeredAt))
-        attention.push({ id: c.id, rank: 0, due: c.dueOn, tag: ['needs-description', 'Clarification'], title: `Answer the auditor · ${q.code} ${q.title}`, sub: `Audit ${req} · ${c.dueOn < t ? 'overdue since' : 'due'} ${day(c.dueOn)}`, cta: canWrite ? 'Respond' : 'Open', href: `/reviews/${rv.id}` });
+        attention.push({ id: c.id, rank: 0, due: c.dueOn, tag: ['needs-description', 'Clarification'], title: `Answer the auditor · ${q.code} ${q.title}`, titleParts: [ph('Answer the auditor · {code} {item}', { code: q.code, item: q.title })], sub: `Audit ${req} · ${c.dueOn < t ? 'overdue since' : 'due'} ${day(c.dueOn)}`, subParts: [ph('Audit {id}', { id: req }), ph(c.dueOn < t ? 'overdue since {day}' : 'due {day}', { day: c.dueOn })], cta: canWrite ? 'Respond' : 'Open', href: `/reviews/${rv.id}` });
     }
   }
   for (const r of requests.filter((x) => x.status === 'information_requested')) {
     const ir = db.infoRequests.filter((x) => x.requestId === r.id && !x.answeredAt).sort((a, b) => b.askedAt.localeCompare(a.askedAt))[0];
-    attention.push({ id: `ir-${r.id}`, rank: 1, due: ir?.dueOn ?? '9999', tag: ['missing-info', 'Action required'], title: `Answer SGS · ${r.id}`, sub: `${SR_META[r.category].label}${ir ? ` · ${ir.question.length > 70 ? `${ir.question.slice(0, 70)}…` : ir.question}` : ''}`, cta: canWrite ? 'Respond' : 'Open', href: customerHref(r.category, r.id) });
+    const question = ir ? (ir.question.length > 70 ? `${ir.question.slice(0, 70)}…` : ir.question) : '';
+    attention.push({ id: `ir-${r.id}`, rank: 1, due: ir?.dueOn ?? '9999', tag: ['missing-info', 'Action required'], title: `Answer SGS · ${r.id}`, titleParts: [ph('Answer SGS · {id}', { id: r.id })], sub: `${SR_META[r.category].label}${question ? ` · ${question}` : ''}`, subParts: question ? [ph(SR_META[r.category].label), ph('{text}', { text: question })] : [ph(SR_META[r.category].label)], cta: canWrite ? 'Respond' : 'Open', href: customerHref(r.category, r.id) });
   }
   for (const { w, row } of rows) {
     const reqIds = new Set(workspaceRequirements(db, w).map((q) => q.id));
@@ -108,7 +125,7 @@ export async function getCustomerDashboard(s: Session): Promise<CustomerDashboar
       if (v === 'ok') continue;
       const m = db.evidenceMappings.find((x) => x.evidenceId === e.id && reqIds.has(x.requirementId));
       const code = m ? db.requirements.find((q) => q.id === m.requirementId)!.code : undefined;
-      attention.push({ id: e.id, rank: 2, due: e.validUntil!, tag: v === 'exp' ? ['missing-info', 'Expired'] : ['needs-description', 'Expires soon'], title: `${e.name} ${v === 'exp' ? 'expired on' : 'expires on'} ${date(e.validUntil!)}`,
+      attention.push({ id: e.id, rank: 2, due: e.validUntil!, tag: v === 'exp' ? ['missing-info', 'Expired'] : ['needs-description', 'Expires soon'], title: `${e.name} ${v === 'exp' ? 'expired on' : 'expires on'} ${date(e.validUntil!)}`, titleParts: [ph(v === 'exp' ? '{doc} expired on {when}' : '{doc} expires on {when}', { doc: e.name, when: e.validUntil! })],
         sub: [row.title.split(' · ').slice(0, 1).join(''), row.scopeName, code].filter(Boolean).join(' · '), cta: canWrite && w.status !== 'audit_in_progress' ? 'Upload new version' : 'Open',
         href: `/workspaces/${w.id}?${code ? `req=${encodeURIComponent(code)}&` : ''}evidence=${e.id}` });
     }
@@ -116,8 +133,9 @@ export async function getCustomerDashboard(s: Session): Promise<CustomerDashboar
   if (admin) {
     for (const u of db.users.filter((x) => x.tenantId === tenant.id && (x.status === 'invited' || x.status === 'expired'))) {
       const n = db.userScopes.filter((x) => x.userId === u.id).length;
-      attention.push({ id: u.id, rank: 3, due: u.invitedAt ?? '9999', tag: u.status === 'expired' ? ['draft', 'Expired'] : ['under-review', 'Pending'], title: u.status === 'expired' ? `${u.displayName}’s invitation expired` : `${u.displayName} hasn’t activated the account yet`,
-        sub: `Invited ${u.invitedAt ? date(u.invitedAt) : '—'} · ${u.role === 'customer_admin' ? 'all scopes' : plural(n, 'scope')}`, cta: 'Resend', href: `/admin/users/${u.id}` });
+      const expired = u.status === 'expired';
+      attention.push({ id: u.id, rank: 3, due: u.invitedAt ?? '9999', tag: expired ? ['draft', 'Expired'] : ['under-review', 'Pending'], title: expired ? `${u.displayName}’s invitation expired` : `${u.displayName} hasn’t activated the account yet`, titleParts: [ph(expired ? '{who}’s invitation expired' : '{who} hasn’t activated the account yet', { who: u.displayName })],
+        sub: `Invited ${u.invitedAt ? date(u.invitedAt) : '—'} · ${u.role === 'customer_admin' ? 'all scopes' : plural(n, 'scope')}`, subParts: [ph('Invited {when}', { when: u.invitedAt || '—' }), u.role === 'customer_admin' ? ph('all scopes') : ph(n === 1 ? '{n} scope' : '{n} scopes', { n })], cta: 'Resend', href: `/admin/users/${u.id}` });
     }
   }
   attention.sort((a, b) => a.rank - b.rank || a.due.localeCompare(b.due));
@@ -133,11 +151,14 @@ export async function getCustomerDashboard(s: Session): Promise<CustomerDashboar
     for (const q of reqs) if (st.get(q.id) !== 'provided') { const g = byGroup.get(q.groupCode) ?? { title: q.groupTitle, missing: 0 }; g.missing += 1; byGroup.set(q.groupCode, g); }
     const first = [...byGroup.values()].sort((a, b) => b.missing - a.missing)[0];
     const missing = behind.row.total - behind.row.provided;
-    next = { title: `${behind.row.fw.split(' · ')[0]} · ${behind.row.scopeName.replace(/ · Taipei$/, '')} is at ${behind.row.percent}%`, cta: 'Open workspace', href: `/workspaces/${behind.w.id}`,
-      body: `${plural(missing, 'requirement')} still ${missing === 1 ? 'needs its' : 'need their'} mandatory evidence.${first ? ` Start with the ${first.title} requirements.` : ''}` };
+    const fw = behind.row.fw.split(' · ')[0];
+    const scope = behind.row.scopeName.replace(/ · Taipei$/, '');
+    next = { title: `${fw} · ${scope} is at ${behind.row.percent}%`, titleParts: [ph('{fw} · {scope} is at {percent}%', { fw, scope, percent: behind.row.percent })], cta: 'Open workspace', href: `/workspaces/${behind.w.id}`,
+      body: `${plural(missing, 'requirement')} still ${missing === 1 ? 'needs its' : 'need their'} mandatory evidence.${first ? ` Start with the ${first.title} requirements.` : ''}`,
+      bodyParts: [ph(missing === 1 ? '{n} requirement still needs its mandatory evidence.' : '{n} requirements still need their mandatory evidence.', { n: missing }), ...(first ? [ph('Start with the {group} requirements.', { group: first.title })] : [])] };
   } else if (preparing.length) {
     const x = preparing[0];
-    next = { title: `${x.row.title} · ${x.row.scopeName} has all mandatory evidence`, cta: 'Open workspace', href: `/workspaces/${x.w.id}`, body: 'When you are ready, request certification from the workspace. SGS auditors decide on compliance.' };
+    next = { title: `${x.row.title} · ${x.row.scopeName} has all mandatory evidence`, titleParts: [ph('{title} has all mandatory evidence', { title: `${x.row.title} · ${x.row.scopeName}` })], cta: 'Open workspace', href: `/workspaces/${x.w.id}`, body: 'When you are ready, request certification from the workspace. SGS auditors decide on compliance.' };
   }
 
   // Coverage by control group: the workspace in audit, else the one requested, else the most advanced one in preparation.
@@ -152,14 +173,17 @@ export async function getCustomerDashboard(s: Session): Promise<CustomerDashboar
   }
 
   const count = (st: Stage) => rows.filter((x) => x.stage === st).length;
-  const wsSub = [[2, 'in audit'], [1, 'requested'], [3, 'certified'], [0, 'preparing']].filter(([st]) => count(st as Stage)).map(([st, l]) => `${count(st as Stage)} ${l}`).join(' · ') || 'None yet';
+  const wsParts = ([[2, 'in audit'], [1, 'requested'], [3, 'certified'], [0, 'preparing']] as const).filter(([st]) => count(st)).map(([st, l]) => ph(`{n} ${l}`, { n: count(st) }));
+  const wsSub = wsParts.map((p) => `${p.v!.n} ${p.k.replace('{n} ', '')}`).join(' · ') || 'None yet';
   const needYou = attention.filter((a) => a.rank === 0);
   const auditIds = [...new Set(reviews.filter((rv) => needYou.some((a) => a.href === `/reviews/${rv.id}`)).map((rv) => rv.requestId))];
+  const serviceLabels = (['gap_analysis', 'implementation_support', 'certification', 'training'] as const).filter((c) => openRequests.some((r) => r.category === c)).map((c) => SR_META[c].label);
+  const certName = certs[0]?.frameworkLabel.split(/[:·]/)[0].trim();
   const tiles: Tile[] = [
-    { value: needYou.length, label: 'Review items to answer', sub: auditIds.length ? `Audit ${auditIds.join(', ')}` : 'Nothing waiting on you', href: needYou[0]?.href ?? '/reviews' },
-    { value: rows.length, label: 'Workspaces', sub: wsSub, href: '/workspaces' },
-    { value: openRequests.length, label: 'Service requests in progress', sub: (['gap_analysis', 'implementation_support', 'certification', 'training'] as const).filter((c) => openRequests.some((r) => r.category === c)).map((c) => SR_META[c].label).join(', ') || 'None open', href: '/service-requests' },
-    { value: certs.length, label: certs.length === 1 ? 'Active certificate' : 'Active certificates', sub: certs[0] ? `${certs[0].frameworkLabel.split(/[:·]/)[0].trim()} · valid to ${date(certs[0].validTo)}` : 'None yet', href: '/certifications' },
+    { value: needYou.length, label: 'Review items to answer', sub: auditIds.length ? `Audit ${auditIds.join(', ')}` : 'Nothing waiting on you', subParts: auditIds.length ? [ph('Audit {ids}', { ids: auditIds.join(', ') })] : undefined, href: needYou[0]?.href ?? '/reviews' },
+    { value: rows.length, label: 'Workspaces', sub: wsSub, subParts: wsParts.length ? wsParts : undefined, href: '/workspaces' },
+    { value: openRequests.length, label: 'Service requests in progress', sub: serviceLabels.join(', ') || 'None open', subParts: serviceLabels.length ? serviceLabels.map((label) => ph(label)) : undefined, subJoin: ', ', href: '/service-requests' },
+    { value: certs.length, label: certs.length === 1 ? 'Active certificate' : 'Active certificates', sub: certName ? `${certName} · valid to ${date(certs[0].validTo)}` : 'None yet', subParts: certName ? [ph('{name} · valid to {when}', { name: certName, when: certs[0].validTo })] : undefined, href: '/certifications' },
   ];
 
   return copy({
@@ -175,8 +199,8 @@ export async function getCustomerDashboard(s: Session): Promise<CustomerDashboar
 export interface SgsDashboard {
   kind: 'sgs'; tiles: Tile[];
   workload: { id: string; name: string; role: string; audits: number; consulting: number; training: number }[];
-  onboarding: { id: string; name: string; since: string; tag: [Tone, string]; href: string }[];
-  triage: { id: string; customer: string; service: string; waiting: string; cta: string; href: string }[];
+  onboarding: { id: string; name: string; since: string; sinceParts?: Phrase[]; tag: [Tone, string]; href: string }[];
+  triage: { id: string; customer: string; service: string; waiting: string; waitingParts?: Phrase[]; cta: string; href: string }[];
   audits: { id: string; customer: string; workspace: string; auditor: string; reviewed: string; status: [Tone, string]; href: string }[];
 }
 
@@ -225,9 +249,9 @@ export async function getSgsDashboard(s: Session): Promise<SgsDashboard> {
     const invited = a.find((u) => u.status === 'invited' || u.status === 'expired');
     const hasScope = db.scopes.some((sc) => sc.tenantId === x.id);
     const created = daysBetween(x.createdAt, t);
-    if (!a.length) onboarding.push({ id: x.id, name: x.name, since: created <= 0 ? 'Created today' : `Created ${date(x.createdAt)}`, tag: ['draft', 'No Customer Admin'], href: `/ops/customers/${x.id}` });
-    else if (!active && invited) onboarding.push({ id: x.id, name: x.name, since: `Admin invited ${invited.invitedAt ? day(invited.invitedAt) : ''}`.trim(), tag: ['under-review', 'Admin not activated'], href: `/ops/customers/${x.id}` });
-    else if (active && !hasScope) onboarding.push({ id: x.id, name: x.name, since: `Admin active since ${active.activatedAt ? day(active.activatedAt) : '—'}`, tag: ['needs-description', 'No scope yet'], href: `/ops/customers/${x.id}` });
+    if (!a.length) onboarding.push({ id: x.id, name: x.name, since: created <= 0 ? 'Created today' : `Created ${date(x.createdAt)}`, sinceParts: [created <= 0 ? ph('Created today') : ph('Created {when}', { when: x.createdAt })], tag: ['draft', 'No Customer Admin'], href: `/ops/customers/${x.id}` });
+    else if (!active && invited) onboarding.push({ id: x.id, name: x.name, since: `Admin invited ${invited.invitedAt ? day(invited.invitedAt) : ''}`.trim(), sinceParts: [invited.invitedAt ? ph('Admin invited {day}', { day: invited.invitedAt }) : ph('Admin invited')], tag: ['under-review', 'Admin not activated'], href: `/ops/customers/${x.id}` });
+    else if (active && !hasScope) onboarding.push({ id: x.id, name: x.name, since: `Admin active since ${active.activatedAt ? day(active.activatedAt) : '—'}`, sinceParts: [ph('Admin active since {day}', { day: active.activatedAt || '—' })], tag: ['needs-description', 'No scope yet'], href: `/ops/customers/${x.id}` });
   }
 
   const staff = db.users.filter((u) => u.affiliateId === s.user.affiliateId && u.status === 'active' && ['sgs_auditor', 'sgs_consultant', 'sgs_user'].includes(u.role));
@@ -240,16 +264,17 @@ export async function getSgsDashboard(s: Session): Promise<SgsDashboard> {
     .sort((a, b) => (b.audits + b.consulting + b.training) - (a.audits + a.consulting + a.training) || a.name.localeCompare(b.name));
 
   const oldest = submitted[0]?.submittedAt;
+  const oldestDays = oldest ? daysBetween(oldest, t) : 0;
   const tiles: Tile[] = [
-    { value: tenants.length, label: 'Active customers', sub: noActiveAdmin.length ? `${noActiveAdmin.length} without a Customer Admin yet` : 'All have a Customer Admin', href: '/ops/customers' },
-    { value: submitted.length, label: 'Requests to triage', sub: oldest ? `Oldest waiting ${waiting(oldest) === 'Today' ? 'since today' : waiting(oldest)}` : 'Nothing waiting', href: '/ops/requests' },
-    { value: openAudits.length, label: 'Audits open', sub: waitingOnCustomer ? `${waitingOnCustomer} waiting for the customer` : 'None waiting for the customer', href: '/ops/requests/certification?tab=run' },
-    { value: ready.length, label: 'Ready for certificate', sub: ready.length ? `Audit closed · ${ready.map((r) => r.id).join(', ')}` : '—', href: '/ops/requests/certification?tab=cert' },
+    { value: tenants.length, label: 'Active customers', sub: noActiveAdmin.length ? `${noActiveAdmin.length} without a Customer Admin yet` : 'All have a Customer Admin', subParts: noActiveAdmin.length ? [ph('{n} without a Customer Admin yet', { n: noActiveAdmin.length })] : undefined, href: '/ops/customers' },
+    { value: submitted.length, label: 'Requests to triage', sub: oldest ? `Oldest waiting ${waiting(oldest) === 'Today' ? 'since today' : waiting(oldest)}` : 'Nothing waiting', subParts: !oldest ? undefined : oldestDays <= 0 ? [ph('Oldest waiting since today')] : oldestDays === 1 ? [ph('Oldest waiting 1 day')] : [ph('Oldest waiting {n} days', { n: oldestDays })], href: '/ops/requests' },
+    { value: openAudits.length, label: 'Audits open', sub: waitingOnCustomer ? `${waitingOnCustomer} waiting for the customer` : 'None waiting for the customer', subParts: waitingOnCustomer ? [ph('{n} waiting for the customer', { n: waitingOnCustomer })] : undefined, href: '/ops/requests/certification?tab=run' },
+    { value: ready.length, label: 'Ready for certificate', sub: ready.length ? `Audit closed · ${ready.map((r) => r.id).join(', ')}` : '—', subParts: ready.length ? [ph('Audit closed · {ids}', { ids: ready.map((r) => r.id).join(', ') })] : undefined, href: '/ops/requests/certification?tab=cert' },
   ];
   const CTA: Record<string, string> = { certification: 'Assign auditor', training: 'Assign', gap_analysis: 'Review', implementation_support: 'Review' };
   return copy({
     kind: 'sgs', tiles, workload, onboarding,
-    triage: submitted.map((r) => ({ id: r.id, customer: cust(r.tenantId), service: serviceLabel(r), waiting: waiting(r.submittedAt ?? r.updatedAt), cta: CTA[r.category], href: opsHref(r.category, r.id) })),
+    triage: submitted.map((r) => ({ id: r.id, customer: cust(r.tenantId), service: serviceLabel(r), waiting: waiting(r.submittedAt ?? r.updatedAt), waitingParts: [waitPhrase(r.submittedAt ?? r.updatedAt)], cta: CTA[r.category], href: opsHref(r.category, r.id) })),
     audits: audits.map((r) => {
       const rv = rvOf(r);
       const st = rv && !rv.closedAt ? reviewState(db, rv) : undefined;
@@ -264,8 +289,8 @@ export async function getSgsDashboard(s: Session): Promise<SgsDashboard> {
 
 export interface ConsultantDashboard {
   kind: 'consultant'; tiles: Tile[]; next: AttentionItem[];
-  coming: { id: string; month: string; day: string; title: string; sub: string; href: string }[];
-  assignments: { id: string; customer: string; workspace: string; dates: string; status: [Tone, string]; href: string }[];
+  coming: { id: string; month: string; day: string; title: string; sub: string; href: string; titleParts?: Phrase[]; subParts?: Phrase[] }[];
+  assignments: { id: string; customer: string; workspace: string; dates: string; datesParts?: Phrase[]; status: [Tone, string]; href: string }[];
 }
 
 export async function getConsultantDashboard(s: Session): Promise<ConsultantDashboard> {
@@ -285,37 +310,44 @@ export async function getConsultantDashboard(s: Session): Promise<ConsultantDash
   for (const r of active.filter((x) => x.status === 'in_progress')) {
     if (r.category === 'gap_analysis') {
       if (docs(r.id, 'report')) continue;
-      const visit = r.periodTo ? (r.periodTo < t ? `visit finished ${day(r.periodTo)}` : `on site ${range(r.periodFrom, r.periodTo)}`) : 'dates not agreed yet';
-      next.push({ id: r.id, rank: r.periodTo && r.periodTo < t ? 0 : 2, tag: ['info', 'Report due'], title: `Upload the final report · ${r.id}`, sub: `${cust(r)} · ${visit}`, cta: 'Upload report', href: `${consultantHref(r.category, r.id)}?action=report` });
+      const span = rangePhrase(r.periodFrom, r.periodTo);
+      const visit = !r.periodTo ? ph('dates not agreed yet') : r.periodTo < t ? ph('visit finished {day}', { day: r.periodTo }) : ph(`on site ${span.k}`, span.v);
+      next.push({ id: r.id, rank: r.periodTo && r.periodTo < t ? 0 : 2, tag: ['info', 'Report due'], title: `Upload the final report · ${r.id}`, titleParts: [ph('Upload the final report · {id}', { id: r.id })], sub: `${cust(r)} · ${r.periodTo ? (r.periodTo < t ? `visit finished ${day(r.periodTo)}` : `on site ${range(r.periodFrom, r.periodTo)}`) : 'dates not agreed yet'}`, subParts: [ph('{org}', { org: cust(r) }), visit], cta: 'Upload report', href: `${consultantHref(r.category, r.id)}?action=report` });
     } else {
       const shared = docs(r.id, 'deliverable');
-      next.push({ id: r.id, rank: 1, tag: ['info', 'In progress'], title: `Share the next deliverable · ${r.id}`, sub: `${shortOrg(cust(r))} · ${shared ? `${plural(shared, 'deliverable')} shared so far` : 'nothing shared yet'}`, cta: 'Share deliverable', href: `${consultantHref(r.category, r.id)}?action=share` });
+      next.push({ id: r.id, rank: 1, tag: ['info', 'In progress'], title: `Share the next deliverable · ${r.id}`, titleParts: [ph('Share the next deliverable · {id}', { id: r.id })], sub: `${shortOrg(cust(r))} · ${shared ? `${plural(shared, 'deliverable')} shared so far` : 'nothing shared yet'}`, subParts: [ph('{org}', { org: shortOrg(cust(r)) }), shared ? ph(shared === 1 ? '{n} deliverable shared so far' : '{n} deliverables shared so far', { n: shared }) : ph('nothing shared yet')], cta: 'Share deliverable', href: `${consultantHref(r.category, r.id)}?action=share` });
     }
   }
   for (const r of active.filter((x) => x.status === 'information_requested'))
-    next.push({ id: r.id, rank: 3, tag: ['missing-info', 'Waiting for customer'], title: `Customer is answering your question · ${r.id}`, sub: `${cust(r)} · the request continues when they reply`, cta: 'Open', href: consultantHref(r.category, r.id) });
+    next.push({ id: r.id, rank: 3, tag: ['missing-info', 'Waiting for customer'], title: `Customer is answering your question · ${r.id}`, titleParts: [ph('Customer is answering your question · {id}', { id: r.id })], sub: `${cust(r)} · the request continues when they reply`, subParts: [ph('{org}', { org: cust(r) }), ph('the request continues when they reply')], cta: 'Open', href: consultantHref(r.category, r.id) });
 
   next.sort((a, b) => a.rank - b.rank);
   const coming: (ConsultantDashboard['coming'][number] & { at: string })[] = [];
   for (const r of active) {
     const fw = r.serviceFramework ?? '';
-    if (r.category === 'gap_analysis' && r.periodFrom && r.periodFrom >= t)
-      coming.push({ id: `${r.id}-visit`, at: r.periodFrom, month: MON[Number(r.periodFrom.slice(5, 7)) - 1].toUpperCase(), day: String(Number(r.periodFrom.slice(8, 10))), title: `On site · ${shortOrg(cust(r))}`, sub: `${r.id} · ${fw} · ${range(r.periodFrom, r.periodTo)}`, href: consultantHref(r.category, r.id) });
+    if (r.category === 'gap_analysis' && r.periodFrom && r.periodFrom >= t) {
+      const span = rangePhrase(r.periodFrom, r.periodTo);
+      coming.push({ id: `${r.id}-visit`, at: r.periodFrom, month: MON[Number(r.periodFrom.slice(5, 7)) - 1], day: String(Number(r.periodFrom.slice(8, 10))), title: `On site · ${shortOrg(cust(r))}`, titleParts: [ph('On site · {org}', { org: shortOrg(cust(r)) })], sub: `${r.id} · ${fw} · ${range(r.periodFrom, r.periodTo)}`, subParts: [ph('{id}', { id: r.id }), ...(fw ? [ph('{fw}', { fw })] : []), span], href: consultantHref(r.category, r.id) });
+    }
     if (r.category === 'implementation_support' && r.periodTo && r.periodTo >= t)
-      coming.push({ id: `${r.id}-end`, at: r.periodTo, month: MON[Number(r.periodTo.slice(5, 7)) - 1].toUpperCase(), day: String(Number(r.periodTo.slice(8, 10))), title: `Support period ends · ${shortOrg(cust(r))}`, sub: `${r.id} · ${fw}`, href: consultantHref(r.category, r.id) });
+      coming.push({ id: `${r.id}-end`, at: r.periodTo, month: MON[Number(r.periodTo.slice(5, 7)) - 1], day: String(Number(r.periodTo.slice(8, 10))), title: `Support period ends · ${shortOrg(cust(r))}`, titleParts: [ph('Support period ends · {org}', { org: shortOrg(cust(r)) })], sub: `${r.id} · ${fw}`, subParts: [ph('{id}', { id: r.id }), ...(fw ? [ph('{fw}', { fw })] : [])], href: consultantHref(r.category, r.id) });
   }
   coming.sort((a, b) => a.at.localeCompare(b.at));
 
   return copy({
     kind: 'consultant',
     tiles: [
-      { value: active.length, label: 'Assignments in progress', sub: `Gap Analysis ${n('gap_analysis')} · Implementation Support ${n('implementation_support')}`, href: '/ops/my-assignments/gap-analysis' },
+      { value: active.length, label: 'Assignments in progress', sub: `Gap Analysis ${n('gap_analysis')} · Implementation Support ${n('implementation_support')}`, subParts: [ph('Gap Analysis {n}', { n: n('gap_analysis') }), ph('Implementation Support {n}', { n: n('implementation_support') })], href: '/ops/my-assignments/gap-analysis' },
       { value: reportDue.length, label: reportDue.length === 1 ? 'Report to upload' : 'Reports to upload', sub: reportDue.map((r) => r.id).join(', ') || '—', href: reportDue[0] ? `${consultantHref(reportDue[0].category, reportDue[0].id)}?action=report` : '/ops/my-assignments/gap-analysis' },
       { value: done.length, label: 'Completed this year', sub: 'Workspace access ended', href: '/ops/my-assignments/gap-analysis?tab=done' },
     ],
     next: next.map(({ rank: _r, ...x }) => x), coming: coming.map(({ at: _a, ...x }) => x),
-    assignments: active.map((r) => ({ id: r.id, customer: cust(r), workspace: [SR_META[r.category].label, r.serviceFramework, db.scopes.find((x) => x.id === r.scopeId)?.name.replace(/ · Taipei$/, '')].filter(Boolean).join(' · '),
-      dates: r.periodFrom && r.periodTo ? (r.category === 'gap_analysis' ? `On site ${range(r.periodFrom, r.periodTo)} ${r.periodTo.slice(0, 4)}` : `${date(r.periodFrom)} – ${date(r.periodTo)}`) : '—', status: srStatus(r), href: consultantHref(r.category, r.id) })),
+    assignments: active.map((r) => {
+      const span = r.periodFrom && r.periodTo ? rangePhrase(r.periodFrom, r.periodTo) : undefined;
+      const datesParts = span ? [r.category === 'gap_analysis' ? ph(`On site ${span.k} {year}`, { ...span.v, year: r.periodTo!.slice(0, 4) }) : span] : undefined;
+      return { id: r.id, customer: cust(r), workspace: [SR_META[r.category].label, r.serviceFramework, db.scopes.find((x) => x.id === r.scopeId)?.name.replace(/ · Taipei$/, '')].filter(Boolean).join(' · '),
+        dates: r.periodFrom && r.periodTo ? (r.category === 'gap_analysis' ? `On site ${range(r.periodFrom, r.periodTo)} ${r.periodTo.slice(0, 4)}` : `${date(r.periodFrom)} – ${date(r.periodTo)}`) : '—', datesParts, status: srStatus(r), href: consultantHref(r.category, r.id) };
+    }),
   });
 }
 
@@ -323,7 +355,7 @@ export async function getConsultantDashboard(s: Session): Promise<ConsultantDash
 
 export interface AuditorDashboard {
   kind: 'auditor'; tiles: Tile[]; attention: AttentionItem[];
-  findings: { label: string; sub: string; value: number }[];
+  findings: { label: string; sub: string; subParts?: Phrase[]; value: number }[];
   audits: { id: string; customer: string; workspace: string; reviewed: string; toEvaluate: string; status: [Tone, string]; href: string }[];
 }
 
@@ -342,21 +374,24 @@ export async function getAuditorDashboard(s: Session): Promise<AuditorDashboard>
     for (const f of db.findings.filter((x) => x.reviewId === rv.id && x.status === 'response_submitted')) {
       const a = f.actions[f.actions.length - 1];
       const code = db.requirements.find((q) => q.id === db.reviewItems.find((x) => x.id === f.itemId)!.requirementId)!.code;
-      attention.push({ id: f.id, at: a?.submittedAt ?? f.raisedAt, tag: ['under-review', 'Response submitted'], title: `Evaluate corrective action · ${f.code} ${code}`, sub: `${rv.requestId} · ${nameOf(db, a?.submittedBy)} · submitted ${day(a?.submittedAt ?? f.raisedAt)}`, cta: 'Evaluate', href: href(code) });
+      const when = a?.submittedAt ?? f.raisedAt;
+      attention.push({ id: f.id, at: when, tag: ['under-review', 'Response submitted'], title: `Evaluate corrective action · ${f.code} ${code}`, titleParts: [ph('Evaluate corrective action · {code} {item}', { code: f.code, item: code })], sub: `${rv.requestId} · ${nameOf(db, a?.submittedBy)} · submitted ${day(when)}`, subParts: [ph('{id}', { id: rv.requestId }), ph('{who}', { who: nameOf(db, a?.submittedBy) }), ph('submitted {day}', { day: when })], cta: 'Evaluate', href: href(code) });
     }
     for (const x of db.reviewItems.filter((y) => y.reviewId === rv.id && y.status === 'response_submitted')) {
       const c = db.clarifications.filter((y) => y.itemId === x.id && y.answeredAt).sort((a, b) => b.answeredAt!.localeCompare(a.answeredAt!))[0];
       if (!c) continue;
       const q = db.requirements.find((y) => y.id === x.requirementId)!;
-      attention.push({ id: c.id, at: c.answeredAt!, tag: ['under-review', 'Response submitted'], title: `Evaluate answer · ${q.code} ${q.title}`, sub: `${rv.requestId} · ${nameOf(db, c.answeredBy)} · answered ${day(c.answeredAt!)}`, cta: 'Evaluate', href: href(q.code) });
+      attention.push({ id: c.id, at: c.answeredAt!, tag: ['under-review', 'Response submitted'], title: `Evaluate answer · ${q.code} ${q.title}`, titleParts: [ph('Evaluate answer · {code} {item}', { code: q.code, item: q.title })], sub: `${rv.requestId} · ${nameOf(db, c.answeredBy)} · answered ${day(c.answeredAt!)}`, subParts: [ph('{id}', { id: rv.requestId }), ph('{who}', { who: nameOf(db, c.answeredBy) }), ph('answered {day}', { day: c.answeredAt! })], cta: 'Evaluate', href: href(q.code) });
     }
     if (states.get(rv.id)!.ready)
-      attention.push({ id: `close-${rv.id}`, at: '0', tag: ['completed', 'Ready to close'], title: `Close the audit review · ${rv.requestId}`, sub: `${db.tenants.find((x) => x.id === rv.tenantId)!.name} · every item has a conclusion`, cta: 'Close review', href: `/ops/audits/${rv.requestId}/review` });
+      attention.push({ id: `close-${rv.id}`, at: '0', tag: ['completed', 'Ready to close'], title: `Close the audit review · ${rv.requestId}`, titleParts: [ph('Close the audit review · {id}', { id: rv.requestId })], sub: `${db.tenants.find((x) => x.id === rv.tenantId)!.name} · every item has a conclusion`, subParts: [ph('{org}', { org: db.tenants.find((x) => x.id === rv.tenantId)!.name }), ph('every item has a conclusion')], cta: 'Close review', href: `/ops/audits/${rv.requestId}/review` });
   }
   attention.sort((a, b) => b.at.localeCompare(a.at));
   for (const r of mine.filter((x) => x.status === 'assigned')) {
     const f = db.frameworks.find((x) => x.id === r.frameworkId);
-    attention.push({ id: r.id, at: '', tag: ['info', 'Assigned'], title: `Start the audit review · ${r.id} ${f?.shortName ?? r.serviceFramework ?? ''}`.trim(), sub: `${cust(r)} · ${r.periodFrom ? `on site ${range(r.periodFrom, r.periodTo)}` : `preferred ${r.preferredPeriod ?? '—'}`}`, cta: 'Open request', href: `/ops/audits/${r.id}` });
+    const fw = f?.shortName ?? r.serviceFramework ?? '';
+    const span = r.periodFrom ? rangePhrase(r.periodFrom, r.periodTo) : undefined;
+    attention.push({ id: r.id, at: '', tag: ['info', 'Assigned'], title: `Start the audit review · ${r.id} ${fw}`.trim(), titleParts: [ph('Start the audit review · {id} {fw}', { id: r.id, fw })], sub: `${cust(r)} · ${r.periodFrom ? `on site ${range(r.periodFrom, r.periodTo)}` : `preferred ${r.preferredPeriod ?? '—'}`}`, subParts: [ph('{org}', { org: cust(r) }), span ? ph(`on site ${span.k}`, span.v) : ph('preferred {period}', { period: r.preferredPeriod ?? '—' })], cta: 'Open request', href: `/ops/audits/${r.id}` });
   }
 
   const all = [...states.values()];
@@ -370,14 +405,14 @@ export async function getAuditorDashboard(s: Session): Promise<AuditorDashboard>
     kind: 'auditor',
     tiles: [
       { value: toEvaluate, label: 'Responses to evaluate', sub: toEvaluate ? 'Customers have answered' : 'Nothing to evaluate', href: attention.find((a) => a.cta === 'Evaluate')?.href ?? '/ops/audits' },
-      { value: reviews.length, label: reviews.length === 1 ? 'Review in progress' : 'Reviews in progress', sub: first ? `${first.reviewed} of ${first.total} reviewed` : '—', href: reviews[0] ? `/ops/audits/${reviews[0].requestId}/review` : '/ops/audits' },
+      { value: reviews.length, label: reviews.length === 1 ? 'Review in progress' : 'Reviews in progress', sub: first ? `${first.reviewed} of ${first.total} reviewed` : '—', subParts: first ? [ph('{done} of {total} reviewed', { done: first.reviewed, total: first.total })] : undefined, href: reviews[0] ? `/ops/audits/${reviews[0].requestId}/review` : '/ops/audits' },
       { value: mine.filter((r) => r.status === 'assigned').length, label: 'Assigned, not started', sub: 'Start when document review begins', href: '/ops/audits' },
       { value: readyCount, label: 'Ready to close', sub: readyCount ? reviews.filter((rv) => states.get(rv.id)!.ready).map((rv) => rv.requestId).join(', ') : '—', href: '/ops/audits' },
     ],
     attention: attention.map(({ at: _a, ...x }) => x),
     findings: [
       { label: 'Major nonconformity', sub: 'Blocks the certificate until closed', value: open.filter((f) => f.classification === 'major').length },
-      { label: 'Minor nonconformity', sub: minorToEval ? `${minorToEval} with a corrective action to evaluate` : 'Corrective action required', value: open.filter((f) => f.classification === 'minor').length },
+      { label: 'Minor nonconformity', sub: minorToEval ? `${minorToEval} with a corrective action to evaluate` : 'Corrective action required', subParts: minorToEval ? [ph('{n} with a corrective action to evaluate', { n: minorToEval })] : undefined, value: open.filter((f) => f.classification === 'minor').length },
       { label: 'Waiting for the customer', sub: 'Clarifications and findings not answered yet', value: all.reduce((a, x) => a + x.waitingOnCustomer, 0) },
     ],
     audits: mine.map((r) => {
