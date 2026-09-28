@@ -2,6 +2,21 @@
 html, body { margin: 0; padding: 0; }
 body { font-family: var(--font-sans); color: var(--text-primary); background: var(--background); }
 
+/* SGS wordmark. The mark in Graphite is still the placeholder text "SGS"; this swaps in the
+   supplied lockup (gray + orange on light, white + orange on the dark top bar). */
+.gr-logo__mark {
+  display: inline-block;
+  width: 77px;
+  height: 36px;
+  background: url('/sgs-logo.png') center / contain no-repeat;
+  font-size: 0;
+  line-height: 0;
+  letter-spacing: 0;
+  color: transparent;
+}
+.gr-top--dark .gr-logo__mark { background-image: url('/sgs-logo-on-dark.png'); }
+.gr-logo__div { display: none; }
+
 /* ---------- Portal shell (AppShell page template) ----------
    Big area min 960 / max 1980px (UI Guidelines → Responsiveness); beyond 1980 the background fills both sides.
    Only the content area scrolls. Mobile breakpoints come in Pha 4. */
